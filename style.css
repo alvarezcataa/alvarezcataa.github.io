@@ -1,0 +1,142 @@
+body {
+    margin: 0;
+    font-family: 'Merriweather', serif;
+    overflow-x: hidden;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+.logo {
+    height: 30px;
+    transition: transform 1s ease;
+    cursor: pointer;
+}
+
+.menu-icon {
+    position: absolute;
+    right: 20px;
+    top: 18px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20px;
+}
+
+.menu-icon span {
+    display: block;
+    height: 3px;
+    width: 25px;
+    background: white;
+    margin: 2px 0;
+    transition: 0.3s ease;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 25%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: right 2s ease;
+    z-index: 999;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.menu li {
+    margin: 20px 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.menu.active {
+    right: 0;
+}
+
+.blur-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(0px);
+    transition: backdrop-filter 1s ease;
+    z-index: 500;
+    pointer-events: none;
+}
+
+.blur-background.active {
+    backdrop-filter: blur(5px);
+}
+
+@media (max-width: 768px) {
+    .logo {
+        height: auto;
+        width: 33vw;
+    }
+
+    .menu {
+        width: 100%;
+    }
+}
+
+
+/* INICIO PAGE */
+.inicio-page {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.inicio-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.inicio-logo {
+    position: relative;
+    height: 33vh;
+    z-index: 1;
+    transition: transform 0.5s ease;
+}
+
+.inicio-logo:hover {
+    transform: translateY(-10px) rotate(-2deg) scale(1.05);
+}
