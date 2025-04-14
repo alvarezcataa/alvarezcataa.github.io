@@ -1,0 +1,57 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: Georgia, serif;
+  color: white;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.logo {
+  height: 40px;
+  cursor: pointer;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+  text-transform: capitalize;
+}
+
+.nav-links a:hover {
+  color: #bfa980;
+}
+
+.page {
+  padding-top: 100px;
+  text-align: center;
+}
