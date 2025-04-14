@@ -1,105 +1,4 @@
 
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Helvetica', sans-serif;
-  scroll-behavior: smooth;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 50px;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-}
-
-.logo {
-  height: 30px;
-  transition: transform 1s ease;
-  cursor: pointer;
-}
-
-.logo:hover {
-  transform: scale(1.2);
-}
-
-.menu-icon {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  cursor: pointer;
-}
-
-.menu-icon .bar {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  margin: 4px 0;
-}
-
-.menu-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 0;
-  height: 100%;
-  background: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
-  overflow-x: hidden;
-  transition: width 0.3s ease;
-  z-index: 20;
-}
-
-.menu {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 25vw;
-  background-color: black;
-  display: flex;
-  flex-direction: column;
-  padding-top: 60px;
-}
-
-.menu a {
-  color: white;
-  font-family: 'Merriweather', serif;
-  font-size: 18px;
-  padding: 12px;
-  text-decoration: none;
-}
-
-.hero {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
-}
-
-.hero .background {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background-color: #222;
-}
-
-.main-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 33vw;
-  transform: translate(-50%, -50%);
-  transition: transform 0.5s ease-in-out;
-}
-
-.main-logo:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
 .filosofia-container {
   position: relative;
   height: 100vh;
@@ -107,42 +6,44 @@ body, html {
 }
 
 .filosofia-bg {
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-size: cover;
   background-position: center;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 3s ease;
+  z-index: -2;
 }
 
 #bg1 {
-  background-image: url('FILOSOFIA_01.png');
-  z-index: 1;
+  background-image: url('assets/FILOSOFIA_01.png');
+  opacity: 1;
 }
 
 #bg2 {
-  background-image: url('FILOSOFIA_02.png');
+  background-image: url('assets/FILOSOFIA_02.png');
   opacity: 0;
-  z-index: 2;
 }
 
 .overlay-text {
-  position: absolute;
-  top: 40%;
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  z-index: 3;
+  z-index: 2;
+}
+
+.titulo-filosofia, .subtitulo-filosofia {
+  transition: color 1s ease;
+  font-family: 'Merriweather', serif;
 }
 
 .titulo-filosofia {
-  font-family: 'Merriweather', serif;
   font-size: 20px;
-  margin: 0;
 }
 
 .subtitulo-filosofia {
-  font-family: Helvetica, sans-serif;
   font-size: 10px;
   margin-top: 20px;
 }
@@ -152,18 +53,21 @@ body, html {
 
 .filosofia-blanco {
   background-color: white;
-  padding: 60px 50px;
+  padding: 100px 50px;
+  z-index: 1;
+  position: relative;
 }
 
 .titulo-filosofia-seccion {
   font-family: 'Merriweather', serif;
   font-size: 15px;
   color: black;
-  margin-bottom: 20px;
+  text-align: left;
 }
 
 .texto-filosofia {
   font-family: Helvetica, sans-serif;
   color: black;
   text-align: justify;
+  margin-top: 20px;
 }
