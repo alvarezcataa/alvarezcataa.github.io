@@ -1,33 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAVLA</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="navbar">
-        <img src="assets/LOGO.png" alt="Logo CAVLA" class="logo" onclick="growLogo()">
-        <div class="menu-icon" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </div>
-    </header>
-
-    <nav class="menu" id="menu">
-        <ul>
-            <li onclick="closeMenu()">Inicio</li>
-            <li onclick="closeMenu()">Filosofía</li>
-            <li onclick="closeMenu()">Proyectos</li>
-            <li onclick="closeMenu()">Servicios</li>
-            <li onclick="closeMenu()">Sobre mí</li>
-            <li onclick="closeMenu()">Contacto</li>
-        </ul>
-    </nav>
-
-    <div class="blur-background" id="blur-bg"></div>
-
-    <script src="script.js"></script>
+  <nav class="navbar">
+    <img src="LOGO.png" alt="Logo" class="logo" onclick="location.href='index.html';">
+    <div class="menu-icon" onclick="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay">
+      <div class="menu">
+        <a href="index.html" onclick="closeMenu()">Inicio</a>
+        <a href="filosofia.html" onclick="closeMenu()">Filosofía</a>
+        <a href="#" onclick="closeMenu()">Proyectos</a>
+        <a href="#" onclick="closeMenu()">Servicios</a>
+        <a href="#" onclick="closeMenu()">Sobre mí</a>
+        <a href="#" onclick="closeMenu()">Contacto</a>
+      </div>
+    </div>
+  </nav>
+  <div class="hero">
+    <img src="PORTADA.png" class="background" alt="Portada">
+    <img src="LOGO.png" alt="Logo Grande" class="main-logo">
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
