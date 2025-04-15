@@ -1,0 +1,119 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Merriweather', serif;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: transparent;
+    z-index: 10;
+}
+
+.logo {
+    height: 40px;
+}
+
+.menu-toggle {
+    position: absolute;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 25%;
+    height: 100vh;
+    background: linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0));
+    backdrop-filter: blur(10px);
+    transition: right 0.3s ease;
+    z-index: 20;
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 50px 20px;
+    margin: 0;
+}
+
+.side-menu ul li {
+    margin: 20px 0;
+}
+
+.side-menu ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.inicio {
+    height: 100vh;
+    background-image: url('../images/PORTADA.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-logo {
+    width: 33%;
+}
+
+.subtext {
+    margin-top: 20px;
+    color: white;
+    font-size: 20px;
+}
+
+.animate {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .side-menu {
+        width: 100%;
+    }
+
+    .main-logo {
+        width: 60%;
+    }
+
+    .subtext {
+        font-size: 16px;
+    }
+}
