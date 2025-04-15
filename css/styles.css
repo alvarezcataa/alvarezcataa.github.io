@@ -3,7 +3,6 @@ body, html {
   margin: 0;
   padding: 0;
   font-family: 'Merriweather', serif;
-  background-color: #333;
   overflow-x: hidden;
 }
 
@@ -11,132 +10,106 @@ body, html {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 10;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 10px 40px;
+  padding: 10px 20px;
   background: transparent;
-  z-index: 100;
-  pointer-events: none; /* evita bloquear interacciones por error */
 }
 
 .logo {
-  height: 40px;
-  pointer-events: auto;
+  height: 60px;
 }
 
 .menu-toggle {
   position: absolute;
   top: 20px;
-  right: 40px;
-  font-size: 30px;
+  right: 80px;
+  font-size: 32px;
   color: white;
+  background: none;
+  border: none;
   cursor: pointer;
-  z-index: 110;
-  padding: 10px;
-  border-radius: 8px;
-  background: transparent;
-  pointer-events: auto;
+  z-index: 11;
 }
 
-.side-menu {
+.menu {
   position: fixed;
   top: 0;
-  right: -100%;
-  width: 25%;
+  left: 0;
+  width: 100%;
   height: 100%;
-  background: linear-gradient(to left, rgba(0,0,0,0.5), rgba(0,0,0,0));
-  transition: right 1s ease;
-  z-index: 105;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
+  z-index: 10;
+  background: linear-gradient(to right, rgba(128, 128, 128, 0.5), rgba(128, 128, 128, 0));
+  backdrop-filter: blur(10px);
+  transition: all 1s ease;
 }
 
-.side-menu ul {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
   text-align: center;
 }
 
-.side-menu ul li {
+.menu ul li {
   margin: 20px 0;
 }
 
-.side-menu ul li a {
+.menu ul li a {
   color: white;
-  text-decoration: none;
   font-size: 16px;
+  text-decoration: none;
 }
 
-.side-menu.open {
-  right: 0;
+.menu.active {
+  display: flex;
 }
 
-.blur {
-  filter: blur(5px);
-  transition: filter 1s ease;
-}
-
-.inicio {
+.background {
+  background-image: url('../img/PORTADA.png');
+  background-size: cover;
+  background-position: center;
   height: 100vh;
-  background: url('../images/PORTADA.png') no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  transition: filter 0.5s ease;
+}
+
+.background.blur {
+  filter: blur(8px);
+}
+
+.center-content {
   text-align: center;
+  color: white;
+  animation: fadeIn 2s ease;
 }
 
 .main-logo {
   width: 33vw;
-  animation: fadeInUpLogo 2.5s ease forwards;
+  max-width: 300px;
+  display: block;
+  margin: 0 auto;
 }
 
-.subtext {
-  color: white;
+.slogan {
   margin-top: 20px;
   font-size: 18px;
-  animation: fadeInUp 2s ease forwards;
 }
 
-@keyframes fadeInUpLogo {
-  0% {
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .side-menu {
-    width: 100%;
-  }
-
-  .main-logo {
-    width: 50vw;
-  }
-
-  .menu-toggle {
-    right: 20px;
   }
 }
