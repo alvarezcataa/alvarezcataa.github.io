@@ -14,7 +14,7 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 50px;
+  padding: 10px 30px;
   background: transparent;
   z-index: 100;
 }
@@ -28,6 +28,7 @@ body, html {
   color: white;
   cursor: pointer;
   z-index: 110;
+  padding: 10px;
 }
 
 .side-menu {
