@@ -4,6 +4,7 @@ body, html {
   padding: 0;
   font-family: 'Merriweather', serif;
   background-color: #333;
+  overflow-x: hidden;
 }
 
 .navbar {
@@ -13,9 +14,9 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 30px;
   background: transparent;
-  z-index: 10;
+  z-index: 100;
 }
 
 .logo {
@@ -26,7 +27,7 @@ body, html {
   font-size: 30px;
   color: white;
   cursor: pointer;
-  z-index: 20;
+  z-index: 110;
 }
 
 .side-menu {
@@ -37,15 +38,20 @@ body, html {
   height: 100%;
   background: linear-gradient(to left, rgba(128,128,128,0.5), rgba(128,128,128,0));
   transition: right 1s ease;
-  z-index: 15;
+  z-index: 105;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .side-menu ul {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   list-style: none;
   padding: 0;
+  margin: 0;
   text-align: center;
 }
 
