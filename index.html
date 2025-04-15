@@ -1,38 +1,88 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalina Alvarez - Atelier de Arquitectura Emocional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
-  <nav class="navbar">
-    <img src="LOGO.png" alt="Logo" class="logo" onclick="location.href='index.html';">
-    <div class="menu-icon" onclick="toggleMenu()">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-    </div>
-    <div class="menu-overlay" id="menuOverlay">
-      <div class="menu">
-        <a href="index.html" onclick="closeMenu()">Inicio</a>
-        <a href="filosofia.html" onclick="closeMenu()">Filosofía</a>
-        <a href="#" onclick="closeMenu()">Proyectos</a>
-        <a href="#" onclick="closeMenu()">Servicios</a>
-        <a href="#" onclick="closeMenu()">Sobre mí</a>
-        <a href="#" onclick="closeMenu()">Contacto</a>
-      </div>
-    </div>
-  </nav>
-  <div class="hero">
-    <img src="PORTADA.png" class="background" alt="Portada">
-    <img src="LOGO.png" alt="Logo Grande" class="main-logo">
-  </div>
-  <script src="script.js"></script>
+
+<div class="page-content">
+
+<header class="main-header">
+<div class="header-container">
+<a href="#inicio" class="header-logo-link">
+<img src="images/LOGO.png" alt="Logo Catalina Alvarez" class="header-logo">
+</a>
+
+<button class="hamburger-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="offscreenMenu">
+<span class="line line1"></span>
+<span class="line line2"></span>
+<span class="line line3"></span>
+</button>
+</div>
+</header>
+
+<main>
+<section id="inicio" class="hero-section">
+<div class="hero-content">
+<img src="images/LOGO.png" alt="Logo Catalina Alvarez" class="inicio-logo animate-on-load">
+<p class="inicio-subtitle animate-on-load delay-animation">Atelier de arquitectura emocional</p>
+</div>
+</section>
+
+<section id="filosofia" class="content-section">
+<h2>Filosofía</h2>
+<p>Contenido de la sección Filosofía...</p>
+<div style="height: 400px;"></div>
+</section>
+
+<section id="proyectos" class="content-section alt-bg">
+<h2>Proyectos</h2>
+<p>Contenido de la sección Proyectos...</p>
+<div style="height: 400px;"></div>
+</section>
+
+<section id="servicios" class="content-section">
+<h2>Servicios</h2>
+<p>Contenido de la sección Servicios...</p>
+<div style="height: 400px;"></div>
+</section>
+
+<section id="sobre-mi" class="content-section alt-bg">
+<h2>Sobre mí</h2>
+<p>Contenido de la sección Sobre mí...</p>
+<div style="height: 400px;"></div>
+</section>
+
+<section id="contacto" class="content-section">
+<h2>Contacto</h2>
+<p>Contenido de la sección Contacto...</p>
+<div style="height: 400px;"></div>
+</section>
+
+</main>
+
+</div>
+<nav class="offscreen-menu" id="offscreenMenu" aria-hidden="true">
+<button class="close-menu-btn" aria-label="Cerrar menú">&times;</button>
+<ul class="menu-list">
+<li class="menu-item"><a href="#inicio" class="menu-link">Inicio</a></li>
+<li class="menu-item"><a href="#filosofia" class="menu-link">Filosofía</a></li>
+<li class="menu-item"><a href="#proyectos" class="menu-link">Proyectos</a></li>
+<li class="menu-item"><a href="#servicios" class="menu-link">Servicios</a></li>
+<li class="menu-item"><a href="#sobre-mi" class="menu-link">Sobre mí</a></li>
+<li class="menu-item"><a href="#contacto" class="menu-link">Contacto</a></li>
+</ul>
+</nav>
+
+<script src="js/script.js"></script>
+
 </body>
 </html>
