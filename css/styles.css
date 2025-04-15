@@ -24,6 +24,9 @@ body, html {
 }
 
 .menu-toggle {
+  position: fixed;
+  top: 10px;
+  right: 30px;
   font-size: 30px;
   color: white;
   cursor: pointer;
@@ -127,4 +130,14 @@ body, html {
   .main-logo {
     width: 50vw;
   }
+}
+
+.filosofia {
+  height: 100vh;
+  background: url('../images/PORTADA.png') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
