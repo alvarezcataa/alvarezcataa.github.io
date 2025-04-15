@@ -14,21 +14,29 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 30px;
+  padding: 10px 40px;
   background: transparent;
   z-index: 100;
+  pointer-events: none; /* evita bloquear interacciones por error */
 }
 
 .logo {
   height: 40px;
+  pointer-events: auto;
 }
 
 .menu-toggle {
+  position: absolute;
+  top: 20px;
+  right: 40px;
   font-size: 30px;
   color: white;
   cursor: pointer;
   z-index: 110;
   padding: 10px;
+  border-radius: 8px;
+  background: transparent;
+  pointer-events: auto;
 }
 
 .side-menu {
@@ -126,5 +134,9 @@ body, html {
 
   .main-logo {
     width: 50vw;
+  }
+
+  .menu-toggle {
+    right: 20px;
   }
 }
