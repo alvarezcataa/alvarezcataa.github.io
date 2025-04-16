@@ -155,6 +155,12 @@ body, html {
   align-items: center;
   flex-direction: column;
   text-align: center;
+  scroll-snap-type: y mandatory;
+}
+
+section { 
+  height: 100vh;
+  scroll-snap-align: start;
 }
 
 .titulo-filosofia {
@@ -205,10 +211,6 @@ body, html {
   align-items: start;
 }
 
-.col-vacia {
-  /* No necesita estilos, solo ocupa espacio */
-}
-
 .grid-proyectos {
   grid-column: 2 / span 2; /* ocupa columnas 2 y 3 */
   display: grid;
@@ -235,6 +237,17 @@ body, html {
   align-items: center;
 }
 
+@keyframes appear {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
 .polaroid {
   z-index: 3;
   transform: scale(0.85);
@@ -244,6 +257,9 @@ body, html {
   height: auto;
   object-fit: contain;
   display: block;
+  animation: appear linear; 
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
 }
 
 .proyecto:hover .polaroid {
