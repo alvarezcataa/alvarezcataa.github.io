@@ -145,6 +145,26 @@ body, html {
   .main-logo {
     width: 50vw;
   }
+  .page-proyectos {
+    grid-template-columns: 1fr;
+    padding: 30px 20px;
+  }
+  
+  .grid-proyectos {
+    grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+    
+  .proyecto {
+    max-width: 90vw;
+    margin: 0 auto;
+  }
+    
+  .titulo-filosofia {
+    width: 90vw;
+    font-size: 40px;
+  }
 }
 
 .page-filosofia {
