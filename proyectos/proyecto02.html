@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA - Proyecto02</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="../index.html"><img src="../images/LOGO.png" alt="Logo" class="logo" /></a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <!-- MENÚ DESPLEGABLE -->
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
+      <li><a href="../servicios.html" onclick="toggleMenu()">Servicios</a></li>
+      <li><a href="../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <!-- CONTENIDO DE LA PÁGINA -->
+  <section class="page" id="proyecto02">
+    <h1 class="titulo-seccion">Proyecto02</h1>
+    <img src="../images/PROYECTOS/proyecto02.png" alt="Proyecto02" class="proyecto-portada">
+    <div class="descripcion-proyecto">
+      <p>Proyecto02 explora la interacción entre luz, materia y atmósfera, integrando diseño emocional con funcionalidad...</p>
+      <!-- Podés agregar más imágenes, sliders o descripciones -->
+    </div>
+    <div class="volver">
+      <a href="../proyectos.html">← Volver a Proyectos</a>
+    </div>
+  </section>
+
+  <script src="../js/scripts.js"></script>
+</body>
+</html>
