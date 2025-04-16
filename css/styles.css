@@ -21,6 +21,16 @@ body, html {
 
 .logo {
   height: 40px;
+  opacity: 0;
+  animation: fadeSlideIn 1.5s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .menu-toggle {
@@ -76,6 +86,7 @@ body, html {
 .blur {
   filter: blur(5px);
   transition: filter 1s ease;
+  pointer-events: none;
 }
 
 .inicio {
@@ -86,6 +97,10 @@ body, html {
   align-items: center;
   flex-direction: column;
   text-align: center;
+}
+
+.inicio .navbar-logo {
+  display: none;
 }
 
 .main-logo {
@@ -132,9 +147,9 @@ body, html {
   }
 }
 
-.filosofia {
+.page-filosofia {
   height: 100vh;
-  background: url('../images/PORTADA.png') no-repeat center center/cover;
+  background: url('../images/FILOSOFIA_01.png') no-repeat center center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -142,19 +157,22 @@ body, html {
   text-align: center;
 }
 
-.main-logo {
+.titulo-filosofia {
+  font-size: 70px;
   width: 33vw;
-  animation: fadeInUpLogo 2.5s ease forwards;
+  animation: fadeInUpTitulo 2.5s ease forwards;
 }
 
-.subtext {
+.subtitulo-filosofia {
   color: white;
   margin-top: 20px;
   font-size: 18px;
-  animation: fadeInUp 2s ease forwards;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 100;
+  animation: fadeInUpSubtitulo 2s ease forwards;
 }
 
-@keyframes fadeInUpLogo {
+@keyframes fadeInUpTitulo {
   0% {
     opacity: 0;
     transform: translateY(30px);
@@ -165,7 +183,7 @@ body, html {
   }
 }
 
-@keyframes fadeInUp {
+@keyframes fadeInUpSubtitulo {
   0% {
     opacity: 0;
     transform: translateY(30px);
@@ -174,26 +192,62 @@ body, html {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.page-proyectos {
+  display: grid;
+  background: url(/images/background\ proyectos.jpg) no-repeat center center/cover;
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 columnas */
+  background-color: rgb(228, 228, 228);
+  padding: 60px 0;
+  gap: 20px;
+  min-height: 100vh;
+  align-items: start;
+}
+
+.col-vacia {
+  /* No necesita estilos, solo ocupa espacio */
 }
 
 .grid-proyectos {
+  grid-column: 2 / span 2; /* ocupa columnas 2 y 3 */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
 }
 
-.grid-proyectos a {
-  text-align: center;
-  text-decoration: none;
-  color: inherit;
-}
-
-.grid-proyectos img {
+.grid-proyectos a img {
   width: 100%;
-  border-radius: 12px;
+  height: auto;
   transition: transform 0.3s ease;
+  display: block;
 }
 
-.grid-proyectos img:hover {
-  transform: scale(1.03);
+.grid-proyectos a:hover img {
+  transform: scale(1.10);
+}
+
+.proyecto {
+  position: relative;
+  overflow: visible; /* MUY IMPORTANTE para que se vea la sombra */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.polaroid {
+  z-index: 3;
+  transform: scale(0.85);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.8);
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.proyecto:hover .polaroid {
+  transform: scale(1.05);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
 }
