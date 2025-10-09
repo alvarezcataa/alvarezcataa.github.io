@@ -1,13 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Servicios</title>
+  <title>CAVLA</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 </head>
+<header>
 <body class="pagina">
   <nav class="navbar">
     <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
@@ -16,20 +16,172 @@
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
+      
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
       <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
       <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
+      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
+</header>
 
-  <section class="page-servicios" id="mainContent">
-    <div class="overlay">
-    </div>
+  <!-- PORTADA-->
+  <section class="page mainContent">
+    <div class="opacidad shadow"></div>
+    <h1 class="titulo-pagina translate" data-speed="0.1">SERVICIOS</h1>
+    <h2 class="subtitulo-pagina translate" data-speed="0.1">Lo que puedo hacer por vos.</h2>
+    <img src="images/flecha-19.png" class="flecha">
+    <img src="images/SERVICIOS/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
   </section>
 
-  <script src="js/scripts.js"></script>
+ <!-- VIRTUAL -->
+<section class="page mainContent">
+  <div class="section__data">
+    <h2 class="metodologia-subtitulo">METODOLOGÍA DE TRABAJO</h2>
+    <h1 class="metodologia-titulo">100% VIRTUAL</h1>
+  </div>
+
+  <div class="opacidad shadow"></div>
+  <div class="bg-gradient"></div>
+  <img src="images/SERVICIOS/VIRTUAL.jpg" class="fondo">
+
+  <div class="contenedor-grillavirtual">
+    <div class="item-virtual">
+      <img src="images/SERVICIOS/VIRTUAL/01.png" class="imagen-virtual" />
+      <h2 class="titulo-virtual">ALCANCE NACIONAL</h2>
+    </div>
+    <div class="item-virtual">
+      <div class="linea-vertical"></div>
+      <img src="images/SERVICIOS/VIRTUAL/02.png" class="imagen-virtual" />
+      <h2 class="titulo-virtual">DESDE LA COMODIDAD DE TU HOGAR</h2>
+    </div>
+    <div class="item-virtual">
+      <div class="linea-vertical"></div>
+      <img src="images/SERVICIOS/VIRTUAL/03.png" class="imagen-virtual" />
+      <h2 class="titulo-virtual">EFICIENCIA DE COSTOS</h2>
+    </div>
+    <div class="item-virtual">
+      <div class="linea-vertical"></div>
+      <img src="images/SERVICIOS/VIRTUAL/04.png" class="imagen-virtual" />
+      <h2 class="titulo-virtual">RESULTADOS MÁS RÁPIDOS</h2>
+    </div>
+    <div class="item-virtual">
+      <div class="linea-vertical"></div>
+      <img src="images/SERVICIOS/VIRTUAL/05.png" class="imagen-virtual" />
+      <h2 class="titulo-virtual">FLEXIBILIDAD HORARIA</h2>
+    </div>
+  </div>
+</section>
+
+<!-- FASES -->
+<section class="metodologia mainContent">
+  <img src="images/flecha-19.png" class="flecha">
+  <div class="contenedor-grillafases">
+    <div class="item-fase">
+    <img src="images/SERVICIOS/METODOLOGÍA/01.jpg" class="imagen-fase" />
+    <div class="overlay-fase"></div>
+     <div class="overlay-textofase">
+      <h1 class="numero-fase">01</h1>
+      <h1 class="titulo-fase">INICIO</h1>
+      <h2 class="subtitulo-fase">Selección del servicio y carga de información básica del proyecto.</h2>
+    </div>
+    </div>
+    
+     
+    <div class="item-fase">
+    <img src="images/SERVICIOS/METODOLOGÍA/02.jpg" class="imagen-fase" />
+    <div class="overlay-fase"></div>
+    <div class="overlay-textofase">
+      <h1 class="numero-fase">02</h1>
+      <h1 class="titulo-fase">PRESUPUESTO</h1>
+      <h2 class="subtitulo-fase">Cotización online, relevamiento guiado y reserva del primer encuentro virtual.</h2>
+    </div>
+    </div>
+      
+
+    <div class="item-fase">
+    <img src="images/SERVICIOS/METODOLOGÍA/03.jpg" class="imagen-fase" />
+    <div class="overlay-fase"></div>
+    <div class="overlay-textofase">
+      <h1 class="numero-fase">03</h1>
+      <h1 class="titulo-fase">REUNIÓN</h1>
+      <h2 class="subtitulo-fase">Entrevista de diagnóstico y pago de seña.</h2>
+    </div>
+    </div>
+
+
+    <div class="item-fase">
+    <img src="images/SERVICIOS/METODOLOGÍA/04.jpg" class="imagen-fase" />
+    <div class="overlay-fase"></div>
+    <div class="overlay-textofase">
+      <h1 class="numero-fase">04</h1>
+      <h1 class="titulo-fase">REVISIÓN</h1>
+      <h2 class="subtitulo-fase">Segunda reunión de ajuste para garantizar la satisfacción con el proyecto.</h2>
+    </div>
+    </div>
+
+    <div class="item-fase">
+    <img src="images/SERVICIOS/METODOLOGÍA/05.jpg" class="imagen-fase" />
+    <div class="overlay-fase"></div>
+    <div class="overlay-textofase"></div>
+      <h1 class="numero-fase">05</h1>
+      <h1 class="titulo-fase">ENTREGA</h1>
+      <h2 class="subtitulo-fase">Cancelación del saldo y entrega final del proyecto.</h2>
+    </div>
+
+  </div>
+</section>
+
+ <!-- CATEGORÍAS -->
+<section class="categorias mainContent">
+  
+  <div class="opacidad shadow"></div>
+  <div class="bg-gradient"></div>
+  <img src="images/SERVICIOS/CATEGORIA/CATEGORIA.jpg" class="fondo">
+
+  <div class="contenedor-grillacategoria">
+      <div class="item-categoría c01"></div>
+
+      <div class="item-categoría c02"></div>
+
+      <div class="item-categoría c03"></div>
+
+      <a href="categorías/corporativo.html" class="item-categoría c04">
+        <div class="fondoblanco"></div>
+        <h1 class="titulo-categoria">CORPORATIVO</h1>
+      </a>
+        
+      <div class="item-categoría c05">
+        <h2 class="categoria-subtitulo">ELIGE TU</h2>
+        <h1 class="categoria-titulo">TIPO DE CATEGORÍA</h1>
+      </div>
+
+      <a href="categorías/comercial.html" class="item-categoría c06">
+      <div class="fondoblanco"></div>
+      <h1 class="titulo-categoria">COMERCIAL</h1>
+      </a>
+
+      <a href="categorías/gastronomico.html" class="item-categoría c07">
+      <div class="fondoblanco"></div>
+      <h1 class="titulo-categoria">GASTRONÓMICO</h1>
+      </a>
+
+      <a href="categorías/residencial.html" class="item-categoría c08">
+      <div class="fondoblanco"></div>
+      <h1 class="titulo-categoria">RESIDENCIAL</h1>
+      </a>
+
+      <a href="categorías/hoteleria.html" class="item-categoría c09">
+      <div class="fondoblanco"></div>
+      <h1 class="titulo-categoria">HOTELERÍA</h1>
+      </a>
+  </div>
+</section>
+
+
+
+<script src="js/scripts.js"></script>
 </body>
 </html>

@@ -1,44 +1,223 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Proyecto03</title>
-  <link rel="stylesheet" href="../css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Scroll circles effect</title>
+<style>
+  :root{
+    --bg:#0f0f10;
+    --accent1:#3d6b5f;  /* verde musgo (ajustable) */
+    --accent2:#7a2b2b;  /* bordó (ajustable) */
+    --accent3:#b0875a;  /* bronce (ajustable) */
+    --accent4:#0f4b4b;  /* azul petróleo (ajustable) */
+  }
+  html,body{height:100%;margin:0;background:var(--bg);font-family:system-ui,Arial}
+  /* Contenedor principal para que haya scroll */
+  .page {
+    min-height: 300vh; /* mucho scroll para probar el efecto */
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* CANVAS/SVG layer fixed con pointer-events none para que no interfiera */
+  .circles-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: visible;
+  }
+
+  /* Contenedor de contenido (simula secciones) */
+  .content {
+    position: relative;
+    z-index: 3;
+    max-width: 900px;
+    margin: 6rem auto;
+    color: #efece6;
+    padding: 2rem;
+  }
+
+  h1{font-size: clamp(28px,4vw,48px); margin:0 0 1rem}
+  p{line-height:1.5; color: #d6d3cf}
+
+  /* Estilo base de cada "círculo" (usamos SVG <circle> o divs) */
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform, opacity;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+    filter: blur(0.3px); /* sutil */
+  }
+
+  /* tamaños por clase (puedes añadir más) */
+  .c-lg{width:420px;height:420px}
+  .c-md{width:260px;height:260px}
+  .c-sm{width:120px;height:120px}
+  .c-xs{width:70px;height:70px}
+
+  /* sombras/gradientes para darle profundidad */
+  .grad {
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.14), rgba(255,255,255,0.02) 8%, transparent 30%),
+                radial-gradient(circle at 70% 70%, rgba(0,0,0,0.12), transparent 35%);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45), inset 0 -8px 30px rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(0.6px);
+  }
+
+  /* Ejemplos de colores */
+  .clr-1{background: linear-gradient(135deg,var(--accent1), rgba(0,0,0,0.08))}
+  .clr-2{background: linear-gradient(135deg,var(--accent2), rgba(0,0,0,0.08))}
+  .clr-3{background: linear-gradient(135deg,var(--accent3), rgba(0,0,0,0.06))}
+  .clr-4{background: linear-gradient(135deg,var(--accent4), rgba(0,0,0,0.06))}
+
+  /* pequeños ajustes responsivos */
+  @media (max-width:720px){
+    .c-lg{width:260px;height:260px}
+    .c-md{width:160px;height:160px}
+    .c-sm{width:90px;height:90px}
+  }
+</style>
 </head>
 <body>
-
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="../index.html"><img src="../images/LOGO.png" alt="Logo" class="logo" /></a>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  </nav>
-
-  <!-- MENÚ DESPLEGABLE -->
-  <div class="side-menu" id="sideMenu">
-    <ul>
-      <li><a href="../index.html" onclick="toggleMenu()">Inicio</a></li>
-      <li><a href="../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="../proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
-      <li><a href="../servicios.html" onclick="toggleMenu()">Servicios</a></li>
-      <li><a href="../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
-      <li><a href="../contacto.html" onclick="toggleMenu()">Contacto</a></li>
-    </ul>
+<div class="page">
+  <!-- Layer de círculos: usamos divs posicionados con data-attributes -->
+  <div class="circles-layer" id="circlesLayer" aria-hidden="true">
+    <!-- cada elemento tiene:
+         data-x: porcentaje horizontal inicial (0-100)
+         data-y: porcentaje vertical inicial (0-100)
+         data-speed: cuanto se desplaza con el scroll (positivo o negativo)
+         data-rot: factor de rotación relativo
+         data-scale: factor base de escala
+    -->
+    <div class="circle c-lg grad clr-1" data-x="10" data-y="12" data-speed="-0.35" data-rot="0.08" data-scale="1.0"></div>
+    <div class="circle c-md grad clr-2" data-x="75" data-y="18" data-speed="0.25" data-rot="-0.12" data-scale="1.05"></div>
+    <div class="circle c-sm grad clr-3" data-x="50" data-y="55" data-speed="-0.6" data-rot="0.18" data-scale="0.95"></div>
+    <div class="circle c-xs grad clr-4" data-x="20" data-y="72" data-speed="0.45" data-rot="-0.25" data-scale="1.08"></div>
+    <div class="circle c-md grad clr-4" data-x="85" data-y="80" data-speed="-0.18" data-rot="0.05" data-scale="0.9"></div>
   </div>
 
-  <!-- CONTENIDO DE LA PÁGINA -->
-  <section class="page-proyecto03" id="mainContent">
-    <h1 class="titulo-seccion">Proyecto03</h1>
-    <img src="../images/PROYECTOS/proyecto03_portada.png" alt="Proyecto03" class="proyecto-portada">
-    <div class="descripcion-proyecto">
-      <p>Proyecto03 continúa la búsqueda estética desde una perspectiva experimental y tectónica...</p>
-    </div>
-    <div class="volver">
-      <a href="../proyectos.html">← Volver a Proyectos</a>
-    </div>
-  </section>
+  <!-- Contenido simulado -->
+  <main class="content">
+    <h1>CAVLA — Ejemplo de efecto círculos al scrollear</h1>
+    <p>Este ejemplo muestra cómo desplazar, escalar y rotar círculos en respuesta al scroll. Los círculos están en capa fija sobre el contenido para producir profundidad y movimiento parallax.</p>
 
-  <script src="../js/scripts.js"></script>
+    <section style="margin-top:3rem">
+      <h2>Instrucciones</h2>
+      <ol>
+        <li>Modifica colores en :root.</li>
+        <li>Ajusta los data-attributes de cada .circle para cambiar comportamiento.</li>
+        <li>Para performance en móviles reduce la cantidad de elementos o blur.</li>
+      </ol>
+    </section>
+
+    <section style="margin-top:40vh;">
+      <h2>Sección larga ejemplo</h2>
+      <p>Desplázate hacia abajo para ver el efecto. Cada círculo tiene una velocidad distinta (data-speed) que multiplica el progreso del scroll y genera movimiento relativo.</p>
+    </section>
+
+    <section style="margin-top:70vh;">
+      <h2>Final</h2>
+      <p>Fin del demo — puedes duplicar los .circle y variar atributos para componer la escena que quieras.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+/*
+  Scroll circles effect
+  - lee todos los elementos .circle
+  - posiciona iniciales según data-x / data-y (porcentajes)
+  - en cada frame calcula scrollProgress y aplica transform:
+      translate(x, y + scroll * speed), rotate, scale, opacity
+  - usa lerp para suavizar
+*/
+
+(() => {
+  const circles = Array.from(document.querySelectorAll('.circle'));
+  const docHeight = () => Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+  const winH = () => window.innerHeight || document.documentElement.clientHeight;
+  let lastScroll = window.scrollY;
+  let virtualScroll = lastScroll; // para lerp smoothing
+
+  // inicializar posición absoluta basada en % del viewport
+  function initPositions(){
+    circles.forEach(el => {
+      const xPercent = parseFloat(el.dataset.x) || 50;
+      const yPercent = parseFloat(el.dataset.y) || 50;
+      // convert % to px relative to viewport size
+      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      const vh = winH();
+      const left = (xPercent/100) * vw;
+      const top = (yPercent/100) * vh;
+      // guardamos valores base
+      el.__base = {left, top};
+      // set initial transform origin and position
+      el.style.left = `${left}px`;
+      el.style.top = `${top}px`;
+      el.style.transformOrigin = '50% 50%';
+      // initial transform
+      const baseScale = parseFloat(el.dataset.scale) || 1;
+      el.style.transform = `translate3d(-50%,-50%,0) scale(${baseScale})`;
+    });
+  }
+
+  // lerp helper
+  function lerp(a, b, t){ return a + (b - a) * t; }
+
+  function onResize(){
+    initPositions();
+  }
+
+  // frame loop
+  function rafLoop(){
+    lastScroll = window.scrollY || window.pageYOffset;
+    // smoothing: virtualScroll approaches lastScroll
+    virtualScroll = lerp(virtualScroll, lastScroll, 0.12);
+
+    const maxScrollable = docHeight() - winH();
+    const normalized = maxScrollable > 0 ? (virtualScroll / maxScrollable) : 0;
+    // puedes usar normalized o virtualScroll según el efecto que quieras
+    circles.forEach(el => {
+      const speed = parseFloat(el.dataset.speed) || 0;       // px per px scroll factor (fraction)
+      const rotFactor = parseFloat(el.dataset.rot) || 0;    // rotación relativa
+      const baseScale = parseFloat(el.dataset.scale) || 1;
+      const base = el.__base || {left:0, top:0};
+
+      // Movimiento vertical: proporcional al scroll y al speed y al viewport
+      // Ajustamos el desplazamiento a la altura visible para que sea perceptible
+      const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+      const vh = winH();
+
+      // desplazamiento calculado en px
+      // usamos normalized * vh para que el movimiento sea proporcional al tamaño de pantalla
+      const moveY = (normalized * vh * 1.6) * speed * -1; // el -1 invierte dirección, ajústalo
+
+      // variación horizontal sutil para dar diagonales (opcional)
+      const moveX = (normalized * vw * 0.6) * (speed * 0.2);
+
+      // rotación pequeña
+      const rot = (normalized * 360 * rotFactor);
+
+      // opcional: variar opacidad según posición para dar aparición/desaparición
+      const opacity = Math.max(0.18, 1 - Math.abs(normalized - (parseFloat(el.dataset.y||50)/100)) * 1.6);
+
+      // aplicamos transform (centro con -50% para mantener el centro exacto)
+      // translate3d para activar compositing en GPU
+      el.style.transform = `translate3d(calc(-50% + ${moveX.toFixed(2)}px), calc(-50% + ${moveY.toFixed(2)}px), 0) rotate(${rot.toFixed(3)}deg) scale(${(baseScale).toFixed(3)})`;
+      el.style.opacity = opacity.toFixed(2);
+    });
+
+    requestAnimationFrame(rafLoop);
+  }
+
+  // inicia
+  initPositions();
+  requestAnimationFrame(rafLoop);
+  window.addEventListener('resize', onResize, {passive:true});
+})();
+</script>
 </body>
 </html>

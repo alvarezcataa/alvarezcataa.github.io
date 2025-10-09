@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Filosofía</title>
+  <title>CAVLA</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 </head>
+<header>
 <body class="pagina">
   <nav class="navbar">
     <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
@@ -15,27 +16,79 @@
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
+      
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
       <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
       <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
+      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
+</header>
 
-  <section class="page-filosofia" id="mainContent">
-  <div class="overlay-text" id="textBlock">
-    <h1 class="titulo-filosofia">Título Filosofía</h1>
-    <h2 class="subtitulo-filosofia">Subtítulo Filosofía</h2>
+  <!-- Portada -->
+<section class="page mainContent">
+    <div class="opacidad shadow"></div>
+    <h1 class="titulo-pagina translate" data-speed="0.1">FILOSOFÍA</h1>
+    <h2 class="subtitulo-pagina translate" data-speed="0.1">El espacio transforma la manera en que vivimos.</h2>
+    <img src="images/flecha-19.png" class="flecha">
+    <img src="images/FILOSOFÍA/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
   </section>
-  <section>
-    <p>texto de prueba</p>
-  </section>
-  <section>
-    <p>texto de prueba 22222222222</p>
-  </section>
-</div>
+  
+  <!-- NEUROARQUITECTURA -->
+<section class="proyecto mainContent">
+  <div class="bg-gradient"></div>
+    <img src="images/FILOSOFÍA/neuroarquitectura.jpg" class="imagen-proyectoind-der">
+    <div class="section__data">
+          <h1 class="titulo-proyecto">NEURO - ARQUITECTURA</h1>
+          <hr>
+          <p class="texto-proyecto">Los espacios que habitamos tienen un impacto directo en nuestra salud emocional, mental y física. No se trata solo de estética, sino de cómo un entorno puede acompañarnos o condicionarnos.</p>
+          <p class="texto-proyecto">Es por esto que diseñamos bajo los principios de la neuroarquitectura, con el objetivo de mejorar tu calidad de vida en cada proyecto construimos atmósferas para lograr transformar tu día a día y ayudarte a regenerar tu bienestar.</p>
+  </div>
+</section>
+
+  <!-- ESTÉTICA CON SENTIDO -->
+<section class="proyecto mainContent">
+  <div class="bg-gradient"></div>
+    
+    <div class="section__data">
+          <h1 class="titulo-proyecto">ESTÉTICA CON SENTIDO</h1>
+          <hr>
+          <p class="texto-proyecto">El enfoque de diseño es atemporal. La estética surge como consecuencia de un diseño hecho a medida, donde cada proyecto busca reflejar la identidad de quien lo habita. Las tendencias caducan, las necesidades reales no.</p>
+          <p class="texto-proyecto">El espacio tiene alma porque guarda recuerdos, por lo que siempre partimos de un lienzo cargado de experiencias. Apelamos a la memoria para crear lugares que las personas sientan y no olviden jamás.</p>
+    </div>
+  <img src="images/FILOSOFÍA/coherencia.jpg" class="imagen-proyectoind-izq">
+</section>
+
+ <!-- COMPROMISO SOCIAL -->
+<section class="proyecto mainContent">
+  <div class="bg-gradient"></div>
+    <img src="images/FILOSOFÍA/compromiso.jpg" class="imagen-proyectoind-der">
+    <div class="section__data">
+          <h1 class="titulo-proyecto">COMPROMISO SOCIAL</h1>
+          <hr>
+          <p class="texto-proyecto">Creemos que todas las personas merecen habitar un espacio saludable y bien diseñado. La calidad de un entorno no depende del presupuesto, sino de la intención y el cuidado con el que se proyecta.</p>
+          <p class="texto-proyecto">Sabemos que cada persona vive y percibe los espacios de forma distinta. Por eso, diseñamos pensando en la diversidad física, sensorial y emocional de quienes los habitan, garantizando una accesibilidad real para todo tipo de usuario.</p>
+  </div>
+</section>
+
+ <!-- RESPETO POR EL ENTORNO -->
+<section class="proyecto mainContent">
+  <div class="bg-gradient"></div>
+    
+    <div class="section__data">
+          <h1 class="titulo-proyecto">RESPETO POR EL ENTORNO</h1>
+          <hr>
+          <p class="texto-proyecto">Una arquitectura inteligente no es la que incluye más domótica en su diseño, es la que consume menos recursos para ser funcional.</p>
+          <p class="texto-proyecto">Es por esto que priorizamos la eficiencia energética, procuramos un continuo contacto con la naturaleza en los diseños, y apostamos por la segunda vida de los materiales como una forma de proyectar con conciencia y respeto por el ambiente.</p>
+        
+  </div>
+  <img src="images/FILOSOFÍA/respeto.jpg" class="imagen-proyectoind-izq">
+</section>
+
+
+
 
   <script src="js/scripts.js"></script>
 </body>

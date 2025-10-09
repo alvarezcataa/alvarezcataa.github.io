@@ -3,43 +3,132 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Proyecto01</title>
-  <link rel="stylesheet" href="/css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <title>CAVLA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- NAVBAR -->
+  
+   <!-- NAVBAR -->
   <nav class="navbar">
-    <a href="/index.html"><img src="/images/LOGO.png" alt="Logo" class="logo" /></a>
+    <a href="../index.html"><img src="../images/LOGO.png" alt="Logo" class="logo" /></a>
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
-  <!-- MENÚ DESPLEGABLE -->
-  <div class="side-menu" id="sideMenu">
-    <ul>
-      <li><a href="/index.html" onclick="toggleMenu()">Inicio</a></li>
-      <li><a href="/filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="/proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
-      <li><a href="/servicios.html" onclick="toggleMenu()">Servicios</a></li>
-      <li><a href="/sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
-      <li><a href="/contacto.html" onclick="toggleMenu()">Contacto</a></li>
-    </ul>
-  </div>
+    <div class="side-menu" id="sideMenu">
+      <ul>
+        <li><a href="../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+        <li><a href="../proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
+        <li><a href="../servicios.html" onclick="toggleMenu()">Servicios</a></li>
+        <li><a href="../recursos.html" onclick="toggleMenu()">Recursos</a></li>
+        <li><a href="../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+        <li><a href="../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+      </ul>
+    </div>
 
-   <!-- CONTENIDO DE LA PÁGINA -->
-   <section class="page-proyecto01" id="mainContent">
-    <h1 class="titulo-seccion">Proyecto01</h1>
-    <img src="/images/PROYECTOS/proyecto01_portada.png" alt="Proyecto01" class="proyecto-portada">
-    <div class="descripcion-proyecto">
-      <p>Proyecto01 es una vivienda diseñada desde la introspección espiritual y la armonía con el entorno...</p>
-      <!-- Agregá más info, imágenes o sliders acá -->
-    </div>
-    <div class="volver">
-      <a href="/proyectos.html">← Volver a Proyectos</a>
-    </div>
+  <!-- Portada -->
+  <section class="page mainContent">
+    <div class="opacidad shadow"></div>
+    <h1 class="titulo-page-proyecto translate" data-speed="0.1">CASA BRUMA</h1>
+    <img src="../images/flecha-19.png" class="flecha">
+    <img src="../images/PROYECTOS/01/PORTADA.png" class="page_fondo-proyecto translate" data-speed="0.6">
   </section>
 
-  <script src="/js/scripts.js"></script>
+<section class="contacto mainContent">
+    <div class="section__data">
+        <h1 class="subtitulo-seccion">MEMORIA DESCRIPTIVA</h3>
+        <p class="texto-contacto">Localización: Unquillo, Córdoba | Argentina</p>
+        
+    </div>
+</section>
+
+
+
+    <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/01.png" class="imagen-proyectoind-der">
+    <div class="section__data">
+          <h1 class="titulo-proyecto">DORMITORIO</h1>
+          <hr>
+          <p class="texto-proyecto">Localización: Unquillo, Córdoba | Argentina</p>
+          <p class="texto-servicio-TIPO">RESIDENCIAL | COMERCIAL</p>
+          <p class="texto-proyecto">Si sentís que tu espacio no termina de funcionar, pero no sabés por qué ni por dónde empezar, este servicio es para vos.</p>
+          <p class="texto-proyecto">A través de una sesión virtual, realizo un análisis integral del ambiente para detectar conflictos espaciales, oportunidades de mejora y ajustes posibles sin obra.</p>
+          <p class="texto-proyecto">Luego, te entrego un informe claro con propuestas personalizadas, recomendaciones funcionales y una visión estratégica para que puedas tomar decisiones con seguridad, evitando intervenciones innecesarias.</p>
+      </div>
+  </section>
+
+   <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/02.png" class="imagen-proyecto-solo">
+       </div>
+  </section>
+
+   <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/03.jpg" class="imagen-proyecto-solo">
+       </div>
+  </section>
+
+  <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/04.png" class="imagen-proyecto-solo">
+       </div>
+  </section>
+
+   <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/05.png" class="imagen-proyectoind-der">
+    <div class="section__data">
+          <h1 class="titulo-proyecto">LIVING</h1>
+          <hr>
+          
+          <p class="texto-proyecto">Si sentís que tu espacio no termina de funcionar, pero no sabés por qué ni por dónde empezar, este servicio es para vos.</p>
+          <p class="texto-proyecto">A través de una sesión virtual, realizo un análisis integral del ambiente para detectar conflictos espaciales, oportunidades de mejora y ajustes posibles sin obra.</p>
+          <p class="texto-proyecto">Luego, te entrego un informe claro con propuestas personalizadas, recomendaciones funcionales y una visión estratégica para que puedas tomar decisiones con seguridad, evitando intervenciones innecesarias.</p>
+      </div>
+  </section>
+
+ <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/06.png" class="imagen-proyecto-solo">
+       </div>
+  </section>
+
+   <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/07.png" class="imagen-proyecto-solo">
+       </div>
+  </section>
+
+ <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/08.png" class="imagen-proyecto-solo">
+       </div>
+  </section>
+
+  <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/09.png" class="imagen-proyectoind-der">
+    <div class="section__data">
+          <h1 class="titulo-proyecto">ESTUDIO</h1>
+          <hr>
+          
+          <p class="texto-proyecto">Si sentís que tu espacio no termina de funcionar, pero no sabés por qué ni por dónde empezar, este servicio es para vos.</p>
+          <p class="texto-proyecto">A través de una sesión virtual, realizo un análisis integral del ambiente para detectar conflictos espaciales, oportunidades de mejora y ajustes posibles sin obra.</p>
+          <p class="texto-proyecto">Luego, te entrego un informe claro con propuestas personalizadas, recomendaciones funcionales y una visión estratégica para que puedas tomar decisiones con seguridad, evitando intervenciones innecesarias.</p>
+      </div>
+  </section>
+
+  <section class="proyecto mainContent">
+    <img src="../images/PROYECTOS/01/10.png" class="imagen-proyecto-solo">
+       </div>
+  </section>
+
+</section>
+
+      
+
+  <script src="../js/scripts.js"></script>
+
+
 </body>
 </html>
+
+
+
+
+
+
+

@@ -3,32 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Inicio</title>
+  <title>CAVLA</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+  <!-- VANTA.js y THREE.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js"></script>
 </head>
 <body class="inicio">
+  <!-- Fondo animado -->
+  <div id="vanta-bg"></div>
+
+  <!-- Navbar -->
   <nav class="navbar">
     <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
+  <!-- Menú lateral -->
   <div class="side-menu" id="sideMenu">
     <ul>
-      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
+     
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
       <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
       <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
+      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
 
-  <section class="inicio" id="mainContent">
-    <div class="spline-container">
-      <spline-viewer url="https://prod.spline.design/21pdfMVHDPv8w9Ns/scene.splinecode"></spline-viewer>
-    </div>
+  <!-- Sección de inicio -->
+  <section class="inicio mainContent">
     <div class="overlay">
       <img src="images/LOGO.png" alt="Logo principal" class="main-logo animate" />
       <p class="subtext animate">Atelier de arquitectura emocional</p>
@@ -36,5 +43,27 @@
   </section>
 
   <script src="js/scripts.js"></script>
+
+  <!-- Inicialización de Vanta.js -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      VANTA.FOG({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.50,
+        highlightColor: 0x2f1600,
+        midtoneColor: 0x504649,
+        lowlightColor: 0x371722,
+        baseColor: 0x000000,
+        blurFactor: 0.50,
+        speed: 1.50,
+        zoom: 0.80
+      });
+    });
+  </script>
 </body>
 </html>

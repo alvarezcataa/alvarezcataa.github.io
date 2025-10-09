@@ -1,13 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Contacto</title>
+  <title>CAVLA</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 </head>
+<header>
 <body class="pagina">
   <nav class="navbar">
     <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
@@ -16,19 +16,39 @@
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
+      
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
       <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
       <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
+      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
 
-  <section class="page-contacto" id="mainContent">
-    <div class="overlay">
-    </div>
+<section class="page mainContent">
+    <div class="opacidad shadow"></div>
+    <h1 class="titulo-pagina translate" data-speed="0.1">CONTACTO</h1>
+    <h2 class="subtitulo-pagina translate" data-speed="0.1">Estoy a un mensaje de distancia.</h2>
+    <img src="images/flecha-19.png" class="flecha">
+    <img src="images/CONTACTO/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
+
   </section>
+</header>
+  
+<section class="contacto mainContent">
+    <div class="section__data">
+        <h1 class="subtitulo-seccion">MAIL</h1>
+        <p class="texto-contacto">office@estudiocavla.com</p>
+        <h1 class="subtitulo-seccion">INSTAGRAM</h1>
+        <p class="texto-contacto">@estudio.cavla</p>
+        <h1 class="subtitulo-seccion">FACEBOOK</h1>
+        <p class="texto-contacto">Estudio CAVLA</p>
+        <h1 class="subtitulo-seccion">LINKEDIN</h1>
+        <p class="texto-contacto">Estudio CAVLA</p>
+    </div>
+</section>
+
 
   <script src="js/scripts.js"></script>
 </body>

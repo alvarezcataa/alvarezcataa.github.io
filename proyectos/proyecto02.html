@@ -1,45 +1,117 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Proyecto02</title>
-  <link rel="stylesheet" href="../css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Carrusel 3D</title>
+  <style>
+    body {
+      background: #111;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .carrusel {
+      position: relative;
+      width: 650px;
+      height: 650px;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+
+    .contenedor-carrusel {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform:
+        rotateY(calc(var(--offset) * 50deg))
+        scaleY(calc(1 + var(--abs-offset) * -0.4))
+        translateZ(calc(var(--abs-offset) * -30rem))
+        translateX(calc(var(--direction) * -5rem));
+      filter: blur(calc(var(--abs-offset) * 1rem));
+      transition: all 0.3s ease-out;
+    }
+
+    .contenedor-carrusel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 2rem;
+      box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.3);
+    }
+
+    .flechas {
+      position: absolute;
+      bottom: -80px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2rem;
+    }
+
+    .flechas button {
+      background: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+  </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="../index.html"><img src="../images/LOGO.png" alt="Logo" class="logo" /></a>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  </nav>
+  <div class="carrusel" id="carrusel">
+    <div class="contenedor-carrusel">
+      <img src="https://picsum.photos/id/1015/650/650" alt="Imagen 1">
+    </div>
+    <div class="contenedor-carrusel">
+      <img src="https://picsum.photos/id/1016/650/650" alt="Imagen 2">
+    </div>
+    <div class="contenedor-carrusel">
+      <img src="https://picsum.photos/id/1018/650/650" alt="Imagen 3">
+    </div>
 
-  <!-- MENÚ DESPLEGABLE -->
-  <div class="side-menu" id="sideMenu">
-    <ul>
-      <li><a href="../index.html" onclick="toggleMenu()">Inicio</a></li>
-      <li><a href="../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="../proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
-      <li><a href="../servicios.html" onclick="toggleMenu()">Servicios</a></li>
-      <li><a href="../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
-      <li><a href="../contacto.html" onclick="toggleMenu()">Contacto</a></li>
-    </ul>
+    <div class="flechas">
+      <button id="prev">&larr;</button>
+      <button id="next">&rarr;</button>
+    </div>
   </div>
 
-  <!-- CONTENIDO DE LA PÁGINA -->
-  <section class="page-proyecto02" id="mainContent">
-    <h1 class="titulo-seccion">Proyecto02</h1>
-    <img src="../images/PROYECTOS/proyecto02.png" alt="Proyecto02" class="proyecto-portada">
-    <div class="descripcion-proyecto">
-      <p>Proyecto02 explora la interacción entre luz, materia y atmósfera, integrando diseño emocional con funcionalidad...</p>
-      <!-- Podés agregar más imágenes, sliders o descripciones -->
-    </div>
-    <div class="volver">
-      <a href="../proyectos.html">← Volver a Proyectos</a>
-    </div>
-  </section>
+  <script>
+    const carrusel = document.getElementById('carrusel');
+    const items = carrusel.querySelectorAll('.contenedor-carrusel');
+    const total = items.length;
+    let active = 0;
 
-  <script src="../js/scripts.js"></script>
+    function updateCarousel() {
+      items.forEach((item, i) => {
+        const offset = i - active;
+        item.style.setProperty('--offset', offset);
+        item.style.setProperty('--abs-offset', Math.abs(offset));
+        item.style.setProperty('--direction', Math.sign(offset));
+      });
+    }
+
+    document.getElementById('next').addEventListener('click', () => {
+      active = (active + 1) % total;
+      updateCarousel();
+    });
+
+    document.getElementById('prev').addEventListener('click', () => {
+      active = (active - 1 + total) % total;
+      updateCarousel();
+    });
+
+    updateCarousel(); // inicializar
+  </script>
+
 </body>
 </html>
+

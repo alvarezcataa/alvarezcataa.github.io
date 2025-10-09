@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+   <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="../index.html"><img src="../images/LOGO.png" alt="Logo" class="logo" /></a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+    <div class="side-menu" id="sideMenu">
+      <ul>
+        <li><a href="../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+        <li><a href="../proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
+        <li><a href="../servicios.html" onclick="toggleMenu()">Servicios</a></li>
+        <li><a href="../recursos.html" onclick="toggleMenu()">Recursos</a></li>
+        <li><a href="../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+        <li><a href="../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Portada -->
+  <section class="page" id="mainContent">
+    <div class="opacidad"></div>
+    <h1 class="titulo-pagina translate" data-speed="0.1">MOBILIARIO</h1>
+    <h2 class="subtitulo-pagina translate" data-speed="0.1">Instructivos de ensamble.</h2>
+    <img src="../images/flecha-19.png" class="flecha">
+    <img src="../images/RECURSOS/MOBILIARIO/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
+  </section>
+
+  <section class="l-section" id="section">
+  <div class="shadow"></div>
+
+  <!-- Grilla de proyectos -->
+  <section class="grilla-proyectos">
+    <div class="contenedor-grilla">
+      <a href="proyectos/proyecto01.html" class="item-proyecto">
+        <img src="../images/RECURSOS/MOBILIARIO/01.png" class="imagen-proyecto" />
+        <div class="overlay-proyecto"></div>
+        <span class="titulo-proyecto">HOTEL BOUTIQUE</span>
+      </a>
+      
+       <a href="proyectos/proyecto02.html" class="item-proyecto">
+        <img src="images/PROYECTOS/proyecto02.jpg" class="imagen-proyecto" />
+        <div class="overlay-proyecto"></div>
+        <span class="titulo-proyecto">CAFÉ DEL MUNDO</span>
+      </a>
+      
+       <a href="proyectos/proyecto03.html" class="item-proyecto">
+        <img src="images/PROYECTOS/proyecto03.png" class="imagen-proyecto" />
+        <div class="overlay-proyecto"></div>
+        <span class="titulo-proyecto">BARILATTE</span>
+      </a>
+
+      
+       
+      
+    </div>
+  </section>
+
+  <script src="../js/scripts.js"></script>
+</body>
+</html>

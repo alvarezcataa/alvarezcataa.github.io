@@ -1,13 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA - Sobre</title>
+  <title>CAVLA</title>
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 </head>
+<header>
 <body class="pagina">
   <nav class="navbar">
     <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
@@ -16,20 +16,42 @@
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
+      
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
       <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
       <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
+      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
+</header>
 
-  <section class="page-sobremi" id="mainContent">
-    <div class="overlay">
-    </div>
+  <!-- Portada -->
+<section class="page mainContent">
+    <div class="opacidad shadow"></div>
+    <h1 class="titulo-pagina translate" data-speed="0.1">SOBRE MÍ</h1>
+    <h2 class="subtitulo-pagina translate" data-speed="0.1">Proyecto desde lo que soy.</h2>
+    <img src="images/flecha-19.png" class="flecha">
+    <img src="images/SOBRE MI/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
   </section>
 
+
+  <!-- ESTÉTICA CON SENTIDO -->
+<section class="proyecto mainContent">
+  <div class="bg-gradient"></div>
+    
+    <div class="section__data">
+          <h1 class="titulo-proyecto">DETRÁS DEL DISEÑO</h1>
+          <hr>
+          <p class="texto-proyecto">El enfoque de diseño es atemporal. La estética surge como consecuencia de un diseño hecho a medida, donde cada proyecto busca reflejar la identidad de quien lo habita. Las tendencias caducan, las necesidades reales no.</p>
+          <p class="texto-proyecto">El espacio tiene alma porque guarda recuerdos, por lo que siempre partimos de un lienzo cargado de experiencias. Apelamos a la memoria para crear lugares que las personas sientan y no olviden jamás.</p>
+    </div>
+  <img src="images/SOBRE MI/catalina.jpg" class="imagen-proyectoind-izq">
+</section>
+
+
   <script src="js/scripts.js"></script>
+  
 </body>
 </html>
