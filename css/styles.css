@@ -694,9 +694,12 @@ hr { /* linea divisoria */
 @media (max-width: 810px) {
   .proyecto{
   flex-direction: column;
-  
 }
 }
+
+
+
+
 
 .imagen-proyectoind-izq {
   height: 100vh;
@@ -736,6 +739,7 @@ hr { /* linea divisoria */
 .titulo-proyecto{
   position: relative; 
   text-align:start;
+  line-height: 2.8vw;
   font-size: 2.5vw;
   font-weight: 600;
   color: white;
@@ -745,12 +749,44 @@ hr { /* linea divisoria */
 @media (max-width: 810px) {
   .titulo-proyecto{
   font-size: 6vw;
+  line-height: 7vw;
   margin: 0 10vw;
-  top: 10vh;
+  top: 12vh;
 }
 }
 
-
+.proyecto hr { /* linea divisoria */
+  position: relative;
+  z-index: 200;
+  height: 0.05vh;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  margin: 2vh 3vw;
+}
+@media (max-width: 810px) {
+  .proyecto hr {
+  margin: 2vh 10vw ;
+  top: 12vh;
+}
+}
+.texto-proyecto{
+  position: relative;
+  color: white;
+  opacity: 0.9;
+  font-size: 1.1vw;
+  font-weight: lighter;
+  text-align: justify;
+  margin: 2vh 3vw ;
+  z-index: 10;
+}
+@media (max-width: 810px) {
+  .texto-proyecto{
+    font-size: 4vw;
+    margin: 2vh 10vw;
+    top: 12vh;
+   
+}
+}
 
 
 .subtitulo-proyecto{
@@ -804,13 +840,13 @@ hr { /* linea divisoria */
   font-size: 1.1vw;
   font-weight: lighter;
   text-align: justify;
-  margin: 0 30vw;
+  margin: 0 30vw 2vh;
   z-index: 10;
 }
 @media (max-width: 810px) {
   .texto-memoria{
-    font-size: 4.5vw;
-    margin: 0 10vw;
+    font-size: 4vw;
+    margin: 0 10vw 2vh;
 }
 }
 .contacto hr { /* linea divisoria */
@@ -819,7 +855,7 @@ hr { /* linea divisoria */
   height: 0.05vh;
   background-color: rgb(255, 255, 255);
   border: none;
-  margin: 2vh 0;
+  margin: 2vh 30vw;
 }
 @media (max-width: 810px) {
   .contacto hr {
@@ -828,40 +864,10 @@ hr { /* linea divisoria */
 }
 }
 
-.proyecto hr { /* linea divisoria */
-  position: relative;
-  z-index: 200;
-  height: 0.05vh;
-  background-color: rgb(255, 255, 255);
-  border: none;
-  margin: 0 3vw;
-}
-@media (max-width: 810px) {
-  .proyecto hr {
-  margin: 0 10vw ;
-  top: 10vh;
-}
-}
 
 
-.texto-proyecto{
-  position: relative;
-  color: white;
-  opacity: 0.9;
-  font-size: 1.1vw;
-  font-weight: lighter;
-  text-align: justify;
-  margin: 1vh 3vw 0;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .texto-proyecto{
-    font-size: 4.5vw;
-    margin: 1vh 10vw;
-    top: 10vh;
-   
-}
-}
+
+
 
  
 
