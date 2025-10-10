@@ -245,7 +245,7 @@ section{
 }
 @media (max-width: 810px) {
   .flecha{
-    width: 50vw;
+    width: 40vw;
   
 }
 }
@@ -640,10 +640,10 @@ hr { /* linea divisoria */
 /* PROYECTOS */
 .page_fondo-proyecto{
   position: absolute;
-  object-fit: cover;
-  width: 100%;
-  height: 70%;
   top: 0px;
+  object-fit: cover;
+  width: 100vw;
+  height: 70vh;
   z-index: 0;
   transition: transform 0.2s ease-out;
   transform-origin: center center;
@@ -653,22 +653,36 @@ hr { /* linea divisoria */
 
 .titulo-page-proyecto{
   position: absolute;
-  bottom: 25vh;
+  top: 70vh;
   z-index: 30;
   width: 100%;
   
-  font-size: 4rem;
+  font-size: 5vh;
   font-weight: 300;
   color: white;
   animation: fadeInUp 2s ease forwards;
 }
-@media (max-width: 1000px) {
+@media screen and (max-width: 810px) and (min-height: 840px) {
   .titulo-page-proyecto{
-  font-size: 6vw;
-  bottom: 18vh;
+   font-size: 3.5vh;
+   top: 75vh;
 }
 }
 
+.categoria-proyecto{
+  position: absolute; 
+  top: 78vh;
+  font-size: 2vh;
+  font-weight: 100;
+  color: white;
+  opacity: 0.5;
+  z-index: 20;
+}
+@media (max-width: 810px) {
+  .categoria-proyecto{
+  top: 80vh;
+}
+}
 
 .proyecto{
   height: 100vh;
@@ -736,16 +750,6 @@ hr { /* linea divisoria */
 }
 }
 
-.categoria-proyecto{
-  position: relative; 
-  text-align:start;
-  font-size: 0.7vw;
-  font-weight: 100;
-  color: white;
-  opacity: 0.5;
-  z-index: 20;
-  margin: 1.5vh 3vw;
-}
 
 
 
@@ -800,13 +804,13 @@ hr { /* linea divisoria */
   font-size: 1.1vw;
   font-weight: lighter;
   text-align: justify;
-  max-width: 40vw;
+  margin: 0 30vw;
   z-index: 10;
 }
 @media (max-width: 810px) {
   .texto-memoria{
     font-size: 4.5vw;
-    max-width: 80vw;
+    margin: 0 10vw;
 }
 }
 .contacto hr { /* linea divisoria */
@@ -819,7 +823,7 @@ hr { /* linea divisoria */
 }
 @media (max-width: 810px) {
   .contacto hr {
-  margin: 2vh 6vw ;
+  margin: 2vh 10vw ;
   
 }
 }
