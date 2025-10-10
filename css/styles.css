@@ -688,7 +688,8 @@ hr { /* linea divisoria */
   height: 100vh;
   width: 70vw;
   object-fit: cover;
-  border-radius: 0 50px 50px 0;
+  
+  border-radius: 50px 0 0 50px;
 }
 @media (max-width: 810px) { /*arriba*/
   .imagen-proyectoind-izq {
@@ -705,7 +706,7 @@ hr { /* linea divisoria */
   height: 100vh;
   width: 70vw;
   object-fit: cover;
-  border-radius: 50px 0 0 50px;
+  border-radius: 0 50px 50px 0;
 }
 @media (max-width: 810px) { /*abajo*/
   .imagen-proyectoind-der {
@@ -757,7 +758,71 @@ hr { /* linea divisoria */
   z-index: 20;
   margin: 50px 75px 0px;
 }
+.titulo-memoria{
+  position: relative; 
+  text-align: center;
+  font-size: 2.5vw;
+  font-weight: 600;
+  color: white;
+  margin-bottom: auto;
+  z-index: 20;
+}
+@media (max-width: 810px) {
+  .titulo-memoria{
+  font-size: 6vw;
+  
+  
+}
+}
 
+.datos-memoria{
+  position: relative;
+  color: rgba(255, 255, 255, 0.5);
+  
+  font-size: 0.9vw;
+  font-weight: lighter;
+  text-align: center;
+  margin: auto;
+  z-index: 10;
+}
+@media (max-width: 810px) {
+  .datos-memoria{
+    font-size: 4.2vw;
+    margin: 1vh 10vw;
+}
+}
+
+.texto-memoria{
+  position: relative;
+  justify-self: center;
+  color: white;
+  opacity: 0.9;
+  font-size: 1.1vw;
+  font-weight: lighter;
+  text-align: justify;
+  max-width: 40vw;
+  z-index: 10;
+}
+@media (max-width: 810px) {
+  .texto-memoria{
+    font-size: 4.5vw;
+    max-width: 80vw;
+}
+}
+.contacto hr { /* linea divisoria */
+  position: relative;
+  z-index: 200;
+  height: 0.05vh;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  margin: 2vh 0;
+}
+@media (max-width: 810px) {
+  .contacto hr {
+  margin: 2vh 6vw ;
+  
+}
+}
 
 .proyecto hr { /* linea divisoria */
   position: relative;
@@ -798,10 +863,18 @@ hr { /* linea divisoria */
 
 .imagen-proyecto-solo {
   height: 90vh;
+  width: 95vw;
   object-fit:cover;
   position: absolute;
-  border-radius: 50px;
+  border-radius: 5vh;
   }
+
+  @media (max-width: 810px) {
+  .imagen-proyecto-solo {
+  width: 100vw;
+  height: auto;
+}
+}
 
 
 /* SERVICIOS GENERAL*/
