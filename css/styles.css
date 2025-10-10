@@ -1012,13 +1012,13 @@ hr { /* linea divisoria */
     position: absolute;
     left: 20%;
     top: 0;
-    font-size: 14.5vh;
+    font-size: 21vw;
 }
 }
 
 .item-fase:hover .numero-fase {
   color: white;
-  font-size: 13vW;
+  font-size: 13vw;
 }
 @media (max-width: 768px) {
   .item-fase:hover .numero-fase {
@@ -1038,9 +1038,11 @@ hr { /* linea divisoria */
   opacity: 0.5;
   transition: opacity 0.3s ease;
   pointer-events: none; 
+  font-size: 2vw;
 }
 @media (max-width: 768px) {
   .titulo-fase {
+    font-size: 5vw;
     width: 50%;
     top: 15%;
     margin-left: 60px;
@@ -1066,7 +1068,7 @@ hr { /* linea divisoria */
   text-align: justify;
   
   width: 80%;
-  font-size: 1.4rem;
+  font-size: 1.4vw;
   font-weight: 100;
   margin: 0;
   opacity: 0;
