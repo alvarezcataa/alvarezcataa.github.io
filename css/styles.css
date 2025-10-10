@@ -1539,7 +1539,6 @@ button.boton-cotizar {
 }
 @media (max-width: 810px) {
   .contenedor-cotizador {
-   height: 80vh;
    max-height: 650px;
    width: 90vw;
    
@@ -2148,74 +2147,78 @@ button.boton-cotizar {
 /* DATOS CLIENTE */
 .contenedor-datoscliente {
   position: relative;
-  height: 80vh;
-  width: 50vw;
+  height: 70vh;
+  width: 40vw;
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid rgb(255, 255, 255, 0.2);
   border-left: 1px solid rgb(255, 255, 255, 0.2);
   box-shadow: 10px 10px 25px #00000044, -10px -10px 25px #00000044;
-  border-radius: 50px;
+  border-radius: 5vh;
   opacity: 0;
   animation: fadeSlideIn 1.5s ease forwards;
   z-index: 30;
 }
 @media (max-width: 810px) {
   .contenedor-datoscliente {
-   height: 88vh;
+   max-height: 550px;
    width: 90vw;
-   position: absolute;
-   bottom: 3vh;
+}
+}
+
+@media screen and (max-width: 810px) and (min-height: 1000px) {
+  .contenedor-datoscliente {
+   max-height: 800px;
 }
 }
 
 .contenedor-grilla-datoscliente {
   width: 100%;
-  position: absolute;
-  top: 15vh;
+  position: relative;
   display:block;
   grid-template-columns: 1fr;
   grid-template-rows: min-content;
   overflow: hidden;
-  
-  
 }
 
 .item-datoscliente {
   position: relative;
   align-content: center;
   justify-content: center;
-  padding: 10px 25px;
+  padding: 2vh 3vw;
   z-index: 30;
-  
 }
 
 .titulo-datoscliente{
   position: relative;
   color: rgb(255, 255, 255);
-  margin-top: 20px;
-  font-size: 1.4rem;
+  margin-top: 1vh;
+  font-size: 2vh;
   font-weight: 100;
-  
 }
 @media (max-width: 810px) {
   .titulo-datoscliente{
-   font-size: 1.2rem;
+   font-size: 4vw;
+   margin-top: 0;
 }
 }
 
 .contenedor-completardatos {
-  height: 40px;
-  padding: 0 30px;
-  margin: 0 3vw;
+  height: 4vh;
+  padding: 0 3vw;
+  margin: 0 1vw;
   align-items: center;
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 15px;
+  border-radius: 2vh;
   z-index: 30;
 }
-
+@media (max-width: 810px) {
+  .contenedor-completardatos{
+   margin: 0 5vw;
+}
+}
 
 /* INPUTS DENTRO DE .contenedor-completardatos */
 .contenedor-completardatos input {
@@ -2224,14 +2227,14 @@ button.boton-cotizar {
   border: none;
   outline: none;
   background: transparent;
-  font-size: 1.3rem;
+  font-size: 2vh;
   color: #000; /* texto negro */
   text-align: center;
   font-family: 'Crimson Pro', serif;
 }
 @media (max-width: 810px) {
   .contenedor-completardatos input {
-   font-size: 1rem;
+   font-size: 1.8vh;
 }
 }
 
@@ -2245,14 +2248,14 @@ button.boton-cotizar {
 .contenedor-cotizar-05{
   position: relative;
   justify-self: center;
-  height: 60px;
+  height: 6vh;
   width: fit-content;
-  padding: 0 40px;
+  padding: 0 3vw;
 
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50px;
+  border-radius: 3vh;
   z-index: 30;
   animation: fadeSlideIn 1.5s ease forwards;
   transition:  background-color 0.3s ease;
@@ -2283,27 +2286,32 @@ button.boton-cotizar {
 }
 
 .imagen-agradecimiento{
-  max-height: 200px;
+  height: 20vh;
   margin-bottom: 0;
+}
+@media (max-width: 810px) {
+  .imagen-agradecimiento{
+  width: 50w;
+}
 }
 
 .titulo-agradecimiento{
   color: rgb(255, 255, 255);
-  font-size: 5rem;
+  font-size: 8vh;
   font-weight: 100;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 3vh;
 }
 @media (max-width: 810px) {
   .titulo-agradecimiento{
-  font-size: 3rem;
+  font-size: 15vw;
 }
 }
 
 .texto-agradecimiento{
   color: rgb(255, 255, 255, 0.6);
-  font-size: 1.25rem;
+  font-size: 2vh;
   font-weight: 100;
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 3vh;
 }
