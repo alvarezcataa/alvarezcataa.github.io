@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+   <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="../../index.html"><img src="../../images/LOGO.png" alt="Logo" class="logo" /></a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+    <div class="side-menu" id="sideMenu">
+      <ul>
+        <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+        <li><a href="../../proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
+        <li><a href="../../servicios.html" onclick="toggleMenu()">Servicios</a></li>
+        <li><a href="../../recursos.html" onclick="toggleMenu()">Recursos</a></li>
+        <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+        <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+      </ul>
+    </div>
+</header>
+
+  <!-- COTIZACIÓN -->
+<section class="page mainContent">
+  <div class="opacidad shadow"></div>
+  <img src="../../images/SERVICIOS/DESCRIPCION/COTIZACION.jpg" class="fondo">
+  <div class="contenedor-cotizador">
+    <h1 class="titulo-cotizacion">VISTA PREVIA COTIZACIÓN</h1>
+   
+    <div class="contenedor-grilla-presupuesto">
+      <div class="item-presupuesto">
+         <h1 class="titulo-grilla-presupuesto">DETALLE</h1>
+      </div>
+
+      <div class="item-presupuesto">
+        <h1 class="titulo-grilla-presupuesto">DESCRIPCIÓN</h1>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-presupuesto">Datos de proyecto</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-detalle-presupuesto"></p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-presupuesto">Videollamadas</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-detalle-presupuesto">Dos encuentros virtuales: entrevista inicial y revisión final.</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-presupuesto">Análisis y diagnóstico</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-detalle-presupuesto">Evaluación de medidas, estado y material fotográfico proporcionado por el cliente.</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-presupuesto">Propuesta de diseño</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-detalle-presupuesto">Una alternativa por ambiente, adaptada a tus necesidades.</p>
+      </div>
+
+     <div class="item-presupuesto">
+        <p class="texto-presupuesto">Visualización</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-detalle-presupuesto">Renders fotorrealistas. Cantidad variable en base al proyecto, mínimo 1 por ambiente.</p>
+      </div>
+
+      <div class="item-presupuesto">
+         <p class="texto-presupuesto">Documento técnico</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-detalle-presupuesto">PDF detallado con planos, especificaciones y lineamientos para ejecutar la obra.</p>
+      </div>  
+
+       <div class="item-presupuesto">
+         <p class="texto-presupuesto">Tiempo de entrega</p>
+      </div>
+
+      <div class="item-presupuesto">
+        <p class="texto-detalle-presupuesto">Se define luego del relevamiento. Aproximadamente 
+          <span id="tiempoEntregaTexto">2 semanas</span> 
+          a partir de la primer reunión.</p>
+      </div>
+
+    </div>
+
+
+    <div class="contenedor-precio">
+      <h1 class="texto-precio">TOTAL:</h1>
+      <p id="precioTotal" class="texto-precio">$XXX ARS</p>  
+    </div>
+
+    <div class="contenedor-cotizar-03"> 
+      <a href="../../Corporativo/DiseñoIntegral/Cotización.html" class="boton-cotizar">
+        <h1 class="texto-boton-03">VOLVER</h1>
+      </a>    
+    </div>
+
+    <div class="contenedor-cotizar-04">
+      <button type="button" id="confirmarBtn" class="boton-cotizar">
+        <h1 class="texto-boton-03">CONFIRMAR</h1>
+      </button>
+    </div>
+
+
+
+
+
+
+    <div class="terminos-condiciones">
+      <div class="checkbox-contenedor">
+       <input type="checkbox" id="acepto">
+      </div>
+      <label for="acepto">
+       <p class="texto-condiciones">He leído y acepto los</p>
+       <a href="../../images/SERVICIOS/Términos y Condiciones.pdf" class="pdf-condiciones" target="_blank" rel="noopener noreferrer">
+         Términos y Condiciones.
+       </a>
+      </label>
+      <span id="cruz-error" class="cruz-error">*</span>
+    </div>
+  </div>
+</section>
+
+
+<script src="../../js/scripts.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const raw = localStorage.getItem('cotizacion');
+  if (!raw) {
+    console.error('No hay datos de cotización en localStorage');
+    return;
+  }
+
+  let cotizacion;
+  try {
+    cotizacion = JSON.parse(raw);
+  } catch (err) {
+    console.error('Error parseando cotización:', err);
+    return;
+  }
+
+  console.log('Datos cargados desde localStorage:', cotizacion);
+
+  // Precio base
+  const precioBase = 70000;
+  const valores = cotizacion.valores || {
+    pregunta1: 0,
+    pregunta2: 0,
+    pregunta3: 0,
+    pregunta4: 0,
+    pregunta5: 0
+  };
+
+  const precioFinal = precioBase +
+    valores.pregunta1 +
+    valores.pregunta2 +
+    valores.pregunta3 +
+    valores.pregunta4 +
+    valores.pregunta5;
+
+  // Mostrar detalle
+  const detalleElem = document.querySelector('.texto-detalle-presupuesto');
+  if (detalleElem) {
+    detalleElem.textContent = `Superficie de ${cotizacion.pregunta1}, ${cotizacion.pregunta3} ambientes, ${cotizacion.pregunta2}, pensado para ${cotizacion.pregunta4}.`;
+  }
+
+    // Reemplazar tiempo de entrega dinámico
+  const tiempoEntregaElem = document.getElementById('tiempoEntregaTexto');
+  if (tiempoEntregaElem && cotizacion.tiempoEntrega) {
+    tiempoEntregaElem.textContent = cotizacion.tiempoEntrega;
+  }
+
+  // Mostrar precio final
+  const precioElemento = document.getElementById('precioTotal');
+  if (precioElemento) {
+    precioElemento.textContent = `$${precioFinal.toLocaleString('es-AR')} ARS`;
+  }
+
+  // Guardar los resultados listos para enviar
+  const resultados = {
+    detalle1: detalleElem.textContent,
+    total: `$${precioFinal.toLocaleString('es-AR')} ARS`,
+    tiempoEntrega: cotizacion.tiempoEntrega
+  };
+
+  // ✅ Guardamos el paquete completo para la próxima pantalla
+  localStorage.setItem('paqueteFinal', JSON.stringify({
+    cotizacion: cotizacion,
+    resultados: resultados
+  }));
+});
+
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  console.log("DOM cargado correctamente en anteproyecto.html");
+
+  const confirmarBtn = document.getElementById('confirmarBtn');
+  const checkbox = document.getElementById('acepto');
+  const cruzError = document.getElementById('cruz-error');
+  const textoCondiciones = document.querySelector('.texto-condiciones');
+  const linkCondiciones = document.querySelector('.pdf-condiciones');
+
+  if (!confirmarBtn) {
+    console.error("No se encontró el botón #confirmarBtn en anteproyecto.html");
+    return;
+  }
+
+  confirmarBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    // Validar checkbox
+    if (!checkbox.checked) {
+      cruzError.classList.add('visible');
+      textoCondiciones.classList.add('error-texto-condiciones');
+      linkCondiciones.classList.add('error-texto-condiciones');
+      return;
+    }
+
+    // Si está tildado, quitamos errores
+    cruzError.classList.remove('visible');
+    textoCondiciones.classList.remove('error-texto-condiciones');
+    linkCondiciones.classList.remove('error-texto-condiciones');
+
+    // Recuperar cotizacion completa
+    const cotizacionRaw = localStorage.getItem('cotizacion');
+    let cotizacion = {};
+
+    if (cotizacionRaw) {
+      try {
+        cotizacion = JSON.parse(cotizacionRaw);
+      } catch (err) {
+        console.error("Error parseando cotizacion:", err);
+      }
+    } else {
+      console.error("No se encontró la cotización en localStorage");
+    }
+
+    // Obtener todos los textos de la cotización actual
+    const detalles = document.querySelectorAll('.texto-detalle-presupuesto');
+    const total = document.getElementById('precioTotal')?.innerText.trim() || "";
+
+    const nuevosDetalles = {
+      detalle1: detalles[0]?.innerText || "",
+      detalle2: detalles[1]?.innerText || "",
+      detalle3: detalles[2]?.innerText || "",
+      detalle4: detalles[3]?.innerText || "",
+      detalle5: detalles[4]?.innerText || "",
+      detalle6: detalles[5]?.innerText || "",
+      detalle7: detalles[6]?.innerText || "",
+      total: total
+    };
+
+    // Fusionar cotizacion + detalles en un solo objeto
+    const resultadosFinales = {
+      ...cotizacion,
+      ...nuevosDetalles
+    };
+
+    console.log("Guardando paquete completo en localStorage:", resultadosFinales);
+
+    // Guardar todo bajo la clave 'resultados'
+    localStorage.setItem('resultados', JSON.stringify(resultadosFinales));
+
+    // Redirigir a datoscliente.html
+    window.location.href = "../../Corporativo/DiseñoIntegral/Datos.html";
+  });
+});
+</script>
+
+</body>
+</html>

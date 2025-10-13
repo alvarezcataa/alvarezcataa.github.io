@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  
+   <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="../../index.html"><img src="../../images/LOGO.png" alt="Logo" class="logo" /></a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+    <div class="side-menu" id="sideMenu">
+      <ul>
+        <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+        <li><a href="../../proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
+        <li><a href="../../servicios.html" onclick="toggleMenu()">Servicios</a></li>
+        <li><a href="../../recursos.html" onclick="toggleMenu()">Recursos</a></li>
+        <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+        <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+      </ul>
+    </div>
+</header>
+
+ <!--   DATOS CLIENTE -->
+<section class="page mainContent">
+  <div class="opacidad shadow"></div>
+  <img src="../../images/SERVICIOS/DESCRIPCION/CLIENTE.jpg" class="fondo">
+  <div class="contenedor-datoscliente">
+    <h1 class="titulo-cotizacion">DATOS CLIENTE</h1>
+   
+       <div class="contenedor-grilla-datoscliente">
+        <div class="item-datoscliente">
+            <h1 class="titulo-datoscliente">Nombre/s</h1>
+            <div class="contenedor-completardatos">
+                <input type="text" id="nombre" name="nombre" placeholder="Juan Carlos" required>
+            </div>
+        </div>
+        
+        <div class="item-datoscliente">
+            <h1 class="titulo-datoscliente">APELLIDO/S</h1>
+            <div class="contenedor-completardatos">
+                <input type="text" id="apellido" name="apellido" placeholder="PÉREZ" required>
+            </div>
+        </div>
+        
+        <div class="item-datoscliente">
+            <h1 class="titulo-datoscliente">e-mail</h1>
+            <div class="contenedor-completardatos">
+                <input type="email" id="mail" name="mail" placeholder="tucorreo@ejemplo.com" required>
+            </div>
+        </div>
+
+<!-- Mensaje de error (vacío por defecto) -->
+<p id="mensaje-error" class="mensaje-error"></p>
+
+<form id="form-datoscliente">
+  <div class="contenedor-cotizar-05">
+    <button type="submit" id="enviarBtn" class="boton-cotizar">
+      <h1 class="texto-boton-02">ENVIAR PRESUPUESTO</h1>
+    </button>
+  </div>
+</form>
+
+
+  
+
+
+</section>
+
+      
+<script src="../../js/scripts.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const resultados = JSON.parse(localStorage.getItem('resultados') || "{}");
+  console.log("Datos recibidos en datoscliente.html:", resultados);
+
+  const form = document.getElementById("form-datoscliente");
+  const nombre = document.getElementById('nombre');
+  const apellido = document.getElementById('apellido');
+  const mail = document.getElementById('mail');
+  const mensaje = document.getElementById('mensaje-error');
+
+  // REEMPLAZÁ por la URL que obtuviste al "Deploy -> Web app"
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby5TI3q3lfRqp9pBFFJEs9sOstYLEsJBXjCyDZ0-gojSXr8gfBfJ7KvAn5G3osh568/exec";
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Validaciones
+    if (!nombre.value.trim() || !apellido.value.trim() || !mail.value.trim()) {
+      mensaje.textContent = "* Es obligatorio completar todos los campos para continuar.";
+      mensaje.classList.add('visible');
+      return;
+    }
+    if (!mail.checkValidity()) {
+      mensaje.textContent = "* Por favor ingresa un e-mail válido.";
+      mensaje.classList.add('visible');
+      return;
+    }
+
+    mensaje.classList.remove('visible');
+    mensaje.textContent = "";
+
+    // Armamos el objeto que vamos a enviar
+    const cliente = {
+      nombre: nombre.value.trim(),
+      apellido: apellido.value.trim(),
+      mail: mail.value.trim()
+    };
+
+    // Traemos resultados desde localStorage 
+    const resultados = JSON.parse(localStorage.getItem("resultados") || "{}");
+    
+    // Armamos el objeto final
+    const data = { resultados, cliente };
+    console.log("JSON final a enviar:", JSON.stringify(data));
+    console.log("Enviando al servidor:", data);
+
+
+    // --- 1) crear iframe invisible si no existe ---
+    let iframe = document.getElementById('invisible_iframe_for_post');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.name = 'invisible_iframe_for_post';
+      iframe.id = 'invisible_iframe_for_post';
+      document.body.appendChild(iframe);
+    }
+
+    // --- 2) crear form temporal con campo 'payload' y submit hacia el web app en el iframe ---
+    const tempForm = document.createElement('form');
+    tempForm.style.display = 'none';
+    tempForm.method = 'POST';
+    tempForm.action = WEB_APP_URL;
+    tempForm.target = iframe.name;
+    tempForm.enctype = 'application/x-www-form-urlencoded'; // CLAVE
+
+
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'payload';
+    input.value = JSON.stringify(data);
+    tempForm.appendChild(input);
+
+    document.body.appendChild(tempForm);
+
+    // Enviamos el formulario (esto evita CORS porque es un POST de formulario)
+    try {
+      console.log("Voy a enviar este payload:", input.value);
+      tempForm.submit();
+    } catch (err) {
+      console.error('Error al submit form:', err);
+      alert('Error al enviar. Reintentar.');
+      tempForm.remove();
+      return;
+    }
+
+    // Removemos el form temporal (opcional)
+    tempForm.remove();
+
+    // Redirigimos la página a agradecimiento (no dependemos de la respuesta del iframe)
+    // Si querés esperar comprobación, podés implementar comunicación postMessage desde el iframe,
+    // pero para este test directo redirigimos.
+    setTimeout(function () {
+      window.location.href = "../../Agradecimiento.html";
+    }, 700); // 700ms suficiente para que el POST llegue al servidor en la mayoría de los casos
+  });
+});
+</script>
+</body>
+</html>
+
