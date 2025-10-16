@@ -2408,7 +2408,9 @@ button.boton-cotizar {
 }
 @media (max-width: 810px) {
   .contenedor-completardatos input {
-   font-size: 16px;
+   font-size: 18px;
+   padding: 0;
+   box-sizing: border-box;
 }
 }
 
