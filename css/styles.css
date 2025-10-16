@@ -2408,7 +2408,7 @@ button.boton-cotizar {
 }
 @media (max-width: 810px) {
   .contenedor-completardatos input {
-   font-size: 1.8vh;
+   font-size: 16px;
 }
 }
 
@@ -2418,6 +2418,12 @@ button.boton-cotizar {
   background-color: transparent;
 }
 
+
+.form-datoscliente {
+  width: 100%;
+  text-align: center;
+  margin-top: 3vh;
+}
 
 .contenedor-cotizar-05{
   position: relative;
@@ -2439,6 +2445,9 @@ button.boton-cotizar {
   transform: scale(1.05);
   background-color: rgb(0, 0, 0);
 }
+
+
+
 
 /* AGRADECIMIENTO */
 .contenedor-agradecimiento {
