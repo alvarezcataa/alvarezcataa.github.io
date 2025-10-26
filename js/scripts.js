@@ -335,37 +335,125 @@ document.addEventListener('scroll', () => {
 
 
 
-// Fijar --vh estable en móviles sin reaccionar a scroll-bar dinámico
-window.addEventListener('load', () => {
-  if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
 
-    let prevHeight = 0;
-    let prevWidth = 0;
 
-    function setViewportHeight(force = false) {
-      // Preferimos visualViewport si existe
-      const vhSource = window.visualViewport || window;
-      const newHeight = Math.round(vhSource.height);
-      const newWidth = Math.round(vhSource.width);
+// ---- FIX definitivo: medir varias veces al inicio y "lockear" el --vh para evitar recalculos por la barra de Instagram ----
+(function () {
+  const IS_MOBILE = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  if (!IS_MOBILE) return;
 
-      // Solo actualizar si hay cambio significativo de orientación o tamaño real
-      const heightChanged = Math.abs(newHeight - prevHeight) > 60; // evitar saltos de barra
-      const widthChanged = Math.abs(newWidth - prevWidth) > 60; // cambio de orientación
+  // Devuelve la altura más confiable entre visualViewport o window
+  function getViewportHeight() {
+    return Math.round((window.visualViewport && window.visualViewport.height) || window.innerHeight);
+  }
 
-      if (force || heightChanged || widthChanged) {
-        prevHeight = newHeight;
-        prevWidth = newWidth;
-        const vh = newHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
+  // Aplicar --vh al DOM
+  function applyVh(h) {
+    const vh = h * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+
+  // Medir varias veces durante un intervalo y escoger el valor "estable"
+  function measureAndLock(initialMs = 700, sampleInterval = 80) {
+    const samples = [];
+    const start = Date.now();
+
+    return new Promise((resolve) => {
+      const t = setInterval(() => {
+        samples.push(getViewportHeight());
+        if (Date.now() - start >= initialMs) {
+          clearInterval(t);
+          // Elegir el valor más estable: usamos el valor que aparece más (mode),
+          // si no hay mode claro, usamos el mayor (suele ser el que corresponde cuando las barras estan ocultas)
+          const counts = {};
+          samples.forEach(v => counts[v] = (counts[v] || 0) + 1);
+          let mode = samples[0];
+          let maxCount = 0;
+          Object.keys(counts).forEach(k => {
+            if (counts[k] > maxCount) {
+              maxCount = counts[k];
+              mode = Number(k);
+            }
+          });
+          // fallback: si mode es muy bajo o hay poca muestra, tomar max
+          const stable = (maxCount >= 2) ? mode : Math.max(...samples);
+          applyVh(stable);
+          resolve(stable);
+        }
+      }, sampleInterval);
+    });
+  }
+
+  // Handler para re-aplicar vh cuando haya un cambio real (rotación, teclado) - con umbral
+  let lastLocked = 0;
+  function maybeUpdateOnHugeChange(e) {
+    const newH = getViewportHeight();
+    const diff = Math.abs(newH - lastLocked);
+    // Umbral grande para evitar cambios por barra animada: 140px
+    if (diff > 140) {
+      lastLocked = newH;
+      applyVh(newH);
+      // Recalcular heights y posiciones de tu smooth wrapper si querés
+      if (window.__CAVLA_SMOOTH && typeof window.__CAVLA_SMOOTH.setBodyHeight === 'function') {
+        window.__CAVLA_SMOOTH.setBodyHeight();
+        window.__CAVLA_SMOOTH.computeSectionPositions && window.__CAVLA_SMOOTH.computeSectionPositions();
       }
     }
-
-    // Ejecutar una vez al cargar
-    setViewportHeight(true);
-
-    // Actualizar solo en cambios reales de orientación o tamaño fuerte
-    window.addEventListener('orientationchange', () => setTimeout(() => setViewportHeight(true), 300));
-    window.visualViewport?.addEventListener('resize', () => setViewportHeight());
-    window.addEventListener('resize', () => setViewportHeight());
   }
-});
+
+  // Proceso al cargar: medir, lockear y desactivar listeners ruidosos
+  window.addEventListener('load', async () => {
+    lastLocked = await measureAndLock(700, 80);
+
+    // Después de lockear: NO escuchamos visualViewport.resize continuamente
+    // Solo escuchamos orientationchange y visualViewport.resize con umbral grande
+    window.addEventListener('orientationchange', () => {
+      // esperar a que la orientación termine de estabilizar la UI
+      setTimeout(async () => {
+        lastLocked = await measureAndLock(500, 80);
+        // actualizar calculos del wrapper
+        if (window.__CAVLA_SMOOTH && typeof window.__CAVLA_SMOOTH.setBodyHeight === 'function') {
+          window.__CAVLA_SMOOTH.setBodyHeight();
+          window.__CAVLA_SMOOTH.computeSectionPositions && window.__CAVLA_SMOOTH.computeSectionPositions();
+        }
+      }, 300);
+    });
+
+    // Escuchar visualViewport.resize pero solo reaccionar si cambio gigante (teclado / zoom real)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', maybeUpdateOnHugeChange);
+    }
+    // Listener de reserva para resize (no reaccionará a los pequeños cambios)
+    window.addEventListener('resize', maybeUpdateOnHugeChange);
+
+    // OPTIONAL DEBUG: comentar si no lo querés
+    // createDebugOverlay();
+  });
+
+  // DEBUG helper (opcional)
+  function createDebugOverlay() {
+    const el = document.createElement('div');
+    el.id = 'vh-debug-overlay';
+    el.style.position = 'fixed';
+    el.style.right = '10px';
+    el.style.bottom = '10px';
+    el.style.zIndex = 999999;
+    el.style.background = 'rgba(0,0,0,0.6)';
+    el.style.color = '#fff';
+    el.style.padding = '6px 8px';
+    el.style.fontSize = '12px';
+    el.style.borderRadius = '6px';
+    el.style.pointerEvents = 'none';
+    document.body.appendChild(el);
+
+    function update() {
+      const visualH = Math.round((window.visualViewport && window.visualViewport.height) || 0);
+      const innerH = Math.round(window.innerHeight);
+      const cssVh = getComputedStyle(document.documentElement).getPropertyValue('--vh').trim();
+      el.textContent = `visual:${visualH}px | inner:${innerH}px | --vh:${cssVh}`;
+    }
+    update();
+    setInterval(update, 200);
+  }
+
+})();
