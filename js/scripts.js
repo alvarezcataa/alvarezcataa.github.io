@@ -335,17 +335,37 @@ document.addEventListener('scroll', () => {
 
 
 
-//evitar recálculo de vh en celular
+// Fijar --vh estable en móviles sin reaccionar a scroll-bar dinámico
 window.addEventListener('load', () => {
   if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
-    function setViewportHeight() {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+    let prevHeight = 0;
+    let prevWidth = 0;
+
+    function setViewportHeight(force = false) {
+      // Preferimos visualViewport si existe
+      const vhSource = window.visualViewport || window;
+      const newHeight = Math.round(vhSource.height);
+      const newWidth = Math.round(vhSource.width);
+
+      // Solo actualizar si hay cambio significativo de orientación o tamaño real
+      const heightChanged = Math.abs(newHeight - prevHeight) > 60; // evitar saltos de barra
+      const widthChanged = Math.abs(newWidth - prevWidth) > 60; // cambio de orientación
+
+      if (force || heightChanged || widthChanged) {
+        prevHeight = newHeight;
+        prevWidth = newWidth;
+        const vh = newHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
     }
-    setViewportHeight();
-    window.addEventListener('resize', setViewportHeight);
-    window.addEventListener('orientationchange', setViewportHeight);
+
+    // Ejecutar una vez al cargar
+    setViewportHeight(true);
+
+    // Actualizar solo en cambios reales de orientación o tamaño fuerte
+    window.addEventListener('orientationchange', () => setTimeout(() => setViewportHeight(true), 300));
+    window.visualViewport?.addEventListener('resize', () => setViewportHeight());
+    window.addEventListener('resize', () => setViewportHeight());
   }
 });
-
-
