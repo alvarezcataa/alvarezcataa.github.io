@@ -633,7 +633,7 @@ hr { /* linea divisoria */
   top: 0px;
   object-fit: cover;
   width: 100vw;
-  height: 70vh;
+  height: 70%;
   z-index: 0;
   transition: transform 0.2s ease-out;
   transform-origin: center center;
@@ -642,11 +642,11 @@ hr { /* linea divisoria */
 
 .titulo-page-proyecto{
   position: absolute;
-  top: 70vh;
+  top: 70%;
   z-index: 30;
   width: 100%;
   
-  font-size: 5vh;
+  font-size: 2.4vw;
   font-weight: 300;
   color: white;
   animation: fadeInUp 2s ease forwards;
@@ -654,22 +654,22 @@ hr { /* linea divisoria */
 
 @media (max-width: 810px){
   .titulo-page-proyecto{
-   font-size: 3.5vh;
-   top: 75vh;
+   font-size: 6vw;
+   top: 75%;
 }
 }
 
 @media screen and (max-width: 810px) and (min-height: 840px) {
   .titulo-page-proyecto{
-   font-size: 3.5vh;
-   top: 75vh;
+   font-size: 6vw;
+   top: 75%;
 }
 }
 
 .categoria-proyecto{
   position: absolute; 
-  top: 78vh;
-  font-size: 2vh;
+  top: 80%;
+  font-size: 1vw;
   font-weight: 100;
   color: white;
   opacity: 0.5;
@@ -677,7 +677,7 @@ hr { /* linea divisoria */
 }
 @media (max-width: 810px) {
   .categoria-proyecto{
-  top: 80vh;
+  font-size: 4vw;
 }
 }
 
@@ -768,7 +768,7 @@ hr { /* linea divisoria */
   position: relative;
   color: white;
   opacity: 0.9;
-  font-size: 2vh;
+  font-size: 1vw;
   font-weight: lighter;
   text-align: justify;
   margin: 2vh 3vw ;
@@ -776,7 +776,7 @@ hr { /* linea divisoria */
 }
 @media (max-width: 810px) {
   .texto-proyecto{
-    font-size: 2.2vh;
+    font-size: 4vw;
     margin: 2vh 10vw;
     top: 12vh;
    
@@ -831,7 +831,7 @@ hr { /* linea divisoria */
   justify-self: center;
   color: white;
   opacity: 0.9;
-  font-size: 2vh;
+  font-size: 1vw;
   font-weight: lighter;
   text-align: justify;
   margin: 0 30vw 2vh;
@@ -839,7 +839,7 @@ hr { /* linea divisoria */
 }
 @media (max-width: 810px) {
   .texto-memoria{
-    font-size: 2.2vh;
+    font-size: 4vw;
     margin: 0 10vw 2vh;
 }
 }
@@ -1082,6 +1082,7 @@ hr { /* linea divisoria */
 
 .numero-fase {
   position: absolute;
+  
   left: 50%;
   top: 15vh;
   transform: translate(-50%, -50%);
@@ -1094,22 +1095,18 @@ hr { /* linea divisoria */
 }
 @media (max-width: 810px) {
   .numero-fase {
-    position: absolute;
+    align-self: center;
     left: 20%;
-    top: 0;
-    font-size: 14.5vh;
+    top: 10%;
+    font-size: 20vw;
 }
 }
 
 .item-fase:hover .numero-fase {
   color: white;
-  font-size: 13vw;
+  
 }
-@media (max-width: 810px) {
-  .item-fase:hover .numero-fase {
-    font-size: 15vh;
-}
-}
+
 
 .titulo-fase {
   position: absolute;
@@ -1161,7 +1158,7 @@ hr { /* linea divisoria */
 }
 @media (max-width: 810px) {
   .subtitulo-fase {
-    font-size: 2.3vh;
+    font-size: 4vw;
     top: 35%;
     width: 50%;
     margin-left: 60px;
@@ -1348,6 +1345,7 @@ hr { /* linea divisoria */
 }
 @media (max-width: 810px) {
   .destinatario-servicio{
+  font-size: 3vw;
   margin: 2vh 5vw 0;
 }
 }
@@ -1365,6 +1363,7 @@ hr { /* linea divisoria */
 @media (max-width: 810px) {
   .categoria-servicio{
   top: 88vh;
+  font-size: 3vw;
 }
 }
 
@@ -1490,6 +1489,7 @@ hr { /* linea divisoria */
 @media (max-width: 810px) {
   .texto-incluye{
   margin-right: 3vwpx;
+  font-size: 3vw;
 }
 }
 
@@ -1595,7 +1595,7 @@ button.boton-cotizar {
 }
 @media (max-width: 810px) {
   .titulo-faq{
-  font-size: 2.5vh;
+  font-size: 6vw;
 }
 }
 
@@ -1610,7 +1610,7 @@ button.boton-cotizar {
 }
 @media (max-width: 810px) {
   .pregunta-faq{
-  font-size: 2vh;  
+  font-size: 4vw;  
 }
 }
 
@@ -1622,6 +1622,11 @@ button.boton-cotizar {
   text-align: justify;
   margin: 0 3vw 3vh;
   z-index: 10;
+}
+@media (max-width: 810px) {
+  .respuestas-faq {
+  font-size: 3vw;  
+}
 }
 
 .servicios .preguntas-frecuentes hr { /* linea divisoria */
