@@ -9,57 +9,147 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <header>
 <body class="pagina">
+
+    <!-- Navbar -->
   <nav class="navbar">
-    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
+    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo" /></a>
+   
+
+      <!-- Menú desktop -->
+   <nav class="cavla-nav__center" aria-label="Principal">
+    <a href="index.html">Inicio</a>
+    <a href="filosofia.html">Filosofía</a>
+    <a href="sobremi.html">Sobre mí</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+
+  <!-- Menú mobile -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      
+      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
-      <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
-      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
-</header>
 
-  <!-- Portada -->
-<section class="page mainContent">
-    <div class="opacidad shadow"></div>
-    <h1 class="titulo-pagina translate" data-speed="0.1">SOBRE MÍ</h1>
-    <h2 class="subtitulo-pagina translate" data-speed="0.1">Proyecto desde lo que soy.</h2>
-    <img src="images/flecha-19.png" class="flecha">
-    <img src="images/SOBRE MI/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
+  <!-- PORTADA-->
+  <section class="page mainContent">
+    <div class="opacidad"></div>
+    <div class="bg-gradient"></div>
+    <div class="shadowa"></div>
+
+    <div class="bloque-titulos translate" data-speed="0.1">
+    <h1 class="titulo-pagina">Sobre mí</h1>
+    <h2 class="subtitulo-pagina">
+      <span>PROYECTO</span> <span>DESDE</span> <span>LO</span> <span>QUE</span> <span>SOY</span> 
+    </h2>
+  </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Desliza</span>
+      <span class="scroll-cue__line">
+         <span class="scroll-cue__dot"></span>
+      </span>
+    </div>
+    <img src="images/SOBRE MI/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
   </section>
 
-<section class="contacto mainContent">
-    <div class="section__data">
-        <p class="texto-memoria">Hay algo que me seduce en la nostalgia. Crecemos desarrollando amor por las cosas; por la máquina de coser de la abuela, el reloj de papá, las marcas en la pared que muestran cuánto crecimos cada año.</p>
-        <p class="texto-memoria">Nos convertimos en adultos y terminamos guardando un popurrí de fragmentos desconectados que nos remiten a lo que amamos. Combinamos la identidad que heredamos con la que construimos, y no siempre dialogan bien. Quizás por eso, a veces, los espacios que habitamos tampoco saben bien quiénes somos.</p>
+<!-- FRASE 1 -->
+<section class="pantalla-identificacion mainContent">
+    <img src="images/SOBRE MI/fondo 1.webp" class="page_fondo">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div> 
+    <div class="grafico-contenido">      
+        <div class="grafico-contenedor">
+            <img src="images/SOBRE MI/1.webp" class="imagen-circulos">
+        </div>
+        <div class="texto-contenedor">
+            <p class="texto-grafico">
+              Hay algo que me seduce en <b>la nostalgia.</b> Crecemos desarrollando <b>amor por las cosas;</b> por la máquina de coser de la abuela, el reloj de papá, las marcas en la pared que muestran cuánto crecimos cada año.
+            </p>
+        </div>
     </div>
 </section>
 
-<section class="proyecto mainContent">
-  <div class="bg-gradient"></div>
-    <div class="section__data">
-      <h1 class="titulo-proyecto">DETRÁS DEL DISEÑO</h1>
-      <hr>
-      <p class="texto-proyecto">Me llamo Catalina y soy arquitecta. Pero no elegí la profesión para levantar muros, sino para construir lugares, momentos, anécdotas. Pienso que el corazón de los edificios está en su interior, en lo invisible; en cómo dejamos nuestra marca para refugiarnos, para sentirnos nosotros mismos.</p>
-      <p class="texto-proyecto">No se trata de elegir qué florero te gusta más, sino de que puedas mirar a tu alrededor y ver un pedacito de vos en cada rincón. No voy a imponerte ninguna tendencia. Voy a ayudarte a amalgamar todos los fragmentos que te componen y plasmarlos en tu espacio. Quiero saber quién sos, y sobre todo que vos también lo sepas. Cuando tenés claro qué te define, ya no dudás en cómo querés vivir.</p>
-  </div>
-  <img src="images/SOBRE MI/catalina.jpg" class="imagen-proyectoind-izq">
+<!-- FRASE 2 -->
+<section class="pantalla-identificacion mainContent">
+    <img src="images/SOBRE MI/fondo 2.webp" class="page_fondo">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div> 
+    <div class="grafico-contenido">      
+        <div class="texto-contenedor">
+            <p class="texto-grafico">
+              Nos convertimos en adultos y terminamos guardando <b>un popurrí de fragmentos desconectados</b> que nos remiten a lo que amamos. Combinamos <b>la identidad que heredamos con la que construimos,</b> y no siempre dialogan bien. Quizás por eso, a veces, <b>los espacios que habitamos tampoco saben bien quiénes somos.</b>
+            </p>
+        </div>
+
+    </div>
 </section>
 
+<!-- FRASE 3 -->
+<section class="pantalla-identificacion mainContent">
+    <img src="images/SOBRE MI/fondo 3.webp" class="page_fondo">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div> 
+    <div class="grafico-contenido">      
+        <div class="grafico-contenedor">
+            <img src="images/SOBRE MI/polaroid cata.webp" class="imagen-circulos">
+        </div>
+        <div class="texto-contenedor">
+            <p class="texto-grafico">
+              Ma llamo <b>Catalina.</b> Soy arquitecta, pero me considero artista. 
+            </p>
+            <p class="texto-grafico">
+              Siempre me costó ver el espacio como paredes y nada más. Para mí <b>los lugares no son las cosas, sino la chispa</b> que nos hace sentir que son nuestros.
+            </p>
+        </div>
+    </div>
+</section>
 
+  <!-- FRASE 4 -->
+<section class="contacto mainContent">
+    <div class="section__data">
+      <div class="opacidad"></div>
+      <div class="shadowa"></div>
+      <div class="bg-gradient"></div>
+        <p class="texto-memoria">
+          No se trata de elegir qué florero te gusta más, sino de <b>que puedas</b> mirar a tu alrededor y <b>ver un pedacito de vos en cada rincón.</b>      
+        </p>
+        <img src="images/SOBRE MI/fondo 4.webp" class="page_fondo">
+    </div>
+</section>
 
+<!-- FRASE 5 -->
+<section class="pantalla-identificacion mainContent">
+    <img src="images/SOBRE MI/fondo 5.webp" class="page_fondo">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div> 
+    <div class="grafico-contenido">      
+
+        <div class="texto-contenedor">
+            <p class="texto-grafico">
+              No voy a imponerte ninguna tendencia. Voy a ayudarte a <b>amalgamar todos los fragmentos</b> que te componen y plasmarlos en tu espacio.      
+            </p>
+            <p class="texto-grafico">
+              Quiero <b>saber quién sos,</b> y sobre todo que vos también lo sepas. <b>Cuando tenés claro qué te define, ya no dudás en cómo querés vivir.</b>          
+            </p>
+        </div>
+    </div>
+</section>
 
   <script src="js/scripts.js"></script>
   

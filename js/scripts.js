@@ -1,4 +1,7 @@
-// scripts.js — Smooth + Parallax + Snap amable + Menú estable
+// ============================================================
+// 1. smooth scroll · snap · logo · menú · virtual
+// ============================================================
+
 (function () {
   "use strict";
 

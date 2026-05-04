@@ -9,42 +9,172 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <!-- VANTA.js y THREE.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js"></script>
 </head>
+
 <body class="inicio">
-  <!-- Fondo animado -->
-  <div id="vanta-bg"></div>
 
   <!-- Navbar -->
   <nav class="navbar">
-    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
+    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo" /></a>
+   
+
+      <!-- Menú desktop -->
+   <nav class="cavla-nav__center" aria-label="Principal">
+    <a href="index.html">Inicio</a>
+    <a href="filosofia.html">Filosofía</a>
+    <a href="sobremi.html">Sobre mí</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+
+  <a href="#servicios" class="cavla-nav__cta">Cotizá tu proyecto</a>
+
+  <!-- Menú mobile -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
-  <!-- Menú lateral -->
   <div class="side-menu" id="sideMenu">
     <ul>
-     
+      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
-      <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
-      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
 
-  <!-- Sección de inicio -->
-  <section class="inicio mainContent">
-    <div class="overlay">
-      <img src="images/LOGO.png" alt="Logo principal" class="main-logo animate" />
-      <p class="subtext animate">Atelier de arquitectura emocional</p>
+  <!-- PORTADA-->
+  <section class="page mainContent">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bloque-titulos translate" data-speed="0.1">
+       <img src="images/LOGO.png" alt="Logo principal" class="main-logo" />
+       <h2 class="subtitulo-pagina">
+       <span>ESTUDIO</span> <span>DE</span> <span>INTERIORISMO</span> <span>VIRTUAL</span> 
+       </h2>
+    </div>
+
+    <div id="vanta-bg"></div>
+    <div class="luz-inferior"></div>
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Desliza</span>
+      <span class="scroll-cue__line">
+         <span class="scroll-cue__dot"></span>
+      </span>
     </div>
   </section>
+
+  <!-- FRASE -->
+<section class="contacto mainContent">
+    <div class="section__data">
+      <div class="opacidad"></div>
+      <div class="shadowa"></div>
+      <div class="bg-gradient"></div>
+      <div class="texto-contenedor">
+      <p class="texto-grafico">
+       <b>Te esforzaste.</b> Compraste, pintaste, cambiaste cosas de lugar.
+      </p>
+      <p class="texto-grafico">
+       Y aún así, algo no encaja. <b>No se siente tuyo.</b> 
+      </p>
+      </div>
+      <img src="images/INICIO/" class="page_fondo">
+      
+    </div>
+</section>
+
+
+
+
+  <!-- FRASE -->
+<section class="contacto mainContent">
+    <div class="section__data">
+      <div class="opacidad"></div>
+      <div class="shadowa"></div>
+      <div class="bg-gradient"></div>
+        <p class="texto-memoria">
+          Viste ejemplos donde todo funciona perfecto. Lo intentas pero <b>no tiene nada que ver con vos.</b>
+        </p>
+        <p class="texto-memoria">
+          No necesitas más tips de decoración, <b>necesitas que alguien te escuche.</b>
+        </p>
+        <p class="texto-memoria">
+         <b>Eso es lo que hacemos en Estudio CAVLA.</b>
+        </p>
+        <img src="images/INICIO/01.jpg" class="page_fondo">
+    </div>
+</section>
+
+  <!-- VIRTUAL -->
+<section class="page mainContent">
+  <div class="opacidad"></div>
+  <div class="shadowa"></div>
+  <div class="bg-gradient"></div>
+  <div class="bloque-titulos translate" data-speed="0.1">
+    
+    <h2 class="subtitulo-pagina">
+      <span>METODOLOGÍA</span> <span>DE</span> <span>TRABAJO</span> 
+    </h2>
+    <h1 class="titulo-pagina">100% virtual</h1>
+  </div>
+
+
+
+  <img src="images/INICIO/VIRTUAL.webp" class="fondo">
+</section>
+
+<!-- CATEGORÍAS -->
+<section id="servicios" class="categorias mainContent">
+  
+  <div class="opacidad"></div>
+  <div class="bg-gradient"></div>
+  <img src="images/SERVICIOS/RESIDENCIAL/FONDO.jpg" class="fondo">
+
+  <div class="contenedor-grillacategoria">
+      <div class="item-categoría c01"></div>
+
+      <div class="item-categoría c02"></div>
+
+      <div class="item-categoría c03"></div>
+
+      <div class="item-categoría c04"></div>
+        
+      <div class="item-categoría c05">
+        <h2 class="categoria-subtitulo">
+          <span>ELIGE</span> <span>TU</span>
+        </h2>
+        <h1 class="categoria-titulo">Servicio</h1>
+      </div>
+
+      <div class="item-categoría c06"></div>
+
+
+      <a href="Residencial/AsesoríaEspacial/AsesoríaEspacial.html" class="item-categoría c07">
+      <div class="fondoblanco"></div>
+      <h1 class="titulo-categoria">ASESORÍA ESPACIAL</h1>
+      </a>
+
+      <a href="Residencial/DiseñoIntegral/DiseñoIntegral.html" class="item-categoría c08">
+      <div class="fondoblanco"></div>
+      <h1 class="titulo-categoria">DISEÑO INTEGRAL</h1>
+      </a>
+
+      <a href="Residencial/DiseñoMobiliario/DiseñoMobiliario.html" class="item-categoría c09">
+      <div class="fondoblanco"></div>
+      <h1 class="titulo-categoria">DISEÑO DE MOBILIARIO</h1>
+      </a>
+  </div>
+</section>
+
+
+
+
 
   <script src="js/scripts.js"></script>
 

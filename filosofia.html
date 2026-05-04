@@ -9,88 +9,140 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <header>
 <body class="pagina">
+
+    <!-- Navbar -->
   <nav class="navbar">
-    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
+    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo" /></a>
+   
+
+      <!-- Menú desktop -->
+   <nav class="cavla-nav__center" aria-label="Principal">
+    <a href="index.html">Inicio</a>
+    <a href="filosofia.html">Filosofía</a>
+    <a href="sobremi.html">Sobre mí</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+
+  <!-- Menú mobile -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      
+      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
-      <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
-      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
-</header>
-
-  <!-- Portada -->
-<section class="page mainContent">
-    <div class="opacidad shadow"></div>
-    <h1 class="titulo-pagina translate" data-speed="0.1">FILOSOFÍA</h1>
-    <h2 class="subtitulo-pagina translate" data-speed="0.1">El espacio transforma la manera en que vivimos.</h2>
-    <img src="images/flecha-19.png" class="flecha">
-    <img src="images/FILOSOFÍA/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
-  </section>
   
-  <!-- NEUROARQUITECTURA -->
-<section class="proyecto mainContent">
-  <div class="bg-gradient"></div>
-    <img src="images/FILOSOFÍA/neuroarquitectura.jpg" class="imagen-proyectoind-izq">
-    <div class="section__data">
-          <h1 class="titulo-proyecto">NEURO - ARQUITECTURA</h1>
-          <hr>
-          <p class="texto-proyecto">Los espacios que habitamos tienen un impacto directo en nuestra salud emocional, mental y física. No se trata solo de estética, sino de cómo un entorno puede acompañarnos o condicionarnos.</p>
-          <p class="texto-proyecto">Es por esto que diseñamos bajo los principios de la neuroarquitectura, con el objetivo de mejorar tu calidad de vida en cada proyecto construimos atmósferas para lograr transformar tu día a día y ayudarte a regenerar tu bienestar.</p>
-  </div>
-</section>
+  <!-- PORTADA-->
+  <section class="page mainContent">
+    <div class="opacidad"></div>
+    <div class="bg-gradient"></div>
+    <div class="shadowa"></div>
 
-  <!-- ESTÉTICA CON SENTIDO -->
-<section class="proyecto mainContent">
-  <div class="bg-gradient"></div>
-    
-    <div class="section__data">
-          <h1 class="titulo-proyecto">COHERENCIA ESTÉTICA</h1>
-          <hr>
-          <p class="texto-proyecto">El enfoque de diseño es atemporal. La estética surge como consecuencia de un diseño hecho a medida, donde cada proyecto busca reflejar la identidad de quien lo habita. Las tendencias caducan, las necesidades reales no.</p>
-          <p class="texto-proyecto">El espacio tiene alma porque guarda recuerdos, por lo que siempre partimos de un lienzo cargado de experiencias. Apelamos a la memoria para crear lugares que las personas sientan y no olviden jamás.</p>
+    <div class="bloque-titulos translate" data-speed="0.1">
+    <h1 class="titulo-pagina">Filosofía</h1>
+    <h2 class="subtitulo-pagina">
+      <span>EL</span> <span>ESPACIO</span> <span>NOS</span> <span>DEFINE</span> 
+    </h2>
+  </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Desliza</span>
+      <span class="scroll-cue__line">
+         <span class="scroll-cue__dot"></span>
+      </span>
     </div>
-  <img src="images/FILOSOFÍA/coherencia.jpg" class="imagen-proyectoind-der">
+    <img src="images/FILOSOFÍA/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
+  </section>
+
+  <!-- FRASE -->
+<section class="entregable mainContent">
+    <img src="images/FILOSOFÍA/FRASE.jpg" class="page_fondo" alt="textura verde">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div>
+        <p class="texto-memoria">
+         ¿Qué dice el <b>espacio sobre vos?</b>
+        </p>
+    </div>
 </section>
 
- <!-- COMPROMISO SOCIAL -->
-<section class="proyecto mainContent">
-  <div class="bg-gradient"></div>
-    <img src="images/FILOSOFÍA/compromiso.jpg" class="imagen-proyectoind-izq">
-    <div class="section__data">
-          <h1 class="titulo-proyecto">COMPROMISO SOCIAL</h1>
-          <hr>
-          <p class="texto-proyecto">Creemos que todas las personas merecen habitar un espacio saludable y bien diseñado. La calidad de un entorno no depende del presupuesto, sino de la intención y el cuidado con el que se proyecta.</p>
-          <p class="texto-proyecto">Sabemos que cada persona vive y percibe los espacios de forma distinta. Por eso, diseñamos pensando en la diversidad física, sensorial y emocional de quienes los habitan, garantizando una accesibilidad real para todo tipo de usuario.</p>
-  </div>
-</section>
-
- <!-- RESPETO POR EL ENTORNO -->
-<section class="proyecto mainContent">
-  <div class="bg-gradient"></div>
-    
-    <div class="section__data">
-          <h1 class="titulo-proyecto">RESPETO POR EL ENTORNO</h1>
-          <hr>
-          <p class="texto-proyecto">Una arquitectura inteligente no es la que incluye más domótica en su diseño, es la que consume menos recursos para ser funcional.</p>
-          <p class="texto-proyecto">Es por esto que priorizamos la eficiencia energética, procuramos un continuo contacto con la naturaleza en los diseños, y apostamos por la segunda vida de los materiales como una forma de proyectar con conciencia y respeto por el ambiente.</p>
+<!-- ESTÉTICA CON SENTIDO -->
+<section class="pantalla-identificacion mainContent">
+    <img src="images/FILOSOFÍA/TEXTURA.jpg" class="page_fondo">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div> 
+    <div class="grafico-contenido">
         
-  </div>
-  <img src="images/FILOSOFÍA/respeto.jpg" class="imagen-proyectoind-der">
+        <div class="grafico-contenedor">
+            <img src="images/FILOSOFÍA/coherencia grafico.png" class="imagen-circulos">
+        </div>
+
+        <div class="texto-contenedor">
+            <h1 class="titulo-grafico">El sentido de la estética</h1>
+            <p class="texto-grafico">
+              Para sorpresa de muchos, la <b>estética no</b> es algo que se pueda elegir <b>de una foto.</b> El diseño siempre debe ser un <b>reflejo de nosotros mismos.</b>
+            </p>
+            <p class="texto-grafico">
+              <b>No</b> buscamos <b>replicar un estilo,</b> sino ayudarte a que <b>encuentres el propio.</b> Nuestro enfoque es atemporal, porque las <b>tendencias caducan, pero tu esencia no.</b> 
+            </p>
+        </div>
+
+    </div>
 </section>
 
+  <!-- NEUROARQUITECTURA -->
+<section class="contacto mainContent">
+    <div class="section__data">
+      <div class="opacidad"></div>
+      <div class="shadowa"></div>
+      <div class="bg-gradient"></div>
+        <h2 class="titulo-importante">La Neuroarquitectura</h2>
+        <p class="texto-memoria">
+          La forma en que <b>actuamos y nos sentimos</b> depende del <b>espacio que nos rodea.</b> Muchas veces no notamos cómo nos influye el entorno, porque <b>nos acostumbramos</b> a vivir en <b>la incomodidad.</b>
+        </p>
+        <p class="texto-memoria">
+          En CAVLA aplicamos <b>neuroarquitectura</b> para que la vida diaria no sea un esfuerzo y <b>dejes de ser vos quien se adapta al espacio.</b>
+        </p>
+        <img src="images/FILOSOFÍA/neuroarquitectura.jpg" class="page_fondo">
+    </div>
+</section>
+
+
+<!-- RESPETO POR EL ENTORNO -->
+<section class="pantalla-identificacion mainContent">
+    <img src="images/FILOSOFÍA/entorno.jpg" class="page_fondo">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div> 
+    <div class="grafico-contenido">
+        
+        <div class="grafico-contenedor">
+            <img src="images/FILOSOFÍA/PAPEL.png" class="imagen-circulos">
+        </div>
+
+        <div class="texto-contenedor">
+            <h1 class="titulo-grafico">Respeto por el entorno</h1>
+            <p class="texto-grafico">
+                La <b>arquitectura inteligente</b> no es la que usa más tecnología, sino la que <b>necesita menos recursos para ser funcional.</b>            
+              </p>
+            <p class="texto-grafico">
+                <b>Diseñamos priorizando</b> que los materiales tengan una <b>segunda vida.</b> Proyectar con conciencia no es una opción estética, es nuestra forma de <b>construir espacios que respeten el lugar donde están.</b>        
+              </p>
+        </div>
+
+    </div>
+</section>
 
 
 

@@ -1,3 +1,34 @@
+/* ===================================================================
+   ESTUDIO CAVLA — styles.css (versión depurada)
+   -------------------------------------------------------------------
+   01. BASE
+   02. TIPOGRAFÍA GLOBAL
+   03. LAYOUT DE SECCIONES
+   04. NAVBAR Y MENÚ LATERAL
+   05. ANIMACIONES (@keyframes)
+   06. PORTADA — INDEX (overlay, logo, subtext, vanta)
+   07. OVERLAYS Y FONDOS COMPARTIDOS
+   08. INDICADOR DE SCROLL (scroll-cue)
+   09. BLOQUES DE TÍTULOS (portadas internas)
+   10. BLOQUES DE TEXTO COMPARTIDOS
+   11. GRÁFICOS (círculos, imagen-circulos)
+   12. GRILLA DE CATEGORÍAS (index.html)
+   13. SECCIÓN VIRTUAL (index.html)
+   14. PANTALLA DE IDENTIFICACIÓN (servicios)
+   15. ANTES Y DESPUÉS (split)
+   16. SECCIÓN ENTREGABLE
+   17. FAQ (preguntas frecuentes)
+   18. COTIZADOR
+   19. PRESUPUESTO
+   20. DATOS CLIENTE
+   21. AGRADECIMIENTO
+   =================================================================== */
+
+
+/* ===================================================================
+   01. BASE
+   =================================================================== */
+
 html {
   scroll-behavior: smooth;
 }
@@ -5,20 +36,122 @@ html {
 body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Crimson Pro', serif; 
-  font-weight: 200;
-  background-color: #181818;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  background-color: #130c09;
   height: calc(var(--vh, 1vh) * 100);
   overflow-y: auto;
   overflow-x: hidden;
-  scroll-snap-type:y mandatory;
+  scroll-snap-type: y mandatory;
   scrollbar-width: none;
+  color: #ffffff;
 }
 
+
+/* ===================================================================
+   02. TIPOGRAFÍA GLOBAL
+   =================================================================== */
+
 h1 {
-  font-family: 'Bodoni Moda', serif;
-  font-weight: 400;
+  font-family: 'Playfair Display', serif;
+  font-weight: 100;
+  margin: 0;
 }
+
+hr {
+  height: 1px;
+  background-color: rgb(255, 255, 255);
+  border: none;
+}
+
+
+/* ===================================================================
+   03. LAYOUT DE SECCIONES
+   =================================================================== */
+
+section {
+  width: 100%;
+  position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Pantalla completa centrada — uso general */
+.page {
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  scroll-snap-align: start;
+  transition: all 0.5s ease;
+}
+
+/* Pantalla completa centrada — uso en secciones de texto/contacto */
+.contacto {
+  height: calc(var(--vh, 1vh) * 100);
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Pantalla completa — sección de categorías */
+.categorias {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(var(--vh, 1vh) * 100);
+}
+
+/* Pantalla completa — identificación de servicio */
+.pantalla-identificacion {
+  position: relative;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/* Pantalla completa — antes/después */
+.antes-despues {
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pantalla completa — sección entregable */
+.entregable {
+  position: relative;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Pantalla completa — FAQ */
+.faq-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(var(--vh, 1vh) * 100);
+  color: white;
+  overflow: hidden;
+}
+
+
+/* ===================================================================
+   04. NAVBAR Y MENÚ LATERAL
+   =================================================================== */
 
 .navbar {
   position: fixed;
@@ -40,6 +173,45 @@ h1 {
   animation-delay: 0.5s;
 }
 
+/* =========================  NAV  ====================================== */
+.cavla-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;transition:all .5s cubic-bezier(.2,.7,.2,1);border-bottom:1px solid transparent}
+.cavla-nav.is-scrolled{padding:14px 28px;background:rgba(19,9,10,.78);backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);border-bottom-color:rgba(58,38,31,.6)}
+@media (max-width:860px){ .cavla-nav__brand-est{display:none} }
+.cavla-nav__center{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:4vw;align-items:center}
+
+.cavla-nav__center a{
+  text-decoration: none; 
+  font-size:2vh; 
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  transition:color .3s;
+  padding:6px 0
+}
+
+.cavla-nav__center a:hover{
+  color:white
+}
+
+.cavla-nav__cta{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);border:1px solid var(--line);padding:10px 16px;transition:all .4s}
+.cavla-nav__cta:hover{background:var(--cream);color:var(--bg);border-color:var(--cream)}
+@media (max-width:860px){ .cavla-nav__center,.cavla-nav__cta{display:none} }
+
+a.boton-cotizar,
+button.boton-cotizar {
+  text-decoration: none;
+  color: black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+
 .menu-toggle {
   position: fixed;
   top: 10px;
@@ -49,6 +221,7 @@ h1 {
   cursor: pointer;
   z-index: 1100;
   padding: 10px;
+  display: none;
 }
 
 .side-menu {
@@ -64,10 +237,14 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+
 @media (max-width: 810px) {
   .side-menu {
-  width: 100%;
-}
+    width: 100%;
+  }
+  .menu-toggle{
+    display: flex;
+  }
 }
 
 .side-menu ul {
@@ -88,6 +265,8 @@ h1 {
 .side-menu ul li a {
   color: white;
   text-decoration: none;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
   font-size: 25px;
   font-weight: 300;
 }
@@ -96,6 +275,7 @@ h1 {
   right: 0;
 }
 
+/* Blur del contenido cuando el menú está abierto */
 .blur {
   filter: blur(5px);
   transition: filter 1s ease;
@@ -103,10 +283,11 @@ h1 {
 }
 
 
+/* ===================================================================
+   05. ANIMACIONES (@keyframes)
+   =================================================================== */
 
-
-
-/* aparece logo en la esquina */
+/* Fade-in con deslizamiento vertical — logo, subtext, cotizador */
 @keyframes fadeSlideIn {
   to {
     opacity: 1;
@@ -114,14 +295,35 @@ h1 {
   }
 }
 
+/* Fade-in con subida desde abajo — bloque-titulos en portadas */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 30px));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Punto animado del scroll-cue */
+@keyframes scrollDot {
+  0%   { transform: translateY(-12px); opacity: 0; }
+  25%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { transform: translateY(38px); opacity: 0; }
+}
+
+
+/* ===================================================================
+   06. PORTADA — INDEX ( logo, vanta)
+   =================================================================== */
+
 .inicio {
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
-}
-
-body.inicio .navbar-logo {
-  display: none;
 }
 
 /* Fondo animado Vanta.js */
@@ -135,7 +337,31 @@ body.inicio .navbar-logo {
   pointer-events: none;
 }
 
-/* Asegurar contenido por encima del fondo */
+.luz-inferior {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    rgba(160, 119, 90, 0.7) 0%,
+    rgba(120, 60, 20, 0.1) 40%,
+    transparent 90%
+  );
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+@media (max-width: 810px) {
+  .luz-inferior{
+    width: 200%;
+  }
+}
+
+/* El contenido va por encima del fondo Vanta */
 body.inicio,
 section.inicio,
 .overlay,
@@ -144,771 +370,39 @@ nav {
   z-index: 1;
 }
 
-.overlay {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(3px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-}
+
 
 .main-logo {
-  width: 35vw;
-  opacity: 0;
-  margin: 0;
+  width: 80vh;
+  opacity: 0.5;
+  margin-bottom: 2vh;
   animation: fadeSlideIn 3s ease forwards;
 }
+
 @media (max-width: 810px) {
   .main-logo {
-  width: 85vw;
-}
-}
-
-.subtext {
-  position: relative;
-  color: white;
-  font-size: 1.5vw;
-  font-weight: 100;
-  opacity: 0;
-  animation: fadeSlideIn 3s ease forwards;
-}
-@media (max-width: 810px) {
-  .subtext {
-  font-size: 1.2rem;
-}
+    width: 85vw;
+  }
 }
 
-section{
-  width: 100%;
-  position: relative;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-}
 
-/* imagen portada de cada pestaña */
-.page {
-  height: calc(var(--vh, 1vh) * 100);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  scroll-snap-align: start;
-  transition: all 0.5s ease;
-  
-}
 
-.page_fondo{
+
+/* ===================================================================
+   07. OVERLAYS Y FONDOS COMPARTIDOS
+   =================================================================== */
+
+/* Imagen de fondo que cubre toda la sección */
+.page_fondo {
   position: absolute;
   object-fit: cover;
   width: 100%;
   height: 100%;
-  bottom: 0px;
-  z-index: 0;
-  
-}
-
-.shadow{
-  position: absolute;
-  bottom: 100%;
-  height: 50vh;
-  width: 100%;
-  left: 0;
-  z-index: 2;
-  background: linear-gradient(to top, #181818, transparent);
-}
-
-.opacidad{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #18181820;
-  z-index: 1;
-}
-
-.flecha{
-  width: 15vw;
-  z-index: 5;
-  position: absolute;
-  bottom: 0px;
-}
-@media (max-width: 810px) {
-  .flecha{
-    width: 40vw;
-    left: 50vw;
-    transform: translateX(-50%);
-}
-}
-
-
-/* texto portada */
-.titulo-pagina{
-  position: absolute;
-  z-index: 30;
-  line-height: 5vh;
-  width: 100%;
-  text-align: center;
-  font-size: 5vw;
-  font-weight: 600;
-  color: white;
-  animation: fadeInUp 2s ease forwards;
-}
-@media (max-width: 810px) {
-  .titulo-pagina{
-  font-size: 15vw;
-}
-}
-
-.subtitulo-pagina {
-  position: absolute;
-  z-index: 30;
-  line-height: 5vh;
-  margin-top: 15vh;
-  width: 100%;
-  text-align: center;
-  font-size: 1.5vw;
-  font-weight: 100;
-  color: rgba(255, 255, 255, 0.6);
-  animation: fadeInUp 2s ease forwards;
-}
-@media (max-width: 810px) {
-  .subtitulo-pagina {
-  font-size: 4vw;
-  margin-top: 13vh;
-}
-}
-
-/* pantallas dentro de pestaña */
-.section {
-  height: calc(var(--vh, 1vh) * 100);
-  scroll-snap-align: start;
-  display:grid;
-  grid-template-columns: 1fr 1fr ;
-  column-gap: 100px;
-  align-items: center;
-  margin: 0 200px; 
-  
-}
-
-/* COLUMNAS */
-.imagen-seccion{
-  width: 650px;
-  height: 650px;
-  object-fit: cover;
-  border-radius: 70px;
-  margin: auto;
-  z-index: 5;
-}
-
-.titulo-seccion{
-  text-align:start;
-  font-size: 4.5rem;
-  font-weight: 300;
-  color: white;
-  padding: 0;
-  margin-bottom: 10px;
-  z-index: 10;
-  
-}
-
-hr { /* linea divisoria */
-  height: 1px;
-  background-color: rgb(255, 255, 255);
-  border: none;
-}
-
-.texto-seccion{
-  font-size: 1.3rem;
-  margin: 0 auto;
-  line-height: 1.6;
-  text-align: justify;
-  color: white;
-}
-
-/* CENTRADO */
-.contacto {
-  height: calc(var(--vh, 1vh) * 100);
-  scroll-snap-align: start;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.subtitulo-seccion{
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  color: white;
-}
-
-.texto-contacto{
-  font-size: 1.3rem;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1;
-  text-align: center;
-  color: white;
-  margin-bottom: 60px;
-}
-
-/* GRILLA */
-
-.grilla-proyectos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(var(--vh, 1vh) * 100);
-  padding: 0 10vw;
-  box-sizing: border-box;
-}
-
-@media (max-width: 1000px) {
-  .grilla-proyectos {
-  padding: 0 2vw;
-}
-}
-
-@media (max-width: 810px) {
-  .grilla-proyectos {
-  padding: 0 10vw;
-}
-}
-
-.contenedor-grilla {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1vw;
-  align-self: center;
-  margin-top: 25vh;
-  margin-bottom: 50px;
-}
-
-@media (max-width: 810px) {
-  .contenedor-grilla {
-  grid-template-columns: 1fr;
-}
-}
-
-/* contenedor individual */
-.item-proyecto {
-  position: relative;
-  transition: filter 0.3s ease;
-}
-
-.imagen-proyecto {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  transition: filter 0.3s ease, transform 0.3s ease;
-  border-radius: 15%;
+  bottom: 0;
   z-index: 0;
 }
 
-.imagen-proyecto:hover {
-  transform: scale(1.05);
-  cursor: pointer;
-}
-
-.overlay-proyecto {
-  position: absolute;
-  top: 0; 
-  left: 0;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background-color: rgba(0, 0, 0, 0); /* negro con opacidad 20% */
-  border-radius: 15%;
-  z-index: 1;
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-
-.overlay-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
-  color: white;
-  z-index: 2;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  width: 90%;
-}
-
-.overlay-text h1 {
-  font-size: 2.5vw;
-  font-weight: 100;
-  margin: auto;
-}
-
-@media (max-width: 810px) {
-  .overlay-text h1 {
-  font-size: 6vw;
-}
-}
-
-.overlay-text p {
-  font-size: 1.5vw;
-  font-weight: 100;
-  margin: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-@media (max-width: 810px) {
-  .overlay-text p {
-  font-size: 4vw;
-}
-}
-
-/* cuando pasás el mouse sobre un item: */
-
-.item-proyecto:hover .imagen-proyecto {
-  transform: scale(1.03);
-}
-
-.item-proyecto:hover .overlay-proyecto {
-  transform: scale(1.03);
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.contenedor-grilla:hover .overlay-text {
-  opacity: 0;
-}
-
-.item-proyecto:hover .overlay-text {
-  opacity: 1;
-}
-
-.item-proyecto:hover .overlay-text p {
-  opacity: 0.8;
-}
-
-/* al hacer hover sobre cualquier .item-proyecto,
-   desaturamos todas las demás */
-.contenedor-grilla:hover .item-proyecto:not(:hover) .imagen-proyecto {
-  filter: grayscale(70%);
-  opacity: 0.7;
-}
-
-.contenedor-grilla:hover .item-proyecto:not(:hover) .overlay-proyecto {
-  background-color: #181818d5;
-}
-
-
-/* FILOSOFÍA*/
-.filosofía {
-  height: calc(var(--vh, 1vh) * 100);
-  scroll-snap-align: start;
-  display:grid;
-  grid-template-columns: 1fr 1fr ;
-  column-gap: 100px;
-  align-items: center;
-  margin: 0 200px; 
-}
-
-.titulo-seccionfilo{
-  text-align: start;
-  font-size: 4.5rem;
-  font-weight: 300;
-  color: white;
-  margin-bottom: 10px;
-  z-index: 10;
-  position: relative;
-}
-
-.filosofía hr { /* linea divisoria */
-  height: 1px;
-  background-color: rgb(255, 255, 255);
-  position: relative;
-  margin:auto;
-  z-index: 5;
-}
-
-.texto-seccionfilo{
-  font-size: 1.3rem;
-  margin: 0 auto;
-  line-height: 1.6;
-  text-align: justify;
-  color: white;
-  z-index: 5;
-  position: relative;
-}
-
-
-
-
-
-
-/* Degradado superior */
-.bg-gradient {
-    position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100%;
-  pointer-events: none;
-  
-  height: 50vh;
-  width: 100%;
-  z-index: 2;
-  background: linear-gradient(to bottom, #181818, transparent);
-}
-
-
-
-@keyframes fadeInUpTitulo {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUpSubtitulo {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-
-
-
-.page-proyectos {
-  display: grid;
-  background: url(/images/background\ proyectos.jpg) no-repeat center center/cover;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  background-color: rgb(228, 228, 228);
-  padding: 60px 0;
-  gap: 20px;
-  min-height: calc(var(--vh, 1vh) * 100);
-  align-items: start;
-}
-
-.grid-proyectos {
-  grid-column: 2 / span 2;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px;
-}
-
-.grid-proyectos a img {
-  width: 100%;
-  height: auto;
-  transition: transform 0.3s ease;
-  display: block;
-}
-
-
-
-
-
-
-
-/* PROYECTOS */
-.page_fondo-proyecto{
-  position: absolute;
-  top: 0px;
-  object-fit: cover;
-  width: 100vw;
-  height: 70%;
-  z-index: 0;
-  transition: transform 0.2s ease-out;
-  transform-origin: center center;
-}
-
-
-.titulo-page-proyecto{
-  position: absolute;
-  top: 70%;
-  z-index: 30;
-  width: 100%;
-  
-  font-size: 2.4vw;
-  font-weight: 300;
-  color: white;
-  animation: fadeInUp 2s ease forwards;
-}
-
-@media (max-width: 810px){
-  .titulo-page-proyecto{
-   font-size: 6vw;
-   top: 75%;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 840px) {
-  .titulo-page-proyecto{
-   font-size: 6vw;
-   top: 75%;
-}
-}
-
-.categoria-proyecto{
-  position: absolute; 
-  top: 80%;
-  font-size: 1vw;
-  font-weight: 100;
-  color: white;
-  opacity: 0.5;
-  z-index: 20;
-}
-@media (max-width: 810px) {
-  .categoria-proyecto{
-  font-size: 4vw;
-}
-}
-
-.proyecto{
-  height: calc(var(--vh, 1vh) * 100);
-  scroll-snap-align: start;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-}
-@media (max-width: 810px) {
-  .proyecto{
-  flex-direction: column;
-}
-}
-
-
-
-
-.imagen-proyectoind-izq {
-  height: calc(var(--vh, 1vh) * 100);
-  width: 70vw;
-  object-fit: cover;
-  
-  border-radius: 50px 0 0 50px;
-}
-@media (max-width: 810px) { /*arriba*/
-  .imagen-proyectoind-izq {
-  height: 35vh;
-  width: 100vw;
-  border-radius: 0px 0px 50px 50px;
-  position: absolute;
-  top: 0;
-}
-}
-
-.imagen-proyectoind-der {
-  height: calc(var(--vh, 1vh) * 100);
-  width: 70vw;
-  object-fit: cover;
-  border-radius: 0 50px 50px 0;
-}
-@media (max-width: 810px) { /*abajo*/
-  .imagen-proyectoind-der {
-  height: 35vh;
-  width: 100vw;
-  border-radius: 0px 0px 50px 50px;
-  position: absolute;
-  top: 0;
-  
-}
-}
-
-.titulo-proyecto{
-  position: relative; 
-  text-align:start;
-  line-height: 2.8vw;
-  font-size: 2.5vw;
-  font-weight: 600;
-  color: white;
-  z-index: 20;
-  margin: 0 3vw;
-}
-@media (max-width: 810px) {
-  .titulo-proyecto{
-  font-size: 6vw;
-  line-height: 7vw;
-  margin: 0 10vw;
-  top: 12vh;
-}
-}
-
-.proyecto hr { /* linea divisoria */
-  position: relative;
-  z-index: 200;
-  height: 0.05vh;
-  background-color: rgb(255, 255, 255);
-  border: none;
-  margin: 2vh 3vw;
-}
-@media (max-width: 810px) {
-  .proyecto hr {
-  margin: 2vh 10vw ;
-  top: 12vh;
-}
-}
-.texto-proyecto{
-  position: relative;
-  color: white;
-  opacity: 0.9;
-  font-size: 1vw;
-  font-weight: lighter;
-  text-align: justify;
-  margin: 2vh 3vw ;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .texto-proyecto{
-    font-size: 4vw;
-    margin: 2vh 10vw;
-    top: 12vh;
-   
-}
-}
-
-.subtitulo-proyecto{
-  position: relative; 
-  text-align:start;
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: white;
-  z-index: 20;
-  margin: 50px 75px 0px;
-}
-.titulo-memoria{
-  position: relative; 
-  text-align: center;
-  font-size: 2.5vw;
-  font-weight: 600;
-  color: white;
-  margin-bottom: auto;
-  z-index: 20;
-}
-@media (max-width: 810px) {
-  .titulo-memoria{
-  font-size: 6vw;
-  
-  
-}
-}
-
-.datos-memoria{
-  position: relative;
-  color: rgba(255, 255, 255, 0.5);
-  
-  font-size: 0.9vw;
-  font-weight: lighter;
-  text-align: center;
-  margin: auto;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .datos-memoria{
-    font-size: 4.2vw;
-    margin: 1vh 10vw;
-}
-}
-
-.texto-memoria{
-  position: relative;
-  justify-self: center;
-  color: white;
-  opacity: 0.9;
-  font-size: 1vw;
-  font-weight: lighter;
-  text-align: justify;
-  margin: 0 30vw 2vh;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .texto-memoria{
-    font-size: 4vw;
-    margin: 0 10vw 2vh;
-}
-}
-.contacto hr { /* linea divisoria */
-  position: relative;
-  z-index: 200;
-  height: 0.05vh;
-  background-color: rgb(255, 255, 255);
-  border: none;
-  margin: 2vh 30vw;
-}
-@media (max-width: 810px) {
-  .contacto hr {
-  margin: 2vh 10vw ;
-  
-}
-}
-
-
-
-
-
- 
-
-.imagen-proyecto-solo {
-  height: 90vh;
-  width: 95vw;
-  object-fit:cover;
-  position: absolute;
-  border-radius: 5vh;
-  }
-
-  @media (max-width: 810px) {
-  .imagen-proyecto-solo {
-  width: 100vw;
-  height: auto;
-}
-}
-
-/* SERVICIOS GENERAL*/
-/*<-- VIRTUAL -->*/
-.metodologia-subtitulo {
-  color: white;
-  font-size: 3.5rem;
-  margin: auto;
-  font-weight: 100;
-  position: relative;
-  z-index: 30;
-}
-@media (max-width: 810px) {
-  .metodologia-subtitulo {
-  font-size: 1.5rem;
-}
-}
-
-.metodologia-titulo {
-  color: white;
-  font-size: 5.5rem;
-  font-weight: 600;
-  margin: auto;
-  position: relative;
-  z-index: 30;
-}
-@media (max-width: 810px) {
-  .metodologia-titulo {
-  font-size: 3.5rem;
-}
-}
-
+/* Imagen de fondo con z-index bajo — cotizador y presupuesto */
 .fondo {
   position: absolute;
   object-fit: cover;
@@ -918,267 +412,341 @@ hr { /* linea divisoria */
   opacity: 50%;
 }
 
-.contenedor-grillavirtual {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  justify-items: center;
-  justify-content: center;
-  margin: 0 200px;
-  --grid-gap: 10vw;
-  gap: var(--grid-gap);
+/* Capa de oscurecimiento sobre el fondo */
+.opacidad {
   position: absolute;
-  bottom: 10vh;
-  z-index: 10;
-  transform: translateY(200px); /* Comienza desplazada hacia abajo */
-  transition: transform 0.4s ease-out; /* transición suave */
-}
-@media (max-width: 810px) {
-  .contenedor-grillavirtual {
-  margin: 0 10vw;
-  --grid-gap: 8vw;
-  width: 50%;
-}
-}
-
-.item-virtual {
-  width: auto;
-  justify-items: center;
-}
-@media (max-width: 810px) {
-  .item-virtual {
-    width: max-content;
-
-}
-}
-
-.imagen-virtual {
-  width: 6vh;
-  object-fit: cover;
-  z-index: 10;
-  pointer-events: none; 
-  opacity: 0.7;
-}
-@media (max-width: 810px) {
-  .imagen-virtual {
-  width: 10vw;
-}
-}
-
-.titulo-virtual {
-  color: white;
-  z-index: 2;
-  width: min-content;
-  pointer-events: none; 
-  font-size: 1.2rem;
-  font-weight: 100;
-  opacity: 0.7;
-  text-align: center;
-}
-@media (max-width: 810px) {
-  .titulo-virtual {
-
-  font-size: 2vw;
-  
-}
-}
-
-.linea-vertical {
-  background-color: white;
-  height: 100%;
-  width: 1px;
-  position: absolute;
-  bottom: 0;
-  transform: translateX(calc(var(--grid-gap)/ -2));
-  opacity: 0.7;
-}
-
-/*<-- FASES -->*/
-.metodologia {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(var(--vh, 1vh) * 100);
-  padding: 0;
-  
-  
-}
-@media (max-width: 810px) {
-  .metodologia {
-    flex-direction: column;
-    width: 100%
-}
-}
-
-.contenedor-grillafases {
-  display:grid;
-  grid-template-columns: repeat(5, 1fr);
-  align-items: center;
-  align-content: center;
-  gap: 1vw;
-
-  margin: 20px;
-}
-@media (max-width: 810px) {
-  .contenedor-grillafases {
-    grid-template-columns: 1fr;
-    width: 90%;
-    height: 20%;
-    gap: 1vh;
-    margin: 0;
-    
-}
-}
-
-.item-fase {
-  position: relative;
-  transition: filter 0.3s ease;
-  
-}
-
-
-.imagen-fase {
-  width: 100%;
-  height: 95vh;
-  object-fit: cover;
-  transition: filter 0.3s ease, transform 0.3s ease;
-  border-radius: 5vh;
-  z-index: 0;
-  pointer-events: none; 
-}
-@media (max-width: 810px) {
-  .imagen-fase {
-  height: 18vh;
-}
-}
-
-.item-fase:hover .imagen-fase {
-  transform: scale(1.03);
-}
-
-
-.overlay-fase {
-  position: absolute;
-  top: 0; 
+  top: 0;
   left: 0;
   width: 100%;
-  height: 95vh;
-  aspect-ratio: 1 / 1;
-  background-color: rgba(0, 0, 0, 0.6); /* negro con opacidad 20% */
-  border-radius: 5vh;
+  height: 100%;
+  background-color: rgb(0, 0, 0, 0.3);
   z-index: 1;
-  transition: filter 0.3s ease, transform 0.3s ease;
-}
-@media (max-width: 810px) {
-  .overlay-fase {
-  height: 18vh;
-}
 }
 
-.item-fase:hover .overlay-fase {
-  transform: scale(1.03);
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-
-.numero-fase {
+/* Degradado inferior — suaviza la transición entre secciones */
+.shadowa {
   position: absolute;
-  
-  left: 50%;
-  top: 15vh;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  color: rgb(139, 139, 139);
-  font-size: 12.5vw;
-  font-weight: 500;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
   pointer-events: none;
-  transition: filter 0.3s ease, font-size 0.3s ease;
-}
-@media (max-width: 810px) {
-  .numero-fase {
-    align-self: center;
-    left: 20%;
-    top: 10%;
-    font-size: 20vw;
-}
-}
-
-.item-fase:hover .numero-fase {
-  color: white;
-  
-}
-
-
-.titulo-fase {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  color: white;
+  height: 25vh;
   z-index: 2;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-  pointer-events: none; 
-  font-size: 2vw;
-}
-@media (max-width: 810px) {
-  .titulo-fase {
-    font-size: 6vw;
-    width: 50%;
-    top: 15%;
-    margin-left: 60px;
-}
+  background: linear-gradient(to top, #130c09, transparent);
 }
 
-.item-fase:hover .titulo-fase {
-  opacity: 1;
-}
-
-.subtitulo-fase {
+/* Degradado superior — suaviza el navbar sobre el fondo */
+.bg-gradient {
   position: absolute;
-  top: 57%;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  pointer-events: none;
+  height: 30vh;
+  z-index: 2;
+  background: linear-gradient(to bottom, #130c09, transparent);
+}
+
+/* Línea divisoria dentro del cotizador */
+.contenedor-cotizador hr {
+  position: relative;
+  z-index: 200;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  margin: 0;
+}
+
+
+/* ===================================================================
+   08. INDICADOR DE SCROLL (scroll-cue)
+   =================================================================== */
+
+.scroll-cue {
+  position: absolute;
   left: 50%;
+  bottom: 36px;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  
-  color: white;
-  z-index: 2;
-  text-align: justify;
-  
-  width: 80%;
-  font-size: 1.4vw;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.scroll-cue__label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 10px;
+  color: rgba(232, 220, 200, 0.65);
+}
+
+.scroll-cue__line {
+  position: relative;
+  display: block;
+  width: 1px;
+  height: 38px;
+  background: linear-gradient(to bottom, rgba(232,220,200,0.65), transparent);
+  overflow: hidden;
+}
+
+.scroll-cue__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 12px;
+  background: #ece3d2;
+  animation: scrollDot 2.4s ease-in-out infinite;
+}
+
+
+/* ===================================================================
+   09. BLOQUES DE TÍTULOS (portadas internas)
+   =================================================================== */
+
+/* Contenedor centrado para el título y subtítulo de cada página */
+.bloque-titulos {
+  position: absolute;
+  max-width: 90vw;
+  z-index: 30;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInUp 2s ease forwards;
+}
+
+/* Título principal — páginas de primer nivel (Filosofía, Sobre mí, Contacto) */
+.titulo-pagina {
+  font-family: 'Playfair Display', serif;
+  max-width: 90vw;
   font-weight: 100;
   margin: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-@media (max-width: 810px) {
-  .subtitulo-fase {
-    font-size: 4vw;
-    top: 35%;
-    width: 50%;
-    margin-left: 60px;
-    
-}
+  line-height: 1;
+  font-size: 15vh;
+  color: white;
+  display: inline-block;
+  transform: scaleX(0.9);
+  transform-origin: center;
+  white-space: nowrap;
 }
 
-.item-fase:hover .subtitulo-fase {
-  opacity: 1;
+/* Título principal — páginas de servicios (tamaño reducido) */
+.titulo-servicios {
+  font-family: 'Playfair Display', serif;
+  max-width: 90vw;
+  font-weight: 100;
+  margin: 0;
+  line-height: 1;
+  font-size: 10vh;
+  color: white;
+  display: inline-block;
+  transform: scaleX(0.9);
+  transform-origin: center;
+  white-space: nowrap;
 }
 
-/*<-- CATEGORÍAS -->*/
-.categorias {
-  position: relative;   /* necesario para que los absolute internos se 'anclen' aquí */
-  overflow: hidden;
+/* Subtítulo en mayúsculas distribuido bajo el título */
+.subtitulo-pagina {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(var(--vh, 1vh) * 100);
+  justify-content: space-between;
+  width: 90%;
+  margin: 0;
+  font-size: 1.5vh;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0;
 }
+
+/* Flecha decorativa en la parte inferior de la portada */
+.flecha {
+  width: 15vw;
+  z-index: 5;
+  position: absolute;
+  bottom: 0;
+}
+
+@media (max-width: 810px) {
+  .titulo-pagina {
+    font-size: 18vw;
+  }
+  .subtitulo-pagina {
+    font-size: 3vw;
+  }
+  .titulo-servicios {
+    font-size: 10vw;
+  }
+  .flecha {
+    width: 40vw;
+    left: 50vw;
+    transform: translateX(-50%);
+  }
+}
+
+
+/* ===================================================================
+   10. BLOQUES DE TEXTO COMPARTIDOS
+   =================================================================== */
+
+/* Texto principal de secciones con imagen de fondo (filosofía, sobre mí, index) */
+.texto-grafico {
+  font-size: 2.2vh;
+  font-weight: 300;
+  opacity: 0.9;
+  text-align: justify;
+  margin: 0 30vw 2vh;
+}
+
+.texto-grafico b {
+  font-weight: 600;
+}
+
+/* Texto en secciones tipo "contacto" con fondo y texto centrado */
+.texto-memoria {
+  position: relative;
+  justify-self: center;
+  color: white;
+  opacity: 0.9;
+  font-size: 2.2vh;
+  font-weight: 300;
+  text-align: justify;
+  margin: 0 30vw 2vh;
+  z-index: 10;
+}
+
+.texto-memoria b {
+  font-weight: 600;
+}
+
+/* Título destacado en cursiva — "La Neuroarquitectura", "¡Importante!", etc. */
+.titulo-importante {
+  font-family: 'Playfair Display', serif;
+  font-size: 4vh;
+  font-weight: 400;
+  font-style: italic;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 3vh;
+  letter-spacing: 1px;
+  z-index: 10;
+  position: relative;
+}
+
+/* Título en cursiva sobre gráficos de círculos */
+.titulo-grafico {
+  font-family: 'Playfair Display', serif;
+  font-size: 4vh;
+  font-weight: 400;
+  font-style: italic;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  letter-spacing: 1px;
+  z-index: 10;
+  position: relative;
+}
+
+/* Subtítulo en cursiva — sección de contacto */
+.subtitulo-seccion {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+/* Texto de datos de contacto (mail, Instagram, etc.) */
+.texto-contacto {
+  font-size: 1.3rem;
+  font-weight: 200;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1;
+  text-align: center;
+  color: white;
+  margin-bottom: 60px;
+}
+
+.texto-contacto a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Contenedor del texto en secciones tipo "frase" (index.html) */
+.texto-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 810px) {
+  .texto-grafico {
+    font-size: 4vw;
+    margin: 0 10vw 2vh;
+  }
+  .texto-memoria {
+    font-size: 4vw;
+    margin: 0 10vw 2vh;
+  }
+  .titulo-importante {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  .titulo-grafico {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+}
+
+
+/* ===================================================================
+   11. GRÁFICOS (círculos, imagen-circulos)
+   =================================================================== */
+
+/* Layout flex para secciones con imagen circular + texto */
+.grafico-contenido {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+/* Contenedor de la imagen de círculos de Illustrator */
+.grafico-contenedor {
+  width: 100%;
+  max-width: 55vh;
+}
+
+/* La imagen de círculos en sí */
+.imagen-circulos {
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 810px) {
+  .grafico-contenedor {
+    width: 100%;
+    max-width: 80vw;
+  }
+}
+
+
+/* ===================================================================
+   12. GRILLA DE CATEGORÍAS (index.html)
+   =================================================================== */
 
 .contenedor-grillacategoria {
   height: calc(var(--vh, 1vh) * 100);
@@ -1190,17 +758,16 @@ hr { /* linea divisoria */
   align-items: stretch;
 }
 
-
 .item-categoría {
   color: transparent;
   position: relative;
-  
+  justify-content: center;
   align-content: center;
   background-color: rgba(255, 255, 255, 0);
-  justify-content: center;
   z-index: 30;
 }
 
+/* Fondo blanco que aparece al hover */
 .fondoblanco {
   position: absolute;
   top: 0;
@@ -1211,97 +778,45 @@ hr { /* linea divisoria */
   z-index: -10;
 }
 
-
-
-
-.c01{
- border-right: 0.5px solid rgb(255, 255, 255, 0.8);
- border-bottom: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c02{
- border-right: 0.5px solid rgb(255, 255, 255, 0.8);
- border-left: 0.5px solid rgb(255, 255, 255, 0.8);
- border-bottom: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c03{
- border-left: 0.5px solid rgb(255, 255, 255, 0.8);
- border-bottom: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c04{
- border-right: 0.5px solid rgb(255, 255, 255, 0.8);
- border-bottom: 0.5px solid rgb(255, 255, 255, 0.8);
- border-top: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c05{
- border: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c06{
- border-left: 0.5px solid rgb(255, 255, 255, 0.8);
- border-bottom: 0.5px solid rgb(255, 255, 255, 0.8);
- border-top: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c07{
- border-right: 0.5px solid rgb(255, 255, 255, 0.8);
- border-top: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c08{
- border-right: 0.5px solid rgb(255, 255, 255, 0.8);
- border-left: 0.5px solid rgb(255, 255, 255, 0.8);
- border-top: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.c09{
- border-left: 0.5px solid rgb(255, 255, 255, 0.8);
- border-top: 0.5px solid rgb(255, 255, 255, 0.8);
-}
-
-.item-categoría:hover .fondoblanco  {
-  background-color: rgba(255, 255, 255, 0.8);
+.item-categoría:hover .fondoblanco {
+  background-color: rgba(255, 255, 255, 0.5);
   transition: 0.3s ease-in-out;
-} 
+}
 
+/* Bordes de cada celda de la grilla */
+.c01 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c02 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c03 { border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c04 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c05 { border: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c06 { border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c07 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c08 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
+.c09 { border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
 
+/* Textos dentro de la celda central (c05) */
 .categoria-subtitulo {
   color: white;
-  font-size: 1.5vw;
+  font-size: 2vh;
   margin: auto;
-  font-weight: 100;
   position: relative;
   z-index: 30;
   pointer-events: none;
   text-align: center;
-}
-@media (max-width: 810px) {
-  .categoria-subtitulo {
-  font-size: 3vw;
-}
 }
 
 .categoria-titulo {
   color: white;
   font-size: 2.3vw;
   font-weight: 100;
-  margin: auto;
+  line-height: 1;
   position: relative;
   z-index: 30;
   pointer-events: none;
   text-align: center;
 }
-@media (max-width: 810px) {
-  .categoria-titulo {
-  font-size: 5vw;
-  margin: 0;
-  text-align: center;
-}
-}
 
+/* Título del servicio en las celdas c07/c08/c09 */
 .titulo-categoria {
   color: white;
   justify-self: center;
@@ -1309,351 +824,686 @@ hr { /* linea divisoria */
   font-weight: 100;
   z-index: 35;
 }
-@media (max-width: 810px) {
-  .titulo-categoria {
-  font-size: 4vw;
-  text-align: center;
-}
-}
 
 .item-categoría:hover .titulo-categoria {
   color: black;
 }
 
-
-  
-  
-
-
-
-
-
-
-
-/* SERVICIOS INDIVIDUAL*/
-/* <--PORTADA--> */
-.destinatario-servicio{
-  position:absolute;
-  top: 80%;
-  color: white;
-  opacity: 0.7;
-  font-size: 2vh;
-  font-weight: lighter;
-  text-align: center;
-  margin: 2vh 20vw 0;
-  z-index: 10;
-}
 @media (max-width: 810px) {
-  .destinatario-servicio{
-  font-size: 3vw;
-  margin: 2vh 5vw 0;
-}
-}
-
-.categoria-servicio{
-  position: absolute; 
-  top: 85vh;
-  justify-self: center;
-  font-size: 1.8vh;
-  font-weight: 100;
-  color: white;
-  opacity: 0.5;
-  z-index: 20;
-}
-@media (max-width: 810px) {
-  .categoria-servicio{
-  top: 85%;
-  font-size: 3vw;
-}
-}
-
-/* <--DESCRIPCIÓN--> */
-.descripcion-servicio{
-  position: relative;
-  color: white;
-  opacity: 0.9;
-  font-size: 1.2vw;
-  font-weight: lighter;
-  text-align: justify;
-  margin: 0 3vw 0;
-  z-index: 10;
-}
-
-.linea-descripcion-servicio {
-  position: absolute;
-  top: 20vh;
-  z-index: 200;
-  height: 2px;
-  width: 100vw;
-  background-color: rgb(255, 255, 255);
-  opacity: 0.5;
-  border: none;
-  margin: 0;
-}
-
-/* <--QUÉ INCLUYE--> */
-
-.servicios{
-  position: relative;   /* necesario para que los absolute internos se 'anclen' aquí */
-  overflow: hidden;
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  min-height: calc(var(--vh, 1vh) * 100);
-}
-@media (max-width: 810px) {
-  .servicios {
-  flex-direction: column;
-}
+  .categoria-subtitulo {
+    font-size: 3vw;
+  }
+  .categoria-titulo {
+    font-size: 5vw;
+    margin: 0;
+    text-align: center;
+  }
+  .titulo-categoria {
+    font-size: 4vw;
+    text-align: center;
+  }
 }
 
 
+/* ===================================================================
+   13. SECCIÓN VIRTUAL (index.html)
+   =================================================================== */
 
-.contenedor-grillaincluye {
-  height: calc(var(--vh, 1vh) * 100);
-  margin: 0 5vw;
-  position: relative;
-  top: 20vh;
+/* Grilla de íconos de la metodología virtual */
+.contenedor-grillavirtual {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5vw;
-  overflow: hidden;
-}
-@media (max-width: 810px) {
-  .contenedor-grillaincluye {
-  top: 5vh;
-  display: block;
-}
-}
-
-.item-incluye {
-  position: relative;
-  z-index: 30;
-}
-@media (max-width: 810px) {
-  .item-incluye {
-  margin-top: 3vh;
-}
-}
-@media screen and (max-width: 810px) and (min-height: 840px) {
-  .item-incluye {
-  margin-top: 2vh;
-}
-}
-
-.servicios .contenedor-grillaincluye hr { /* linea divisoria */
-  position: relative;
-  z-index: 200;
-  height: 0.1vh;
-  background-color: rgb(255, 255, 255, 0.5);
-  border: none;
-  margin: 0;
-}
-
-.titulo-incluye{
-  position: relative; 
-  text-align:center;
-  font-size: 5vh;
-  font-weight: 600;
-  color: white;
-  z-index: 20;
-  margin: 0;
-}
-@media (max-width: 810px) {
-  .titulo-incluye{
-  font-size: 3vh;
-}
-}
-
-.renglon {
-  display: flex;
-  align-items: center;  /* Centra verticalmente el texto con el ícono */
-  gap: 20px;            /* Espacio entre el ícono y el texto */
-  padding: 2vh;
-}
-@media (max-width: 810px) {
-  .renglon {
-  padding: 1vh;
-}
-}
-
-.texto-incluye{
-  color: white;
-  opacity: 0.9;
-  font-size: 2vh;
-  font-weight: lighter;
-  text-align: justify;
-  margin: 0;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .texto-incluye{
-  margin-right: 3vwpx;
-  font-size: 3vw;
-}
-}
-
-.icono-incluye{
-  opacity: 0.8;
-  height: 2vh;
-  flex-shrink: 0; /* Evita que el ícono se deforme */
-  z-index: 10;
-}
-
-.contenedor-cotizar{
-  position: absolute;
-  bottom: 5vh;
-  height: 6vh;
-  width: max-content;
-  padding: 0 8vw;
-  align-self: center;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 5vh;
+  margin: 0 200px;
+  --grid-gap: 10vw;
+  gap: var(--grid-gap);
+  position: absolute;
+  bottom: 10vh;
   z-index: 10;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-@media screen and (max-width: 810px) and (min-height: 840px) {
-  .contenedor-cotizar {
-  height: 5vh;
-  bottom: 3vh;
-}
+  transform: translateY(200px);
+  transition: transform 0.4s ease-out;
 }
 
-.contenedor-cotizar:hover{
-  transform: scale(1.05);
-  background-color: rgba(255, 255, 255, 1);
+.item-virtual {
+  width: auto;
+  justify-items: center;
 }
 
-a.boton-cotizar,
-button.boton-cotizar {
+.imagen-virtual {
+  width: 6vh;
+  object-fit: cover;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.titulo-virtual {
+  z-index: 2;
+  pointer-events: none;
+  font-size: 1.3vh;
+  opacity: 0.7;
+  text-align: justify;
+}
+
+/* Separadores verticales entre ítems de la grilla */
+.linea-vertical {
+  background-color: white;
+  height: 100%;
+  width: 1px;
+  position: absolute;
+  bottom: 0;
+  transform: translateX(calc(var(--grid-gap) / -2));
+  opacity: 0.7;
+}
+
+@media (max-width: 810px) {
+  .contenedor-grillavirtual {
+    margin: 0 10vw;
+    --grid-gap: 8vw;
+    width: 50%;
+  }
+  .item-virtual {
+    width: max-content;
+  }
+  .imagen-virtual {
+    width: 10vw;
+  }
+  .titulo-virtual {
+    font-size: 2vw;
+  }
+}
+
+
+/* ===================================================================
+   14. PANTALLA DE IDENTIFICACIÓN (servicios)
+   =================================================================== */
+
+/* Capa de contenido sobre la imagen de fondo */
+.identificacion-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 70vh;
+  text-align: center;
+}
+
+/* Contenedor de la imagen de círculos de Illustrator */
+.container-circulos {
+  width: 100%;
+  max-width: 70vh;
+}
+
+/* Título en cursiva — "Este servicio es para vos." */
+.titulo-identif {
+  font-family: 'Playfair Display', serif;
+  font-size: 6vh;
+  font-weight: 100;
+  font-style: italic;
+  margin: 3vh 0;
+}
+
+/* Contenedor de los dos botones de derivación */
+.container-derivacion {
+  display: flex;
+  gap: 10vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.derivacion-col {
+  flex: 1;
+  max-width: 26vh;
+  text-align: justify;
+  text-align-last: center;
+}
+
+.derivacion-col p {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 100;
+  margin-bottom: 1vh;
+  line-height: 1.4;
+  padding: 0 2vh;
+  color: rgba(255,255,255,0.8);
+}
+
+/* Botones cápsula de derivación a otro servicio */
+.btn-derivacion {
+  display: inline-block;
+  padding: 1vh 3vh;
+  border: 1px solid #ffffff;
+  border-radius: 50px;
   text-decoration: none;
-  color: black;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 100;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.btn-derivacion:hover {
+  background-color: #ffffff;
+  color: #130c09;
+}
+
+.flecha-btn {
+  font-size: 1rem;
+}
+
+@media (max-width: 810px) {
+  .container-derivacion {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .titulo-identif {
+    font-size: 5vw;
+    margin-bottom: 3vh;
+  }
+}
+
+
+/* ===================================================================
+   15. ANTES Y DESPUÉS (split)
+   =================================================================== */
+
+/* Flexbox que divide la pantalla en dos mitades */
+.split-container {
+  display: flex;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background-color: transparent;
-  border-color: transparent;
-}
-
-.texto-boton {
-  text-align: center;
-  color: black;
-  font-size: 2.5vh;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
-
-@media screen and (max-width: 810px) and (min-height: 840px) {
-  .texto-boton {
-  font-size: 2vh;
-}
-}
-
-
-/* <--FAQ--> */
-.preguntas-frecuentes {
-  height: calc(var(--vh, 1vh) * 100);
-  margin: 0 25vw;
-  
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
+}
+
+.split-side {
+  flex: 1;
+  height: 100%;
+  position: relative;
   overflow: hidden;
-  align-content: center;
-}
-@media (max-width: 810px) {
-  .preguntas-frecuentes {
-  margin: 0 5vw;
-}
 }
 
-.renglon-faq {
-  display: flex;
-  align-items: center;  /* Centra verticalmente el texto con el ícono */
-  gap: 1vw;            /* Espacio entre el ícono y el texto */
-  padding: 2vh;
-}
-@media (max-width: 810px) {
-  .renglon-faq {
-  padding: 1vh;
-  gap: 3vw;  
-}
-}
-
-.titulo-faq{
-  position: relative; 
-  text-align:center;
-  font-size: 5vh;
-  font-weight: 600;
-  color: white;
-  z-index: 20;
-  margin: 0 0 1vh 0;
-}
-@media (max-width: 810px) {
-  .titulo-faq{
-  font-size: 6vw;
-}
-}
-
-.pregunta-faq{
-  color: white;
-  opacity: 0.9;
-  font-size: 3vh;
-  font-weight: normal;
-  text-align: justify;
-  margin: 0;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .pregunta-faq{
-  font-size: 4vw;  
-}
-}
-
-.respuestas-faq {
-  color: white;
-  opacity: 0.6;
-  font-size: 2vh;
-  font-weight: lighter;
-  text-align: justify;
-  margin: 0 3vw 3vh;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .respuestas-faq {
-  font-size: 3vw;  
-}
-}
-
-.servicios .preguntas-frecuentes hr { /* linea divisoria */
-  position: relative;
-  z-index: 200;
-  height: 0.1vh;
-  background-color: rgb(255, 255, 255, 0.5);
-  border: none;
-  margin: 0;
-}
-
-.imagen-proyecto {
+.img-split {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: cover;
-  transition: filter 0.3s ease, transform 0.3s ease;
-  border-radius: 15%;
-  z-index: 0;
+  display: block;
 }
 
-.imagen-proyecto:hover {
-  transform: scale(1.05);
+/* Papelito superpuesto centrado entre las dos imágenes */
+.papelito-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 40vh;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.papelito-center img {
+  height: 100%;
+  width: auto;
+  filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.3));
+}
+
+/* Labels "ANTES" / "DESPUÉS" o nombre del proyecto */
+.label-foto {
+  position: absolute;
+  bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  opacity: 0.6;
+  z-index: 5;
+}
+
+.antes .label-foto { left: 20px; }
+.despues .label-foto { right: 20px; }
+
+@media (max-width: 810px) {
+  .split-container {
+    flex-direction: column;
+  }
+  .papelito-center {
+    width: 80vw;
+    height: auto;
+  }
+  .papelito-center img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+
+/* ===================================================================
+   16. SECCIÓN ENTREGABLE
+   =================================================================== */
+
+/* Contenedor principal — centrado, ocupa el alto completo */
+.entregable-content {
+  position: relative;
+  z-index: 10;
+  width: 95%;
+  max-width: 1400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Título superior "Lo que recibís." */
+.titulo-seccion-superior {
+  position: absolute;
+  top: 20vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vh, 5rem);
+  font-style: italic;
+  z-index: 5;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Ecuación horizontal A + B + C + D */
+.listado-ecuacion {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.item-ecuacion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+.imagen-abc {
+  width: 15vw;
+  height: auto;
+  margin-bottom: 10px;
+  filter: drop-shadow(0px 10px 20px rgba(0,0,0,0.3));
+}
+
+.simbolo-suma {
+  width: 2vw;
+  height: auto;
+  align-self: flex-start;
+  margin: 6.5vw 1vw 0 1vw;
+  opacity: 0.8;
+}
+
+.item-ecuacion p {
+  font-size: clamp(0.9rem, 1.8vh, 1rem);
+  font-style: italic;
+  font-weight: 200;
+  margin: 0;
+  color: #ffffff;
+}
+
+.item-ecuacion p b {
+  font-weight: 700;
+}
+
+/* Bloque de detalles del plan al pie de la sección */
+.detalles-plan-container {
+  position: absolute;
+  bottom: 6vh;
+  width: 100%;
+  max-width: 55vw;
+  text-align: center;
+}
+
+.titulo-detalles {
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-style: italic;
+  text-align: left;
+  opacity: 0.7;
+  padding-bottom: 0.8vh;
+  margin-bottom: 1.5vh;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detalles-plan {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.col-detalles {
+  flex: 1;
+  text-align: left;
+}
+
+.col-detalles ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.col-detalles li {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 6px;
+}
+
+/* Sección del mockup (entrega final) */
+.container-mockup {
+  width: 100%;
+  max-width: 70vh;
+  margin-bottom: 0;
+  filter: drop-shadow(0px 15px 30px rgba(0,0,0,0.5));
+}
+
+.imagen-mockup {
+  width: 100%;
+  height: auto;
+}
+
+.info-entregable {
+  text-align: center;
+  color: #ffffff;
+}
+
+.titulo-entregable {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4.5vh, 3rem);
+  font-style: italic;
+  margin-bottom: 0;
+}
+
+@media (max-width: 810px) {
+  .entregable-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 4vh 0;
+    height: auto;
+  }
+  .titulo-seccion-superior {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    font-size: 2rem;
+    margin-bottom: 4vh;
+    width: 100%;
+    text-align: center;
+  }
+  .listado-ecuacion {
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+    width: 100%;
+  }
+  .item-ecuacion {
+    flex: none;
+    width: 100%;
+  }
+  .imagen-abc {
+    width: auto;
+    max-width: 8vh;
+    height: auto;
+    margin-bottom: 0;
+  }
+  .simbolo-suma {
+    width: 2vh;
+    margin: 0;
+    align-self: center;
+    opacity: 0.6;
+  }
+  .item-ecuacion p {
+    font-size: 1.5vh;
+    line-height: 0.8;
+  }
+  .detalles-plan-container {
+    position: relative;
+    bottom: 0;
+    margin: 4vh auto 0 auto;
+    max-width: 90vw;
+  }
+  .titulo-detalles {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 1vh;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .detalles-plan {
+    flex-direction: column;
+    gap: 0.5vh;
+  }
+  .col-detalles {
+    text-align: center;
+  }
+  .col-detalles li {
+    font-size: 0.75rem;
+    margin-bottom: 0.5vh;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .container-mockup {
+    max-width: 95vw;
+  }
+}
+
+
+/* ===================================================================
+   17. FAQ (preguntas frecuentes)
+   =================================================================== */
+
+.faq-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 60vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vh, 3.5rem);
+  font-style: italic;
+  margin-bottom: 4vh;
+  font-weight: 400;
+}
+
+.faq-container {
+  width: 100%;
+  margin-bottom: 4vh;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0;
   cursor: pointer;
+  transition: background-color 0.8s ease, color 0.8s ease;
+  border-radius: 5vh;
+}
+
+.faq-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5vh;
+}
+
+.faq-item.active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.faq-item:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5vh;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  transition: padding 0.1s ease;
+  padding: 2vh 3vh;
+}
+
+.faq-item.active .faq-question {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.faq-question b {
+  font-weight: 700;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  opacity: 0;
+  padding: 0 3vh;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  margin-top: 0;
+  padding-bottom: 0;
+  opacity: 1;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease-in;
+}
+
+.faq-item:hover .faq-answer {
+  max-height: 0;
+  opacity: 0;
+}
+
+.faq-item.active:hover .faq-answer {
+  max-height: 12vh;
+  opacity: 0.9;
+}
+
+.faq-answer p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.faq-answer b {
+  font-weight: 600;
+}
+
+/* Botón CTA al pie del FAQ */
+.cta-container {
+  text-align: center;
+}
+
+.btn-cotizacion {
+  display: inline-block;
+  padding: 1vh 3vh;
+  border: 1px solid #ffffff;
+  border-radius: 50px;
+  text-decoration: none;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.btn-cotizacion:hover {
+  background-color: #ffffff;
+  color: #130c09;
+}
+
+.btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-cotizacion:hover .btn-arrow {
+  transform: translateX(5px);
+}
+
+.cta-subtexto {
+  margin-top: 2vh;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+@media (max-width: 810px) {
+  .faq-section {
+    max-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .faq-content {
+    max-width: 90vw;
+    height: auto;
+  }
+  .faq-item.active:hover .faq-answer {
+    max-height: 60vh;
+    opacity: 1;
+  }
+  .faq-item:hover .faq-answer {
+    max-height: 0;
+  }
+  .faq-item.active .faq-answer {
+    max-height: 60vh;
+    opacity: 1;
+    overflow: visible;
+  }
+  .faq-answer p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .faq-titulo {
+    font-size: 2.2rem;
+    margin-bottom: 5vh;
+  }
+  .faq-question {
+    font-size: 1rem;
+    padding: 2vh 3vh;
+  }
+  .btn-cotizacion {
+    font-size: 1.8rem;
+  }
 }
 
 
-/* <--COTIZADOR--> */
+/* ===================================================================
+   18. COTIZADOR
+   =================================================================== */
+
+/* Panel de vidrio esmerilado con las preguntas */
 .contenedor-cotizador {
   position: relative;
   height: 80vh;
@@ -1669,13 +1519,6 @@ button.boton-cotizar {
   animation: fadeSlideIn 1.5s ease forwards;
   z-index: 30;
 }
-@media (max-width: 810px) {
-  .contenedor-cotizador {
-   max-height: 650px;
-   width: 90vw;
-   
-}
-}
 
 .titulo-cotizacion {
   position: relative;
@@ -1684,40 +1527,14 @@ button.boton-cotizar {
   font-weight: 100;
   margin: 4vh 0;
 }
-@media (max-width: 810px) {
-  .titulo-cotizacion {
-   font-size: 5vw;
-}
-}
 
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .titulo-cotizacion {
-   font-size: 3vh;
+/* Fila de pregunta (número | texto | select | ícono) */
+.renglon {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 2vh;
 }
-}
-
-.texto-cotizacion{
-  color: rgb(255, 255, 255);
-  opacity: 0.9;
-  font-size: 1.1vw;
-  font-weight: 100;
-  text-align: justify;
-  margin: 0;
-  z-index: 10;
-}
-@media (max-width: 810px) {
-  .texto-cotizacion{
-   font-size: 4vw;
-   width: 35vw;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .texto-cotizacion {
-   font-size: 2.5vw;
-}
-}
-
 
 .numero-pregunta-cotizacion {
   color: rgb(255, 255, 255);
@@ -1728,101 +1545,22 @@ button.boton-cotizar {
   z-index: 10;
 }
 
-@media (max-width: 810px) {
-  .numero-pregunta-cotizacion{
-   font-size: 6vw;
-   margin: 0;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .numero-pregunta-cotizacion{
-   font-size: 2vh;
-}
-}
-
-.icono-pregunta{
-  cursor: pointer;
-  opacity: 0.8;
-  height: 2vh;
-  position: absolute;
-  right: 1vw;
-  z-index: 60; /* por encima del wrapper */
-}
-@media (max-width: 810px) {
-  .icono-pregunta{
-   margin-right: 0.5vw;
-}
-}
-
-.contenedor-cotizador hr { /* linea divisoria */
-  position: relative;
-  z-index: 200;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border: none;
-  margin: 0;
-}
-
-.contenedor-cotizar-02{
-  position: absolute;
-  bottom: 12vh;
-  height: 5vh;
-  width: 12vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 4vh;
-  z-index: 30;
-  animation: fadeSlideIn 1.5s ease forwards;
-  transition:  background-color 0.3s ease;
-}
-@media (max-width: 810px) {
-  .contenedor-cotizar-02 {
-    bottom: 12vh;  
-    width: 40vw;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 800px) {
-  .contenedor-cotizar-02 {
-   bottom: 16vh;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .contenedor-cotizar-02 {
-   bottom: 20vh;
-}
-}
-
-.contenedor-cotizar-02:hover{
-  transform: scale(1.05);
-  background-color: rgb(0, 0, 0);
-}
-
-.texto-boton-02 {
-  text-align: center;
+.texto-cotizacion {
   color: rgb(255, 255, 255);
-  font-size: 1.8vh;
-  font-weight: 600;
-  transition: color 0.3s ease;
-  animation: fadeSlideIn 1.5s ease forwards;
-}
-@media (max-width: 810px) {
-  .texto-boton-02 {
-   font-size: 4vw;
-}
+  opacity: 0.9;
+  font-size: 1.1vw;
+  font-weight: 100;
+  text-align: justify;
+  margin: 0;
+  z-index: 10;
 }
 
-/* Estilos para los select de las preguntas */
+/* Dropdown de respuesta */
 .select-cotizacion {
   position: absolute;
   right: 3vw;
   height: 4vh;
   width: 10vw;
-  
   border-radius: 4vh;
   border: none;
   background-color: rgba(255, 255, 255, 0.5);
@@ -1833,25 +1571,22 @@ button.boton-cotizar {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-@media (max-width: 810px) {
-  .select-cotizacion {
-   font-size: 4vw;
-   width: 25vw;
-   margin-right: 4vw;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .select-cotizacion {
-   font-size: 2.5vw;
-}
-}
 
 .select-cotizacion:hover {
   background-color: rgba(255, 255, 255, 1);
 }
 
-/* BOX: fixed para que no se mueva con transforms del wrapper */
+/* Ícono de ayuda (?) a la derecha de la fila */
+.icono-pregunta {
+  cursor: pointer;
+  opacity: 0.8;
+  height: 2vh;
+  position: absolute;
+  right: 1vw;
+  z-index: 60;
+}
+
+/* Caja de información flotante al hacer click en (?) */
 .box-pregunta {
   position: fixed;
   left: 80vw;
@@ -1869,14 +1604,7 @@ button.boton-cotizar {
   z-index: 9999;
   pointer-events: none;
 }
-@media (max-width: 810px) {
-  .box-pregunta {
-   width: 60vw;
-   padding: 5vw;
-}
-}
 
-/* Cuando está activo */
 .box-pregunta.active {
   opacity: 1;
   visibility: visible;
@@ -1890,11 +1618,6 @@ button.boton-cotizar {
   font-weight: 600;
   margin-bottom: 0.5vh;
 }
-@media (max-width: 810px) {
-  .titulo-info {
-   font-size: 5vw;
-}
-}
 
 .texto-info {
   color: rgb(0, 0, 0);
@@ -1902,22 +1625,13 @@ button.boton-cotizar {
   font-weight: 100;
   text-align: justify;
 }
-@media (max-width: 810px) {
-  .texto-info {
-   font-size: 4vw;
-}
-}
 
 .icono-info {
   width: 18vw;
   margin-top: 0.5vh;
 }
-@media (max-width: 810px) {
-  .icono-info {
-   width: 60vw;
-}
-}
 
+/* Mensaje de validación de error */
 .mensaje-error {
   color: red;
   font-size: 1.1vw;
@@ -1926,34 +1640,120 @@ button.boton-cotizar {
   opacity: 0;
   transition: opacity 0.3s ease;
   margin-top: 12px;
-  height: 1.4em;        /* mantiene el espacio para evitar "saltos" del layout */
+  height: 1.4em;
   display: block;
-}
-@media (max-width: 810px) {
-  .mensaje-error {
-   font-size: 3vw;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .mensaje-error {
-   font-size: 2vw;
-}
 }
 
 .mensaje-error.visible {
   opacity: 1;
 }
 
-/* RESULTADOS */
-.presupuesto {
-  height: calc(var(--vh, 1vh) * 100);
-  width: 50vw;
-  background-color: beige;
-  border-radius: 5vh;
+@media (max-width: 810px) {
+  .contenedor-cotizador {
+    max-height: 650px;
+    width: 90vw;
+  }
+  .titulo-cotizacion {
+    font-size: 5vw;
+  }
+  .renglon {
+    padding: 1vh;
+  }
+  .numero-pregunta-cotizacion {
+    font-size: 6vw;
+    margin: 0;
+  }
+  .texto-cotizacion {
+    font-size: 4vw;
+    width: 35vw;
+  }
+  .select-cotizacion {
+    font-size: 4vw;
+    width: 25vw;
+    margin-right: 4vw;
+  }
+  .icono-pregunta {
+    margin-right: 0.5vw;
+  }
+  .box-pregunta {
+    width: 60vw;
+    padding: 5vw;
+  }
+  .titulo-info {
+    font-size: 5vw;
+  }
+  .texto-info {
+    font-size: 4vw;
+  }
+  .icono-info {
+    width: 60vw;
+  }
+  .mensaje-error {
+    font-size: 3vw;
+  }
 }
 
-.contenedor-cotizar-03{
+@media screen and (max-width: 810px) and (min-height: 1000px) {
+  .titulo-cotizacion {
+    font-size: 3vh;
+  }
+  .texto-cotizacion {
+    font-size: 2.5vw;
+  }
+  .numero-pregunta-cotizacion {
+    font-size: 2vh;
+  }
+  .select-cotizacion {
+    font-size: 2.5vw;
+  }
+  .mensaje-error {
+    font-size: 2vw;
+  }
+}
+
+
+/* ===================================================================
+   BOTONES DE ACCIÓN (cotizar, confirmar, volver, enviar)
+   =================================================================== */
+
+/* Enlace/botón transparente que envuelve el texto del botón */
+a.boton-cotizar,
+button.boton-cotizar {
+  text-decoration: none;
+  color: black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+/* Botón "COTIZAR" — en la página del cotizador */
+.contenedor-cotizar-02 {
+  position: absolute;
+  bottom: 12vh;
+  height: 5vh;
+  width: 12vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4vh;
+  z-index: 30;
+  animation: fadeSlideIn 1.5s ease forwards;
+  transition: background-color 0.3s ease;
+}
+
+.contenedor-cotizar-02:hover {
+  transform: scale(1.05);
+  background-color: rgb(0, 0, 0);
+}
+
+/* Botón "VOLVER" — en la página de presupuesto */
+.contenedor-cotizar-03 {
   position: absolute;
   bottom: 3.5vh;
   left: 6vh;
@@ -1966,28 +1766,16 @@ button.boton-cotizar {
   border-radius: 5vh;
   z-index: 30;
   animation: fadeSlideIn 1.5s ease forwards;
-  transition:  background-color 0.3s ease;
-}
-@media (max-width: 810px) {
-  .contenedor-cotizar-03{
-   padding: 0 5vw;
-   left: 2.5vh;
-   bottom: 2.5vh;
-}
-}
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .contenedor-cotizar-03{
-    padding: 0 3vw;
-    height: 3vh;
-}
+  transition: background-color 0.3s ease;
 }
 
-.contenedor-cotizar-03:hover{
+.contenedor-cotizar-03:hover {
   transform: scale(1.05);
   background-color: rgb(0, 0, 0);
 }
 
-.contenedor-cotizar-04{
+/* Botón "CONFIRMAR" — en la página de presupuesto */
+.contenedor-cotizar-04 {
   position: absolute;
   bottom: 3.5vh;
   right: 6vh;
@@ -2000,27 +1788,43 @@ button.boton-cotizar {
   border-radius: 5vh;
   z-index: 30;
   animation: fadeSlideIn 1.5s ease forwards;
-  transition:  background-color 0.3s ease;
-}
-@media (max-width: 810px) {
-  .contenedor-cotizar-04{
-   padding: 0 5vw;
-   right: 2.5vh;
-   bottom: 2.5vh;
-}
+  transition: background-color 0.3s ease;
 }
 
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .contenedor-cotizar-04{
-    padding: 0 3vw;
-    height: 3vh;
-}
-}
-
-
-.contenedor-cotizar-04:hover{
+.contenedor-cotizar-04:hover {
   transform: scale(1.05);
   background-color: rgb(0, 0, 0);
+}
+
+/* Botón "ENVIAR PRESUPUESTO" — en la página de datos del cliente */
+.contenedor-cotizar-05 {
+  position: relative;
+  justify-self: center;
+  height: 6vh;
+  width: fit-content;
+  padding: 0 3vw;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 3vh;
+  z-index: 30;
+  animation: fadeSlideIn 1.5s ease forwards;
+  transition: background-color 0.3s ease;
+}
+
+.contenedor-cotizar-05:hover {
+  transform: scale(1.05);
+  background-color: rgb(0, 0, 0);
+}
+
+/* Texto interior de los botones oscuros */
+.texto-boton-02 {
+  text-align: center;
+  color: rgb(255, 255, 255);
+  font-size: 1.8vh;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  animation: fadeSlideIn 1.5s ease forwards;
 }
 
 .texto-boton-03 {
@@ -2031,32 +1835,59 @@ button.boton-cotizar {
   transition: color 0.3s ease;
   animation: fadeSlideIn 1.5s ease forwards;
 }
+
 @media (max-width: 810px) {
+  .contenedor-cotizar-02 {
+    bottom: 12vh;
+    width: 40vw;
+  }
+  .contenedor-cotizar-03 {
+    padding: 0 5vw;
+    left: 2.5vh;
+    bottom: 2.5vh;
+  }
+  .contenedor-cotizar-04 {
+    padding: 0 5vw;
+    right: 2.5vh;
+    bottom: 2.5vh;
+  }
+  .texto-boton-02 {
+    font-size: 4vw;
+  }
   .texto-boton-03 {
-   font-size: 4vw;
+    font-size: 4vw;
+  }
 }
+
+@media screen and (max-width: 810px) and (min-height: 800px) {
+  .contenedor-cotizar-02 {
+    bottom: 16vh;
+  }
 }
 
 @media screen and (max-width: 810px) and (min-height: 1000px) {
+  .contenedor-cotizar-02 {
+    bottom: 20vh;
+  }
+  .contenedor-cotizar-03 {
+    padding: 0 3vw;
+    height: 3vh;
+  }
+  .contenedor-cotizar-04 {
+    padding: 0 3vw;
+    height: 3vh;
+  }
   .texto-boton-03 {
-   font-size: 1.5vh;
-}
-}
-
-.titulo-grilla-presupuesto {
-  position: relative;
-  color: rgb(255, 255, 255);
-  margin: 0;
-  font-size: 2vh;
-  font-weight: 100;
-}
-@media (max-width: 810px) {
-  .titulo-grilla-presupuesto {
-   font-size: 1.8vh;
-   
-}
+    font-size: 1.5vh;
+  }
 }
 
+
+/* ===================================================================
+   19. PRESUPUESTO
+   =================================================================== */
+
+/* Grilla de detalle y descripción del presupuesto */
 .contenedor-grilla-presupuesto {
   width: 100%;
   position: absolute;
@@ -2067,12 +1898,6 @@ button.boton-cotizar {
   overflow: hidden;
   align-items: stretch;
 }
-@media (max-width: 810px) {
-  .contenedor-grilla-presupuesto {
-   grid-template-columns: min-content 1fr;
-   top: 11vh;
-}
-}
 
 .item-presupuesto {
   position: relative;
@@ -2082,16 +1907,12 @@ button.boton-cotizar {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@media screen and (max-width: 1200px) and (min-height: 700px) {
-  .item-presupuesto {
-   padding: 1vh;
-}
-}
-
-@media (max-width: 810px) {
-  .item-presupuesto {
-   padding: 0.7vh;
-}
+.titulo-grilla-presupuesto {
+  position: relative;
+  color: rgb(255, 255, 255);
+  margin: 0;
+  font-size: 2vh;
+  font-weight: 100;
 }
 
 .texto-presupuesto {
@@ -2104,24 +1925,6 @@ button.boton-cotizar {
   z-index: 10;
 }
 
-@media (max-width: 810px) {
-  .texto-presupuesto {
-   font-size: 3.5vw;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .texto-presupuesto {
-   font-size: 1.8vh;
-}
-}
-
-@media (max-height: 650px) {
-  .texto-presupuesto {
-   font-size: 2vh;
-}
-}
-
 .texto-detalle-presupuesto {
   color: rgb(255, 255, 255);
   opacity: 0.7;
@@ -2131,24 +1934,8 @@ button.boton-cotizar {
   margin: 0;
   z-index: 10;
 }
-@media (max-width: 810px) {
-  .texto-detalle-presupuesto {
-   font-size: 3.5vw;
-}
-}
 
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .texto-detalle-presupuesto {
-   font-size: 1.6vh;
-}
-}
-
-@media (max-height: 650px) {
-  .texto-detalle-presupuesto {
-   font-size: 1.8vh;
-}
-}
-
+/* Chip con el precio total */
 .contenedor-precio {
   position: absolute;
   left: 50%;
@@ -2165,18 +1952,6 @@ button.boton-cotizar {
   border-radius: 1.5vh;
   z-index: 30;
 }
-@media (max-width: 810px) {
-  .contenedor-precio {
-   bottom: 13vh;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .contenedor-precio {
-   bottom: 9vh;
-   height: 3.5vh;
-}
-}
 
 .texto-precio {
   text-align: center;
@@ -2185,18 +1960,8 @@ button.boton-cotizar {
   font-weight: 600;
   transition: color 0.3s ease;
 }
-@media (max-width: 810px) {
-  .texto-precio {
-   font-size: 1.8vh;
-}
-}
 
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .texto-precio {
-   font-size: 1.6vh;
-}
-}
-
+/* Fila de términos y condiciones */
 .terminos-condiciones {
   position: absolute;
   left: 50%;
@@ -2204,31 +1969,21 @@ button.boton-cotizar {
   bottom: 11vh;
   display: flex;
   justify-content: center;
-  align-items: center;  /* Centra verticalmente el texto con el ícono */
-  gap: 0.3vw;            /* Espacio entre el ícono y el texto */
+  align-items: center;
+  gap: 0.3vw;
   width: max-content;
 }
-@media (max-width: 810px) {
-  .terminos-condiciones {
-   width: 80vw;
-   bottom: 9.5vh;
-}
-}
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .terminos-condiciones {
-   bottom: 6vh;
-}
+
+.checkbox-contenedor {
+  position: relative;
+  display: inline-block;
+  margin-right: 1vw;
 }
 
-.pdf-condiciones{
-  color: white;
-  font-size: 2vh;
-  font-weight: 500;
-}
-@media (max-width: 810px) {
-  .pdf-condiciones {
-   font-size: 1.6vh;
-}
+.checkbox-contenedor input[type="checkbox"] {
+  width: 1.5vh;
+  height: 1.5vh;
+  cursor: pointer;
 }
 
 .texto-condiciones {
@@ -2240,24 +1995,14 @@ button.boton-cotizar {
   z-index: 10;
   display: inline;
 }
-@media (max-width: 810px) {
-  .texto-condiciones {
-   font-size: 1.6vh;
-}
+
+.pdf-condiciones {
+  color: white;
+  font-size: 2vh;
+  font-weight: 500;
 }
 
-.checkbox-contenedor {
-  position: relative;
-  display: inline-block;
-  margin-right: 1vw;
-}
-
-.checkbox-contenedor input[type="checkbox"] {
-  width: 1.5vh;  
-  height: 1.5vh;
-  cursor: pointer;
-}
-
+/* Asterisco de error en el checkbox */
 .cruz-error {
   position: relative;
   color: red;
@@ -2265,22 +2010,99 @@ button.boton-cotizar {
   font-weight: 600;
   opacity: 0;
   transition: opacity 0.3s ease;
-  pointer-events: none; /* Para que no interfiera con el checkbox */
+  pointer-events: none;
 }
 
 .cruz-error.visible {
   opacity: 1;
 }
 
+/* Estado de error en el texto de condiciones */
 .error-texto-condiciones {
   color: red !important;
   opacity: 1 !important;
-  
-  transition:  color 0.3s ease, transform 0.3s ease;
-  text-decoration-color: red !important; /* Subrayado rojo */
+  transition: color 0.3s ease, transform 0.3s ease;
+  text-decoration-color: red !important;
 }
 
-/* DATOS CLIENTE */
+@media (max-width: 810px) {
+  .contenedor-grilla-presupuesto {
+    grid-template-columns: min-content 1fr;
+    top: 11vh;
+  }
+  .item-presupuesto {
+    padding: 0.7vh;
+  }
+  .titulo-grilla-presupuesto {
+    font-size: 1.8vh;
+  }
+  .texto-presupuesto {
+    font-size: 3.5vw;
+  }
+  .texto-detalle-presupuesto {
+    font-size: 3.5vw;
+  }
+  .contenedor-precio {
+    bottom: 13vh;
+  }
+  .texto-precio {
+    font-size: 1.8vh;
+  }
+  .terminos-condiciones {
+    width: 80vw;
+    bottom: 9.5vh;
+  }
+  .texto-condiciones {
+    font-size: 1.6vh;
+  }
+  .pdf-condiciones {
+    font-size: 1.6vh;
+  }
+  .cruz-error {
+    font-size: 2vh;
+  }
+}
+
+@media screen and (max-width: 1200px) and (min-height: 700px) {
+  .item-presupuesto {
+    padding: 1vh;
+  }
+}
+
+@media screen and (max-width: 810px) and (min-height: 1000px) {
+  .texto-presupuesto {
+    font-size: 1.8vh;
+  }
+  .texto-detalle-presupuesto {
+    font-size: 1.6vh;
+  }
+  .contenedor-precio {
+    bottom: 9vh;
+    height: 3.5vh;
+  }
+  .texto-precio {
+    font-size: 1.6vh;
+  }
+  .terminos-condiciones {
+    bottom: 6vh;
+  }
+}
+
+@media (max-height: 650px) {
+  .texto-presupuesto {
+    font-size: 2vh;
+  }
+  .texto-detalle-presupuesto {
+    font-size: 1.8vh;
+  }
+}
+
+
+/* ===================================================================
+   20. DATOS CLIENTE
+   =================================================================== */
+
+/* Panel de vidrio esmerilado con los campos del formulario */
 .contenedor-datoscliente {
   position: relative;
   height: 70vh;
@@ -2296,23 +2118,11 @@ button.boton-cotizar {
   animation: fadeSlideIn 1.5s ease forwards;
   z-index: 30;
 }
-@media (max-width: 810px) {
-  .contenedor-datoscliente {
-   max-height: 550px;
-   width: 90vw;
-}
-}
-
-@media screen and (max-width: 810px) and (min-height: 1000px) {
-  .contenedor-datoscliente {
-   max-height: 800px;
-}
-}
 
 .contenedor-grilla-datoscliente {
   width: 100%;
   position: relative;
-  display:block;
+  display: block;
   grid-template-columns: 1fr;
   grid-template-rows: min-content;
   overflow: hidden;
@@ -2326,20 +2136,15 @@ button.boton-cotizar {
   z-index: 30;
 }
 
-.titulo-datoscliente{
+.titulo-datoscliente {
   position: relative;
   color: rgb(255, 255, 255);
   margin-top: 1vh;
   font-size: 2vh;
   font-weight: 100;
 }
-@media (max-width: 810px) {
-  .titulo-datoscliente{
-   font-size: 4vw;
-   margin-top: 0;
-}
-}
 
+/* Campo de input de texto */
 .contenedor-completardatos {
   height: 4vh;
   padding: 0 3vw;
@@ -2350,13 +2155,7 @@ button.boton-cotizar {
   border-radius: 2vh;
   z-index: 30;
 }
-@media (max-width: 810px) {
-  .contenedor-completardatos{
-   margin: 0 5vw;
-}
-}
 
-/* INPUTS DENTRO DE .contenedor-completardatos */
 .contenedor-completardatos input {
   width: 100%;
   height: 100%;
@@ -2364,16 +2163,9 @@ button.boton-cotizar {
   outline: none;
   background: transparent;
   font-size: 2vh;
-  color: #000; /* texto negro */
+  color: #000;
   text-align: center;
   font-family: 'Crimson Pro', serif;
-}
-@media (max-width: 810px) {
-  .contenedor-completardatos input {
-   font-size: 18px;
-   padding: 0;
-   box-sizing: border-box;
-}
 }
 
 .contenedor-completardatos input::placeholder {
@@ -2388,72 +2180,62 @@ button.boton-cotizar {
   margin-top: 3vh;
 }
 
-.contenedor-cotizar-05{
-  position: relative;
-  justify-self: center;
-  height: 6vh;
-  width: fit-content;
-  padding: 0 3vw;
-
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 3vh;
-  z-index: 30;
-  animation: fadeSlideIn 1.5s ease forwards;
-  transition:  background-color 0.3s ease;
+@media (max-width: 810px) {
+  .contenedor-datoscliente {
+    max-height: 550px;
+    width: 90vw;
+  }
+  .titulo-datoscliente {
+    font-size: 4vw;
+    margin-top: 0;
+  }
+  .contenedor-completardatos {
+    margin: 0 5vw;
+  }
+  .contenedor-completardatos input {
+    font-size: 18px;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
 
-.contenedor-cotizar-05:hover{
-  transform: scale(1.05);
-  background-color: rgb(0, 0, 0);
+@media screen and (max-width: 810px) and (min-height: 1000px) {
+  .contenedor-datoscliente {
+    max-height: 800px;
+  }
 }
 
 
+/* ===================================================================
+   21. AGRADECIMIENTO
+   =================================================================== */
 
-/* AGRADECIMIENTO */
 .contenedor-agradecimiento {
   position: relative;
   display: inline;
   gap: 0;
   width: 30vw;
-  
   align-items: center;
   justify-items: center;
   opacity: 0;
   animation: fadeSlideIn 1.5s ease forwards;
   z-index: 30;
 }
-@media (max-width: 810px) {
-  .contenedor-agradecimiento {
-  width: 80vw;
-}
-}
 
-.imagen-agradecimiento{
+.imagen-agradecimiento {
   height: 20vh;
   margin-bottom: 0;
 }
-@media (max-width: 810px) {
-  .imagen-agradecimiento{
-  width: 50w;
-}
-}
 
-.titulo-agradecimiento{
+.titulo-agradecimiento {
   color: rgb(255, 255, 255);
   font-size: 8vh;
   font-weight: 100;
   text-align: center;
   margin-bottom: 3vh;
 }
-@media (max-width: 810px) {
-  .titulo-agradecimiento{
-  font-size: 15vw;
-}
-}
 
-.texto-agradecimiento{
+.texto-agradecimiento {
   color: rgb(255, 255, 255, 0.6);
   font-size: 2vh;
   font-weight: 100;
@@ -2461,16 +2243,11 @@ button.boton-cotizar {
   margin-bottom: 3vh;
 }
 
-.titulo-construccion{
-  color: rgb(255, 255, 255);
-  font-size: 8vh;
-  font-weight: 100;
-  text-align: center;
-  margin-bottom: 3vh;
-}
 @media (max-width: 810px) {
-  .titulo-construccion{
-  font-size: 10vw;
+  .contenedor-agradecimiento {
+    width: 80vw;
+  }
+  .titulo-agradecimiento {
+    font-size: 15vw;
+  }
 }
-}
-

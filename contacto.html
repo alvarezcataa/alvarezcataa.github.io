@@ -9,50 +9,77 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
 
   <link rel="stylesheet" href="css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <header>
 <body class="pagina">
+
+   <!-- Navbar -->
   <nav class="navbar">
-    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo logo-animado" /></a>
+    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo" /></a>
+   
+
+      <!-- Menú desktop -->
+   <nav class="cavla-nav__center" aria-label="Principal">
+    <a href="index.html">Inicio</a>
+    <a href="filosofia.html">Filosofía</a>
+    <a href="sobremi.html">Sobre mí</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+
+  <!-- Menú mobile -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      
+      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
       <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="proyectos.html" onclick="toggleMenu()">Proyectos</a></li>
-      <li><a href="servicios.html" onclick="toggleMenu()">Servicios</a></li>
-      <li><a href="recursos.html" onclick="toggleMenu()">Recursos</a></li>
       <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
       <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
 
-<section class="page mainContent">
-    <div class="opacidad shadow"></div>
-    <h1 class="titulo-pagina translate" data-speed="0.1">CONTACTO</h1>
-    <h2 class="subtitulo-pagina translate" data-speed="0.1">Estoy a un mensaje de distancia.</h2>
-    <img src="images/flecha-19.png" class="flecha">
-    <img src="images/CONTACTO/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
+    <!-- PORTADA-->
+  <section class="page mainContent">
+    <div class="opacidad"></div>
+    <div class="bg-gradient"></div>
+    <div class="shadowa"></div>
 
+    <div class="bloque-titulos translate" data-speed="0.1">
+    <h1 class="titulo-pagina">Contacto</h1>
+    <h2 class="subtitulo-pagina">
+      <span>ESTOY</span> <span>A</span> <span>UN</span> <span>MENSAJE</span> <span>DE</span> <span>DISTANCIA</span> 
+    </h2>
+  </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Desliza</span>
+      <span class="scroll-cue__line">
+         <span class="scroll-cue__dot"></span>
+      </span>
+    </div>
+    <img src="images/CONTACTO/PORTADA.jpg" class="page_fondo translate" data-speed="0.6">
   </section>
-</header>
-  
+
 <section class="contacto mainContent">
     <div class="section__data">
-        <h1 class="subtitulo-seccion">MAIL</h1>
-        <p class="texto-contacto">office@estudiocavla.com</p>
-        <h1 class="subtitulo-seccion">INSTAGRAM</h1>
-        <p class="texto-contacto">@estudio.cavla</p>
-        <h1 class="subtitulo-seccion">FACEBOOK</h1>
-        <p class="texto-contacto">Estudio CAVLA</p>
-        <h1 class="subtitulo-seccion">LINKEDIN</h1>
-        <p class="texto-contacto">Estudio CAVLA</p>
+        <h1 class="subtitulo-seccion">Mail</h1>
+        <!-- Para correos se usa 'mailto:' antes de la dirección -->
+        <p class="texto-contacto"><a href="mailto:office@estudiocavla.com">office@estudiocavla.com</a></p>
+        
+        <h1 class="subtitulo-seccion">Instagram</h1>
+        <p class="texto-contacto"><a href="https://www.instagram.com/estudio.cavla" target="_blank">@estudio.cavla</a></p>
+        
+        <h1 class="subtitulo-seccion">Facebook</h1>
+        <p class="texto-contacto"><a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank">Estudio CAVLA</a></p>
+        
+        <h1 class="subtitulo-seccion">YouTube</h1>
+        <p class="texto-contacto"><a href="https://www.youtube.com/@EstudioCAVLA" target="_blank">Estudio CAVLA</a></p>
     </div>
 </section>
-
 
   <script src="js/scripts.js"></script>
 </body>
