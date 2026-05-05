@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA — Tu presupuesto</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --fondo:       #13090a;
+      --linea:       #3a261f;
+      --crema:       #ece3d2;
+      --crema-suave: #d8cdb9;
+      --crema-mute:  #a89c89;
+      --acento:      #640000;
+    }
+
+    .presupuesto-pagina {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--fondo);
+      padding: 80px 20px 40px;
+    }
+
+    .presupuesto-luz {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(160,90,40,.22) 0%, transparent 65%);
+      z-index: 0;
+    }
+
+    .presupuesto {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Header */
+    .presupuesto__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      line-height: 1.05;
+    }
+
+    .presupuesto__subtitulo {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    /* Separador */
+    .separador {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Resumen cotización */
+    .resumen {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--linea);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .resumen__fila {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--linea);
+    }
+
+    .resumen__fila:last-child {
+      border-bottom: none;
+    }
+
+    .resumen__label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      flex-shrink: 0;
+      width: 110px;
+    }
+
+    .resumen__valor {
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .resumen__fila.destacada {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .resumen__precio {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 400;
+      font-style: italic;
+      color: white;
+    }
+
+    /* Sección cómo sigue */
+    .como-sigue {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .como-sigue__titulo {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .paso {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .paso__numero {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,0.3);
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .paso__texto {
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    .paso__texto strong {
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+
+    /* Formulario datos */
+    .formulario {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .formulario__titulo {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .campo {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .campo__label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .campo__input {
+      padding: 12px 16px;
+      background: transparent;
+      border: 1px solid var(--linea);
+      border-radius: 50px;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color .3s;
+    }
+
+    .campo__input:focus {
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .campo__input::placeholder {
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Términos */
+    .terminos {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .terminos__checkbox {
+      margin-top: 2px;
+      flex-shrink: 0;
+      accent-color: white;
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+
+    .terminos__texto {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    .terminos__link {
+      color: rgba(255,255,255,0.7);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .terminos__link:hover {
+      color: white;
+    }
+
+    /* Mensaje error */
+    .mensaje-error {
+      font-size: 12px;
+      color: #c97a7a;
+      min-height: 16px;
+      padding-left: 4px;
+      display: none;
+    }
+
+    .mensaje-error.visible {
+      display: block;
+    }
+
+    /* Botón */
+    .boton-confirmar {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-style: italic;
+      font-size: 1.5vh;
+      font-weight: 700;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      transition: all .4s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .boton-confirmar:hover {
+      background: white;
+      color: var(--fondo);
+    }
+
+    .boton-confirmar:disabled {
+      opacity: .4;
+      pointer-events: none;
+    }
+
+    .volver {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      text-decoration: none;
+      text-align: center;
+      transition: color .3s;
+      display: block;
+    }
+
+    .volver:hover { color: white; }
+
+    @media (max-width: 600px) {
+      .presupuesto-pagina { padding: 70px 16px 32px; }
+      .presupuesto { gap: 20px; }
+      .resumen__label { width: 90px; }
+    }
+  </style>
+</head>
+
+<body class="pagina">
+
+  <!-- Navbar -->
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="../../index.html">Inicio</a>
+      <a href="../../filosofia.html">Filosofía</a>
+      <a href="../../sobremi.html">Sobre mí</a>
+      <a href="../../contacto.html">Contacto</a>
+    </nav>
+    <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="presupuesto-luz"></div>
+
+  <div class="presupuesto-pagina">
+    <div class="presupuesto">
+
+      <!-- Header -->
+      <div>
+        <h1 class="presupuesto__titulo">Tu presupuesto.</h1>
+        <span class="presupuesto__subtitulo">Asesoría espacial · Residencial</span>
+      </div>
+
+      <div class="separador"></div>
+
+      <!-- Resumen cotización -->
+      <div class="resumen" id="resumen-cotizacion">
+        <div class="resumen__fila">
+          <span class="resumen__label">Ambiente</span>
+          <span class="resumen__valor" id="r-ambiente">—</span>
+        </div>
+        <div class="resumen__fila">
+          <span class="resumen__label">Superficie</span>
+          <span class="resumen__valor" id="r-superficie">—</span>
+        </div>
+        <div class="resumen__fila">
+          <span class="resumen__label">Estado</span>
+          <span class="resumen__valor" id="r-estado">—</span>
+        </div>
+        <div class="resumen__fila" id="fila-descuento" style="display:none">
+          <span class="resumen__label">Descuento</span>
+          <span class="resumen__valor" id="r-descuento">—</span>
+        </div>
+        <div class="resumen__fila destacada">
+          <span class="resumen__label">Total</span>
+          <span class="resumen__precio" id="r-precio">—</span>
+        </div>
+      </div>
+
+      <div class="separador"></div>
+
+      <!-- Cómo sigue -->
+      <div class="como-sigue">
+        <span class="como-sigue__titulo">¿Cómo sigue?</span>
+        <div class="paso">
+          <span class="paso__numero">01</span>
+          <span class="paso__texto"><strong>Completás el relevamiento virtual.</strong> Te pedimos fotos, medidas y algunos datos del espacio. Lo hacés a tu ritmo desde el celular.</span>
+        </div>
+        <div class="paso">
+          <span class="paso__numero">02</span>
+          <span class="paso__texto"><strong>Agendás nuestra videollamada.</strong> Elegís el día y horario que mejor te quede. La reunión dura hasta 90 minutos.</span>
+        </div>
+        <div class="paso">
+          <span class="paso__numero">03</span>
+          <span class="paso__texto"><strong>Recibís tu propuesta.</strong> Dentro de las 48hs hábiles posteriores a la reunión te entregamos todo por mail.</span>
+        </div>
+      </div>
+
+      <div class="separador"></div>
+
+      <!-- Formulario datos -->
+      <div class="formulario">
+        <span class="formulario__titulo">Tus datos</span>
+        <div class="campo">
+          <label class="campo__label" for="nombre">Nombre</label>
+          <input type="text" id="nombre" class="campo__input" placeholder="Catalina" autocomplete="given-name" />
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="apellido">Apellido</label>
+          <input type="text" id="apellido" class="campo__input" placeholder="Álvarez" autocomplete="family-name" />
+        </div>
+        <div class="campo">
+          <label class="campo__label" for="email">E-mail</label>
+          <input type="email" id="email" class="campo__input" placeholder="hola@ejemplo.com" autocomplete="email" />
+        </div>
+      </div>
+
+      <!-- Términos -->
+      <div class="terminos">
+        <input type="checkbox" id="acepto-terminos" class="terminos__checkbox" />
+        <label for="acepto-terminos" class="terminos__texto">
+          He leído y acepto los
+          <a href="../../images/SERVICIOS/Términos y Condiciones.pdf" class="terminos__link" target="_blank" rel="noopener noreferrer">
+            Términos y Condiciones
+          </a>
+        </label>
+      </div>
+
+      <!-- Error -->
+      <div class="mensaje-error" id="mensaje-error"></div>
+
+      <!-- Botón -->
+      <button class="boton-confirmar" id="boton-confirmar">
+        Confirmar y continuar
+      </button>
+
+      <a href="Cotizacion.html" class="volver">← Volver al cotizador</a>
+
+    </div>
+  </div>
+
+  <script>
+    // Toggle menú
+    const sideMenu = document.getElementById('sideMenu');
+    window.toggleMenu = function() {
+      if (!sideMenu) return;
+      sideMenu.classList.toggle('open');
+    };
+    document.addEventListener('click', function(e) {
+      if (!sideMenu || !sideMenu.classList.contains('open')) return;
+      const toggle = document.querySelector('.menu-toggle');
+      if (sideMenu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+      sideMenu.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
+    });
+  </script>
+
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyONYIB1BoIiCITQjDJl61UWMRvldSk5vw6eWahm3Z72FWK4E7u2T51d7PJ8gRhm0zU/exec";
+
+    // Leer parámetros de la URL
+    const params     = new URLSearchParams(window.location.search);
+    const ambiente   = params.get('ambiente')         || '';
+    const superficie = params.get('superficie')       || '';
+    const estado     = params.get('estado')           || '';
+    const precio     = params.get('precio')           || '';
+    const descPct    = params.get('descuento_pct')    || '';
+    const descCodigo = params.get('descuento_codigo') || '';
+
+    // Mostrar resumen
+    document.getElementById('r-ambiente').textContent   = ambiente   || '—';
+    document.getElementById('r-superficie').textContent = superficie || '—';
+    document.getElementById('r-estado').textContent     = estado     || '—';
+    document.getElementById('r-precio').textContent     = precio     || '—';
+
+    if (descPct || descCodigo) {
+      document.getElementById('fila-descuento').style.display = 'flex';
+      document.getElementById('r-descuento').textContent =
+        descCodigo && descPct ? `${descCodigo} (${descPct})` : descPct || descCodigo;
+    }
+
+    // Confirmar y enviar
+    document.getElementById('boton-confirmar').addEventListener('click', async function() {
+      const nombre   = document.getElementById('nombre').value.trim();
+      const apellido = document.getElementById('apellido').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const acepto   = document.getElementById('acepto-terminos').checked;
+      const error    = document.getElementById('mensaje-error');
+
+      // Validaciones
+      if (!nombre || !apellido || !email) {
+        error.textContent = '* Completá todos los campos para continuar.';
+        error.classList.add('visible');
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        error.textContent = '* Ingresá un e-mail válido.';
+        error.classList.add('visible');
+        return;
+      }
+      if (!acepto) {
+        error.textContent = '* Debés aceptar los Términos y Condiciones para continuar.';
+        error.classList.add('visible');
+        return;
+      }
+
+      error.classList.remove('visible');
+      this.disabled    = true;
+      this.textContent = 'Procesando...';
+
+      // Armar payload para Apps Script
+      const data = {
+        cotizacion: {
+          servicio:         'Asesoría Espacial Residencial',
+          ambiente:         ambiente,
+          superficie:       superficie,
+          estado:           estado,
+          total:            precio,
+          descuento_pct:    descPct    || '',
+          descuento_codigo: descCodigo || ''
+        },
+        cliente: {
+          nombre:   nombre,
+          apellido: apellido,
+          email:    email
+        }
+      };
+
+      // Enviar al Apps Script via iframe (evita CORS)
+      try {
+        let iframe = document.getElementById('iframe-post');
+        if (!iframe) {
+          iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.name = 'iframe-post';
+          iframe.id   = 'iframe-post';
+          document.body.appendChild(iframe);
+        }
+
+        const tempForm = document.createElement('form');
+        tempForm.style.display = 'none';
+        tempForm.method  = 'POST';
+        tempForm.action  = APPS_SCRIPT_URL;
+        tempForm.target  = 'iframe-post';
+        tempForm.enctype = 'application/x-www-form-urlencoded';
+
+        const input = document.createElement('input');
+        input.type  = 'hidden';
+        input.name  = 'payload';
+        input.value = JSON.stringify(data);
+        tempForm.appendChild(input);
+        document.body.appendChild(tempForm);
+        tempForm.submit();
+        tempForm.remove();
+
+        // Guardamos los datos del cliente en la URL para las pantallas siguientes
+        // No necesitamos esperar respuesta del script para continuar
+        // El código de proyecto lo genera el script en Drive de forma asíncrona
+        setTimeout(function() {
+          const nextParams = new URLSearchParams({
+            nombre:   nombre,
+            apellido: apellido,
+            email:    email,
+            ambiente:   ambiente,
+            superficie: superficie,
+            estado:     estado,
+            precio:     precio,
+            descuento:  descCodigo && descPct
+                          ? `${descCodigo} (${descPct})`
+                          : descPct || 'Sin descuento'
+          });
+          window.location.href = `pago.html?${nextParams.toString()}`;
+        }, 800);
+
+      } catch (err) {
+        this.disabled    = false;
+        this.textContent = 'Confirmar y continuar';
+        error.textContent = '* Ocurrió un error. Intentá de nuevo.';
+        error.classList.add('visible');
+      }
+    });
+  </script>
+
+</body>
+</html>

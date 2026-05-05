@@ -27,9 +27,9 @@ export default async function handler(req, res) {
         ],
         external_reference: codigo_proyecto,
         back_urls: {
-          success: `${req.headers.origin}/Residencial/AsesoríaEspacial/Relevamiento.html?codigo=${codigo_proyecto}&pago=ok&tipo=${tipo_pago}`,
-          failure: `${req.headers.origin}/Residencial/AsesoríaEspacial/Pago.html?error=true`,
-          pending: `${req.headers.origin}/Residencial/AsesoríaEspacial/Pago.html?pendiente=true`
+          success: `${req.headers.origin}/Residencial/AsesoríaEspacial/relevamiento.html?codigo=${codigo_proyecto}&pago=ok&tipo=${tipo_pago}`,
+          failure: `${req.headers.origin}/Residencial/AsesoríaEspacial/pago.html?error=true`,
+          pending: `${req.headers.origin}/Residencial/AsesoríaEspacial/pago.html?pendiente=true`
         },
         auto_return: 'approved',
         statement_descriptor: 'ESTUDIO CAVLA',

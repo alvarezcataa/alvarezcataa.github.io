@@ -627,16 +627,19 @@
     document.getElementById('boton-continuar').addEventListener('click', function() {
       if (!this.classList.contains('activo')) return;
 
+      const codigoUsado = document.getElementById('input-codigo').value.trim().toUpperCase();
+
       const params = new URLSearchParams({
-        servicio:   'Asesoría Espacial',
-        ambiente:   seleccion.ambiente.label,
-        superficie: seleccion.superficie.label,
-        estado:     seleccion.estado.label,
-        precio:     document.getElementById('precio-final').textContent.trim(),
-        descuento:  descuentoAplicado > 0 ? `${descuentoAplicado}%` : 'ninguno'
+       servicio:          'Asesoría Espacial',
+       ambiente:          seleccion.ambiente.label,
+       superficie:        seleccion.superficie.label,
+       estado:            seleccion.estado.label,
+       precio:            document.getElementById('precio-final').textContent.trim(),
+       descuento_pct:     descuentoAplicado > 0 ? `${descuentoAplicado}%` : '',
+       descuento_codigo:  codigoUsado || ''
       });
 
-      window.location.href = `../../Residencial/AsesoríaEspacial/Presupuesto.html?${params.toString()}`;
+      window.location.href = `../../Residencial/AsesoríaEspacial/confirmación.html?${params.toString()}`;
     });
   </script>
 
