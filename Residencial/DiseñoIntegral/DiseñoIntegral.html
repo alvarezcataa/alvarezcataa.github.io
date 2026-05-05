@@ -15,26 +15,39 @@
 </head>
 <body>
   
-   <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="../../index.html"><img src="../../images/LOGO.png" alt="Logo" class="logo" /></a>
+   <!-- Navbar -->
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+
+      <!-- Menú desktop -->
+   <nav class="cavla-nav__center" aria-label="Principal">
+    <a href="../../index.html">Inicio</a>
+    <a href="../../filosofia.html">Filosofía</a>
+    <a href="../../sobremi.html">Sobre mí</a>
+    <a href="../../contacto.html">Contacto</a>
+  </nav>
+
+  <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+
+  <!-- Menú mobile -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
-    <div class="side-menu" id="sideMenu">
-      <ul>
-        <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-        <li><a href="../../servicios.html" onclick="toggleMenu()">Servicios</a></li>
-        <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
-        <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
-      </ul>
-    </div>
-</header>
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
 
 
   <!-- PORTADA-->
   <section class="page mainContent">
-    <div class="opacidad shadow"></div>
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div>
 
     <div class="bloque-titulos translate" data-speed="0.1">
     <h1 class="titulo-servicios">Diseño Integral</h1>
@@ -43,7 +56,12 @@
     </h2>
   </div>
 
-    <img src="../../images/flecha-19.png" class="flecha">
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Desliza</span>
+      <span class="scroll-cue__line">
+         <span class="scroll-cue__dot"></span>
+      </span>
+    </div>
     <img src="../../images/SERVICIOS/RESIDENCIAL/ANTEPROYECTO.jpg" class="page_fondo translate" data-speed="0.6">
   </section>
 

@@ -22,8 +22,8 @@
 <body class="inicio">
 
   <!-- Navbar -->
-  <nav class="navbar">
-    <a href="index.html"><img src="images/LOGO.png" alt="Logo" class="logo navbar-logo" /></a>
+  <nav class="cavla-nav">
+    <a href="index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
    
 
       <!-- Menú desktop -->
@@ -33,6 +33,8 @@
     <a href="sobremi.html">Sobre mí</a>
     <a href="contacto.html">Contacto</a>
   </nav>
+
+  <a href="test.html" class="cavla-nav__cta">Test de servicios</a>
 
   <!-- Menú mobile -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
@@ -68,47 +70,6 @@
     </div>
   </section>
 
-  <!-- FRASE -->
-<section class="contacto mainContent">
-    <div class="section__data">
-      <div class="opacidad"></div>
-      <div class="shadowa"></div>
-      <div class="bg-gradient"></div>
-      <div class="texto-contenedor">
-      <p class="texto-grafico">
-       <b>Te esforzaste.</b> Compraste, pintaste, cambiaste cosas de lugar.
-      </p>
-      <p class="texto-grafico">
-       Y aún así, algo no encaja. <b>No se siente tuyo.</b> 
-      </p>
-      </div>
-      <img src="images/INICIO/" class="page_fondo">
-      
-    </div>
-</section>
-
-
-
-
-  <!-- FRASE -->
-<section class="contacto mainContent">
-    <div class="section__data">
-      <div class="opacidad"></div>
-      <div class="shadowa"></div>
-      <div class="bg-gradient"></div>
-        <p class="texto-memoria">
-          Viste ejemplos donde todo funciona perfecto. Lo intentas pero <b>no tiene nada que ver con vos.</b>
-        </p>
-        <p class="texto-memoria">
-          No necesitas más tips de decoración, <b>necesitas que alguien te escuche.</b>
-        </p>
-        <p class="texto-memoria">
-         <b>Eso es lo que hacemos en Estudio CAVLA.</b>
-        </p>
-        <img src="images/INICIO/01.jpg" class="page_fondo">
-    </div>
-</section>
-
   <!-- VIRTUAL -->
 <section class="page mainContent">
   <div class="opacidad"></div>
@@ -122,57 +83,88 @@
     <h1 class="titulo-pagina">100% virtual</h1>
   </div>
 
-
-
   <img src="images/INICIO/VIRTUAL.webp" class="fondo">
-</section>
-
-<!-- CATEGORÍAS -->
-<section id="servicios" class="categorias mainContent">
-  
-  <div class="opacidad"></div>
-  <div class="bg-gradient"></div>
-  <img src="images/SERVICIOS/RESIDENCIAL/FONDO.jpg" class="fondo">
-
-  <div class="contenedor-grillacategoria">
-      <div class="item-categoría c01"></div>
-
-      <div class="item-categoría c02"></div>
-
-      <div class="item-categoría c03"></div>
-
-      <div class="item-categoría c04"></div>
-        
-      <div class="item-categoría c05">
-        <h2 class="categoria-subtitulo">
-          <span>ELIGE</span> <span>TU</span>
-        </h2>
-        <h1 class="categoria-titulo">Servicio</h1>
-      </div>
-
-      <div class="item-categoría c06"></div>
-
-
-      <a href="Residencial/AsesoríaEspacial/AsesoríaEspacial.html" class="item-categoría c07">
-      <div class="fondoblanco"></div>
-      <h1 class="titulo-categoria">ASESORÍA ESPACIAL</h1>
-      </a>
-
-      <a href="Residencial/DiseñoIntegral/DiseñoIntegral.html" class="item-categoría c08">
-      <div class="fondoblanco"></div>
-      <h1 class="titulo-categoria">DISEÑO INTEGRAL</h1>
-      </a>
-
-      <a href="Residencial/DiseñoMobiliario/DiseñoMobiliario.html" class="item-categoría c09">
-      <div class="fondoblanco"></div>
-      <h1 class="titulo-categoria">DISEÑO DE MOBILIARIO</h1>
-      </a>
+    <div class="contenedor-grillavirtual">
+    <div class="item-virtual">
+      <h2 class="titulo-virtual">ALCANCE NACIONAL</h2>
+    </div>
+    <div class="item-virtual">
+      <h2 class="titulo-virtual">DESDE LA COMODIDAD DE TU HOGAR</h2>
+    </div>
+    <div class="item-virtual">
+      <h2 class="titulo-virtual">EFICIENCIA DE COSTOS</h2>
+    </div>
+    <div class="item-virtual">
+      <h2 class="titulo-virtual">RESULTADOS MÁS RÁPIDOS</h2>
+    </div>
+    <div class="item-virtual">
+      <h2 class="titulo-virtual">FLEXIBILIDAD HORARIA</h2>
+    </div>
   </div>
 </section>
 
+<!-- SERVICIOS -->
+<section class="page mainContent" id="servicios">
+  <div class="fondo-degradado"></div>
+  <div class="contenedor-servicios">
 
+    <div class="encabezado-servicios">
+      <h1 class="titulo-seccion">Elegí tu servicio.</h1>
+    </div>
 
+    <div class="grilla-servicios">
 
+      <a href="Residencial/DiseñoMobiliario/DiseñoMobiliario.html" class="tarjeta-servicio">
+        <div class="imagen-servicio">
+          <img src="images/SERVICIOS/RESIDENCIAL/OTRO.jpg" loading="lazy" alt="Diseño de mobiliario"/>
+          <div class="imagen-degradado"></div>
+          <div class="precio-contenedor">
+            <span class="precio-desde">Desde</span>
+            <span class="precio-valor">$60.000</span>
+          </div>
+        </div>
+        <div class="cuerpo-tarjeta">
+          <h2 class="nombre-servicio">Diseño de mobiliario</h2>
+          <p class="descripcion-servicio">Mueble a medida, listo para que tu carpintero lo ejecute.</p>
+          <span class="boton-servicio">Ver servicio</span>
+        </div>
+      </a>
+
+      <a href="Residencial/AsesoríaEspacial/AsesoríaEspacial.html" class="tarjeta-servicio">
+        <div class="imagen-servicio">
+          <img src="images/SERVICIOS/RESIDENCIAL/CONCEPTUAL.jpg" loading="lazy" alt="Asesoría espacial"/>
+          <div class="imagen-degradado"></div>
+          <div class="precio-contenedor">
+            <span class="precio-desde">Desde</span>
+            <span class="precio-valor">$60.000</span>
+          </div>
+        </div>
+        <div class="cuerpo-tarjeta">
+          <h2 class="nombre-servicio">Asesoría espacial</h2>
+          <p class="descripcion-servicio">Una mirada profesional sobre tu ambiente, sin compromiso de obra.</p>
+          <span class="boton-servicio">Ver servicio</span>
+        </div>
+      </a>
+
+      <a href="Residencial/DiseñoIntegral/DiseñoIntegral.html" class="tarjeta-servicio">
+        <div class="imagen-servicio">
+          <img src="images/SERVICIOS/RESIDENCIAL/ANTEPROYECTO.jpg" loading="lazy" alt="Diseño integral"/>
+          <div class="imagen-degradado"></div>
+          <div class="precio-contenedor">
+            <span class="precio-desde">Desde</span>
+            <span class="precio-valor">$450.000</span>
+          </div>
+        </div>
+        <div class="cuerpo-tarjeta">
+          <h2 class="nombre-servicio">Diseño integral</h2>
+          <p class="descripcion-servicio">Proyecto completo de la casa de principio a fin.</p>
+          <span class="boton-servicio">Ver servicio</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
 
   <script src="js/scripts.js"></script>
 
@@ -196,6 +188,11 @@
         zoom: 0.80
       });
     });
+    
   </script>
+
+
+
+
 </body>
 </html>

@@ -1,14 +1,575 @@
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>TEST DE SERVICIOS</title>
-    <script async src="https://tally.so/widgets/embed.js"></script>
-    <style type="text/css">
-      html { margin: 0; height: 100%; overflow: hidden; }
-      iframe { position: absolute; top: 0; right: 0; bottom: 0; left: 0; border: 0; }
-    </style>
-  </head>
-  <body>
-    <iframe data-tally-src="https://tally.so/r/Zj8gP5" width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0" title="TEST DE SERVICIOS"></iframe>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de servicio — Estudio CAVLA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      --fondo:       #13090a;
+      --fondo-suave: #1a0f0c;
+      --fondo-elev:  #2c1c17;
+      --linea:       #3a261f;
+      --crema:       #ece3d2;
+      --crema-suave: #d8cdb9;
+      --crema-mute:  #a89c89;
+      --acento:      #b8843a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: var(--fondo);
+      color: var(--crema);
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    /* ── Fondo degradado ── */
+    .fondo-luz {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(160,90,40,.25) 0%, transparent 65%);
+      z-index: 0;
+    }
+
+    /* ── Contenedor principal ── */
+    .test-contenedor {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* ── Header ── */
+    .test-header {
+      text-align: center;
+    }
+
+    .test-marca {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .test-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--crema);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .test-subtitulo {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--crema-mute);
+    }
+
+    /* ── Barra de progreso ── */
+    .progreso-contenedor {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progreso-texto {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      text-align: right;
+    }
+
+    .progreso-barra {
+      width: 100%;
+      height: 1px;
+      background: var(--linea);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progreso-fill {
+      height: 100%;
+      background: var(--crema-mute);
+      border-radius: 2px;
+      transition: width .5s cubic-bezier(.2,.7,.2,1);
+    }
+
+    /* ── Tarjeta de pregunta ── */
+    .pregunta-tarjeta {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      gap: 32px;
+      animation: aparecer .4s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .pregunta-tarjeta.activa {
+      display: flex;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .pregunta-numero {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--acento);
+    }
+
+    .pregunta-texto {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.25;
+      color: var(--crema);
+    }
+
+    /* ── Opciones ── */
+    .opciones-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .opcion-btn {
+      width: 100%;
+      padding: 20px 24px;
+      background: transparent;
+      border: 1px solid var(--linea);
+      border-radius: 12px;
+      color: var(--crema-suave);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: left;
+      cursor: pointer;
+      transition: all .35s cubic-bezier(.2,.7,.2,1);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .opcion-letra {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      padding-top: 2px;
+      flex-shrink: 0;
+      transition: color .35s;
+    }
+
+    .opcion-btn:hover {
+      border-color: var(--crema-mute);
+      background: rgba(236,227,210,.04);
+      color: var(--crema);
+    }
+
+    .opcion-btn:hover .opcion-letra {
+      color: var(--acento);
+    }
+
+    /* ── Resultado ── */
+    .resultado-tarjeta {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      gap: 32px;
+      animation: aparecer .5s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .resultado-tarjeta.activa {
+      display: flex;
+    }
+
+    .resultado-etiqueta {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--acento);
+    }
+
+    .resultado-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--crema);
+      line-height: 1.1;
+    }
+
+    .resultado-descripcion {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--crema-suave);
+    }
+
+    /* ── Entregables ── */
+    .entregables-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 24px;
+      border: 1px solid var(--linea);
+      border-radius: 12px;
+    }
+
+    .entregables-titulo {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      margin-bottom: 6px;
+    }
+
+    .entregable-item {
+      font-size: 13px;
+      color: var(--crema-suave);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .entregable-item::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--acento);
+      flex-shrink: 0;
+    }
+
+    /* ── Precio ── */
+    .resultado-precio {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .precio-desde-label {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+    }
+
+    .precio-valor {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--crema);
+    }
+
+    /* ── Botones de acción ── */
+    .acciones {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .boton-principal {
+      display: block;
+      width: 100%;
+      padding: 18px 24px;
+      background: var(--crema);
+      color: var(--fondo);
+      border: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .4s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .boton-principal:hover {
+      background: var(--acento);
+      color: white;
+    }
+
+    .boton-secundario {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: var(--crema-mute);
+      border: 1px solid var(--linea);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      transition: all .4s;
+    }
+
+    .boton-secundario:hover {
+      border-color: var(--crema-mute);
+      color: var(--crema);
+    }
+
+    /* ── Separador ── */
+    .separador {
+      width: 100%;
+      height: 1px;
+      background: var(--linea);
+    }
+
+    /* ── Volver al inicio ── */
+    .volver-inicio {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .volver-inicio:hover {
+      color: var(--crema);
+    }
+
+  </style>
+</head>
+<body>
+
+
+
+  <div class="fondo-luz"></div>
+
+  <div class="test-contenedor">
+
+    <!-- Header -->
+    <div class="test-header">
+      <span class="test-marca">Estudio CAVLA</span>
+      <h1 class="test-titulo">Encontrá tu servicio ideal.</h1>
+      <p class="test-subtitulo">Tres preguntas para entender qué necesita tu espacio.</p>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div class="progreso-contenedor" id="contenedor-progreso">
+      <span class="progreso-texto" id="texto-progreso">Pregunta 1 de 3</span>
+      <div class="progreso-barra">
+        <div class="progreso-fill" id="barra-fill" style="width: 33%"></div>
+      </div>
+    </div>
+
+    <!-- Pregunta 1 -->
+    <div class="pregunta-tarjeta activa" id="p1">
+      <div>
+        <span class="pregunta-numero">01</span>
+        <h2 class="pregunta-texto">¿Qué necesitás diseñar?</h2>
+      </div>
+      <div class="opciones-lista">
+        <button class="opcion-btn" onclick="mostrarResultado('mobiliario')">
+          <span class="opcion-letra">A</span>
+          <span>Solo quiero diseñar un mueble (cocina, placard, rack TV, etc.)</span>
+        </button>
+        <button class="opcion-btn" onclick="irA('p2')">
+          <span class="opcion-letra">B</span>
+          <span>Quiero diseñar un espacio.</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="pregunta-tarjeta" id="p2">
+      <div>
+        <span class="pregunta-numero">02</span>
+        <h2 class="pregunta-texto">¿Qué tipo de diseño buscás?</h2>
+      </div>
+      <div class="opciones-lista">
+        <button class="opcion-btn" onclick="irA('p3')">
+          <span class="opcion-letra">A</span>
+          <span>Quiero reorganizar el espacio, cambiar colores, renovar muebles o iluminación.</span>
+        </button>
+        <button class="opcion-btn" onclick="mostrarResultado('integral')">
+          <span class="opcion-letra">B</span>
+          <span>Quiero renovar instalaciones, arreglar humedades o hacer reformas estructurales.</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="pregunta-tarjeta" id="p3">
+      <div>
+        <span class="pregunta-numero">03</span>
+        <h2 class="pregunta-texto">¿Qué tan profundo querés que sea el diseño?</h2>
+      </div>
+      <div class="opciones-lista">
+        <button class="opcion-btn" onclick="mostrarResultado('asesoria')">
+          <span class="opcion-letra">A</span>
+          <span>Solo quiero unificar la estética del espacio.</span>
+        </button>
+        <button class="opcion-btn" onclick="mostrarResultado('integral')">
+          <span class="opcion-letra">B</span>
+          <span>Quiero que cada solución esté hecha a medida.</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Resultado: Mobiliario -->
+    <div class="resultado-tarjeta" id="resultado-mobiliario">
+      <div>
+        <span class="resultado-etiqueta">Tu servicio ideal es</span>
+        <h2 class="resultado-titulo">Diseño de mobiliario.</h2>
+      </div>
+      <p class="resultado-descripcion">Necesitás una solución puntual y técnica: el plano exacto de tu mueble para que cualquier carpintero lo ejecute sin margen de error.</p>
+      <div class="entregables-lista">
+        <span class="entregables-titulo">Qué recibís</span>
+        <span class="entregable-item">Axonométricas y vistas del mueble</span>
+        <span class="entregable-item">Tabla de cortes optimizada</span>
+        <span class="entregable-item">Presupuesto aproximado de materiales</span>
+      </div>
+      <div class="resultado-precio">
+        <span class="precio-desde-label">Desde</span>
+        <span class="precio-valor">$60.000</span>
+      </div>
+      <div class="acciones">
+        <a href="Residencial/DiseñoMobiliario/DiseñoMobiliario.html" class="boton-principal">Ver servicio completo</a>
+        <button class="boton-secundario" onclick="reiniciar()">Volver a empezar</button>
+      </div>
+    </div>
+
+    <!-- Resultado: Asesoría Espacial -->
+    <div class="resultado-tarjeta" id="resultado-asesoria">
+      <div>
+        <span class="resultado-etiqueta">Tu servicio ideal es</span>
+        <h2 class="resultado-titulo">Asesoría espacial.</h2>
+      </div>
+      <p class="resultado-descripcion">Tu espacio no necesita obra, necesita dirección. Te doy un plan claro para que puedas transformarlo sin demoler nada.</p>
+      <div class="entregables-lista">
+        <span class="entregables-titulo">Qué recibís</span>
+        <span class="entregable-item">Diagnóstico del espacio</span>
+        <span class="entregable-item">Plan de acción con recomendaciones</span>
+        <span class="entregable-item">Selección de materiales y mobiliario</span>
+      </div>
+      <div class="resultado-precio">
+        <span class="precio-desde-label">Desde</span>
+        <span class="precio-valor">$60.000</span>
+      </div>
+      <div class="acciones">
+        <a href="Residencial/AsesoríaEspacial/AsesoríaEspacial.html" class="boton-principal">Ver servicio completo</a>
+        <button class="boton-secundario" onclick="reiniciar()">Volver a empezar</button>
+      </div>
+    </div>
+
+    <!-- Resultado: Diseño Integral -->
+    <div class="resultado-tarjeta" id="resultado-integral">
+      <div>
+        <span class="resultado-etiqueta">Tu servicio ideal es</span>
+        <h2 class="resultado-titulo">Diseño integral.</h2>
+      </div>
+      <p class="resultado-descripcion">Tu proyecto necesita más que ideas: necesita documentación técnica ejecutable para que cada parte del proceso tenga respaldo profesional.</p>
+      <div class="entregables-lista">
+        <span class="entregables-titulo">Qué recibís</span>
+        <span class="entregable-item">Legajo técnico completo</span>
+        <span class="entregable-item">Planos, instalaciones y detalles constructivos</span>
+        <span class="entregable-item">Proyecto ejecutable de principio a fin</span>
+      </div>
+      <div class="resultado-precio">
+        <span class="precio-desde-label">Desde</span>
+        <span class="precio-valor">$450.000</span>
+      </div>
+      <div class="acciones">
+        <a href="Residencial/DiseñoIntegral/DiseñoIntegral.html" class="boton-principal">Ver servicio completo</a>
+        <button class="boton-secundario" onclick="reiniciar()">Volver a empezar</button>
+      </div>
+    </div>
+
+    <a href="index.html" class="volver-inicio">← Volver al inicio</a>
+
+  </div>
+
+  <script>
+    const barraFill = document.getElementById('barra-fill');
+    const textoProgreso = document.getElementById('texto-progreso');
+    const contenedorProgreso = document.getElementById('contenedor-progreso');
+
+    function irA(idPregunta) {
+      // Ocultar todo
+      ocultarTodo();
+
+      // Actualizar progreso
+      const numeros = { p1: 1, p2: 2, p3: 3 };
+      const num = numeros[idPregunta];
+      textoProgreso.textContent = `Pregunta ${num} de 3`;
+      barraFill.style.width = `${(num / 3) * 100}%`;
+      contenedorProgreso.style.display = 'flex';
+
+      // Mostrar pregunta
+      document.getElementById(idPregunta).classList.add('activa');
+    }
+
+    function mostrarResultado(servicio) {
+      ocultarTodo();
+
+      // Ocultar barra de progreso en el resultado
+      contenedorProgreso.style.display = 'none';
+
+      document.getElementById(`resultado-${servicio}`).classList.add('activa');
+    }
+
+    function ocultarTodo() {
+      document.querySelectorAll('.pregunta-tarjeta, .resultado-tarjeta').forEach(el => {
+        el.classList.remove('activa');
+      });
+    }
+
+    function reiniciar() {
+      irA('p1');
+    }
+  </script>
+
+</body>
 </html>

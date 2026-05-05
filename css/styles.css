@@ -176,14 +176,39 @@ section {
 /* =========================  NAV  ====================================== */
 .cavla-nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;transition:all .5s cubic-bezier(.2,.7,.2,1);border-bottom:1px solid transparent}
 .cavla-nav.is-scrolled{padding:14px 28px;background:rgba(19,9,10,.78);backdrop-filter:blur(14px) saturate(1.1);-webkit-backdrop-filter:blur(14px) saturate(1.1);border-bottom-color:rgba(58,38,31,.6)}
-@media (max-width:860px){ .cavla-nav__brand-est{display:none} }
-.cavla-nav__center{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:4vw;align-items:center}
+.cavla-nav__brand{
+  text-decoration: none; 
+  font-family:'Montserrat';
+  font-size:12px;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  font-weight:500;
+  color:white;
+  margin-top: 0;
+}
+
+.cavla-nav__brand-est{
+  text-decoration: none; 
+  color: rgba(255, 255, 255, 0.5);
+  margin-left:10px;
+  font-weight:300;
+  letter-spacing:.2em
+}
+@media (max-width:810px){ 
+  .cavla-nav__brand-est{
+    display:none
+  }
+  .cavla-nav__brand{
+    margin-top: 1vh;
+  } 
+  }
+
+.cavla-nav__center{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:3vw;align-items:center}
 
 .cavla-nav__center a{
   text-decoration: none; 
-  font-size:2vh; 
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
+  font-size:1.3vh; 
+  letter-spacing:.22em;text-transform:uppercase;
   color: rgba(255, 255, 255, 0.5);
   transition:color .3s;
   padding:6px 0
@@ -193,22 +218,61 @@ section {
   color:white
 }
 
-.cavla-nav__cta{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);border:1px solid var(--line);padding:10px 16px;transition:all .4s}
-.cavla-nav__cta:hover{background:var(--cream);color:var(--bg);border-color:var(--cream)}
-@media (max-width:860px){ .cavla-nav__center,.cavla-nav__cta{display:none} }
+@media (max-width:810px){ 
+  .cavla-nav__center{
+    display:none
+  } 
+}
 
-a.boton-cotizar,
-button.boton-cotizar {
+.cavla-nav__cta{
+  text-decoration: none; 
+  border: 1px solid #ffffff;
+  border-radius: 50px;
+  font-size:1.3vh;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(255, 255, 255, 0.5);
+  padding:10px 16px;
+  transition:all .4s
+}
+
+.cavla-nav__cta:hover{
+  background:rgba(255, 255, 255, 0.1);
+  color:white;
+}
+@media (max-width:810px){ 
+  .cavla-nav__cta {
+    display: block;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    font-size:1vh;
+    white-space: nowrap;
+  
+  } 
+}
+
+
+.btn-cotizacion {
+  display: inline-block;
+  padding: 1vh 3vh;
+  border: 1px solid #ffffff;
+  border-radius: 50px;
   text-decoration: none;
-  color: black;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background-color: transparent;
-  border-color: transparent;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.btn-cotizacion:hover {
+  background-color: #ffffff;
+  color: rgba(0, 0, 0, 0.3);
 }
 
 
@@ -575,7 +639,7 @@ nav {
 
 @media (max-width: 810px) {
   .titulo-pagina {
-    font-size: 18vw;
+    font-size: 16vw;
   }
   .subtitulo-pagina {
     font-size: 3vw;
@@ -748,6 +812,200 @@ nav {
    12. GRILLA DE CATEGORÍAS (index.html)
    =================================================================== */
 
+
+/* ========================= SERVICIOS ================================ */
+
+.contenedor-servicios {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.encabezado-servicios {
+  margin-bottom: 4vh;
+}
+
+.titulo-seccion {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 7vh, 80px);
+  font-weight: 300;
+  font-style: italic;
+  color: white;
+  text-align: left;
+}
+
+/* --- Grilla desktop --- */
+.grilla-servicios {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2vw;
+}
+
+/* --- Tarjeta --- */
+.tarjeta-servicio {
+  display: flex;
+  flex-direction: column;
+  transition: transform .8s cubic-bezier(.2,.7,.2,1);
+}
+
+.tarjeta-servicio:hover {
+  transform: translateY(-6px);
+}
+
+/* --- Imagen --- */
+.imagen-servicio {
+  aspect-ratio: 5 / 4;
+  position: relative;
+  overflow: hidden;
+  border-radius: 25px 25px 0 0;
+}
+
+.imagen-servicio img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.85) brightness(.78);
+  transition: filter 1.4s cubic-bezier(.2,.7,.2,1),
+              transform 1.4s cubic-bezier(.2,.7,.2,1);
+}
+
+.tarjeta-servicio:hover .imagen-servicio img {
+  filter: saturate(1.05) brightness(.92);
+  transform: scale(1.04);
+}
+
+.imagen-degradado {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(19,9,10,.6) 100%);
+}
+
+/* --- Precio sobre imagen --- */
+.precio-contenedor {
+  position: absolute;
+  text-align: left;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.precio-desde {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .22em;
+  color: rgba(255,255,255,.6);
+}
+
+.precio-valor {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3.5vh, 36px);
+  font-weight: 400;
+  font-style: italic;
+  color: white;
+  line-height: 1.1;
+}
+
+/* --- Cuerpo tarjeta --- */
+.cuerpo-tarjeta {
+  padding: clamp(16px, 2.5vw, 32px);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+a.tarjeta-servicio {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.nombre-servicio {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(18px, 2.8vh, 28px);
+  font-weight: 400;
+  font-style: italic;
+  color: white;
+  margin-bottom: 1vh;
+}
+
+.descripcion-servicio {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255,255,255,.75);
+  margin-bottom: 2vh;
+  flex: 1;
+}
+
+.boton-servicio {
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.4);
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  padding: 10px 20px;
+  text-align: center;
+  transition: all .4s;
+  align-self: stretch;
+}
+
+.tarjeta-servicio:hover .boton-servicio {
+  background: rgba(255,255,255,.1);
+  color: white;
+  border-color: rgba(255,255,255,.7);
+}
+
+/* --- Mobile: carrusel horizontal --- */
+@media (max-width: 810px) {
+
+  .contenedor-servicios {
+    padding: 0;
+  }
+
+  .encabezado-servicios {
+    padding: 0 6vw;
+  }
+
+  .grilla-servicios {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 6vw 16px;
+  
+    /* Oculta scrollbar pero mantiene funcionalidad */
+    scrollbar-width: none;
+  }
+
+  .grilla-servicios::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tarjeta-servicio {
+    flex: 0 0 78vw;
+    scroll-snap-align: start;
+  }
+}
+
+
+_____________________________________________________________
+
 .contenedor-grillacategoria {
   height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
@@ -849,6 +1107,7 @@ nav {
    13. SECCIÓN VIRTUAL (index.html)
    =================================================================== */
 
+
 /* Grilla de íconos de la metodología virtual */
 .contenedor-grillavirtual {
   display: grid;
@@ -863,6 +1122,13 @@ nav {
   z-index: 10;
   transform: translateY(200px);
   transition: transform 0.4s ease-out;
+  display: flex;
+}
+
+@media (max-width: 810px) {
+  .contenedor-grillavirtual {
+    display: none;
+  }
 }
 
 .item-virtual {
