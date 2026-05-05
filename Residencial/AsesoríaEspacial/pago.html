@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
 
   <style>
     :root {
@@ -320,7 +322,8 @@
       <div class="mensaje-error" id="mensaje-error"></div>
 
       <a href="confirmación.html" class="volver" id="volver-link">← Volver</a>
-
+      
+      <div class="cho-container"></div>
     </div>
   </div>
 
@@ -355,7 +358,7 @@
 
     // Reconstruir el link de volver con los parámetros originales
     document.getElementById('volver-link').href =
-      `Presupuesto.html?${params.toString()}`;
+      `confirmación.html?${params.toString()}`;
 
     // Parsear precio numérico (viene como "$69.000" o "$ 69.000")
     const precioNum = parseInt(
@@ -400,47 +403,63 @@
     }
 
     // Función de pago
-    async function pagar(tipo) {
-      if (precioNum === 0) return;
+    const mp = new MercadoPago('APP_USR-541f81dc-8855-4a87-8c33-dbd32a7e6dde', {
+  locale: 'es-AR'
+});
 
-      document.getElementById('cargando').classList.add('visible');
-      document.getElementById('mensaje-error').classList.remove('visible');
-      document.getElementById('btn-senia').disabled = true;
-      document.getElementById('btn-total').disabled = true;
+let checkout = null;
 
-      const monto      = tipo === 'senia' ? seniaNum : precioNum;
-      const descripcion = `Asesoría Espacial · ${ambiente} · ${tipo === 'senia' ? 'Seña 50%' : 'Pago total'}`;
+async function pagar(tipo) {
+  if (precioNum === 0) return;
 
-      try {
-        const response = await fetch('/api/crear-pago', {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            monto,
-            descripcion,
-            codigo_proyecto: `${apellido}_${ambiente}`.replace(/\s/g, '_'),
-            tipo_pago: tipo
-          })
-        });
+  document.getElementById('cargando').classList.add('visible');
+  document.getElementById('mensaje-error').classList.remove('visible');
+  document.getElementById('btn-senia').disabled = true;
+  document.getElementById('btn-total').disabled = true;
 
-        const data = await response.json();
+  const monto       = tipo === 'senia' ? seniaNum : precioNum;
+  const descripcion = `Asesoría Espacial · ${ambiente} · ${tipo === 'senia' ? 'Seña 50%' : 'Pago total'}`;
 
-        if (data.sandbox_init_point || data.init_point) {
-          // En pruebas usamos sandbox_init_point, en producción init_point
-          window.location.href = data.sandbox_init_point || data.init_point;
-        } else {
-          throw new Error(data.error || 'No se pudo generar el link de pago');
-        }
+  try {
+    const response = await fetch('/api/crear-pago', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        monto,
+        descripcion,
+        codigo_proyecto: `${apellido}_${ambiente}`.replace(/\s/g, '_'),
+        tipo_pago: tipo
+      })
+    });
 
-      } catch (err) {
-        document.getElementById('cargando').classList.remove('visible');
-        document.getElementById('btn-senia').disabled = false;
-        document.getElementById('btn-total').disabled = false;
-        const errorEl = document.getElementById('mensaje-error');
-        errorEl.textContent = '✗ No se pudo procesar el pago. Intentá de nuevo.';
-        errorEl.classList.add('visible');
-      }
+    const data = await response.json();
+
+    if (!data.preference_id) {
+      throw new Error(data.error || 'No se pudo generar el pago');
     }
+
+    document.getElementById('cargando').classList.remove('visible');
+
+    // Abrir modal en lugar de redirigir
+    checkout = mp.checkout({
+      preference: { id: data.preference_id },
+      render: {
+        container: '.cho-container',
+        label: 'Pagar'
+      }
+    });
+
+    checkout.open();
+
+  } catch (err) {
+    document.getElementById('cargando').classList.remove('visible');
+    document.getElementById('btn-senia').disabled = false;
+    document.getElementById('btn-total').disabled = false;
+    const errorEl = document.getElementById('mensaje-error');
+    errorEl.textContent = '✗ No se pudo procesar el pago. Intentá de nuevo.';
+    errorEl.classList.add('visible');
+  }
+}
   </script>
 
 </body>
