@@ -12,8 +12,8 @@
    09. BLOQUES DE TÍTULOS (portadas internas)
    10. BLOQUES DE TEXTO COMPARTIDOS
    11. GRÁFICOS (círculos, imagen-circulos)
-   12. GRILLA DE CATEGORÍAS (index.html)
-   13. SECCIÓN VIRTUAL (index.html)
+   12. GRILLA DE CATEGORÍAS (inicio.html)
+   13. SECCIÓN VIRTUAL (inicio.html)
    14. PANTALLA DE IDENTIFICACIÓN (servicios)
    15. ANTES Y DESPUÉS (split)
    16. SECCIÓN ENTREGABLE
@@ -745,7 +745,7 @@ nav {
   color: inherit;
 }
 
-/* Contenedor del texto en secciones tipo "frase" (index.html) */
+/* Contenedor del texto en secciones tipo "frase" (inicio.html) */
 .texto-contenedor {
   display: flex;
   flex-direction: column;
@@ -809,7 +809,7 @@ nav {
 
 
 /* ===================================================================
-   12. GRILLA DE CATEGORÍAS (index.html)
+   12. GRILLA DE CATEGORÍAS (inicio.html)
    =================================================================== */
 
 
@@ -1104,7 +1104,7 @@ _____________________________________________________________
 
 
 /* ===================================================================
-   13. SECCIÓN VIRTUAL (index.html)
+   13. SECCIÓN VIRTUAL (inicio.html)
    =================================================================== */
 
 
