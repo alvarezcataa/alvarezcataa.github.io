@@ -12,7 +12,7 @@
    09. BLOQUES DE TÍTULOS (portadas internas)
    10. BLOQUES DE TEXTO COMPARTIDOS
    11. GRÁFICOS (círculos, imagen-circulos)
-   12. GRILLA DE CATEGORÍAS (index.html)
+   12. TARJETAS SERVICIOS (index.html)
    13. SECCIÓN VIRTUAL (index.html)
    14. PANTALLA DE IDENTIFICACIÓN (servicios)
    15. ANTES Y DESPUÉS (split)
@@ -22,6 +22,7 @@
    19. PRESUPUESTO
    20. DATOS CLIENTE
    21. AGRADECIMIENTO
+   22. CTA BOTÓN DE SERVICIO (pantallas de identificación y mockup)
    =================================================================== */
 
 
@@ -809,11 +810,9 @@ nav {
 
 
 /* ===================================================================
-   12. GRILLA DE CATEGORÍAS (index.html)
+   12. TARJETAS SERVICIOS (index.html)
    =================================================================== */
 
-
-/* ========================= SERVICIOS ================================ */
 
 .contenedor-servicios {
   width: 100%;
@@ -1004,104 +1003,6 @@ a.tarjeta-servicio {
 }
 
 
-_____________________________________________________________
-
-.contenedor-grillacategoria {
-  height: calc(var(--vh, 1vh) * 100);
-  width: 100vw;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  overflow: hidden;
-  align-items: stretch;
-}
-
-.item-categoría {
-  color: transparent;
-  position: relative;
-  justify-content: center;
-  align-content: center;
-  background-color: rgba(255, 255, 255, 0);
-  z-index: 30;
-}
-
-/* Fondo blanco que aparece al hover */
-.fondoblanco {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  z-index: -10;
-}
-
-.item-categoría:hover .fondoblanco {
-  background-color: rgba(255, 255, 255, 0.5);
-  transition: 0.3s ease-in-out;
-}
-
-/* Bordes de cada celda de la grilla */
-.c01 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c02 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c03 { border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c04 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c05 { border: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c06 { border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-bottom: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c07 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c08 { border-right: 0.05px solid rgb(255, 255, 255, 0.3); border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
-.c09 { border-left: 0.05px solid rgb(255, 255, 255, 0.3); border-top: 0.05px solid rgb(255, 255, 255, 0.3); }
-
-/* Textos dentro de la celda central (c05) */
-.categoria-subtitulo {
-  color: white;
-  font-size: 2vh;
-  margin: auto;
-  position: relative;
-  z-index: 30;
-  pointer-events: none;
-  text-align: center;
-}
-
-.categoria-titulo {
-  color: white;
-  font-size: 2.3vw;
-  font-weight: 100;
-  line-height: 1;
-  position: relative;
-  z-index: 30;
-  pointer-events: none;
-  text-align: center;
-}
-
-/* Título del servicio en las celdas c07/c08/c09 */
-.titulo-categoria {
-  color: white;
-  justify-self: center;
-  font-size: 1.5vw;
-  font-weight: 100;
-  z-index: 35;
-}
-
-.item-categoría:hover .titulo-categoria {
-  color: black;
-}
-
-@media (max-width: 810px) {
-  .categoria-subtitulo {
-    font-size: 3vw;
-  }
-  .categoria-titulo {
-    font-size: 5vw;
-    margin: 0;
-    text-align: center;
-  }
-  .titulo-categoria {
-    font-size: 4vw;
-    text-align: center;
-  }
-}
-
 
 /* ===================================================================
    13. SECCIÓN VIRTUAL (index.html)
@@ -1200,7 +1101,7 @@ _____________________________________________________________
 /* Contenedor de la imagen de círculos de Illustrator */
 .container-circulos {
   width: 100%;
-  max-width: 70vh;
+  max-width: 60vh;
 }
 
 /* Título en cursiva — "Este servicio es para vos." */
@@ -1209,7 +1110,7 @@ _____________________________________________________________
   font-size: 6vh;
   font-weight: 100;
   font-style: italic;
-  margin: 3vh 0;
+  margin: 1vh 0;
 }
 
 /* Contenedor de los dos botones de derivación */
@@ -1475,7 +1376,7 @@ _____________________________________________________________
 /* Sección del mockup (entrega final) */
 .container-mockup {
   width: 100%;
-  max-width: 70vh;
+  max-width: 60vh;
   margin-bottom: 0;
   filter: drop-shadow(0px 15px 30px rgba(0,0,0,0.5));
 }
@@ -2515,5 +2416,45 @@ button.boton-cotizar {
   }
   .titulo-agradecimiento {
     font-size: 15vw;
+  }
+}
+
+
+/* ===================================================================
+   22. CTA BOTÓN DE SERVICIO (pantallas de identificación y mockup)
+   =================================================================== */
+
+.btn-cta-servicio {
+  display: inline-block;
+  padding: 1.4vh 4vh;
+  border: 2px solid #ffffff;
+  border-radius: 50px;
+  text-decoration: none;
+  color: #ffffff;
+  background-color: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.75rem, 2vh, 0.95rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(.2,.7,.2,1);
+  margin:1vh 0;
+  white-space: nowrap;
+}
+
+.btn-cta-servicio:hover {
+  background-color: #ffffff;
+  color: #13090a;
+}
+
+/* Variante para fondo claro o imagen clara (pantalla 06) */
+.btn-cta-servicio--invertido {
+  margin-top: 3vh;
+}
+
+@media (max-width: 810px) {
+  .btn-cta-servicio {
+    font-size: 0.8rem;
+    padding: 1.2vh 5vw;
   }
 }
