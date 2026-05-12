@@ -24,7 +24,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      
     }
 
     .contacto-form__inner {
@@ -43,6 +42,7 @@
       font-style: italic;
       color: white;
       line-height: 1.1;
+      margin-top: 2vh;
       margin-bottom: clamp(32px, 5vh, 56px);
     }
 
@@ -57,7 +57,7 @@
     .contacto-form__campo {
       display: flex;
       flex-direction: column;
-      margin-bottom: 32px;
+      margin: 0 5vw 2vh;
       text-align: left;
     }
 
@@ -112,11 +112,10 @@
       flex-direction: column;
       align-items: center;
       gap: 16px;
-      
       width: 100%;
     }
 
-    /* CTA principal — blanco lleno */
+    /* CTA principal — ver servicios */
     .btn-servicios {
       display: inline-block;
       text-decoration: none;
@@ -164,6 +163,11 @@
       border-color: rgba(255, 255, 255, 0.7);
     }
 
+    .btn-enviar:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
     /* ===================================================
        PANTALLA 2 — REDES SOCIALES
        =================================================== */
@@ -174,7 +178,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      
     }
 
     .contacto-redes__inner {
@@ -211,7 +214,6 @@
       transform: translateY(-6px);
     }
 
-    /* imagen con overlay y perfil */
     .tarjeta-red__imagen {
       aspect-ratio: 5 / 4;
       position: relative;
@@ -239,7 +241,6 @@
       background: linear-gradient(180deg, transparent 25%, rgba(14, 11, 11, 0.65) 100%);
     }
 
-    /* círculo de perfil */
     .tarjeta-red__perfil {
       position: absolute;
       bottom: 18px;
@@ -258,7 +259,6 @@
       object-fit: cover;
     }
 
-    /* cuerpo */
     .tarjeta-red__cuerpo {
       padding: clamp(14px, 2.2vw, 28px);
       text-align: left;
@@ -395,9 +395,8 @@
   <!-- PANTALLA 1 — FORMULARIO -->
   <section class="page contacto-form mainContent">
     <div class="contacto-form__inner">
-       
+
       <button type="button" class="btn-servicios" onclick="irAServicios()">Ver servicios</button>
-      
 
       <h2 class="contacto-form__titulo">¿Tenés dudas?<br>Hablemos.</h2>
 
@@ -450,10 +449,7 @@
         </div>
 
         <div class="contacto-form__botones contacto-form__campo--full">
-          
-          <button type="button" class="btn-enviar" onclick="enviarMail()">Enviar mensaje</button>
-
-          
+          <button type="button" class="btn-enviar" id="btn-enviar" onclick="enviarMail()">Enviar mensaje</button>
         </div>
 
       </form>
@@ -469,22 +465,11 @@
       <div class="contacto-redes__grilla">
 
         <!-- Instagram -->
-        <a
-          href="https://www.instagram.com/estudio.cavla"
-          target="_blank"
-          class="tarjeta-red"
-        >
+        <a href="https://www.instagram.com/estudio.cavla" target="_blank" class="tarjeta-red">
           <div class="tarjeta-red__imagen">
-            <!-- Reemplazá con una imagen representativa de tu feed -->
-            <img
-              class="tarjeta-red__bg"
-              src="images/CONTACTO/instagram.webp"
-              loading="lazy"
-              alt="Instagram Estudio CAVLA"
-            />
+            <img class="tarjeta-red__bg" src="images/CONTACTO/instagram.webp" loading="lazy" alt="Instagram Estudio CAVLA" />
             <div class="tarjeta-red__degradado"></div>
             <div class="tarjeta-red__perfil">
-              <!-- Tu logo -->
               <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
             </div>
           </div>
@@ -496,18 +481,9 @@
         </a>
 
         <!-- YouTube -->
-        <a
-          href="https://www.youtube.com/@EstudioCAVLA"
-          target="_blank"
-          class="tarjeta-red"
-        >
+        <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" class="tarjeta-red">
           <div class="tarjeta-red__imagen">
-            <img
-              class="tarjeta-red__bg"
-              src="images/CONTACTO/youtube.webp"
-              loading="lazy"
-              alt="YouTube Estudio CAVLA"
-            />
+            <img class="tarjeta-red__bg" src="images/CONTACTO/youtube.webp" loading="lazy" alt="YouTube Estudio CAVLA" />
             <div class="tarjeta-red__degradado"></div>
             <div class="tarjeta-red__perfil">
               <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
@@ -521,18 +497,9 @@
         </a>
 
         <!-- Facebook -->
-        <a
-          href="https://www.facebook.com/profile.php?id=61587135314564"
-          target="_blank"
-          class="tarjeta-red"
-        >
+        <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" class="tarjeta-red">
           <div class="tarjeta-red__imagen">
-            <img
-              class="tarjeta-red__bg"
-              src="images/CONTACTO/facebook.webp"
-              loading="lazy"
-              alt="Facebook Estudio CAVLA"
-            />
+            <img class="tarjeta-red__bg" src="images/CONTACTO/facebook.webp" loading="lazy" alt="Facebook Estudio CAVLA" />
             <div class="tarjeta-red__degradado"></div>
             <div class="tarjeta-red__perfil">
               <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
@@ -549,32 +516,77 @@
     </div>
   </section>
 
+  <!-- EmailJS — cargar ANTES de scripts.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="js/scripts.js"></script>
 
-<script>
-  function irAServicios() {
-  sessionStorage.setItem('snapSkip', 'servicios');
-  window.location.href = 'index.html';
-}
+  <script>
+    emailjs.init('y0ioHk2OfmM89TNpJ');
 
-function enviarMail() {
-  const nombre  = document.getElementById('nombre').value.trim();
-  const email   = document.getElementById('email').value.trim();
-  const asunto  = document.getElementById('asunto').value.trim();
-  const mensaje = document.getElementById('mensaje').value.trim();
+    /* -----------------------------------------------
+       Inhibir snap mientras un campo está enfocado
+       ----------------------------------------------- */
+    document.querySelectorAll('.contacto-form__input, .contacto-form__textarea').forEach(function(input) {
+      input.addEventListener('focus', function() { window.__snapInhibited = true; });
+      input.addEventListener('blur',  function() {
+        setTimeout(function() { window.__snapInhibited = false; }, 400);
+      });
+    });
 
-  if (!nombre || !email || !mensaje) {
-    alert('Por favor completá nombre, email y mensaje.');
-    return;
-  }
+    /* -----------------------------------------------
+       Enviar mail con EmailJS
+       ----------------------------------------------- */
+    function enviarMail() {
+      var nombre  = document.getElementById('nombre').value.trim();
+      var email   = document.getElementById('email').value.trim();
+      var asunto  = document.getElementById('asunto').value.trim();
+      var mensaje = document.getElementById('mensaje').value.trim();
 
-  const cuerpo = `Nombre: ${nombre}\nEmail: ${email}\n\n${mensaje}`;
-  const mailtoLink = `mailto:office@estudiocavla.com?subject=${encodeURIComponent(asunto || 'Consulta desde la web')}&body=${encodeURIComponent(cuerpo)}`;
-  window.location.href = mailtoLink;
-}
+      if (!nombre || !email || !mensaje) {
+        alert('Por favor completá nombre, email y mensaje.');
+        return;
+      }
 
-</script>
+      var btn = document.getElementById('btn-enviar');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
 
+      emailjs.send('service_epbhnfn', 'template_ycfbswk', {
+        nombre:  nombre,
+        email:   email,
+        asunto:  asunto || 'Consulta desde la web',
+        mensaje: mensaje
+      })
+      .then(function() {
+        btn.textContent = 'Enviar mensaje';
+        btn.disabled = false;
+
+        var botones = document.querySelector('.contacto-form__botones');
+        if (!document.getElementById('mensaje-exito')) {
+          var p = document.createElement('p');
+          p.id = 'mensaje-exito';
+          p.textContent = '¡Mensaje enviado con éxito!';
+          p.style.cssText = 'color: #4caf50; font-family: Montserrat, sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 8px;';
+          botones.appendChild(p);
+        }
+
+        document.getElementById('form-contacto').reset();
+      })
+      .catch(function() {
+        btn.textContent = 'Enviar mensaje';
+        btn.disabled = false;
+        alert('Hubo un error al enviar. Intentá de nuevo o escribinos directamente a office@estudiocavla.com');
+      });
+    }
+
+    /* -----------------------------------------------
+       Ir a servicios — guardar flag para scripts.js
+       ----------------------------------------------- */
+    function irAServicios() {
+      sessionStorage.setItem('snapSkip', 'servicios');
+      window.location.href = 'index.html';
+    }
+  </script>
 
 </body>
 </html>
