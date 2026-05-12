@@ -130,6 +130,7 @@
     }
 
     function doSnap() {
+      if (window.__snapInhibited) return;
       // No hacer snap si el menú está abierto
       if (sideMenu && sideMenu.classList.contains("open")) return;
 
@@ -407,6 +408,25 @@ document.addEventListener('scroll', () => {
   // Proceso al cargar: medir, lockear y desactivar listeners ruidosos
   window.addEventListener('load', async () => {
     lastLocked = await measureAndLock(700, 80);
+
+    const snapSkip = sessionStorage.getItem('snapSkip');
+if (snapSkip === 'servicios') {
+  sessionStorage.removeItem('snapSkip');
+  const targetEl = document.getElementById('servicios');
+  if (targetEl) {
+    // Inhibir snap durante la navegación
+    window.__snapInhibited = true;
+    setTimeout(() => {
+      if (window.__CAVLA_SMOOTH) {
+        window.__CAVLA_SMOOTH.setBodyHeight();
+        window.__CAVLA_SMOOTH.computeSectionPositions();
+      }
+      window.scrollTo({ top: targetEl.offsetTop, behavior: 'instant' });
+      // Liberar snap después de que el scroll se estabilice
+      setTimeout(() => { window.__snapInhibited = false; }, 800);
+    }, 400);
+  }
+}
 
     // Después de lockear: NO escuchamos visualViewport.resize continuamente
     // Solo escuchamos orientationchange y visualViewport.resize con umbral grande

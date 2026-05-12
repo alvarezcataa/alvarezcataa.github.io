@@ -3,34 +3,361 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA</title>
+  <title>CAVLA — Contacto</title>
 
   <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
 
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===================================================
+       PANTALLA 1 — FORMULARIO DE CONTACTO
+       =================================================== */
+
+    .contacto-form {
+      background: #0e0b0b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .contacto-form__inner {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .contacto-form__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6.5vh, 76px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      line-height: 1.1;
+      margin-bottom: clamp(32px, 5vh, 56px);
+    }
+
+    /* --- Campos --- */
+    .contacto-form__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 40px;
+      width: 100%;
+    }
+
+    .contacto-form__campo {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .contacto-form__campo--full {
+      grid-column: 1 / -1;
+    }
+
+    .contacto-form__label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 10px;
+    }
+
+    .contacto-form__input,
+    .contacto-form__textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 0.5px solid rgb(255, 255, 255);
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      padding: 10px 0;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.4s;
+    }
+
+    .contacto-form__input::placeholder,
+    .contacto-form__textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .contacto-form__input:focus,
+    .contacto-form__textarea:focus {
+      border-bottom-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .contacto-form__textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    /* --- Botones --- */
+    .contacto-form__botones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      
+      width: 100%;
+    }
+
+    /* CTA principal — blanco lleno */
+    .btn-servicios {
+      display: inline-block;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0);
+      border: 1px solid white;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2vh;
+      font-weight: 800;
+      font-style: italic;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ffffff;
+      padding: 13px 36px;
+      text-align: center;
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+
+    .btn-servicios:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Enviar — outline secundario */
+    .btn-enviar {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 13px 36px;
+      text-align: center;
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+
+    .btn-enviar:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ===================================================
+       PANTALLA 2 — REDES SOCIALES
+       =================================================== */
+
+    .contacto-redes {
+      background: #0e0b0b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .contacto-redes__inner {
+      width: 100%;
+      max-width: 1280px;
+    }
+
+    .contacto-redes__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6vh, 72px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      margin-bottom: clamp(28px, 4vh, 48px);
+      text-align: left;
+    }
+
+    .contacto-redes__grilla {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2vw;
+    }
+
+    /* --- Tarjeta red social --- */
+    .tarjeta-red {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .tarjeta-red:hover {
+      transform: translateY(-6px);
+    }
+
+    /* imagen con overlay y perfil */
+    .tarjeta-red__imagen {
+      aspect-ratio: 5 / 4;
+      position: relative;
+      overflow: hidden;
+      border-radius: 25px 25px 0 0;
+    }
+
+    .tarjeta-red__imagen img.tarjeta-red__bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.85) brightness(0.72);
+      transition: filter 1.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+                  transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    .tarjeta-red:hover .tarjeta-red__bg {
+      filter: saturate(1.05) brightness(0.88);
+      transform: scale(1.04);
+    }
+
+    .tarjeta-red__degradado {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 25%, rgba(14, 11, 11, 0.65) 100%);
+    }
+
+    /* círculo de perfil */
+    .tarjeta-red__perfil {
+      position: absolute;
+      bottom: 18px;
+      left: 20px;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      overflow: hidden;
+      background: #1a1010;
+    }
+
+    .tarjeta-red__perfil img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* cuerpo */
+    .tarjeta-red__cuerpo {
+      padding: clamp(14px, 2.2vw, 28px);
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .tarjeta-red__nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 2.6vh, 26px);
+      font-weight: 400;
+      font-style: italic;
+      color: white;
+      margin-bottom: 6px;
+    }
+
+    .tarjeta-red__handle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: clamp(14px, 2vh, 24px);
+      flex: 1;
+    }
+
+    .tarjeta-red__boton {
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 10px 20px;
+      text-align: center;
+      transition: all 0.4s;
+      align-self: stretch;
+    }
+
+    .tarjeta-red:hover .tarjeta-red__boton {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* ===================================================
+       MOBILE
+       =================================================== */
+
+    @media (max-width: 810px) {
+      .contacto-form__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contacto-form__campo--full {
+        grid-column: 1;
+      }
+
+      .contacto-redes__grilla {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 16px;
+        padding: 4vw 16px;
+        scrollbar-width: none;
+      }
+
+      .contacto-redes__grilla::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tarjeta-red {
+        flex: 0 0 78vw;
+        scroll-snap-align: start;
+      }
+    }
+  </style>
 </head>
 <header>
 <body class="pagina">
 
-   <!-- Navbar -->
+  <!-- Navbar -->
   <nav class="cavla-nav">
     <a href="index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
 
-      <!-- Menú desktop -->
-   <nav class="cavla-nav__center" aria-label="Principal">
-    <a href="index.html">Inicio</a>
-    <a href="filosofia.html">Filosofía</a>
-    <a href="sobremi.html">Sobre mí</a>
-    <a href="contacto.html">Contacto</a>
-  </nav>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="index.html">Inicio</a>
+      <a href="filosofia.html">Filosofía</a>
+      <a href="sobremi.html">Sobre mí</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
 
-  <a href="test.html" class="cavla-nav__cta">Test de servicios</a>
-  
-  <!-- Menú mobile -->
+    <a href="test.html" class="cavla-nav__cta">Test de servicios</a>
+
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
@@ -43,45 +370,211 @@
     </ul>
   </div>
 
-    <!-- PORTADA-->
+  <!-- PORTADA -->
   <section class="page mainContent">
     <div class="opacidad"></div>
     <div class="bg-gradient"></div>
     <div class="shadowa"></div>
 
     <div class="bloque-titulos translate" data-speed="0.1">
-    <h1 class="titulo-pagina">Contacto</h1>
-    <h2 class="subtitulo-pagina">
-      <span>ESTOY</span> <span>A</span> <span>UN</span> <span>MENSAJE</span> <span>DE</span> <span>DISTANCIA</span> 
-    </h2>
-  </div>
+      <h1 class="titulo-pagina">Contacto</h1>
+      <h2 class="subtitulo-pagina">
+        <span>A</span> <span>UN</span> <span>MENSAJE</span> <span>DE</span> <span>DISTANCIA</span>
+      </h2>
+    </div>
 
     <div class="scroll-cue" aria-hidden="true">
       <span class="scroll-cue__label">Desliza</span>
       <span class="scroll-cue__line">
-         <span class="scroll-cue__dot"></span>
+        <span class="scroll-cue__dot"></span>
       </span>
     </div>
     <img src="images/CONTACTO/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
   </section>
 
-<section class="contacto mainContent">
-    <div class="section__data">
-        <h1 class="subtitulo-seccion">Mail</h1>
-        <!-- Para correos se usa 'mailto:' antes de la dirección -->
-        <p class="texto-contacto"><a href="mailto:office@estudiocavla.com">office@estudiocavla.com</a></p>
-        
-        <h1 class="subtitulo-seccion">Instagram</h1>
-        <p class="texto-contacto"><a href="https://www.instagram.com/estudio.cavla" target="_blank">@estudio.cavla</a></p>
-        
-        <h1 class="subtitulo-seccion">Facebook</h1>
-        <p class="texto-contacto"><a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank">Estudio CAVLA</a></p>
-        
-        <h1 class="subtitulo-seccion">YouTube</h1>
-        <p class="texto-contacto"><a href="https://www.youtube.com/@EstudioCAVLA" target="_blank">Estudio CAVLA</a></p>
+  <!-- PANTALLA 1 — FORMULARIO -->
+  <section class="page contacto-form mainContent">
+    <div class="contacto-form__inner">
+       
+      <button type="button" class="btn-servicios" onclick="irAServicios()">Ver servicios</button>
+      
+
+      <h2 class="contacto-form__titulo">¿Tenés dudas?<br>Hablemos.</h2>
+
+      <form class="contacto-form__grid" id="form-contacto">
+
+        <div class="contacto-form__campo">
+          <label class="contacto-form__label" for="nombre">Nombre</label>
+          <input
+            class="contacto-form__input"
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Tu nombre"
+            required
+          />
+        </div>
+
+        <div class="contacto-form__campo">
+          <label class="contacto-form__label" for="email">Email</label>
+          <input
+            class="contacto-form__input"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="tu@mail.com"
+            required
+          />
+        </div>
+
+        <div class="contacto-form__campo contacto-form__campo--full">
+          <label class="contacto-form__label" for="asunto">Asunto</label>
+          <input
+            class="contacto-form__input"
+            type="text"
+            id="asunto"
+            name="asunto"
+            placeholder="¿En qué te puedo ayudar?"
+          />
+        </div>
+
+        <div class="contacto-form__campo contacto-form__campo--full">
+          <label class="contacto-form__label" for="mensaje">Mensaje</label>
+          <textarea
+            class="contacto-form__textarea"
+            id="mensaje"
+            name="mensaje"
+            placeholder="Contame tu proyecto o consulta..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="contacto-form__botones contacto-form__campo--full">
+          
+          <button type="button" class="btn-enviar" onclick="enviarMail()">Enviar mensaje</button>
+
+          
+        </div>
+
+      </form>
     </div>
-</section>
+  </section>
+
+  <!-- PANTALLA 2 — REDES SOCIALES -->
+  <section class="page contacto-redes mainContent">
+    <div class="contacto-redes__inner">
+
+      <h2 class="contacto-redes__titulo">Seguinos.</h2>
+
+      <div class="contacto-redes__grilla">
+
+        <!-- Instagram -->
+        <a
+          href="https://www.instagram.com/estudio.cavla"
+          target="_blank"
+          class="tarjeta-red"
+        >
+          <div class="tarjeta-red__imagen">
+            <!-- Reemplazá con una imagen representativa de tu feed -->
+            <img
+              class="tarjeta-red__bg"
+              src="images/CONTACTO/instagram.webp"
+              loading="lazy"
+              alt="Instagram Estudio CAVLA"
+            />
+            <div class="tarjeta-red__degradado"></div>
+            <div class="tarjeta-red__perfil">
+              <!-- Tu logo -->
+              <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
+            </div>
+          </div>
+          <div class="tarjeta-red__cuerpo">
+            <h3 class="tarjeta-red__nombre">Instagram</h3>
+            <p class="tarjeta-red__handle">@estudio.cavla</p>
+            <span class="tarjeta-red__boton">Seguir</span>
+          </div>
+        </a>
+
+        <!-- YouTube -->
+        <a
+          href="https://www.youtube.com/@EstudioCAVLA"
+          target="_blank"
+          class="tarjeta-red"
+        >
+          <div class="tarjeta-red__imagen">
+            <img
+              class="tarjeta-red__bg"
+              src="images/CONTACTO/youtube.webp"
+              loading="lazy"
+              alt="YouTube Estudio CAVLA"
+            />
+            <div class="tarjeta-red__degradado"></div>
+            <div class="tarjeta-red__perfil">
+              <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
+            </div>
+          </div>
+          <div class="tarjeta-red__cuerpo">
+            <h3 class="tarjeta-red__nombre">YouTube</h3>
+            <p class="tarjeta-red__handle">Estudio CAVLA</p>
+            <span class="tarjeta-red__boton">Suscribirse</span>
+          </div>
+        </a>
+
+        <!-- Facebook -->
+        <a
+          href="https://www.facebook.com/profile.php?id=61587135314564"
+          target="_blank"
+          class="tarjeta-red"
+        >
+          <div class="tarjeta-red__imagen">
+            <img
+              class="tarjeta-red__bg"
+              src="images/CONTACTO/facebook.webp"
+              loading="lazy"
+              alt="Facebook Estudio CAVLA"
+            />
+            <div class="tarjeta-red__degradado"></div>
+            <div class="tarjeta-red__perfil">
+              <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
+            </div>
+          </div>
+          <div class="tarjeta-red__cuerpo">
+            <h3 class="tarjeta-red__nombre">Facebook</h3>
+            <p class="tarjeta-red__handle">Estudio CAVLA</p>
+            <span class="tarjeta-red__boton">Seguir</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
 
   <script src="js/scripts.js"></script>
+
+<script>
+  function irAServicios() {
+  sessionStorage.setItem('snapSkip', 'servicios');
+  window.location.href = 'index.html';
+}
+
+function enviarMail() {
+  const nombre  = document.getElementById('nombre').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const asunto  = document.getElementById('asunto').value.trim();
+  const mensaje = document.getElementById('mensaje').value.trim();
+
+  if (!nombre || !email || !mensaje) {
+    alert('Por favor completá nombre, email y mensaje.');
+    return;
+  }
+
+  const cuerpo = `Nombre: ${nombre}\nEmail: ${email}\n\n${mensaje}`;
+  const mailtoLink = `mailto:office@estudiocavla.com?subject=${encodeURIComponent(asunto || 'Consulta desde la web')}&body=${encodeURIComponent(cuerpo)}`;
+  window.location.href = mailtoLink;
+}
+
+</script>
+
+
 </body>
 </html>
