@@ -99,14 +99,16 @@
     .desglose-par { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
     @media (max-width: 810px) { .desglose-par { grid-template-columns: 1fr; } }
     .desglose { padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 28px); border: 1px solid var(--w-08); border-radius: 16px; background: var(--w-03); height: 100%; }
-    .desglose__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 12px; }
-    .desglose__items { display: flex; flex-direction: column; gap: 7px; }
-    .desglose__item { display: flex; align-items: flex-start; gap: 10px; }
-    .desglose__check { width: 14px; height: 14px; flex-shrink: 0; margin-top: 3px; color: var(--w-40); }
-    .desglose__texto { font-size: 11.5px; color: var(--w-70); letter-spacing: .02em; line-height: 1.5; }
-    .desglose__sub-item { font-size: 10.5px; color: var(--w-55); letter-spacing: .04em; line-height: 1.6; padding: 2px 0; border-bottom: 1px solid var(--w-05); display: flex; align-items: center; gap: 8px; }
-    .desglose__sub-item:last-child { border-bottom: none; }
-    .desglose__sub-item::before { content: '·'; color: var(--w-28); flex-shrink: 0; }
+    .desglose__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 14px; }
+
+    /* Pastillas para tarjeta 1 */
+    .desglose__pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .desglose__pill { border: 1px solid var(--w-18); border-radius: 999px; padding: 9px 16px; font-size: 11px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: var(--w-70); white-space: nowrap; }
+
+    /* Items con check SVG para tarjeta 2 — sin líneas, espaciado compacto */
+    .desglose__items { display: flex; flex-direction: column; gap: 5px; }
+    .desglose__sub-item { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; color: var(--w-70); letter-spacing: .02em; line-height: 1.4; }
+    .desglose__sub-check { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; color: var(--w-55); }
 
     /* ── Formulario ── */
     .form-bloque-titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 14px; }
@@ -265,40 +267,28 @@
 
         <!-- Desglose en dos tarjetas lado a lado -->
         <div class="desglose-par">
-          <!-- Tarjeta 1: items generales -->
+          <!-- Tarjeta 1: items como pastillas -->
           <div class="desglose">
             <p class="desglose__titulo">Lo que incluye tu servicio</p>
-            <div class="desglose__items">
-              <div class="desglose__item">
-                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
-                <span class="desglose__texto">Formulario de relevamiento virtual</span>
-              </div>
-              <div class="desglose__item">
-                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
-                <span class="desglose__texto">Sesión de 1 hora de asesoría</span>
-              </div>
-              <div class="desglose__item">
-                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
-                <span class="desglose__texto">Plan de acción en PDF</span>
-              </div>
-              <div class="desglose__item">
-                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
-                <span class="desglose__texto">Excel de gestión de gastos</span>
-              </div>
+            <div class="desglose__pills">
+              <span class="desglose__pill">Relevamiento virtual</span>
+              <span class="desglose__pill">1 hora de asesoría</span>
+              <span class="desglose__pill">Plan de acción PDF</span>
+              <span class="desglose__pill">Excel de gastos</span>
             </div>
           </div>
-          <!-- Tarjeta 2: contenido del plan de acción -->
+          <!-- Tarjeta 2: contenido del plan con check SVG -->
           <div class="desglose">
             <p class="desglose__titulo">Lo que incluye tu plan de acción</p>
             <div class="desglose__items">
-              <div class="desglose__sub-item">Brief de cliente</div>
-              <div class="desglose__sub-item">Análisis neuroespacial</div>
-              <div class="desglose__sub-item">Narrativa de diseño</div>
-              <div class="desglose__sub-item">Renders fotorrealistas</div>
-              <div class="desglose__sub-item">Justificación de diseño</div>
-              <div class="desglose__sub-item">Etapabilidad de ejecución</div>
-              <div class="desglose__sub-item">Sugerencias de compra</div>
-              <div class="desglose__sub-item">Presupuesto aproximado</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Brief de cliente</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Análisis neuroespacial</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Narrativa de diseño</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Renders fotorrealistas</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Justificación de diseño</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Etapabilidad de ejecución</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Sugerencias de compra</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Presupuesto aproximado</div>
             </div>
           </div>
         </div>
@@ -477,22 +467,9 @@
         ? Math.round(precioNum / (1 - pctNum / 100))
         : 0;
       const textoDescuento = descCodigo
-        ? (precioOriginal > 0 ? `${descCodigo} (${formatARS(precioOriginal)})` : descCodigo)
+        ? (precioOriginal > 0 ? `${descCodigo} (${formatARS(precioOriginal)} — ${pctNum}% off)` : descCodigo)
         : (precioOriginal > 0 ? `${descPct} off (${formatARS(precioOriginal)})` : descPct);
       document.getElementById('r-descuento').textContent = textoDescuento;
-    }
-
-    /* ── Calcular seña y precios de cuotas ── */
-    const senia = Math.round(precioNum * 0.5);
-
-    // Intereses de Mercado Pago — actualizá según condiciones vigentes
-    const intereses = { 1: 0, 3: 0.15, 6: 0.28 };
-
-    if (senia > 0) {
-      document.getElementById('precio-transferencia').textContent = formatARS(senia);
-      document.getElementById('precio-mp-1').textContent          = formatARS(senia);
-      document.getElementById('precio-mp-3').textContent          = formatARS(senia * (1 + intereses[3]) / 3);
-      document.getElementById('precio-mp-6').textContent          = formatARS(senia * (1 + intereses[6]) / 6);
     }
 
     /* ── Validación del formulario ── */
@@ -508,15 +485,36 @@
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim());
       const acepto  = document.getElementById('acepto-terminos').checked;
 
-      // Mostrar aviso de T&C solo si los campos están completos pero no aceptó
-      avisoTerminos.classList.toggle('visible', completos && emailOk && !acepto);
+      // Aviso T&C: aparece cuando campos y email OK pero checkbox no marcado
+      if (avisoTerminos) avisoTerminos.classList.toggle('visible', completos && emailOk && !acepto);
 
       formValido = completos && emailOk && acepto;
       btnSiguiente.classList.toggle('activo', formValido);
     }
 
-    camposReq.forEach(id => document.getElementById(id)?.addEventListener('input', validarForm));
+    camposReq.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      // select necesita 'change', inputs necesitan 'input'
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', validarForm);
+    });
     document.getElementById('acepto-terminos').addEventListener('change', validarForm);
+
+    /* ── Recopilar datos del cliente ── */
+    function getDatosCliente() {
+      return {
+        nombre:    document.getElementById('nombre').value.trim(),
+        apellido:  document.getElementById('apellido').value.trim(),
+        email:     document.getElementById('email').value.trim(),
+        telefono:  document.getElementById('telefono').value.trim(),
+        calle:     document.getElementById('calle').value.trim(),
+        numero:    document.getElementById('numero').value.trim(),
+        depto:     document.getElementById('depto').value.trim(),
+        barrio:    document.getElementById('barrio').value.trim(),
+        ciudad:    document.getElementById('ciudad').value.trim(),
+        provincia: document.getElementById('provincia').value
+      };
+    }
 
     /* ── Botón "Elegir método de pago" → redirige a metodo-pago.html ── */
     btnSiguiente.addEventListener('click', function() {
@@ -524,7 +522,6 @@
       document.getElementById('mensaje-error').classList.remove('visible');
 
       const cliente = getDatosCliente();
-      // Pasar datos del cliente + cotización a la siguiente página
       const nextParams = new URLSearchParams({
         nombre:    cliente.nombre,
         apellido:  cliente.apellido,
@@ -545,22 +542,6 @@
       });
       window.location.href = `metodo-pago.html?${nextParams.toString()}`;
     });
-
-    /* ── Recopilar datos del cliente ── */
-    function getDatosCliente() {
-      return {
-        nombre:    document.getElementById('nombre').value.trim(),
-        apellido:  document.getElementById('apellido').value.trim(),
-        email:     document.getElementById('email').value.trim(),
-        telefono:  document.getElementById('telefono').value.trim(),
-        calle:     document.getElementById('calle').value.trim(),
-        numero:    document.getElementById('numero').value.trim(),
-        depto:     document.getElementById('depto').value.trim(),
-        barrio:    document.getElementById('barrio').value.trim(),
-        ciudad:    document.getElementById('ciudad').value.trim(),
-        provincia: document.getElementById('provincia').value
-      };
-    }
   </script>
 </body>
 </html>
