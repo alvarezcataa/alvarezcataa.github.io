@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA</title>
+  <title>CAVLA — Confirmar proyecto</title>
 
   <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
@@ -11,233 +11,408 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
 
   <style>
+    /* ---------- Sistema visual CAVLA ---------- */
     :root {
-      --fondo:       #13090a;
-      --linea:       #3a261f;
-      --crema:       #ece3d2;
-      --crema-suave: #d8cdb9;
-      --crema-mute:  #a89c89;
+      --bg:    #130c09;
+      --w-100: rgba(255,255,255,1);
+      --w-85:  rgba(255,255,255,.85);
+      --w-70:  rgba(255,255,255,.70);
+      --w-55:  rgba(255,255,255,.55);
+      --w-40:  rgba(255,255,255,.40);
+      --w-28:  rgba(255,255,255,.28);
+      --w-18:  rgba(255,255,255,.18);
+      --w-12:  rgba(255,255,255,.12);
+      --w-08:  rgba(255,255,255,.08);
+      --w-05:  rgba(255,255,255,.05);
+      --w-03:  rgba(255,255,255,.03);
+      --serif: 'Playfair Display', 'Times New Roman', serif;
+      --sans:  'Montserrat', system-ui, sans-serif;
     }
 
-    .pago-pagina {
-      min-height: 100dvh;
-      height: 100dvh;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--fondo);
-      padding: 80px 20px 40px;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
 
-    .pago-luz {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(ellipse at 50% 100%, rgba(160,90,40,.22) 0%, transparent 65%);
-      z-index: 0;
-    }
-
-    .pago {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 580px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .pago__titulo {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(30px, 5vw, 48px);
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--w-85);
+      font-family: var(--sans);
       font-weight: 300;
-      font-style: italic;
-      color: white;
-      line-height: 1.05;
+      letter-spacing: .01em;
+      -webkit-font-smoothing: antialiased;
     }
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 
-    .pago__subtitulo {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-top: 4px;
+    /* ---------- Scroll-snap ---------- */
+    .stage {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
     }
+    .stage::-webkit-scrollbar { width: 0; }
 
-    .separador {
-      width: 100%;
-      height: 1px;
-      background: rgba(255,255,255,0.15);
-    }
-
-    /* Resumen precio */
-    .precio-resumen {
+    .scene {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      justify-content: center;
+      padding: 110px 0 90px;
+      position: relative;
+    }
+    .scene__inner {
+      width: 60vw;
+      max-width: 60vw;
+      margin: 0 auto;
+    }
+    @media (max-width: 810px) {
+      .scene__inner { width: 90vw; max-width: 90vw; }
+      .scene { padding: 96px 0 80px; }
     }
 
-    .precio-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+    /* ---------- Rail ---------- */
+    .rail {
+      position: fixed;
+      right: clamp(16px, 2.4vw, 36px);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 40;
+      display: flex; flex-direction: column; gap: 14px;
+      align-items: center;
+    }
+    .rail__dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      border: 1px solid var(--w-28);
+      background: transparent;
+      cursor: pointer; padding: 0;
+      transition: background .25s ease, border-color .25s ease, transform .25s ease;
+    }
+    .rail__dot.is-active { background: var(--w-85); border-color: var(--w-85); transform: scale(1.15); }
+    @media (max-width: 810px) { .rail { display: none; } }
+
+    /* ---------- Scroll cue ---------- */
+    .cue {
+      position: absolute; bottom: 30px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: var(--w-70); font-size: 10px;
+      letter-spacing: .32em; text-transform: uppercase;
+      pointer-events: none;
+    }
+    .cue::after {
+      content: ''; width: 1px; height: 28px;
+      background: linear-gradient(to bottom, var(--w-70), transparent);
+      animation: cueDrop 2.2s ease-in-out infinite;
+    }
+    @keyframes cueDrop {
+      0%   { transform: scaleY(.2); transform-origin: top; opacity: .2; }
+      50%  { transform: scaleY(1);  transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(.2); transform-origin: bottom; opacity: .2; }
+    }
+    @media (max-width: 810px) { .cue { bottom: 22px; } }
+
+    /* ---------- Eyebrow / display ---------- */
+    .eyebrow {
+      font-size: 11px; letter-spacing: .32em;
+      text-transform: uppercase; color: var(--w-55);
+      font-weight: 400; margin: 0;
+    }
+    .display {
+      font-family: var(--serif); font-weight: 400;
+      color: var(--w-100); line-height: 1.02;
+      letter-spacing: -.01em; margin: 10px 0 0;
+      font-size: clamp(36px, 5vw, 68px);
+    }
+    .display em { font-style: italic; }
+
+    /* ---------- Resumen del proyecto ---------- */
+    .resumen {
+      margin-top: clamp(28px, 4vh, 48px);
+      border: 1px solid var(--w-12);
+      border-radius: 20px;
+      padding: clamp(20px, 2.8vw, 36px) clamp(22px, 3vw, 40px);
+      background: var(--w-03);
+    }
+    .resumen__titulo {
+      font-size: 10px; letter-spacing: .32em;
+      text-transform: uppercase; color: var(--w-40);
+      margin: 0 0 18px;
+    }
+    .resumen__filas { display: flex; flex-direction: column; gap: 10px; }
+    .resumen__fila {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 16px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--w-08);
+    }
+    .resumen__fila:last-child { border-bottom: none; padding-bottom: 0; }
+    .resumen__key {
+      font-size: 10.5px; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--w-40);
+      flex-shrink: 0;
+    }
+    .resumen__val {
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(15px, 1.6vw, 18px);
+      color: var(--w-85); text-align: right;
+    }
+    .resumen__fila--precio .resumen__val {
+      font-size: clamp(22px, 2.8vw, 32px);
+      color: var(--w-100);
+    }
+    .resumen__descuento {
+      display: none;
     }
 
-    .precio-total {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(36px, 6vw, 52px);
-      font-weight: 400;
-      font-style: italic;
-      color: white;
-      line-height: 1;
+    /* ---------- Desglose ---------- */
+    .desglose {
+      margin-top: 18px;
+      padding: clamp(16px, 2vw, 24px) clamp(20px, 2.6vw, 32px);
+      border: 1px solid var(--w-08);
+      border-radius: 16px;
+      background: var(--w-03);
+    }
+    .desglose__titulo {
+      font-size: 10px; letter-spacing: .32em;
+      text-transform: uppercase; color: var(--w-40);
+      margin: 0 0 14px;
+    }
+    .desglose__items { display: flex; flex-direction: column; gap: 8px; }
+    .desglose__item {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .desglose__check {
+      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+      color: var(--w-40);
+    }
+    .desglose__texto {
+      font-size: 12px; color: var(--w-70);
+      letter-spacing: .02em; line-height: 1.5;
     }
 
-    .precio-detalle {
-      font-size: 12px;
-      color: rgba(255,255,255,0.45);
-      margin-top: 4px;
+    /* ---------- Formulario ---------- */
+    .form-titulo {
+      margin: clamp(28px, 4vh, 44px) 0 18px;
+      font-size: 10px; letter-spacing: .32em;
+      text-transform: uppercase; color: var(--w-40);
     }
-
-    /* Opciones de pago */
-    .opciones-titulo {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-    }
-
-    .opciones {
-      display: flex;
-      flex-direction: column;
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
+    .form-grid--full { grid-column: 1 / -1; }
+    @media (max-width: 810px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid--full { grid-column: 1; }
+    }
 
-    .opcion-pago {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      padding: 20px 24px;
-      border: 1px solid var(--linea);
-      border-radius: 14px;
-      cursor: pointer;
-      transition: border-color .3s, background .3s;
+    .campo {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .campo label {
+      font-size: 9.5px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--w-40);
+    }
+    .campo input, .campo select {
       background: transparent;
-      text-align: left;
+      border: 1px solid var(--w-18);
+      border-radius: 999px;
+      padding: 13px 20px;
+      color: var(--w-100);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: .04em;
+      outline: none;
+      transition: border-color .22s ease;
       width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
     }
+    .campo input::placeholder { color: var(--w-28); }
+    .campo input:focus, .campo select:focus { border-color: var(--w-55); }
+    .campo input.error, .campo select.error { border-color: rgba(200,60,60,.8); }
+    .campo select option { background: #1b120e; color: white; }
 
-    .opcion-pago:hover {
-      border-color: rgba(255,255,255,0.3);
-      background: rgba(255,255,255,0.03);
+    /* Términos */
+    .terminos {
+      margin-top: 18px;
+      display: flex; align-items: flex-start; gap: 12px;
     }
-
-    .opcion-pago__nombre {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(18px, 3vw, 24px);
-      font-weight: 400;
-      font-style: italic;
-      color: white;
+    .terminos input[type="checkbox"] {
+      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+      accent-color: white; cursor: pointer;
     }
-
-    .opcion-pago__monto {
-      font-size: 13px;
-      color: rgba(255,255,255,0.6);
+    .terminos label {
+      font-size: 11px; color: var(--w-55);
+      line-height: 1.6; cursor: pointer;
     }
+    .terminos a { color: var(--w-85); text-decoration: underline; text-underline-offset: 3px; }
 
-    .opcion-pago__nota {
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-      font-style: italic;
-      margin-top: 2px;
-    }
-
-    /* Estado cargando */
-    .cargando {
-      display: none;
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      font-style: italic;
-    }
-
-    .cargando.visible { display: block; }
-
+    /* Error */
     .mensaje-error {
-      font-size: 12px;
-      color: #c97a7a;
+      margin-top: 14px;
+      font-size: 10.5px; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(200,60,60,.9);
       display: none;
-      padding-left: 4px;
     }
-
     .mensaje-error.visible { display: block; }
 
-    /* Nota descuento 100% */
-    .descuento-total {
-      display: none;
-      flex-direction: column;
+    /* Botón siguiente */
+    .btn-siguiente {
+      margin-top: 24px;
+      display: inline-flex; align-items: center; gap: 14px;
+      border: 1px solid var(--w-40);
+      border-radius: 999px;
+      padding: 16px 32px;
+      color: var(--w-100);
+      font-size: 11.5px; letter-spacing: .26em;
+      text-transform: uppercase;
+      background: transparent;
+      transition: border-color .25s ease, background .25s ease, opacity .25s ease;
+      opacity: .35; pointer-events: none;
+    }
+    .btn-siguiente.activo { opacity: 1; pointer-events: auto; }
+    .btn-siguiente.activo:hover { background: var(--w-08); border-color: var(--w-100); }
+    .btn-siguiente svg { width: 13px; height: 13px; }
+
+    /* ---------- Pantalla 2: Método de pago ---------- */
+    .pago-titulo {
+      font-size: 10px; letter-spacing: .32em;
+      text-transform: uppercase; color: var(--w-40);
+      margin: 0 0 28px;
+    }
+
+    .metodos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 16px;
     }
-
-    .descuento-total.visible { display: flex; }
-
-    .descuento-total__texto {
-      font-size: 14px;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.6;
+    @media (max-width: 810px) {
+      .metodos { grid-template-columns: 1fr; }
     }
 
-    .boton-continuar-gratis {
-      display: block;
-      width: 100%;
-      padding: 16px 24px;
-      background: transparent;
-      color: white;
-      border: 1px solid white;
-      border-radius: 50px;
-      font-family: 'Montserrat', sans-serif;
-      font-style: italic;
-      font-size: 1.5vh;
-      font-weight: 700;
-      letter-spacing: .20em;
-      text-transform: uppercase;
-      text-align: center;
+    .metodo-card {
+      border: 1px solid var(--w-18);
+      border-radius: 20px;
+      padding: clamp(20px, 2.6vw, 32px) clamp(20px, 2.6vw, 32px);
+      background: var(--w-03);
+      display: flex; flex-direction: column;
+      transition: border-color .25s ease, background .25s ease;
       cursor: pointer;
-      transition: all .4s;
-      text-decoration: none;
+      position: relative;
+    }
+    .metodo-card:hover { border-color: var(--w-40); background: var(--w-05); }
+    .metodo-card.seleccionado {
+      border-color: var(--w-100);
+      background: var(--w-08);
     }
 
-    .boton-continuar-gratis:hover {
-      background: white;
-      color: var(--fondo);
+    .metodo-card__badge {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 9px; letter-spacing: .24em;
+      text-transform: uppercase; color: var(--w-40);
+      border: 1px solid var(--w-18); border-radius: 999px;
+      padding: 4px 10px;
+    }
+    .metodo-card.seleccionado .metodo-card__badge {
+      color: var(--w-85); border-color: var(--w-40);
     }
 
-    .volver {
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: .15em;
+    .metodo-card__icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--w-28); border-radius: 50%;
+      display: grid; place-items: center;
+      color: var(--w-70); margin-bottom: 16px;
+    }
+    .metodo-card__icon svg { width: 16px; height: 16px; }
+    .metodo-card.seleccionado .metodo-card__icon { border-color: var(--w-85); color: var(--w-100); }
+
+    .metodo-card__nombre {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--w-100); line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .metodo-card__desc {
+      font-size: 11px; color: var(--w-55);
+      letter-spacing: .04em; line-height: 1.6;
+      flex: 1;
+    }
+
+    /* Preview de precio */
+    .metodo-card__precio-preview {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--w-12);
+    }
+    .metodo-card__precio-label {
+      font-size: 9.5px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--w-40);
+      margin-bottom: 10px;
+    }
+    .precio-opcion {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--w-05);
+    }
+    .precio-opcion:last-child { border-bottom: none; }
+    .precio-opcion__cuotas {
+      font-size: 11px; color: var(--w-55); letter-spacing: .14em;
+    }
+    .precio-opcion__monto {
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(15px, 1.8vw, 20px); color: var(--w-85);
+    }
+    .precio-opcion--destacado .precio-opcion__cuotas { color: var(--w-85); }
+    .precio-opcion--destacado .precio-opcion__monto  { color: var(--w-100); }
+
+    /* Botón de pago final */
+    .btn-pagar {
+      margin-top: 32px;
+      display: inline-flex; align-items: center; gap: 14px;
+      border: 1px solid var(--w-40);
+      border-radius: 999px;
+      padding: 18px 36px;
+      color: var(--w-100);
+      font-size: 12px; letter-spacing: .28em;
       text-transform: uppercase;
-      color: var(--crema-mute);
-      text-decoration: none;
-      text-align: center;
-      transition: color .3s;
-      display: block;
+      background: transparent;
+      transition: border-color .25s ease, background .25s ease, opacity .25s ease;
+      opacity: .35; pointer-events: none;
     }
+    .btn-pagar.activo { opacity: 1; pointer-events: auto; }
+    .btn-pagar.activo:hover { background: var(--w-08); border-color: var(--w-100); }
+    .btn-pagar svg { width: 13px; height: 13px; }
 
-    .volver:hover { color: white; }
-
-    @media (max-width: 600px) {
-      .pago-pagina { padding: 70px 16px 32px; }
-      .pago { gap: 20px; }
-      .opcion-pago { padding: 16px 18px; }
+    /* Loading overlay */
+    .loading-overlay {
+      position: fixed; inset: 0;
+      background: rgba(19,12,9,.92);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 20px;
+    }
+    .loading-overlay.visible { display: flex; }
+    .loading-spinner {
+      width: 36px; height: 36px;
+      border: 1px solid var(--w-18);
+      border-top-color: var(--w-85);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-texto {
+      font-size: 11px; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--w-55);
     }
   </style>
 </head>
@@ -265,69 +440,257 @@
     </ul>
   </div>
 
-  <div class="pago-luz"></div>
+  <aside class="rail" aria-hidden="true">
+    <button class="rail__dot is-active" data-go="0" aria-label="Resumen"></button>
+    <button class="rail__dot" data-go="1" aria-label="Pago"></button>
+  </aside>
 
-  <div class="pago-pagina">
-    <div class="pago">
-
-      <div>
-        <h1 class="pago__titulo">Elegí cómo pagar.</h1>
-        <span class="pago__subtitulo">Asesoría espacial · Residencial</span>
-      </div>
-
-      <div class="separador"></div>
-
-      <div class="precio-resumen">
-        <span class="precio-label">Total del proyecto</span>
-        <span class="precio-total" id="precio-mostrar">—</span>
-        <span class="precio-detalle" id="detalle-proyecto">—</span>
-      </div>
-
-      <div class="separador"></div>
-
-      <!-- Opciones de pago normales -->
-      <div id="bloque-pago">
-        <div style="display:flex; flex-direction:column; gap:12px;">
-          <span class="opciones-titulo">Elegí una opción</span>
-          <div class="opciones">
-
-            <button class="opcion-pago" id="btn-senia" onclick="pagar('senia')">
-              <span class="opcion-pago__nombre">Pagar seña</span>
-              <span class="opcion-pago__monto" id="monto-senia">—</span>
-              <span class="opcion-pago__nota">50% del total · El resto al finalizar el proyecto</span>
-            </button>
-
-            <button class="opcion-pago" id="btn-total" onclick="pagar('total')">
-              <span class="opcion-pago__nombre">Pagar total</span>
-              <span class="opcion-pago__monto" id="monto-total">—</span>
-              <span class="opcion-pago__nota">Pago único · Sin pasos adicionales</span>
-            </button>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- Si descuento 100% -->
-      <div class="descuento-total" id="bloque-gratis">
-        <p class="descuento-total__texto">
-          Aplicaste un código de descuento del 100%. Tu proyecto no tiene costo.<br>
-          Avanzá directo al relevamiento.
-        </p>
-        <a href="#" class="boton-continuar-gratis" id="btn-gratis">
-          Continuar al relevamiento
-        </a>
-      </div>
-
-      <div class="cargando" id="cargando">Redirigiendo a Mercado Pago...</div>
-      <div class="mensaje-error" id="mensaje-error"></div>
-
-      <a href="confirmación.html" class="volver" id="volver-link">← Volver</a>
-      
-      <div class="cho-container"></div>
-    </div>
+  <!-- Loading overlay -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-texto">Procesando tu solicitud…</p>
   </div>
 
+  <main class="stage" id="stage">
+
+    <!-- ============ Pantalla 1: Resumen + Datos ============ -->
+    <section class="scene" data-scene="0">
+      <div class="scene__inner">
+
+        <p class="eyebrow">Asesoría Espacial — Residencial</p>
+        <h1 class="display"><em>Tu proyecto</em></h1>
+
+        <!-- Resumen del servicio -->
+        <div class="resumen">
+          <p class="resumen__titulo">Resumen de cotización</p>
+          <div class="resumen__filas">
+            <div class="resumen__fila">
+              <span class="resumen__key">Ambiente</span>
+              <span class="resumen__val" id="r-ambiente">—</span>
+            </div>
+            <div class="resumen__fila">
+              <span class="resumen__key">Superficie</span>
+              <span class="resumen__val" id="r-superficie">—</span>
+            </div>
+            <div class="resumen__fila">
+              <span class="resumen__key">Estado</span>
+              <span class="resumen__val" id="r-estado">—</span>
+            </div>
+            <div class="resumen__fila resumen__descuento" id="fila-descuento">
+              <span class="resumen__key">Descuento</span>
+              <span class="resumen__val" id="r-descuento">—</span>
+            </div>
+            <div class="resumen__fila resumen__fila--precio">
+              <span class="resumen__key">Total del servicio</span>
+              <span class="resumen__val" id="r-precio">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desglose de lo que incluye -->
+        <div class="desglose">
+          <p class="desglose__titulo">Lo que incluye tu servicio</p>
+          <div class="desglose__items">
+            <div class="desglose__item">
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8l3.5 3.5L13 5"/>
+              </svg>
+              <span class="desglose__texto">Relevamiento fotográfico del ambiente a transformar</span>
+            </div>
+            <div class="desglose__item">
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8l3.5 3.5L13 5"/>
+              </svg>
+              <span class="desglose__texto">Videollamada de diagnóstico y propuesta inicial</span>
+            </div>
+            <div class="desglose__item">
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8l3.5 3.5L13 5"/>
+              </svg>
+              <span class="desglose__texto">Plan de acción personalizado con guía de implementación</span>
+            </div>
+            <div class="desglose__item">
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8l3.5 3.5L13 5"/>
+              </svg>
+              <span class="desglose__texto">Selección de productos y referencias visuales</span>
+            </div>
+            <div class="desglose__item">
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8l3.5 3.5L13 5"/>
+              </svg>
+              <span class="desglose__texto">Acompañamiento por mail durante la implementación</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario de datos -->
+        <p class="form-titulo">Tus datos</p>
+        <div class="form-grid">
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="María" autocomplete="given-name" />
+          </div>
+          <div class="campo">
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" placeholder="García" autocomplete="family-name" />
+          </div>
+          <div class="campo form-grid--full">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="maria@ejemplo.com" autocomplete="email" />
+          </div>
+          <div class="campo form-grid--full">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" placeholder="+54 9 11 0000 0000" autocomplete="tel" />
+          </div>
+          <div class="campo form-grid--full">
+            <label for="calle">Calle</label>
+            <input type="text" id="calle" placeholder="Av. Santa Fe" autocomplete="street-address" />
+          </div>
+          <div class="campo">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" placeholder="1234" />
+          </div>
+          <div class="campo">
+            <label for="depto">Piso / Depto</label>
+            <input type="text" id="depto" placeholder="3° B" autocomplete="off" />
+          </div>
+          <div class="campo">
+            <label for="barrio">Barrio</label>
+            <input type="text" id="barrio" placeholder="Palermo" />
+          </div>
+          <div class="campo">
+            <label for="ciudad">Ciudad</label>
+            <input type="text" id="ciudad" placeholder="Buenos Aires" autocomplete="address-level2" />
+          </div>
+          <div class="campo form-grid--full">
+            <label for="provincia">Provincia</label>
+            <select id="provincia">
+              <option value="" disabled selected>Seleccioná tu provincia</option>
+              <option>Buenos Aires</option>
+              <option>CABA</option>
+              <option>Catamarca</option>
+              <option>Chaco</option>
+              <option>Chubut</option>
+              <option>Córdoba</option>
+              <option>Corrientes</option>
+              <option>Entre Ríos</option>
+              <option>Formosa</option>
+              <option>Jujuy</option>
+              <option>La Pampa</option>
+              <option>La Rioja</option>
+              <option>Mendoza</option>
+              <option>Misiones</option>
+              <option>Neuquén</option>
+              <option>Río Negro</option>
+              <option>Salta</option>
+              <option>San Juan</option>
+              <option>San Luis</option>
+              <option>Santa Cruz</option>
+              <option>Santa Fe</option>
+              <option>Santiago del Estero</option>
+              <option>Tierra del Fuego</option>
+              <option>Tucumán</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Términos y condiciones -->
+        <div class="terminos">
+          <input type="checkbox" id="acepto-terminos" />
+          <label for="acepto-terminos">
+            Leí y acepto los <a href="../../terminos.html" target="_blank">Términos y Condiciones</a> del servicio.
+          </label>
+        </div>
+
+        <p class="mensaje-error" id="mensaje-error"></p>
+
+        <button class="btn-siguiente" id="btn-siguiente" type="button">
+          Elegir método de pago
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+
+      </div>
+      <div class="cue">Método de pago</div>
+    </section>
+
+    <!-- ============ Pantalla 2: Método de pago ============ -->
+    <section class="scene" data-scene="1">
+      <div class="scene__inner">
+
+        <p class="eyebrow">Último paso</p>
+        <h2 class="display"><em>Elegí cómo pagar</em></h2>
+
+        <p class="pago-titulo" style="margin-top: clamp(24px,3.5vh,40px)">Seleccioná un método</p>
+
+        <div class="metodos">
+
+          <!-- Transferencia -->
+          <div class="metodo-card" id="card-transferencia" onclick="seleccionarMetodo('transferencia')">
+            <span class="metodo-card__badge">Sin interés</span>
+            <div class="metodo-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="6" width="18" height="13" rx="2"/>
+                <path d="M3 10h18M7 15h3"/>
+              </svg>
+            </div>
+            <p class="metodo-card__nombre">Transferencia<br>bancaria</p>
+            <p class="metodo-card__desc">Pagás la seña por transferencia. Te enviamos los datos de la cuenta por mail y confirmamos cuando recibimos el comprobante.</p>
+            <div class="metodo-card__precio-preview">
+              <p class="metodo-card__precio-label">Lo que pagás ahora</p>
+              <div class="precio-opcion precio-opcion--destacado">
+                <span class="precio-opcion__cuotas">Seña única</span>
+                <span class="precio-opcion__monto" id="precio-transferencia">—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mercado Pago -->
+          <div class="metodo-card" id="card-mp" onclick="seleccionarMetodo('mp')">
+            <span class="metodo-card__badge">Con interés</span>
+            <div class="metodo-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v5l3 3"/>
+              </svg>
+            </div>
+            <p class="metodo-card__nombre">Mercado<br>Pago</p>
+            <p class="metodo-card__desc">Pagás la seña en cuotas desde la web. Al acreditarse el pago te enviamos el comprobante y los datos del relevamiento.</p>
+            <div class="metodo-card__precio-preview">
+              <p class="metodo-card__precio-label">Opciones de cuotas</p>
+              <div class="precio-opcion precio-opcion--destacado">
+                <span class="precio-opcion__cuotas">1 cuota</span>
+                <span class="precio-opcion__monto" id="precio-mp-1">—</span>
+              </div>
+              <div class="precio-opcion">
+                <span class="precio-opcion__cuotas">3 cuotas</span>
+                <span class="precio-opcion__monto" id="precio-mp-3">—</span>
+              </div>
+              <div class="precio-opcion">
+                <span class="precio-opcion__cuotas">6 cuotas</span>
+                <span class="precio-opcion__monto" id="precio-mp-6">—</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <button class="btn-pagar" id="btn-pagar" type="button">
+          Confirmar y pagar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </button>
+
+      </div>
+    </section>
+
+  </main>
+
   <script>
+    /* ---------- Menu toggle ---------- */
     const sideMenu = document.getElementById('sideMenu');
     window.toggleMenu = function() {
       if (!sideMenu) return;
@@ -342,125 +705,246 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
     });
-  </script>
 
-  <script>
-    // Leer parámetros de la URL
-    const params     = new URLSearchParams(window.location.search);
-    const nombre     = params.get('nombre')     || '';
-    const apellido   = params.get('apellido')   || '';
-    const email      = params.get('email')       || '';
-    const ambiente   = params.get('ambiente')   || '';
-    const superficie = params.get('superficie') || '';
-    const estado     = params.get('estado')     || '';
-    const descuento  = params.get('descuento')  || '';
-    const precioRaw  = params.get('precio')     || '';
-
-    // Reconstruir el link de volver con los parámetros originales
-    document.getElementById('volver-link').href =
-      `confirmación.html?${params.toString()}`;
-
-    // Parsear precio numérico (viene como "$69.000" o "$ 69.000")
-    const precioNum = parseInt(
-      precioRaw.replace(/[^0-9]/g, ''), 10
-    ) || 0;
-
-    const seniaNum  = Math.round(precioNum * 0.5);
-
-    // Formatear en ARS
-    function formatARS(n) {
-      return n.toLocaleString('es-AR', {
-        style: 'currency', currency: 'ARS', minimumFractionDigits: 0
+    /* ---------- Rail sync ---------- */
+    (function(){
+      const stage  = document.getElementById('stage');
+      const scenes = stage.querySelectorAll('.scene');
+      const dots   = document.querySelectorAll('.rail__dot');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && e.intersectionRatio > 0.55) {
+            const idx = +e.target.dataset.scene;
+            dots.forEach((d,i) => d.classList.toggle('is-active', i === idx));
+          }
+        });
+      }, { root: stage, threshold: [0.55, 0.75] });
+      scenes.forEach(s => io.observe(s));
+      dots.forEach(d => {
+        d.addEventListener('click', () => {
+          scenes[+d.dataset.go].scrollIntoView({ behavior:'smooth', block:'start' });
+        });
       });
-    }
+    })();
+
+    /* ---------- Apps Script URL ---------- */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyONYIB1BoIiCITQjDJl61UWMRvldSk5vw6eWahm3Z72FWK4E7u2T51d7PJ8gRhm0zU/exec";
+
+    /* ---------- Leer params de URL ---------- */
+    const params     = new URLSearchParams(window.location.search);
+    const ambiente   = params.get('ambiente')         || '';
+    const superficie = params.get('superficie')       || '';
+    const estado     = params.get('estado')           || '';
+    const precio     = params.get('precio')           || '';
+    const descPct    = params.get('descuento_pct')    || '';
+    const descCodigo = params.get('descuento_codigo') || '';
 
     // Mostrar resumen
-    document.getElementById('precio-mostrar').textContent  = precioRaw || '—';
-    document.getElementById('detalle-proyecto').textContent =
-      [ambiente, superficie, estado].filter(Boolean).join(' · ') || '—';
-    document.getElementById('monto-senia').textContent  = formatARS(seniaNum);
-    document.getElementById('monto-total').textContent  = formatARS(precioNum);
+    document.getElementById('r-ambiente').textContent   = ambiente   || '—';
+    document.getElementById('r-superficie').textContent = superficie || '—';
+    document.getElementById('r-estado').textContent     = estado     || '—';
+    document.getElementById('r-precio').textContent     = precio     || '—';
 
-    // Detectar descuento 100%
-    const es100 = descuento.includes('100%') ||
-                  precioNum === 0            ||
-                  precioRaw.toLowerCase().includes('gratis');
-
-    if (es100) {
-      document.getElementById('bloque-pago').style.display  = 'none';
-      document.getElementById('bloque-gratis').classList.add('visible');
-
-      // Armar link de relevamiento con todos los params
-      const relevParams = new URLSearchParams({
-        nombre, apellido, email,
-        ambiente, superficie, estado,
-        precio: precioRaw,
-        descuento,
-        pago: 'gratis'
-      });
-      document.getElementById('btn-gratis').href =
-        `Relevamiento.html?${relevParams.toString()}`;
+    if (descPct || descCodigo) {
+      document.getElementById('fila-descuento').style.display = 'flex';
+      document.getElementById('r-descuento').textContent =
+        descCodigo && descPct ? `${descCodigo} (${descPct})` : descPct || descCodigo;
     }
 
-    // Función de pago
-    const mp = new MercadoPago('APP_USR-541f81dc-8855-4a87-8c33-dbd32a7e6dde', {
-  locale: 'es-AR'
-});
+    /* ---------- Calcular precios de seña ---------- */
+    // Extraer número del precio formateado (ej: "$ 180.000" → 180000)
+    function parsearPrecio(str) {
+      return parseInt(str.replace(/[^\d]/g, ''), 10) || 0;
+    }
 
-let checkout = null;
+    const precioNum = parsearPrecio(precio);
+    const senia     = Math.round(precioNum * 0.5); // 50% = pago total
 
-async function pagar(tipo) {
-  if (precioNum === 0) return;
+    // Intereses estimados de Mercado Pago (aproximados, actualizables)
+    const intereses = { 1: 0, 3: 0.15, 6: 0.28 };
 
-  document.getElementById('cargando').classList.add('visible');
-  document.getElementById('mensaje-error').classList.remove('visible');
-  document.getElementById('btn-senia').disabled = true;
-  document.getElementById('btn-total').disabled = true;
+    function formatARS(n) {
+      return n.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 });
+    }
 
-  const monto       = tipo === 'senia' ? seniaNum : precioNum;
-  const descripcion = `Asesoría Espacial · ${ambiente} · ${tipo === 'senia' ? 'Seña 50%' : 'Pago total'}`;
+    document.getElementById('precio-transferencia').textContent = formatARS(senia);
+    document.getElementById('precio-mp-1').textContent = formatARS(Math.round(senia * (1 + intereses[1])));
+    document.getElementById('precio-mp-3').textContent =
+      formatARS(Math.round(senia * (1 + intereses[3]) / 3)) + ' x 3';
+    document.getElementById('precio-mp-6').textContent =
+      formatARS(Math.round(senia * (1 + intereses[6]) / 6)) + ' x 6';
 
-  try {
-    const response = await fetch('/api/crear-pago', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        monto,
-        descripcion,
-        codigo_proyecto: `${apellido}_${ambiente}`.replace(/\s/g, '_'),
-        tipo_pago: tipo
-      })
+    /* ---------- Validación del formulario ---------- */
+    const camposRequeridos = ['nombre', 'apellido', 'email', 'telefono',
+                              'calle', 'numero', 'barrio', 'ciudad', 'provincia'];
+    const btnSiguiente = document.getElementById('btn-siguiente');
+
+    function validarForm() {
+      const completos = camposRequeridos.every(id => {
+        const el = document.getElementById(id);
+        return el && el.value.trim() !== '';
+      });
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        document.getElementById('email').value.trim()
+      );
+      const acepto = document.getElementById('acepto-terminos').checked;
+      btnSiguiente.classList.toggle('activo', completos && emailOk && acepto);
+    }
+
+    camposRequeridos.forEach(id => {
+      document.getElementById(id)?.addEventListener('input', validarForm);
+    });
+    document.getElementById('acepto-terminos').addEventListener('change', validarForm);
+
+    /* ---------- Botón "Elegir método de pago" ---------- */
+    btnSiguiente.addEventListener('click', function() {
+      if (!this.classList.contains('activo')) return;
+      // Validar email
+      const email = document.getElementById('email').value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        const err = document.getElementById('mensaje-error');
+        err.textContent = '* Ingresá un e-mail válido.';
+        err.classList.add('visible');
+        return;
+      }
+      document.getElementById('mensaje-error').classList.remove('visible');
+      // Scroll a pantalla 2
+      document.querySelector('.scene[data-scene="1"]')
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    const data = await response.json();
+    /* ---------- Selección de método de pago ---------- */
+    let metodoSeleccionado = null;
 
-    if (!data.preference_id) {
-      throw new Error(data.error || 'No se pudo generar el pago');
+    window.seleccionarMetodo = function(metodo) {
+      metodoSeleccionado = metodo;
+      document.getElementById('card-transferencia').classList.toggle('seleccionado', metodo === 'transferencia');
+      document.getElementById('card-mp').classList.toggle('seleccionado', metodo === 'mp');
+      document.getElementById('btn-pagar').classList.add('activo');
+
+      // Actualizar texto del botón
+      const btn = document.getElementById('btn-pagar');
+      btn.innerHTML = metodo === 'transferencia'
+        ? 'Solicitar datos de transferencia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+        : 'Pagar con Mercado Pago <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    };
+
+    /* ---------- Recopilar datos del cliente ---------- */
+    function getDatosCliente() {
+      return {
+        nombre:    document.getElementById('nombre').value.trim(),
+        apellido:  document.getElementById('apellido').value.trim(),
+        email:     document.getElementById('email').value.trim(),
+        telefono:  document.getElementById('telefono').value.trim(),
+        calle:     document.getElementById('calle').value.trim(),
+        numero:    document.getElementById('numero').value.trim(),
+        depto:     document.getElementById('depto').value.trim(),
+        barrio:    document.getElementById('barrio').value.trim(),
+        ciudad:    document.getElementById('ciudad').value.trim(),
+        provincia: document.getElementById('provincia').value
+      };
     }
 
-    document.getElementById('cargando').classList.remove('visible');
+    /* ---------- Enviar al Apps Script (iframe, evita CORS) ---------- */
+    function enviarAppsScript(datosCliente, metodoPago, callback) {
+      const data = {
+        cotizacion: {
+          servicio:         'Asesoría Espacial Residencial',
+          ambiente,
+          superficie,
+          estado,
+          total:            precio,
+          descuento_pct:    descPct    || '',
+          descuento_codigo: descCodigo || ''
+        },
+        cliente:      datosCliente,
+        metodo_pago:  metodoPago
+      };
 
-    // Abrir modal en lugar de redirigir
-    checkout = mp.checkout({
-      preference: { id: data.preference_id },
-      render: {
-        container: '.cho-container',
-        label: 'Pagar'
+      let iframe = document.getElementById('iframe-post');
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'iframe-post';
+        iframe.id   = 'iframe-post';
+        document.body.appendChild(iframe);
+      }
+
+      const form = document.createElement('form');
+      form.style.display = 'none';
+      form.method  = 'POST';
+      form.action  = APPS_SCRIPT_URL;
+      form.target  = 'iframe-post';
+      form.enctype = 'application/x-www-form-urlencoded';
+
+      const input = document.createElement('input');
+      input.type  = 'hidden';
+      input.name  = 'payload';
+      input.value = JSON.stringify(data);
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+      form.remove();
+
+      // No esperamos respuesta del script; continuamos después de un delay
+      setTimeout(callback, 800);
+    }
+
+    /* ---------- Botón "Confirmar y pagar" ---------- */
+    document.getElementById('btn-pagar').addEventListener('click', async function() {
+      if (!this.classList.contains('activo') || !metodoSeleccionado) return;
+
+      const cliente = getDatosCliente();
+      const overlay = document.getElementById('loading-overlay');
+      overlay.classList.add('visible');
+      this.disabled = true;
+
+      if (metodoSeleccionado === 'transferencia') {
+        // Enviar al Apps Script y redirigir a pantalla de espera
+        enviarAppsScript(cliente, 'transferencia', function() {
+          const p = new URLSearchParams({
+            nombre:   cliente.nombre,
+            apellido: cliente.apellido,
+            email:    cliente.email,
+            metodo:   'transferencia',
+            precio:   formatARS(senia)
+          });
+          window.location.href = `../AsesoríaEspacial/espera.html?${p.toString()}`;
+        });
+
+      } else {
+        // Mercado Pago: crear preferencia vía Vercel function
+        try {
+          const resp = await fetch('/api/crear-preferencia', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              monto:    senia,
+              nombre:   cliente.nombre,
+              apellido: cliente.apellido,
+              email:    cliente.email,
+              servicio: `Asesoría Espacial — ${ambiente}`
+            })
+          });
+          const mpData = await resp.json();
+          if (mpData.init_point) {
+            // Enviar al Apps Script en paralelo (no bloqueante)
+            enviarAppsScript(cliente, 'mercadopago', function(){});
+            window.location.href = mpData.init_point;
+          } else {
+            throw new Error('No se recibió init_point');
+          }
+        } catch (err) {
+          overlay.classList.remove('visible');
+          this.disabled = false;
+          const errEl = document.createElement('p');
+          errEl.style.cssText = 'margin-top:14px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,60,60,.9)';
+          errEl.textContent = '* Error al conectar con Mercado Pago. Intentá de nuevo.';
+          this.parentNode.insertBefore(errEl, this.nextSibling);
+          setTimeout(() => errEl.remove(), 4000);
+        }
       }
     });
-
-    checkout.open();
-
-  } catch (err) {
-    document.getElementById('cargando').classList.remove('visible');
-    document.getElementById('btn-senia').disabled = false;
-    document.getElementById('btn-total').disabled = false;
-    const errorEl = document.getElementById('mensaje-error');
-    errorEl.textContent = '✗ No se pudo procesar el pago. Intentá de nuevo.';
-    errorEl.classList.add('visible');
-  }
-}
   </script>
-
 </body>
 </html>

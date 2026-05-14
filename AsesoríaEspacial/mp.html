@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+
+  <style>
+    :root {
+      --fondo:       #13090a;
+      --linea:       #3a261f;
+      --crema:       #ece3d2;
+      --crema-suave: #d8cdb9;
+      --crema-mute:  #a89c89;
+    }
+
+    .pago-pagina {
+      min-height: 100dvh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--fondo);
+      padding: 80px 20px 40px;
+    }
+
+    .pago-luz {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(160,90,40,.22) 0%, transparent 65%);
+      z-index: 0;
+    }
+
+    .pago {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .pago__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      line-height: 1.05;
+    }
+
+    .pago__subtitulo {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    .separador {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Resumen precio */
+    .precio-resumen {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .precio-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .precio-total {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 6vw, 52px);
+      font-weight: 400;
+      font-style: italic;
+      color: white;
+      line-height: 1;
+    }
+
+    .precio-detalle {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+    }
+
+    /* Opciones de pago */
+    .opciones-titulo {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .opciones {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .opcion-pago {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 20px 24px;
+      border: 1px solid var(--linea);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: border-color .3s, background .3s;
+      background: transparent;
+      text-align: left;
+      width: 100%;
+    }
+
+    .opcion-pago:hover {
+      border-color: rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .opcion-pago__nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 400;
+      font-style: italic;
+      color: white;
+    }
+
+    .opcion-pago__monto {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .opcion-pago__nota {
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* Estado cargando */
+    .cargando {
+      display: none;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      font-style: italic;
+    }
+
+    .cargando.visible { display: block; }
+
+    .mensaje-error {
+      font-size: 12px;
+      color: #c97a7a;
+      display: none;
+      padding-left: 4px;
+    }
+
+    .mensaje-error.visible { display: block; }
+
+    /* Nota descuento 100% */
+    .descuento-total {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .descuento-total.visible { display: flex; }
+
+    .descuento-total__texto {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    .boton-continuar-gratis {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-style: italic;
+      font-size: 1.5vh;
+      font-weight: 700;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      transition: all .4s;
+      text-decoration: none;
+    }
+
+    .boton-continuar-gratis:hover {
+      background: white;
+      color: var(--fondo);
+    }
+
+    .volver {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      text-decoration: none;
+      text-align: center;
+      transition: color .3s;
+      display: block;
+    }
+
+    .volver:hover { color: white; }
+
+    @media (max-width: 600px) {
+      .pago-pagina { padding: 70px 16px 32px; }
+      .pago { gap: 20px; }
+      .opcion-pago { padding: 16px 18px; }
+    }
+  </style>
+</head>
+
+<body class="pagina">
+
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="../../index.html">Inicio</a>
+      <a href="../../filosofia.html">Filosofía</a>
+      <a href="../../sobremi.html">Sobre mí</a>
+      <a href="../../contacto.html">Contacto</a>
+    </nav>
+    <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="pago-luz"></div>
+
+  <div class="pago-pagina">
+    <div class="pago">
+
+      <div>
+        <h1 class="pago__titulo">Elegí cómo pagar.</h1>
+        <span class="pago__subtitulo">Asesoría espacial · Residencial</span>
+      </div>
+
+      <div class="separador"></div>
+
+      <div class="precio-resumen">
+        <span class="precio-label">Total del proyecto</span>
+        <span class="precio-total" id="precio-mostrar">—</span>
+        <span class="precio-detalle" id="detalle-proyecto">—</span>
+      </div>
+
+      <div class="separador"></div>
+
+      <!-- Opciones de pago normales -->
+      <div id="bloque-pago">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <span class="opciones-titulo">Elegí una opción</span>
+          <div class="opciones">
+
+            <button class="opcion-pago" id="btn-senia" onclick="pagar('senia')">
+              <span class="opcion-pago__nombre">Pagar seña</span>
+              <span class="opcion-pago__monto" id="monto-senia">—</span>
+              <span class="opcion-pago__nota">50% del total · El resto al finalizar el proyecto</span>
+            </button>
+
+            <button class="opcion-pago" id="btn-total" onclick="pagar('total')">
+              <span class="opcion-pago__nombre">Pagar total</span>
+              <span class="opcion-pago__monto" id="monto-total">—</span>
+              <span class="opcion-pago__nota">Pago único · Sin pasos adicionales</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Si descuento 100% -->
+      <div class="descuento-total" id="bloque-gratis">
+        <p class="descuento-total__texto">
+          Aplicaste un código de descuento del 100%. Tu proyecto no tiene costo.<br>
+          Avanzá directo al relevamiento.
+        </p>
+        <a href="#" class="boton-continuar-gratis" id="btn-gratis">
+          Continuar al relevamiento
+        </a>
+      </div>
+
+      <div class="cargando" id="cargando">Redirigiendo a Mercado Pago...</div>
+      <div class="mensaje-error" id="mensaje-error"></div>
+
+      <a href="confirmación.html" class="volver" id="volver-link">← Volver</a>
+      
+      <div class="cho-container"></div>
+    </div>
+  </div>
+
+  <script>
+    const sideMenu = document.getElementById('sideMenu');
+    window.toggleMenu = function() {
+      if (!sideMenu) return;
+      sideMenu.classList.toggle('open');
+    };
+    document.addEventListener('click', function(e) {
+      if (!sideMenu || !sideMenu.classList.contains('open')) return;
+      const toggle = document.querySelector('.menu-toggle');
+      if (sideMenu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+      sideMenu.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
+    });
+  </script>
+
+  <script>
+    // Leer parámetros de la URL
+    const params     = new URLSearchParams(window.location.search);
+    const nombre     = params.get('nombre')     || '';
+    const apellido   = params.get('apellido')   || '';
+    const email      = params.get('email')       || '';
+    const ambiente   = params.get('ambiente')   || '';
+    const superficie = params.get('superficie') || '';
+    const estado     = params.get('estado')     || '';
+    const descuento  = params.get('descuento')  || '';
+    const precioRaw  = params.get('precio')     || '';
+
+    // Reconstruir el link de volver con los parámetros originales
+    document.getElementById('volver-link').href =
+      `confirmación.html?${params.toString()}`;
+
+    // Parsear precio numérico (viene como "$69.000" o "$ 69.000")
+    const precioNum = parseInt(
+      precioRaw.replace(/[^0-9]/g, ''), 10
+    ) || 0;
+
+    const seniaNum  = Math.round(precioNum * 0.5);
+
+    // Formatear en ARS
+    function formatARS(n) {
+      return n.toLocaleString('es-AR', {
+        style: 'currency', currency: 'ARS', minimumFractionDigits: 0
+      });
+    }
+
+    // Mostrar resumen
+    document.getElementById('precio-mostrar').textContent  = precioRaw || '—';
+    document.getElementById('detalle-proyecto').textContent =
+      [ambiente, superficie, estado].filter(Boolean).join(' · ') || '—';
+    document.getElementById('monto-senia').textContent  = formatARS(seniaNum);
+    document.getElementById('monto-total').textContent  = formatARS(precioNum);
+
+    // Detectar descuento 100%
+    const es100 = descuento.includes('100%') ||
+                  precioNum === 0            ||
+                  precioRaw.toLowerCase().includes('gratis');
+
+    if (es100) {
+      document.getElementById('bloque-pago').style.display  = 'none';
+      document.getElementById('bloque-gratis').classList.add('visible');
+
+      // Armar link de relevamiento con todos los params
+      const relevParams = new URLSearchParams({
+        nombre, apellido, email,
+        ambiente, superficie, estado,
+        precio: precioRaw,
+        descuento,
+        pago: 'gratis'
+      });
+      document.getElementById('btn-gratis').href =
+        `Relevamiento.html?${relevParams.toString()}`;
+    }
+
+    // Función de pago
+    const mp = new MercadoPago('APP_USR-541f81dc-8855-4a87-8c33-dbd32a7e6dde', {
+  locale: 'es-AR'
+});
+
+let checkout = null;
+
+async function pagar(tipo) {
+  if (precioNum === 0) return;
+
+  document.getElementById('cargando').classList.add('visible');
+  document.getElementById('mensaje-error').classList.remove('visible');
+  document.getElementById('btn-senia').disabled = true;
+  document.getElementById('btn-total').disabled = true;
+
+  const monto       = tipo === 'senia' ? seniaNum : precioNum;
+  const descripcion = `Asesoría Espacial · ${ambiente} · ${tipo === 'senia' ? 'Seña 50%' : 'Pago total'}`;
+
+  try {
+    const response = await fetch('/api/crear-pago', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        monto,
+        descripcion,
+        codigo_proyecto: `${apellido}_${ambiente}`.replace(/\s/g, '_'),
+        tipo_pago: tipo
+      })
+    });
+
+    const data = await response.json();
+
+    if (!data.preference_id) {
+      throw new Error(data.error || 'No se pudo generar el pago');
+    }
+
+    document.getElementById('cargando').classList.remove('visible');
+
+    // Abrir modal en lugar de redirigir
+    checkout = mp.checkout({
+      preference: { id: data.preference_id },
+      render: {
+        container: '.cho-container',
+        label: 'Pagar'
+      }
+    });
+
+    checkout.open();
+
+  } catch (err) {
+    document.getElementById('cargando').classList.remove('visible');
+    document.getElementById('btn-senia').disabled = false;
+    document.getElementById('btn-total').disabled = false;
+    const errorEl = document.getElementById('mensaje-error');
+    errorEl.textContent = '✗ No se pudo procesar el pago. Intentá de nuevo.';
+    errorEl.classList.add('visible');
+  }
+}
+  </script>
+
+</body>
+</html>
