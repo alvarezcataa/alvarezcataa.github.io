@@ -13,7 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   <style>
-    /* ---------- Sistema visual CAVLA ---------- */
     :root {
       --bg:    #130c09;
       --w-100: rgba(255,255,255,1);
@@ -32,83 +31,36 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-
-    html, body {
-      margin: 0; padding: 0;
-      background: var(--bg);
-      color: var(--w-85);
-      font-family: var(--sans);
-      font-weight: 300;
-      letter-spacing: .01em;
-      -webkit-font-smoothing: antialiased;
-    }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--w-85); font-family: var(--sans); font-weight: 300; letter-spacing: .01em; -webkit-font-smoothing: antialiased; }
     body { overflow-x: hidden; }
     a { color: inherit; text-decoration: none; }
     button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 
-    /* ---------- Scroll-snap ---------- */
-    .stage {
-      height: 100vh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-    }
+    /* ── Scroll-snap ── */
+    .stage { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
     .stage::-webkit-scrollbar { width: 0; }
 
     .scene {
-      min-height: 100vh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 110px 0 90px;
-      position: relative;
+      min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 110px 0 90px; position: relative;
     }
-    .scene__inner {
-      width: 60vw;
-      max-width: 60vw;
-      margin: 0 auto;
-    }
+    .scene__inner { width: 60vw; max-width: 60vw; margin: 0 auto; }
     @media (max-width: 810px) {
       .scene__inner { width: 90vw; max-width: 90vw; }
       .scene { padding: 96px 0 80px; }
     }
 
-    /* ---------- Rail ---------- */
-    .rail {
-      position: fixed;
-      right: clamp(16px, 2.4vw, 36px);
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 40;
-      display: flex; flex-direction: column; gap: 14px;
-      align-items: center;
-    }
-    .rail__dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      border: 1px solid var(--w-28);
-      background: transparent;
-      cursor: pointer; padding: 0;
-      transition: background .25s ease, border-color .25s ease, transform .25s ease;
-    }
+    /* ── Rail ── */
+    .rail { position: fixed; right: clamp(16px, 2.4vw, 36px); top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .rail__dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--w-28); background: transparent; cursor: pointer; padding: 0; transition: background .25s ease, border-color .25s ease, transform .25s ease, opacity .25s ease; }
     .rail__dot.is-active { background: var(--w-85); border-color: var(--w-85); transform: scale(1.15); }
+    .rail__dot.is-locked { opacity: .3; cursor: default; }
     @media (max-width: 810px) { .rail { display: none; } }
 
-    /* ---------- Scroll cue ---------- */
-    .cue {
-      position: absolute; bottom: 30px; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      color: var(--w-70); font-size: 10px;
-      letter-spacing: .32em; text-transform: uppercase;
-      pointer-events: none;
-    }
-    .cue::after {
-      content: ''; width: 1px; height: 28px;
-      background: linear-gradient(to bottom, var(--w-70), transparent);
-      animation: cueDrop 2.2s ease-in-out infinite;
-    }
+    /* ── Scroll cue ── */
+    .cue { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--w-70); font-size: 10px; letter-spacing: .32em; text-transform: uppercase; pointer-events: none; transition: opacity .3s ease; }
+    .cue::after { content: ''; width: 1px; height: 28px; background: linear-gradient(to bottom, var(--w-70), transparent); animation: cueDrop 2.2s ease-in-out infinite; }
     @keyframes cueDrop {
       0%   { transform: scaleY(.2); transform-origin: top; opacity: .2; }
       50%  { transform: scaleY(1);  transform-origin: top; opacity: 1; }
@@ -116,304 +68,104 @@
     }
     @media (max-width: 810px) { .cue { bottom: 22px; } }
 
-    /* ---------- Eyebrow / display ---------- */
-    .eyebrow {
-      font-size: 11px; letter-spacing: .32em;
-      text-transform: uppercase; color: var(--w-55);
-      font-weight: 400; margin: 0;
-    }
-    .display {
-      font-family: var(--serif); font-weight: 400;
-      color: var(--w-100); line-height: 1.02;
-      letter-spacing: -.01em; margin: 10px 0 0;
-      font-size: clamp(36px, 5vw, 68px);
-    }
+    /* ── Eyebrow / display ── */
+    .eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-55); font-weight: 400; margin: 0; }
+    .display { font-family: var(--serif); font-weight: 400; color: var(--w-100); line-height: 1.02; letter-spacing: -.01em; margin: 10px 0 0; font-size: clamp(36px, 5vw, 68px); }
     .display em { font-style: italic; }
 
-    /* ---------- Resumen del proyecto ---------- */
-    .resumen {
-      margin-top: clamp(28px, 4vh, 48px);
-      border: 1px solid var(--w-12);
-      border-radius: 20px;
-      padding: clamp(20px, 2.8vw, 36px) clamp(22px, 3vw, 40px);
-      background: var(--w-03);
-    }
-    .resumen__titulo {
-      font-size: 10px; letter-spacing: .32em;
-      text-transform: uppercase; color: var(--w-40);
-      margin: 0 0 18px;
-    }
-    .resumen__filas { display: flex; flex-direction: column; gap: 10px; }
-    .resumen__fila {
-      display: flex; justify-content: space-between; align-items: baseline;
-      gap: 16px; padding-bottom: 10px;
-      border-bottom: 1px solid var(--w-08);
-    }
+    /* ── Metodología globos ── */
+    .method { margin-top: clamp(24px, 4vh, 44px); display: flex; align-items: flex-start; width: 100%; gap: clamp(4px, 1vw, 14px); }
+    .method__step { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.4vw, 14px); flex: 0 0 auto; width: clamp(54px, 10vw, 96px); }
+    .method__bubble { width: clamp(38px, 6.4vw, 56px); height: clamp(38px, 6.4vw, 56px); border: 1px solid var(--w-40); border-radius: 50%; display: grid; place-items: center; color: var(--w-85); background: transparent; transition: border-color .25s ease, color .25s ease; flex-shrink: 0; }
+    .method__bubble svg { width: clamp(16px, 2.6vw, 22px); height: clamp(16px, 2.6vw, 22px); }
+    .method__label { font-size: clamp(8.5px, 1.2vw, 10.5px); letter-spacing: .22em; text-transform: uppercase; color: var(--w-55); text-align: center; line-height: 1.3; }
+    .method__step.is-current .method__bubble { border-color: var(--w-100); color: var(--w-100); }
+    .method__step.is-current .method__label  { color: var(--w-100); }
+    .method__link { flex: 1 1 0; min-width: 0; height: clamp(38px, 6.4vw, 56px); display: flex; align-items: center; padding: 0 clamp(2px, .6vw, 10px); }
+    .method__link::after { content: ''; flex: 1; height: 1px; background: var(--w-18); }
+
+    /* ── Resumen ── */
+    .resumen { margin-top: clamp(20px, 3vh, 36px); border: 1px solid var(--w-12); border-radius: 20px; padding: clamp(18px, 2.4vw, 30px) clamp(20px, 2.8vw, 38px); background: var(--w-03); }
+    .resumen__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 16px; }
+    .resumen__filas { display: flex; flex-direction: column; }
+    .resumen__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--w-08); }
     .resumen__fila:last-child { border-bottom: none; padding-bottom: 0; }
-    .resumen__key {
-      font-size: 10.5px; letter-spacing: .22em;
-      text-transform: uppercase; color: var(--w-40);
-      flex-shrink: 0;
-    }
-    .resumen__val {
-      font-family: var(--serif); font-style: italic;
-      font-size: clamp(15px, 1.6vw, 18px);
-      color: var(--w-85); text-align: right;
-    }
-    .resumen__fila--precio .resumen__val {
-      font-size: clamp(22px, 2.8vw, 32px);
-      color: var(--w-100);
-    }
-    .resumen__descuento {
-      display: none;
-    }
+    .resumen__key { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--w-40); flex-shrink: 0; }
+    .resumen__val { font-family: var(--serif); font-style: italic; font-size: clamp(14px, 1.4vw, 17px); color: var(--w-85); text-align: right; }
+    .resumen__fila--precio .resumen__val { font-size: clamp(20px, 2.4vw, 28px); color: var(--w-100); }
+    .resumen__fila--descuento { display: none; }
 
-    /* ---------- Desglose ---------- */
-    .desglose {
-      margin-top: 18px;
-      padding: clamp(16px, 2vw, 24px) clamp(20px, 2.6vw, 32px);
-      border: 1px solid var(--w-08);
-      border-radius: 16px;
-      background: var(--w-03);
-    }
-    .desglose__titulo {
-      font-size: 10px; letter-spacing: .32em;
-      text-transform: uppercase; color: var(--w-40);
-      margin: 0 0 14px;
-    }
-    .desglose__items { display: flex; flex-direction: column; gap: 8px; }
-    .desglose__item {
-      display: flex; align-items: flex-start; gap: 12px;
-    }
-    .desglose__check {
-      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
-      color: var(--w-40);
-    }
-    .desglose__texto {
-      font-size: 12px; color: var(--w-70);
-      letter-spacing: .02em; line-height: 1.5;
-    }
+    /* ── Desglose ── */
+    .desglose { margin-top: 14px; padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 30px); border: 1px solid var(--w-08); border-radius: 16px; background: var(--w-03); }
+    .desglose__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 12px; }
+    .desglose__items { display: flex; flex-direction: column; gap: 7px; }
+    .desglose__item { display: flex; align-items: flex-start; gap: 10px; }
+    .desglose__check { width: 14px; height: 14px; flex-shrink: 0; margin-top: 3px; color: var(--w-40); }
+    .desglose__texto { font-size: 11.5px; color: var(--w-70); letter-spacing: .02em; line-height: 1.5; }
+    .desglose__sub { margin: 5px 0 2px 24px; display: flex; flex-direction: column; gap: 3px; }
+    .desglose__sub-item { font-size: 10.5px; color: var(--w-40); letter-spacing: .04em; line-height: 1.4; }
+    .desglose__sub-item::before { content: '· '; }
 
-    /* ---------- Formulario ---------- */
-    .form-titulo {
-      margin: clamp(28px, 4vh, 44px) 0 18px;
-      font-size: 10px; letter-spacing: .32em;
-      text-transform: uppercase; color: var(--w-40);
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+    /* ── Formulario ── */
+    .form-bloque-titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 14px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .form-grid--full { grid-column: 1 / -1; }
-    @media (max-width: 810px) {
-      .form-grid { grid-template-columns: 1fr; }
-      .form-grid--full { grid-column: 1; }
-    }
-
-    .campo {
-      display: flex; flex-direction: column; gap: 6px;
-    }
-    .campo label {
-      font-size: 9.5px; letter-spacing: .28em;
-      text-transform: uppercase; color: var(--w-40);
-    }
-    .campo input, .campo select {
-      background: transparent;
-      border: 1px solid var(--w-18);
-      border-radius: 999px;
-      padding: 13px 20px;
-      color: var(--w-100);
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: .04em;
-      outline: none;
-      transition: border-color .22s ease;
-      width: 100%;
-      appearance: none;
-      -webkit-appearance: none;
-    }
+    @media (max-width: 810px) { .form-grid { grid-template-columns: 1fr; } .form-grid--full { grid-column: 1; } }
+    .campo { display: flex; flex-direction: column; gap: 6px; }
+    .campo label { font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-40); }
+    .campo input, .campo select { background: transparent; border: 1px solid var(--w-18); border-radius: 999px; padding: 13px 20px; color: var(--w-100); font-family: var(--sans); font-size: 13px; font-weight: 300; letter-spacing: .04em; outline: none; transition: border-color .22s ease; width: 100%; appearance: none; -webkit-appearance: none; }
     .campo input::placeholder { color: var(--w-28); }
     .campo input:focus, .campo select:focus { border-color: var(--w-55); }
-    .campo input.error, .campo select.error { border-color: rgba(200,60,60,.8); }
     .campo select option { background: #1b120e; color: white; }
 
-    /* Términos */
-    .terminos {
-      margin-top: 18px;
-      display: flex; align-items: flex-start; gap: 12px;
-    }
-    .terminos input[type="checkbox"] {
-      width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
-      accent-color: white; cursor: pointer;
-    }
-    .terminos label {
-      font-size: 11px; color: var(--w-55);
-      line-height: 1.6; cursor: pointer;
-    }
+    .terminos { margin-top: 18px; display: flex; align-items: flex-start; gap: 12px; }
+    .terminos input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: white; cursor: pointer; }
+    .terminos label { font-size: 11px; color: var(--w-55); line-height: 1.6; cursor: pointer; }
     .terminos a { color: var(--w-85); text-decoration: underline; text-underline-offset: 3px; }
 
-    /* Error */
-    .mensaje-error {
-      margin-top: 14px;
-      font-size: 10.5px; letter-spacing: .18em;
-      text-transform: uppercase; color: rgba(200,60,60,.9);
-      display: none;
-    }
+    .mensaje-error { margin-top: 14px; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.9); display: none; }
     .mensaje-error.visible { display: block; }
 
-    /* Botón siguiente */
-    .btn-siguiente {
-      margin-top: 24px;
-      display: inline-flex; align-items: center; gap: 14px;
-      border: 1px solid var(--w-40);
-      border-radius: 999px;
-      padding: 16px 32px;
-      color: var(--w-100);
-      font-size: 11.5px; letter-spacing: .26em;
-      text-transform: uppercase;
-      background: transparent;
-      transition: border-color .25s ease, background .25s ease, opacity .25s ease;
-      opacity: .35; pointer-events: none;
-    }
-    .btn-siguiente.activo { opacity: 1; pointer-events: auto; }
-    .btn-siguiente.activo:hover { background: var(--w-08); border-color: var(--w-100); }
-    .btn-siguiente svg { width: 13px; height: 13px; }
+    /* ── Botón CTA ── */
+    .btn-cta { margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 14px; border: 1px solid var(--w-40); border-radius: 999px; padding: 16px 32px; color: var(--w-100); font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase; background: transparent; width: 100%; transition: border-color .25s ease, background .25s ease, opacity .25s ease; opacity: .35; pointer-events: none; }
+    .btn-cta.activo { opacity: 1; pointer-events: auto; }
+    .btn-cta.activo:hover { background: var(--w-08); border-color: var(--w-100); }
+    .btn-cta svg { width: 13px; height: 13px; flex-shrink: 0; }
 
-    /* ---------- Pantalla 2: Método de pago ---------- */
-    .pago-titulo {
-      font-size: 10px; letter-spacing: .32em;
-      text-transform: uppercase; color: var(--w-40);
-      margin: 0 0 28px;
-    }
+    /* ── Métodos de pago ── */
+    .metodos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 810px) { .metodos { grid-template-columns: 1fr; } }
 
-    .metodos {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    @media (max-width: 810px) {
-      .metodos { grid-template-columns: 1fr; }
-    }
-
-    .metodo-card {
-      border: 1px solid var(--w-18);
-      border-radius: 20px;
-      padding: clamp(20px, 2.6vw, 32px) clamp(20px, 2.6vw, 32px);
-      background: var(--w-03);
-      display: flex; flex-direction: column;
-      transition: border-color .25s ease, background .25s ease;
-      cursor: pointer;
-      position: relative;
-    }
+    .metodo-card { border: 1px solid var(--w-18); border-radius: 20px; padding: clamp(18px, 2.4vw, 28px); background: var(--w-03); display: flex; flex-direction: column; cursor: pointer; position: relative; transition: border-color .25s ease, background .25s ease; }
     .metodo-card:hover { border-color: var(--w-40); background: var(--w-05); }
-    .metodo-card.seleccionado {
-      border-color: var(--w-100);
-      background: var(--w-08);
-    }
+    .metodo-card.seleccionado { border-color: var(--w-100); background: var(--w-08); }
 
-    .metodo-card__badge {
-      position: absolute; top: 16px; right: 16px;
-      font-size: 9px; letter-spacing: .24em;
-      text-transform: uppercase; color: var(--w-40);
-      border: 1px solid var(--w-18); border-radius: 999px;
-      padding: 4px 10px;
-    }
-    .metodo-card.seleccionado .metodo-card__badge {
-      color: var(--w-85); border-color: var(--w-40);
-    }
+    .metodo-card__badge { position: absolute; top: 14px; right: 14px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--w-40); border: 1px solid var(--w-18); border-radius: 999px; padding: 4px 10px; }
+    .metodo-card.seleccionado .metodo-card__badge { color: var(--w-70); border-color: var(--w-28); }
 
-    .metodo-card__icon {
-      width: 36px; height: 36px;
-      border: 1px solid var(--w-28); border-radius: 50%;
-      display: grid; place-items: center;
-      color: var(--w-70); margin-bottom: 16px;
-    }
-    .metodo-card__icon svg { width: 16px; height: 16px; }
+    .metodo-card__icon { width: 34px; height: 34px; border: 1px solid var(--w-28); border-radius: 50%; display: grid; place-items: center; color: var(--w-70); margin-bottom: 14px; }
+    .metodo-card__icon svg { width: 15px; height: 15px; }
     .metodo-card.seleccionado .metodo-card__icon { border-color: var(--w-85); color: var(--w-100); }
 
-    .metodo-card__nombre {
-      font-family: var(--serif); font-weight: 400;
-      font-size: clamp(18px, 2vw, 24px);
-      color: var(--w-100); line-height: 1.1;
-      margin-bottom: 8px;
-    }
-    .metodo-card__desc {
-      font-size: 11px; color: var(--w-55);
-      letter-spacing: .04em; line-height: 1.6;
-      flex: 1;
-    }
+    .metodo-card__nombre { font-family: var(--serif); font-weight: 400; font-size: clamp(17px, 1.8vw, 22px); color: var(--w-100); line-height: 1.1; margin-bottom: 8px; }
+    .metodo-card__desc { font-size: 11px; color: var(--w-55); letter-spacing: .03em; line-height: 1.6; flex: 1; }
 
-    /* Preview de precio */
-    .metodo-card__precio-preview {
-      margin-top: 18px;
-      padding-top: 16px;
-      border-top: 1px solid var(--w-12);
-    }
-    .metodo-card__precio-label {
-      font-size: 9.5px; letter-spacing: .28em;
-      text-transform: uppercase; color: var(--w-40);
-      margin-bottom: 10px;
-    }
-    .precio-opcion {
-      display: flex; justify-content: space-between; align-items: baseline;
-      padding: 6px 0;
-      border-bottom: 1px solid var(--w-05);
-    }
-    .precio-opcion:last-child { border-bottom: none; }
-    .precio-opcion__cuotas {
-      font-size: 11px; color: var(--w-55); letter-spacing: .14em;
-    }
-    .precio-opcion__monto {
-      font-family: var(--serif); font-style: italic;
-      font-size: clamp(15px, 1.8vw, 20px); color: var(--w-85);
-    }
-    .precio-opcion--destacado .precio-opcion__cuotas { color: var(--w-85); }
-    .precio-opcion--destacado .precio-opcion__monto  { color: var(--w-100); }
+    .metodo-card__preview { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--w-12); }
+    .metodo-card__preview-label { font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-40); margin-bottom: 10px; }
 
-    /* Botón de pago final */
-    .btn-pagar {
-      margin-top: 32px;
-      display: inline-flex; align-items: center; gap: 14px;
-      border: 1px solid var(--w-40);
-      border-radius: 999px;
-      padding: 18px 36px;
-      color: var(--w-100);
-      font-size: 12px; letter-spacing: .28em;
-      text-transform: uppercase;
-      background: transparent;
-      transition: border-color .25s ease, background .25s ease, opacity .25s ease;
-      opacity: .35; pointer-events: none;
-    }
-    .btn-pagar.activo { opacity: 1; pointer-events: auto; }
-    .btn-pagar.activo:hover { background: var(--w-08); border-color: var(--w-100); }
-    .btn-pagar svg { width: 13px; height: 13px; }
+    .precio-fila { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid var(--w-05); }
+    .precio-fila:last-child { border-bottom: none; }
+    .precio-fila__label { font-size: 10.5px; color: var(--w-55); letter-spacing: .1em; }
+    .precio-fila__monto { font-family: var(--serif); font-style: italic; font-size: clamp(14px, 1.5vw, 17px); color: var(--w-85); }
+    .precio-fila--main .precio-fila__label { color: var(--w-85); }
+    .precio-fila--main .precio-fila__monto  { color: var(--w-100); font-size: clamp(16px, 1.8vw, 20px); }
 
-    /* Loading overlay */
-    .loading-overlay {
-      position: fixed; inset: 0;
-      background: rgba(19,12,9,.92);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-      display: none;
-      flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 20px;
-    }
+    /* ── Loading ── */
+    .loading-overlay { position: fixed; inset: 0; background: rgba(19,12,9,.92); backdrop-filter: blur(8px); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
     .loading-overlay.visible { display: flex; }
-    .loading-spinner {
-      width: 36px; height: 36px;
-      border: 1px solid var(--w-18);
-      border-top-color: var(--w-85);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-    }
+    .loading-spinner { width: 34px; height: 34px; border: 1px solid var(--w-18); border-top-color: var(--w-85); border-radius: 50%; animation: spin .8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-texto {
-      font-size: 11px; letter-spacing: .28em;
-      text-transform: uppercase; color: var(--w-55);
-    }
+    .loading-texto { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-55); }
   </style>
 </head>
 
@@ -442,10 +194,10 @@
 
   <aside class="rail" aria-hidden="true">
     <button class="rail__dot is-active" data-go="0" aria-label="Resumen"></button>
-    <button class="rail__dot" data-go="1" aria-label="Pago"></button>
+    <button class="rail__dot" data-go="1" aria-label="Datos"></button>
+    <button class="rail__dot is-locked" data-go="2" aria-label="Pago"></button>
   </aside>
 
-  <!-- Loading overlay -->
   <div class="loading-overlay" id="loading-overlay">
     <div class="loading-spinner"></div>
     <p class="loading-texto">Procesando tu solicitud…</p>
@@ -453,14 +205,45 @@
 
   <main class="stage" id="stage">
 
-    <!-- ============ Pantalla 1: Resumen + Datos ============ -->
+    <!-- ══ Pantalla 1: Resumen ══ -->
     <section class="scene" data-scene="0">
       <div class="scene__inner">
 
         <p class="eyebrow">Asesoría Espacial — Residencial</p>
         <h1 class="display"><em>Tu proyecto</em></h1>
 
-        <!-- Resumen del servicio -->
+        <!-- Globos metodología, paso 2 activo -->
+        <div class="method" aria-label="Metodología">
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+            </div>
+            <span class="method__label">Cotización</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step is-current">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+            </div>
+            <span class="method__label">Pago</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            </div>
+            <span class="method__label">Relevamiento</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/><path d="M9.5 10.5l3 1.8-3 1.8z" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <span class="method__label">Videollamada</span>
+          </div>
+        </div>
+
+        <!-- Resumen cotización -->
         <div class="resumen">
           <p class="resumen__titulo">Resumen de cotización</p>
           <div class="resumen__filas">
@@ -473,10 +256,10 @@
               <span class="resumen__val" id="r-superficie">—</span>
             </div>
             <div class="resumen__fila">
-              <span class="resumen__key">Estado</span>
+              <span class="resumen__key">Estado actual</span>
               <span class="resumen__val" id="r-estado">—</span>
             </div>
-            <div class="resumen__fila resumen__descuento" id="fila-descuento">
+            <div class="resumen__fila resumen__fila--descuento" id="fila-descuento">
               <span class="resumen__key">Descuento</span>
               <span class="resumen__val" id="r-descuento">—</span>
             </div>
@@ -487,202 +270,190 @@
           </div>
         </div>
 
-        <!-- Desglose de lo que incluye -->
+        <!-- Desglose -->
         <div class="desglose">
           <p class="desglose__titulo">Lo que incluye tu servicio</p>
           <div class="desglose__items">
             <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 8l3.5 3.5L13 5"/>
-              </svg>
-              <span class="desglose__texto">Relevamiento fotográfico del ambiente a transformar</span>
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
+              <span class="desglose__texto">Formulario de relevamiento virtual</span>
             </div>
             <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 8l3.5 3.5L13 5"/>
-              </svg>
-              <span class="desglose__texto">Videollamada de diagnóstico y propuesta inicial</span>
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
+              <span class="desglose__texto">Sesión de 1 hora de asesoría</span>
+            </div>
+            <div class="desglose__item" style="flex-direction:column;gap:6px">
+              <div style="display:flex;align-items:flex-start;gap:10px">
+                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                <span class="desglose__texto">Plan de acción en PDF</span>
+              </div>
+              <div class="desglose__sub">
+                <span class="desglose__sub-item">Brief de cliente</span>
+                <span class="desglose__sub-item">Análisis neuroespacial</span>
+                <span class="desglose__sub-item">Narrativa de diseño</span>
+                <span class="desglose__sub-item">Renders fotorrealistas</span>
+                <span class="desglose__sub-item">Justificación de diseño</span>
+                <span class="desglose__sub-item">Etapabilidad de ejecución</span>
+                <span class="desglose__sub-item">Sugerencias de compra</span>
+                <span class="desglose__sub-item">Presupuesto aproximado</span>
+              </div>
             </div>
             <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 8l3.5 3.5L13 5"/>
-              </svg>
-              <span class="desglose__texto">Plan de acción personalizado con guía de implementación</span>
-            </div>
-            <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 8l3.5 3.5L13 5"/>
-              </svg>
-              <span class="desglose__texto">Selección de productos y referencias visuales</span>
-            </div>
-            <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 8l3.5 3.5L13 5"/>
-              </svg>
-              <span class="desglose__texto">Acompañamiento por mail durante la implementación</span>
+              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
+              <span class="desglose__texto">Excel de gestión de gastos</span>
             </div>
           </div>
         </div>
-
-        <!-- Formulario de datos -->
-        <p class="form-titulo">Tus datos</p>
-        <div class="form-grid">
-          <div class="campo">
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre" placeholder="María" autocomplete="given-name" />
-          </div>
-          <div class="campo">
-            <label for="apellido">Apellido</label>
-            <input type="text" id="apellido" placeholder="García" autocomplete="family-name" />
-          </div>
-          <div class="campo form-grid--full">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" placeholder="maria@ejemplo.com" autocomplete="email" />
-          </div>
-          <div class="campo form-grid--full">
-            <label for="telefono">Teléfono</label>
-            <input type="tel" id="telefono" placeholder="+54 9 11 0000 0000" autocomplete="tel" />
-          </div>
-          <div class="campo form-grid--full">
-            <label for="calle">Calle</label>
-            <input type="text" id="calle" placeholder="Av. Santa Fe" autocomplete="street-address" />
-          </div>
-          <div class="campo">
-            <label for="numero">Número</label>
-            <input type="text" id="numero" placeholder="1234" />
-          </div>
-          <div class="campo">
-            <label for="depto">Piso / Depto</label>
-            <input type="text" id="depto" placeholder="3° B" autocomplete="off" />
-          </div>
-          <div class="campo">
-            <label for="barrio">Barrio</label>
-            <input type="text" id="barrio" placeholder="Palermo" />
-          </div>
-          <div class="campo">
-            <label for="ciudad">Ciudad</label>
-            <input type="text" id="ciudad" placeholder="Buenos Aires" autocomplete="address-level2" />
-          </div>
-          <div class="campo form-grid--full">
-            <label for="provincia">Provincia</label>
-            <select id="provincia">
-              <option value="" disabled selected>Seleccioná tu provincia</option>
-              <option>Buenos Aires</option>
-              <option>CABA</option>
-              <option>Catamarca</option>
-              <option>Chaco</option>
-              <option>Chubut</option>
-              <option>Córdoba</option>
-              <option>Corrientes</option>
-              <option>Entre Ríos</option>
-              <option>Formosa</option>
-              <option>Jujuy</option>
-              <option>La Pampa</option>
-              <option>La Rioja</option>
-              <option>Mendoza</option>
-              <option>Misiones</option>
-              <option>Neuquén</option>
-              <option>Río Negro</option>
-              <option>Salta</option>
-              <option>San Juan</option>
-              <option>San Luis</option>
-              <option>Santa Cruz</option>
-              <option>Santa Fe</option>
-              <option>Santiago del Estero</option>
-              <option>Tierra del Fuego</option>
-              <option>Tucumán</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Términos y condiciones -->
-        <div class="terminos">
-          <input type="checkbox" id="acepto-terminos" />
-          <label for="acepto-terminos">
-            Leí y acepto los <a href="../../terminos.html" target="_blank">Términos y Condiciones</a> del servicio.
-          </label>
-        </div>
-
-        <p class="mensaje-error" id="mensaje-error"></p>
-
-        <button class="btn-siguiente" id="btn-siguiente" type="button">
-          Elegir método de pago
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </button>
 
       </div>
-      <div class="cue">Método de pago</div>
+      <div class="cue">Tus datos</div>
     </section>
 
-    <!-- ============ Pantalla 2: Método de pago ============ -->
+    <!-- ══ Pantalla 2: Datos ══ -->
     <section class="scene" data-scene="1">
+      <div class="scene__inner">
+
+        <p class="eyebrow">Paso 2 de 3</p>
+        <h2 class="display"><em>Tus datos</em></h2>
+
+        <div style="margin-top: clamp(20px,3.2vh,38px)">
+          <p class="form-bloque-titulo">Información personal</p>
+          <div class="form-grid">
+            <div class="campo">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" placeholder="María" autocomplete="given-name" />
+            </div>
+            <div class="campo">
+              <label for="apellido">Apellido</label>
+              <input type="text" id="apellido" placeholder="García" autocomplete="family-name" />
+            </div>
+            <div class="campo form-grid--full">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" placeholder="maria@ejemplo.com" autocomplete="email" />
+            </div>
+            <div class="campo form-grid--full">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" placeholder="+54 9 11 0000 0000" autocomplete="tel" />
+            </div>
+          </div>
+
+          <p class="form-bloque-titulo" style="margin-top:22px">Dirección del inmueble</p>
+          <div class="form-grid">
+            <div class="campo form-grid--full">
+              <label for="calle">Calle</label>
+              <input type="text" id="calle" placeholder="Av. Santa Fe" autocomplete="street-address" />
+            </div>
+            <div class="campo">
+              <label for="numero">Número</label>
+              <input type="text" id="numero" placeholder="1234" />
+            </div>
+            <div class="campo">
+              <label for="depto">Piso / Depto <span style="opacity:.5">(opcional)</span></label>
+              <input type="text" id="depto" placeholder="3° B" />
+            </div>
+            <div class="campo">
+              <label for="barrio">Barrio</label>
+              <input type="text" id="barrio" placeholder="Palermo" />
+            </div>
+            <div class="campo">
+              <label for="ciudad">Ciudad</label>
+              <input type="text" id="ciudad" placeholder="Buenos Aires" autocomplete="address-level2" />
+            </div>
+            <div class="campo form-grid--full">
+              <label for="provincia">Provincia</label>
+              <select id="provincia">
+                <option value="" disabled selected>Seleccioná tu provincia</option>
+                <option>Buenos Aires</option><option>CABA</option><option>Catamarca</option>
+                <option>Chaco</option><option>Chubut</option><option>Córdoba</option>
+                <option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option>
+                <option>Jujuy</option><option>La Pampa</option><option>La Rioja</option>
+                <option>Mendoza</option><option>Misiones</option><option>Neuquén</option>
+                <option>Río Negro</option><option>Salta</option><option>San Juan</option>
+                <option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option>
+                <option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="terminos">
+            <input type="checkbox" id="acepto-terminos" />
+            <label for="acepto-terminos">
+              Leí y acepto los <a href="../../images/SERVICIOS/Términos y Condiciones.pdf" target="_blank">Términos y Condiciones</a> del servicio.
+            </label>
+          </div>
+
+          <p class="mensaje-error" id="mensaje-error"></p>
+
+          <button class="btn-cta" id="btn-siguiente" type="button">
+            Elegir método de pago
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+
+      </div>
+      <!-- Cue invisible hasta que el form esté completo -->
+      <div class="cue" id="cue-pago" style="opacity:0">Método de pago</div>
+    </section>
+
+    <!-- ══ Pantalla 3: Método de pago ══ -->
+    <section class="scene" data-scene="2" id="scene-pago">
       <div class="scene__inner">
 
         <p class="eyebrow">Último paso</p>
         <h2 class="display"><em>Elegí cómo pagar</em></h2>
 
-        <p class="pago-titulo" style="margin-top: clamp(24px,3.5vh,40px)">Seleccioná un método</p>
+        <div style="margin-top: clamp(20px,3.2vh,38px)">
+          <p class="form-bloque-titulo">Seleccioná un método</p>
 
-        <div class="metodos">
-
-          <!-- Transferencia -->
-          <div class="metodo-card" id="card-transferencia" onclick="seleccionarMetodo('transferencia')">
-            <span class="metodo-card__badge">Sin interés</span>
-            <div class="metodo-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="6" width="18" height="13" rx="2"/>
-                <path d="M3 10h18M7 15h3"/>
-              </svg>
+          <div class="metodos">
+            <!-- Transferencia -->
+            <div class="metodo-card" id="card-transferencia" onclick="seleccionarMetodo('transferencia')">
+              <span class="metodo-card__badge">Sin interés</span>
+              <div class="metodo-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+              </div>
+              <p class="metodo-card__nombre">Transferencia<br>bancaria</p>
+              <p class="metodo-card__desc">Te enviamos los datos de la cuenta por mail. Confirmamos tu proyecto cuando recibimos el comprobante.</p>
+              <div class="metodo-card__preview">
+                <p class="metodo-card__preview-label">Lo que pagás ahora</p>
+                <div class="precio-fila precio-fila--main">
+                  <span class="precio-fila__label">Pago único</span>
+                  <span class="precio-fila__monto" id="precio-transferencia">—</span>
+                </div>
+              </div>
             </div>
-            <p class="metodo-card__nombre">Transferencia<br>bancaria</p>
-            <p class="metodo-card__desc">Pagás la seña por transferencia. Te enviamos los datos de la cuenta por mail y confirmamos cuando recibimos el comprobante.</p>
-            <div class="metodo-card__precio-preview">
-              <p class="metodo-card__precio-label">Lo que pagás ahora</p>
-              <div class="precio-opcion precio-opcion--destacado">
-                <span class="precio-opcion__cuotas">Seña única</span>
-                <span class="precio-opcion__monto" id="precio-transferencia">—</span>
+
+            <!-- Mercado Pago -->
+            <div class="metodo-card" id="card-mp" onclick="seleccionarMetodo('mp')">
+              <span class="metodo-card__badge">Con interés</span>
+              <div class="metodo-card__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h4l2-4"/><path d="M12 12l2 4"/></svg>
+              </div>
+              <p class="metodo-card__nombre">Mercado<br>Pago</p>
+              <p class="metodo-card__desc">Pagás desde la web con tarjeta. Al acreditarse el pago te enviamos el comprobante y los datos del relevamiento.</p>
+              <div class="metodo-card__preview">
+                <p class="metodo-card__preview-label">Opciones de cuotas</p>
+                <div class="precio-fila precio-fila--main">
+                  <span class="precio-fila__label">1 cuota</span>
+                  <span class="precio-fila__monto" id="precio-mp-1">—</span>
+                </div>
+                <div class="precio-fila">
+                  <span class="precio-fila__label">3 cuotas de</span>
+                  <span class="precio-fila__monto" id="precio-mp-3">—</span>
+                </div>
+                <div class="precio-fila">
+                  <span class="precio-fila__label">6 cuotas de</span>
+                  <span class="precio-fila__monto" id="precio-mp-6">—</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Mercado Pago -->
-          <div class="metodo-card" id="card-mp" onclick="seleccionarMetodo('mp')">
-            <span class="metodo-card__badge">Con interés</span>
-            <div class="metodo-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="9"/>
-                <path d="M12 7v5l3 3"/>
-              </svg>
-            </div>
-            <p class="metodo-card__nombre">Mercado<br>Pago</p>
-            <p class="metodo-card__desc">Pagás la seña en cuotas desde la web. Al acreditarse el pago te enviamos el comprobante y los datos del relevamiento.</p>
-            <div class="metodo-card__precio-preview">
-              <p class="metodo-card__precio-label">Opciones de cuotas</p>
-              <div class="precio-opcion precio-opcion--destacado">
-                <span class="precio-opcion__cuotas">1 cuota</span>
-                <span class="precio-opcion__monto" id="precio-mp-1">—</span>
-              </div>
-              <div class="precio-opcion">
-                <span class="precio-opcion__cuotas">3 cuotas</span>
-                <span class="precio-opcion__monto" id="precio-mp-3">—</span>
-              </div>
-              <div class="precio-opcion">
-                <span class="precio-opcion__cuotas">6 cuotas</span>
-                <span class="precio-opcion__monto" id="precio-mp-6">—</span>
-              </div>
-            </div>
-          </div>
-
+          <button class="btn-cta" id="btn-pagar" type="button">
+            Confirmar y pagar
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
         </div>
-
-        <button class="btn-pagar" id="btn-pagar" type="button">
-          Confirmar y pagar
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14M13 6l6 6-6 6"/>
-          </svg>
-        </button>
 
       </div>
     </section>
@@ -690,7 +461,7 @@
   </main>
 
   <script>
-    /* ---------- Menu toggle ---------- */
+    /* ── Menu toggle ── */
     const sideMenu = document.getElementById('sideMenu');
     window.toggleMenu = function() {
       if (!sideMenu) return;
@@ -706,130 +477,146 @@
       if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
     });
 
-    /* ---------- Rail sync ---------- */
-    (function(){
-      const stage  = document.getElementById('stage');
-      const scenes = stage.querySelectorAll('.scene');
-      const dots   = document.querySelectorAll('.rail__dot');
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting && e.intersectionRatio > 0.55) {
-            const idx = +e.target.dataset.scene;
-            dots.forEach((d,i) => d.classList.toggle('is-active', i === idx));
-          }
-        });
-      }, { root: stage, threshold: [0.55, 0.75] });
-      scenes.forEach(s => io.observe(s));
-      dots.forEach(d => {
-        d.addEventListener('click', () => {
-          scenes[+d.dataset.go].scrollIntoView({ behavior:'smooth', block:'start' });
-        });
-      });
-    })();
+    /* ── Rail sync + bloqueo pantalla 3 ── */
+    const stage  = document.getElementById('stage');
+    const scenes = stage.querySelectorAll('.scene');
+    const dots   = document.querySelectorAll('.rail__dot');
+    let   formValido = false;
 
-    /* ---------- Apps Script URL ---------- */
+    // Interceptar scroll hacia pantalla 3 si form no está listo
+    stage.addEventListener('scroll', function() {
+      if (formValido) return;
+      const scene2top = scenes[2].offsetTop;
+      if (stage.scrollTop >= scene2top - 10) {
+        scenes[1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, { passive: true });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio > 0.55) {
+          const idx = +e.target.dataset.scene;
+          dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+        }
+      });
+    }, { root: stage, threshold: [0.55, 0.75] });
+    scenes.forEach(s => io.observe(s));
+
+    dots.forEach(d => {
+      d.addEventListener('click', () => {
+        const idx = +d.dataset.go;
+        if (idx === 2 && !formValido) return;
+        scenes[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    /* ── Apps Script URL ── */
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyONYIB1BoIiCITQjDJl61UWMRvldSk5vw6eWahm3Z72FWK4E7u2T51d7PJ8gRhm0zU/exec";
 
-    /* ---------- Leer params de URL ---------- */
-    const params     = new URLSearchParams(window.location.search);
-    const ambiente   = params.get('ambiente')         || '';
-    const superficie = params.get('superficie')       || '';
-    const estado     = params.get('estado')           || '';
-    const precio     = params.get('precio')           || '';
-    const descPct    = params.get('descuento_pct')    || '';
-    const descCodigo = params.get('descuento_codigo') || '';
+    /* ── Leer params URL ── */
+    const urlParams  = new URLSearchParams(window.location.search);
+    const ambiente   = urlParams.get('ambiente')         || '';
+    const superficie = urlParams.get('superficie')       || '';
+    const estado     = urlParams.get('estado')           || '';
+    const precio     = urlParams.get('precio')           || '';
+    const descPct    = urlParams.get('descuento_pct')    || '';
+    const descCodigo = urlParams.get('descuento_codigo') || '';
 
-    // Mostrar resumen
-    document.getElementById('r-ambiente').textContent   = ambiente   || '—';
-    document.getElementById('r-superficie').textContent = superficie || '—';
-    document.getElementById('r-estado').textContent     = estado     || '—';
-    document.getElementById('r-precio').textContent     = precio     || '—';
-
-    if (descPct || descCodigo) {
-      document.getElementById('fila-descuento').style.display = 'flex';
-      document.getElementById('r-descuento').textContent =
-        descCodigo && descPct ? `${descCodigo} (${descPct})` : descPct || descCodigo;
+    /* ── Parsear precio ──
+       El precio llega como "$ 45.000" (formato es-AR).
+       En es-AR el punto es separador de miles y la coma es decimal.
+       Estrategia: eliminar todo excepto dígitos → entero limpio.
+    ── */
+    function parsearPrecio(str) {
+      if (!str) return 0;
+      const soloDigitos = str.replace(/\D/g, '');
+      return parseInt(soloDigitos, 10) || 0;
     }
 
-    /* ---------- Calcular precios de seña ---------- */
-    // Extraer número del precio formateado (ej: "$ 180.000" → 180000)
-    function parsearPrecio(str) {
-      return parseInt(str.replace(/[^\d]/g, ''), 10) || 0;
+    function formatARS(n) {
+      return Math.round(n).toLocaleString('es-AR', {
+        style: 'currency', currency: 'ARS', minimumFractionDigits: 0
+      });
     }
 
     const precioNum = parsearPrecio(precio);
-    const senia     = Math.round(precioNum * 0.5); // 50% = pago total
 
-    // Intereses estimados de Mercado Pago (aproximados, actualizables)
-    const intereses = { 1: 0, 3: 0.15, 6: 0.28 };
+    /* ── Mostrar resumen ── */
+    document.getElementById('r-ambiente').textContent   = ambiente   || '—';
+    document.getElementById('r-superficie').textContent = superficie || '—';
+    document.getElementById('r-estado').textContent     = estado     || '—';
+    document.getElementById('r-precio').textContent     = precioNum > 0 ? formatARS(precioNum) : (precio || '—');
 
-    function formatARS(n) {
-      return n.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', minimumFractionDigits: 0 });
+    // Fila de descuento: mostrar código + precio original entre paréntesis
+    if (descPct || descCodigo) {
+      document.getElementById('fila-descuento').style.display = 'flex';
+      const pctNum = parseInt((descPct || '').replace(/[^0-9]/g, ''), 10) || 0;
+      const precioOriginal = pctNum > 0 && precioNum > 0
+        ? Math.round(precioNum / (1 - pctNum / 100))
+        : 0;
+      const textoDescuento = descCodigo
+        ? (precioOriginal > 0 ? `${descCodigo} (${formatARS(precioOriginal)})` : descCodigo)
+        : (precioOriginal > 0 ? `${descPct} off (${formatARS(precioOriginal)})` : descPct);
+      document.getElementById('r-descuento').textContent = textoDescuento;
     }
 
-    document.getElementById('precio-transferencia').textContent = formatARS(senia);
-    document.getElementById('precio-mp-1').textContent = formatARS(Math.round(senia * (1 + intereses[1])));
-    document.getElementById('precio-mp-3').textContent =
-      formatARS(Math.round(senia * (1 + intereses[3]) / 3)) + ' x 3';
-    document.getElementById('precio-mp-6').textContent =
-      formatARS(Math.round(senia * (1 + intereses[6]) / 6)) + ' x 6';
+    /* ── Calcular seña y precios de cuotas ── */
+    const senia = Math.round(precioNum * 0.5);
 
-    /* ---------- Validación del formulario ---------- */
-    const camposRequeridos = ['nombre', 'apellido', 'email', 'telefono',
-                              'calle', 'numero', 'barrio', 'ciudad', 'provincia'];
+    // Intereses de Mercado Pago — actualizá según condiciones vigentes
+    const intereses = { 1: 0, 3: 0.15, 6: 0.28 };
+
+    if (senia > 0) {
+      document.getElementById('precio-transferencia').textContent = formatARS(senia);
+      document.getElementById('precio-mp-1').textContent          = formatARS(senia);
+      document.getElementById('precio-mp-3').textContent          = formatARS(senia * (1 + intereses[3]) / 3);
+      document.getElementById('precio-mp-6').textContent          = formatARS(senia * (1 + intereses[6]) / 6);
+    }
+
+    /* ── Validación del formulario ── */
+    const camposReq    = ['nombre','apellido','email','telefono','calle','numero','barrio','ciudad','provincia'];
     const btnSiguiente = document.getElementById('btn-siguiente');
 
     function validarForm() {
-      const completos = camposRequeridos.every(id => {
+      const completos = camposReq.every(id => {
         const el = document.getElementById(id);
         return el && el.value.trim() !== '';
       });
-      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-        document.getElementById('email').value.trim()
-      );
-      const acepto = document.getElementById('acepto-terminos').checked;
-      btnSiguiente.classList.toggle('activo', completos && emailOk && acepto);
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim());
+      const acepto  = document.getElementById('acepto-terminos').checked;
+      formValido    = completos && emailOk && acepto;
+      btnSiguiente.classList.toggle('activo', formValido);
+      // Mostrar cue y desbloquear dot cuando esté listo
+      document.getElementById('cue-pago').style.opacity = formValido ? '1' : '0';
+      dots[2].classList.toggle('is-locked', !formValido);
     }
 
-    camposRequeridos.forEach(id => {
-      document.getElementById(id)?.addEventListener('input', validarForm);
-    });
+    camposReq.forEach(id => document.getElementById(id)?.addEventListener('input', validarForm));
     document.getElementById('acepto-terminos').addEventListener('change', validarForm);
 
-    /* ---------- Botón "Elegir método de pago" ---------- */
+    /* ── Botón "Elegir método de pago" ── */
     btnSiguiente.addEventListener('click', function() {
-      if (!this.classList.contains('activo')) return;
-      // Validar email
-      const email = document.getElementById('email').value.trim();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        const err = document.getElementById('mensaje-error');
-        err.textContent = '* Ingresá un e-mail válido.';
-        err.classList.add('visible');
-        return;
-      }
+      if (!formValido) return;
       document.getElementById('mensaje-error').classList.remove('visible');
-      // Scroll a pantalla 2
-      document.querySelector('.scene[data-scene="1"]')
-        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+      scenes[2].scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    /* ---------- Selección de método de pago ---------- */
+    /* ── Selección de método ── */
     let metodoSeleccionado = null;
 
     window.seleccionarMetodo = function(metodo) {
       metodoSeleccionado = metodo;
       document.getElementById('card-transferencia').classList.toggle('seleccionado', metodo === 'transferencia');
       document.getElementById('card-mp').classList.toggle('seleccionado', metodo === 'mp');
-      document.getElementById('btn-pagar').classList.add('activo');
-
-      // Actualizar texto del botón
       const btn = document.getElementById('btn-pagar');
-      btn.innerHTML = metodo === 'transferencia'
-        ? 'Solicitar datos de transferencia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
-        : 'Pagar con Mercado Pago <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+      btn.classList.add('activo');
+      btn.innerHTML = (metodo === 'transferencia'
+        ? 'Solicitar datos de transferencia'
+        : 'Pagar con Mercado Pago')
+        + ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
     };
 
-    /* ---------- Recopilar datos del cliente ---------- */
+    /* ── Recopilar datos del cliente ── */
     function getDatosCliente() {
       return {
         nombre:    document.getElementById('nombre').value.trim(),
@@ -845,22 +632,19 @@
       };
     }
 
-    /* ---------- Enviar al Apps Script (iframe, evita CORS) ---------- */
+    /* ── Enviar al Apps Script (iframe evita CORS) ── */
     function enviarAppsScript(datosCliente, metodoPago, callback) {
       const data = {
         cotizacion: {
-          servicio:         'Asesoría Espacial Residencial',
-          ambiente,
-          superficie,
-          estado,
+          servicio: 'Asesoría Espacial Residencial',
+          ambiente, superficie, estado,
           total:            precio,
           descuento_pct:    descPct    || '',
           descuento_codigo: descCodigo || ''
         },
-        cliente:      datosCliente,
-        metodo_pago:  metodoPago
+        cliente:     datosCliente,
+        metodo_pago: metodoPago
       };
-
       let iframe = document.getElementById('iframe-post');
       if (!iframe) {
         iframe = document.createElement('iframe');
@@ -869,14 +653,12 @@
         iframe.id   = 'iframe-post';
         document.body.appendChild(iframe);
       }
-
       const form = document.createElement('form');
       form.style.display = 'none';
       form.method  = 'POST';
       form.action  = APPS_SCRIPT_URL;
       form.target  = 'iframe-post';
       form.enctype = 'application/x-www-form-urlencoded';
-
       const input = document.createElement('input');
       input.type  = 'hidden';
       input.name  = 'payload';
@@ -885,35 +667,28 @@
       document.body.appendChild(form);
       form.submit();
       form.remove();
-
-      // No esperamos respuesta del script; continuamos después de un delay
       setTimeout(callback, 800);
     }
 
-    /* ---------- Botón "Confirmar y pagar" ---------- */
+    /* ── Botón "Confirmar y pagar" ── */
     document.getElementById('btn-pagar').addEventListener('click', async function() {
       if (!this.classList.contains('activo') || !metodoSeleccionado) return;
-
       const cliente = getDatosCliente();
-      const overlay = document.getElementById('loading-overlay');
-      overlay.classList.add('visible');
+      document.getElementById('loading-overlay').classList.add('visible');
       this.disabled = true;
 
       if (metodoSeleccionado === 'transferencia') {
-        // Enviar al Apps Script y redirigir a pantalla de espera
         enviarAppsScript(cliente, 'transferencia', function() {
           const p = new URLSearchParams({
             nombre:   cliente.nombre,
             apellido: cliente.apellido,
             email:    cliente.email,
-            metodo:   'transferencia',
             precio:   formatARS(senia)
           });
           window.location.href = `../AsesoríaEspacial/espera.html?${p.toString()}`;
         });
 
       } else {
-        // Mercado Pago: crear preferencia vía Vercel function
         try {
           const resp = await fetch('/api/crear-preferencia', {
             method: 'POST',
@@ -928,17 +703,16 @@
           });
           const mpData = await resp.json();
           if (mpData.init_point) {
-            // Enviar al Apps Script en paralelo (no bloqueante)
             enviarAppsScript(cliente, 'mercadopago', function(){});
             window.location.href = mpData.init_point;
           } else {
             throw new Error('No se recibió init_point');
           }
         } catch (err) {
-          overlay.classList.remove('visible');
+          document.getElementById('loading-overlay').classList.remove('visible');
           this.disabled = false;
           const errEl = document.createElement('p');
-          errEl.style.cssText = 'margin-top:14px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,60,60,.9)';
+          errEl.style.cssText = 'margin-top:14px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,60,60,.9);text-align:center';
           errEl.textContent = '* Error al conectar con Mercado Pago. Intentá de nuevo.';
           this.parentNode.insertBefore(errEl, this.nextSibling);
           setTimeout(() => errEl.remove(), 4000);
