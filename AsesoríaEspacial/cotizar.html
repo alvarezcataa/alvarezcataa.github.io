@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Sistema visual CAVLA ---------- */
+    :root {
+      --bg: #130c09;
+      --bg-soft: #1b120e;
+
+      --w-100: rgba(255,255,255,1);
+      --w-85:  rgba(255,255,255,.85);
+      --w-70:  rgba(255,255,255,.70);
+      --w-55:  rgba(255,255,255,.55);
+      --w-40:  rgba(255,255,255,.40);
+      --w-28:  rgba(255,255,255,.28);
+      --w-18:  rgba(255,255,255,.18);
+      --w-12:  rgba(255,255,255,.12);
+      --w-08:  rgba(255,255,255,.08);
+      --w-05:  rgba(255,255,255,.05);
+      --w-03:  rgba(255,255,255,.03);
+
+      --serif: 'Playfair Display', 'Times New Roman', serif;
+      --sans:  'Montserrat', system-ui, -apple-system, sans-serif;
+
+      --maxw: 1280px;
+      --mobile: 810px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--w-85);
+      font-family: var(--sans);
+      font-weight: 300;
+      letter-spacing: .01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body { overflow-x: hidden; }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+    /* ---------- Nav ---------- */
+    .cavla-nav {
+      position: fixed; inset: 0 0 auto 0;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 22px clamp(20px, 4vw, 56px);
+      background: linear-gradient(to bottom, rgba(19,12,9,.92), rgba(19,12,9,.0));
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .cavla-nav__brand {
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--w-100);
+      font-weight: 500;
+    }
+    .cavla-nav__brand-est {
+      color: var(--w-40);
+      margin-left: 6px;
+      font-weight: 300;
+    }
+    .cavla-nav__center {
+      display: flex; gap: clamp(24px, 4vw, 56px);
+      justify-content: center;
+    }
+    .cavla-nav__center a {
+      font-size: 11.5px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--w-70);
+      transition: color .2s ease;
+    }
+    .cavla-nav__center a:hover { color: var(--w-100); }
+    .cavla-nav__cta {
+      justify-self: end;
+      font-size: 11.5px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--w-100);
+      border: 1px solid var(--w-40);
+      border-radius: 999px;
+      padding: 12px 22px;
+      transition: border-color .25s ease, background .25s ease;
+    }
+    .cavla-nav__cta:hover { border-color: var(--w-100); background: var(--w-05); }
+    .menu-toggle { display: none; }
+
+    @media (max-width: 810px) {
+      .cavla-nav { grid-template-columns: 1fr auto; padding: 18px 20px; }
+      .cavla-nav__center, .cavla-nav__cta { display: none; }
+      .menu-toggle { display: block; color: var(--w-85); font-size: 20px; cursor: pointer; }
+    }
+
+    /* ---------- Scroll-snap shell ---------- */
+    .stage {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+    }
+    .stage::-webkit-scrollbar { width: 0; }
+
+    .scene {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 110px 0 90px;
+      position: relative;
+    }
+
+    /* Inner wrapper: 60vw desktop / 90vw mobile */
+    .scene__inner {
+      width: 60vw;
+      max-width: 60vw;
+      margin: 0 auto;
+    }
+    @media (max-width: 810px) {
+      .scene__inner { width: 90vw; max-width: 90vw; }
+    }
+
+    /* ---------- Eyebrow + display title ---------- */
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--w-55);
+      font-weight: 400;
+      margin: 0;
+    }
+    .display {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--w-100);
+      line-height: 1.02;
+      letter-spacing: -.01em;
+      margin: 14px 0 0;
+      font-size: clamp(44px, 7vw, 92px);
+    }
+    .display em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Intro phrase: anclada al pie de la escena, 30px sobre el cue */
+    .intro-phrase {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 110px; /* 30px (cue.bottom) + ~50px (cue.height) + 30px (gap) */
+      margin: 0 auto;
+      padding: 0 24px;
+      max-width: 56ch;
+      text-align: center;
+      color: var(--w-70);
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(17px, 1.7vw, 22px);
+      line-height: 1.5;
+      letter-spacing: .005em;
+    }
+    @media (max-width: 810px) {
+      .intro-phrase { bottom: 96px; }
+    }
+
+    /* ---------- Scroll cue ---------- */
+    .cue {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 10px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .cue::after {
+      content: '';
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
+      animation: cueDrop 2.2s ease-in-out infinite;
+    }
+    @keyframes cueDrop {
+      0%   { transform: scaleY(.2); transform-origin: top; opacity: .2; }
+      50%  { transform: scaleY(1);  transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(.2); transform-origin: bottom; opacity: .2; }
+    }
+
+    /* ---------- Section counter (right rail) ---------- */
+    .rail {
+      position: fixed;
+      right: clamp(16px, 2.4vw, 36px);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 40;
+      display: flex; flex-direction: column; gap: 14px;
+      align-items: center;
+    }
+    .rail__dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      border: 1px solid var(--w-28);
+      background: transparent;
+      cursor: pointer;
+      padding: 0;
+      transition: background .25s ease, border-color .25s ease, transform .25s ease;
+    }
+    .rail__dot.is-active {
+      background: var(--w-85);
+      border-color: var(--w-85);
+      transform: scale(1.15);
+    }
+    @media (max-width: 810px) { .rail { display: none; } }
+
+    /* ---------- Metodología globos (fluid) ---------- */
+    .method {
+      margin-top: clamp(36px, 6vh, 72px);
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      gap: clamp(4px, 1vw, 14px);
+    }
+    .method__step {
+      display: flex; flex-direction: column; align-items: center;
+      gap: clamp(8px, 1.4vw, 14px);
+      flex: 0 0 auto;
+      min-width: 0;
+      width: clamp(54px, 10vw, 96px);
+    }
+    .method__bubble {
+      width:  clamp(38px, 6.4vw, 56px);
+      height: clamp(38px, 6.4vw, 56px);
+      border: 1px solid var(--w-40);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      color: var(--w-85);
+      background: transparent;
+      transition: border-color .25s ease, color .25s ease;
+      flex-shrink: 0;
+    }
+    .method__bubble svg {
+      width:  clamp(16px, 2.6vw, 22px);
+      height: clamp(16px, 2.6vw, 22px);
+    }
+    .method__label {
+      font-size: clamp(8.5px, 1.2vw, 10.5px);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--w-55);
+      text-align: center;
+      line-height: 1.3;
+    }
+    .method__step.is-current .method__bubble { border-color: var(--w-100); color: var(--w-100); }
+    .method__step.is-current .method__label  { color: var(--w-100); }
+
+    .method__link {
+      flex: 1 1 0;
+      min-width: 0;
+      height: clamp(38px, 6.4vw, 56px);
+      display: flex; align-items: center;
+      padding: 0 clamp(2px, .6vw, 10px);
+    }
+    .method__link::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--w-18);
+    }
+
+    /* ---------- Question cards ---------- */
+    .qcard {
+      background: var(--w-03);
+      border: 1px solid var(--w-08);
+      border-radius: 28px;
+      padding: clamp(22px, 3vw, 38px) clamp(22px, 3.2vw, 44px);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .qhead {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+    .qnum {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 24px;
+      color: var(--w-40);
+      line-height: 1;
+      letter-spacing: .01em;
+    }
+    .qtitle {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(20px, 2vw, 26px);
+      color: var(--w-100);
+      line-height: 1.15;
+      letter-spacing: -.005em;
+      margin: 0;
+    }
+    .qhint {
+      margin-left: auto;
+      font-size: 10px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--w-40);
+    }
+
+    /* ---------- Pastillas ---------- */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pastilla {
+      --bd: var(--w-18);
+      --tx: var(--w-70);
+      --bg-pill: transparent;
+      border: 1px solid var(--bd);
+      background: var(--bg-pill);
+      color: var(--tx);
+      border-radius: 999px;
+      padding: 12px 20px;
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        border-color .22s ease,
+        color .22s ease,
+        background .22s ease,
+        box-shadow .22s ease;
+      position: relative;
+      white-space: nowrap;
+    }
+    .pastilla:hover {
+      --bd: var(--w-40);
+      --tx: var(--w-100);
+    }
+    .pastilla.seleccionada {
+      --bd: var(--w-100);
+      --tx: var(--w-100);
+      --bg-pill: var(--w-08);
+      box-shadow: inset 0 0 0 1px var(--w-40);
+    }
+    /* (active state — sin punto extra; el contraste lo da el borde + fondo) */
+
+    /* Ambiente: flex wrap para que cada pastilla tome su ancho natural
+       (evita que 'Ambiente integrado' o 'Living-Comedor' se trunquen) */
+    .pills--grid-ambiente {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pills--grid-ambiente .pastilla {
+      padding: 13px 22px;
+      flex: 0 0 auto;
+    }
+
+    /* Q2 + Q3 lado a lado, mismo alto */
+    .qpair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-top: 22px;
+    }
+    @media (max-width: 810px) {
+      .qpair { grid-template-columns: 1fr; margin-top: 16px; gap: 16px; }
+    }
+
+    /* ---------- Código descuento ---------- */
+    .code-row {
+      display: flex; gap: 10px;
+      align-items: stretch;
+      width: 100%;
+    }
+    .code-row input {
+      flex: 1;
+      background: transparent;
+      border: 1px solid var(--w-18);
+      border-radius: 999px;
+      padding: 14px 22px;
+      color: var(--w-100);
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      outline: none;
+      transition: border-color .22s ease;
+      min-width: 0;
+    }
+    .code-row input::placeholder { color: var(--w-28); letter-spacing: .22em; }
+    .code-row input:focus { border-color: var(--w-55); }
+    .code-row input:disabled { color: var(--w-55); border-color: var(--w-12); }
+    .btn-outline {
+      border: 1px solid var(--w-40);
+      border-radius: 999px;
+      padding: 12px 24px;
+      color: var(--w-100);
+      font-size: 11px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      background: transparent;
+      transition: border-color .22s ease, background .22s ease, color .22s ease;
+      flex-shrink: 0;
+    }
+    .btn-outline:hover { border-color: var(--w-100); background: var(--w-05); }
+    .btn-outline:disabled { color: var(--w-55); border-color: var(--w-18); cursor: default; background: transparent; }
+
+    .descuento-mensaje {
+      margin: 18px 0 0;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--w-55);
+      min-height: 16px;
+      text-align: center;
+    }
+    .descuento-mensaje:empty { margin: 0; min-height: 0; }
+    .descuento-mensaje.valido   { color: var(--w-100); }
+    .descuento-mensaje.invalido { color: rgb(166, 0, 0); font-weight: 600; }
+
+    /* ---------- Pantalla 3: descuento + precio + CTA (apilado) ---------- */
+    .final-grid {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(22px, 3.2vh, 36px);
+      width: 100%;
+      margin: 0 auto;
+    }
+    /* Tarjeta de código con padding más compacto, ancho completo */
+    .qcard--code {
+      padding: 26px clamp(28px, 3.4vw, 44px) 28px;
+      width: 100%;
+    }
+
+    /* ---------- Resultado editorial ---------- */
+    .result {
+      text-align: left;
+      opacity: .45;
+      transition: opacity .4s ease;
+    }
+    .result.activo { opacity: 1; }
+    .result__eyebrow {
+      font-size: 10.5px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--w-55);
+      margin: 0;
+    }
+    .result__divider {
+      height: 1px; background: var(--w-12); margin: 18px 0 16px;
+    }
+    .result__price {
+      font-family: var(--serif);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--w-100);
+      font-size: clamp(56px, 8.5vw, 116px);
+      line-height: 1;
+      letter-spacing: -.015em;
+      margin: 0;
+    }
+    .result__desc {
+      margin-top: 16px;
+      margin-bottom: 0;
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--w-55);
+      line-height: 1.7;
+    }
+
+    /* CTA */
+    .cta {
+      margin-top: 32px;
+      display: inline-flex; align-items: center; gap: 14px;
+      border: 1px solid var(--w-40);
+      border-radius: 999px;
+      padding: 18px 32px;
+      color: var(--w-100);
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      background: transparent;
+      transition: border-color .25s ease, background .25s ease, opacity .25s ease;
+      opacity: .4;
+      pointer-events: none;
+    }
+    .cta.activo {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cta.activo:hover {
+      background: var(--w-08);
+      border-color: var(--w-100);
+    }
+    .cta__arrow { width: 14px; height: 14px; }
+
+    /* scene__index removed by request */
+    .scene__index { display: none; }
+
+    /* Side menu (mobile placeholder) */
+    .side-menu {
+      position: fixed; inset: 0; background: rgba(19,12,9,.96);
+      transform: translateX(100%); transition: transform .35s ease;
+      z-index: 60;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .side-menu.is-open { transform: none; }
+    .side-menu ul { list-style: none; padding: 0; text-align: center; }
+    .side-menu li { margin: 18px 0; }
+    .side-menu a {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--w-85);
+    }
+
+    @media (max-width: 810px) {
+      .display { font-size: clamp(40px, 11vw, 64px); }
+      .scene { padding: 96px 0 80px; }
+      .cue { bottom: 22px; }
+    }
+  </style>
+</head>
+
+<body class="pagina">
+
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="../../index.html">Inicio</a>
+      <a href="../../filosofia.html">Filosofía</a>
+      <a href="../../sobremi.html">Sobre mí</a>
+      <a href="../../contacto.html">Contacto</a>
+    </nav>
+    <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <!-- Right rail (section dots) -->
+  <aside class="rail" aria-hidden="true">
+    <button class="rail__dot is-active" data-go="0" aria-label="Intro"></button>
+    <button class="rail__dot" data-go="1" aria-label="Preguntas"></button>
+    <button class="rail__dot" data-go="2" aria-label="Resultado"></button>
+  </aside>
+
+  <main class="stage" id="stage">
+
+    <!-- ============ Scene 1: Intro + metodología ============ -->
+    <section class="scene" data-scene="0" data-screen-label="01 Intro" style="padding: 0px">
+
+      <div class="scene__inner" style="text-align: left">
+        
+        <h1 class="display"><em>Cotizá tu espacio</em></h1>
+        <p class="eyebrow">Asesoría espacial — Residencial</p>
+
+        <!-- Metodología (globos) -->
+        <div class="method" aria-label="Metodología">
+          <div class="method__step is-current" style="cursor:pointer" onclick="document.querySelector('.scene[data-scene=\'1\']').scrollIntoView({behavior:'smooth',block:'start'})">
+            <div class="method__bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="3" width="14" height="18" rx="2"/>
+                <path d="M8 8h8M8 12h8M8 16h5"/>
+              </svg>
+            </div>
+            <span class="method__label">Cotización</span>
+          </div>
+          <div class="method__link" aria-hidden="true"></div>
+          <div class="method__step">
+            <div class="method__bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="6" width="18" height="13" rx="2"/>
+                <path d="M3 10h18M7 15h3"/>
+              </svg>
+            </div>
+            <span class="method__label">Pago</span>
+          </div>
+          <div class="method__link" aria-hidden="true"></div>
+          <div class="method__step">
+            <div class="method__bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/>
+                <circle cx="12" cy="13" r="3.5"/>
+              </svg>
+            </div>
+            <span class="method__label">Relevamiento</span>
+          </div>
+          <div class="method__link" aria-hidden="true"></div>
+          <div class="method__step">
+            <div class="method__bubble" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="7" y="2.5" width="10" height="19" rx="2.2"/>
+                <path d="M11 18.5h2"/>
+                <path d="M9.5 10.5l3 1.8-3 1.8z" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+            <span class="method__label">Videollamada</span>
+          </div>
+        </div>
+
+        <p class="intro-phrase">Respondé tres preguntas y obtené tu cotización al instante.</p>
+      </div>
+
+      <div class="cue">Desliza</div>
+    </section>
+
+    <!-- ============ Scene 2: Las 3 preguntas ============ -->
+    <section class="scene" data-scene="1" data-screen-label="02 Preguntas">
+
+      <div class="scene__inner">
+
+        <!-- Pregunta 1 (fila completa) -->
+        <div class="qcard">
+          <div class="qhead">
+            <span class="qnum" style="font-family: 'Playfair Display'; font-weight: 400; font-size: 24px">01.</span>
+            <h2 class="qtitle">¿Qué ambiente querés transformar?</h2>
+            <span class="qhint">Elegí uno</span>
+          </div>
+          <div class="pills pills--grid-ambiente">
+            <button class="pastilla" data-grupo="ambiente" data-valor="bajo"     data-label="Hall">Hall</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="bajo"     data-label="Baño">Baño</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="bajo"     data-label="Lavadero">Lavadero</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="medio"    data-label="Estudio">Estudio</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="medio"    data-label="Dormitorio">Dormitorio</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="alto"     data-label="Living">Living</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="alto"     data-label="Comedor">Comedor</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="alto"     data-label="Cocina">Cocina</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="complejo" data-label="Living-Comedor">Living-Comedor</button>
+            <button class="pastilla" data-grupo="ambiente" data-valor="complejo" data-label="Ambiente integrado">Ambiente integrado</button>
+          </div>
+        </div>
+
+        <!-- Pregunta 2 + 3 lado a lado, mismo alto -->
+        <div class="qpair">
+          <div class="qcard">
+            <div class="qhead">
+              <span class="qnum">02.</span>
+              <h2 class="qtitle">¿Qué superficie tiene?</h2>
+            </div>
+            <div class="pills">
+              <button class="pastilla" data-grupo="superficie" data-valor="1.00" data-label="Hasta 15 m²">Hasta 15 m²</button>
+              <button class="pastilla" data-grupo="superficie" data-valor="1.20" data-label="15 — 30 m²">15 — 30 m²</button>
+              <button class="pastilla" data-grupo="superficie" data-valor="1.40" data-label="Más de 30 m²">Más de 30 m²</button>
+            </div>
+          </div>
+
+          <div class="qcard">
+            <div class="qhead">
+              <span class="qnum">03.</span>
+              <h2 class="qtitle">¿En qué estado está hoy?</h2>
+            </div>
+            <div class="pills">
+              <button class="pastilla" data-grupo="estado" data-valor="1.00" data-label="Sin muebles">Sin muebles</button>
+              <button class="pastilla" data-grupo="estado" data-valor="1.15" data-label="Algunos muebles">Algunos muebles</button>
+              <button class="pastilla" data-grupo="estado" data-valor="1.25" data-label="Completamente amoblado">Completamente amoblado</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="cue">Ver resultado</div>
+    </section>
+
+    <!-- ============ Scene 3: Descuento + Resultado + CTA ============ -->
+    <section class="scene" data-scene="2" data-screen-label="03 Resultado">
+
+      <div class="scene__inner" style="text-align: center">
+        <div class="final-grid" style="gap: 10px">
+
+          <!-- Bloque de código de descuento (ancho completo, padding reducido) -->
+          <div class="qcard qcard--code" style="padding: 26px 44px 28px; border-radius: 28px">
+            <div class="qhead">
+              <span class="qnum">04.</span>
+              <h2 class="qtitle">¿Tenés un código de descuento?</h2>
+              <span class="qhint">Opcional</span>
+            </div>
+            <div class="code-row">
+              <input id="input-codigo" type="text" placeholder="Ingresá tu código" autocomplete="off" />
+              <button id="btn-aplicar-codigo" class="btn-outline">Aplicar</button>
+            </div>
+          </div>
+
+          <!-- Mensaje del descuento fuera de la tarjeta para no romper su simetría -->
+          <p class="descuento-mensaje" id="descuento-mensaje" style="margin: 0px; line-height: 1.4"></p>
+
+          <!-- Columna derecha: precio editorial + CTA -->
+          <div class="result" id="resultado" style="text-align: center">
+            <p class="result__eyebrow" style="text-align: left">Tu cotización</p>
+            <div class="result__divider"></div>
+            <p class="result__price" id="precio-final" style="text-align: center; font-size: 150px; margin: 0px 0px 30px">$ —</p>
+            <p class="result__desc" id="descripcion-final" style="text-align: center">Completá las 3 preguntas para ver tu precio.</p>
+
+            <button class="cta" id="boton-continuar" type="button">
+              Quiero avanzar con este proyecto
+              <svg class="cta__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"/>
+              </svg>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    /* ---------- Menu toggle ---------- */
+    function toggleMenu(){
+      document.getElementById('sideMenu').classList.toggle('is-open');
+    }
+
+    /* ---------- Scroll-snap rail sync ---------- */
+    (function(){
+      const stage  = document.getElementById('stage');
+      const scenes = stage.querySelectorAll('.scene');
+      const dots   = document.querySelectorAll('.rail__dot');
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && e.intersectionRatio > 0.55) {
+            const idx = +e.target.dataset.scene;
+            dots.forEach((d,i) => d.classList.toggle('is-active', i === idx));
+          }
+        });
+      }, { root: stage, threshold: [0.55, 0.75] });
+
+      scenes.forEach(s => io.observe(s));
+
+      dots.forEach(d => {
+        d.addEventListener('click', () => {
+          const idx = +d.dataset.go;
+          scenes[idx].scrollIntoView({ behavior:'smooth', block:'start' });
+        });
+      });
+    })();
+
+    /* ---------- Cotizador (lógica original) ---------- */
+    const preciosBase = {
+      bajo:     60000,
+      medio:    120000,
+      alto:     180000,
+      complejo: 270000
+    };
+
+    const seleccion = { ambiente: null, superficie: null, estado: null };
+    let descuentoAplicado = 0;
+
+    document.querySelectorAll('.pastilla').forEach(function(p) {
+      p.addEventListener('click', function() {
+        const grupo = this.dataset.grupo;
+        document.querySelectorAll('.pastilla[data-grupo="'+grupo+'"]').forEach(function(x) {
+          x.classList.remove('seleccionada');
+        });
+        this.classList.add('seleccionada');
+        seleccion[grupo] = { valor: this.dataset.valor, label: this.dataset.label };
+        calcular();
+      });
+    });
+
+    function calcular() {
+      const resultado = document.getElementById('resultado');
+      const boton     = document.getElementById('boton-continuar');
+      if (!seleccion.ambiente || !seleccion.superficie || !seleccion.estado) {
+        resultado.classList.remove('activo');
+        boton.classList.remove('activo');
+        return;
+      }
+      const base  = preciosBase[seleccion.ambiente.valor];
+      const total = Math.round(base * parseFloat(seleccion.superficie.valor) * parseFloat(seleccion.estado.valor));
+      mostrarPrecio(total);
+resultado.classList.add('activo');
+boton.classList.add('activo');
+// Auto-scroll a pantalla 3
+setTimeout(function(){
+  document.querySelector('.scene[data-scene="2"]').scrollIntoView({behavior:'smooth',block:'start'});
+}, 320);
+    }
+
+    function mostrarPrecio(total) {
+      const precioEl    = document.getElementById('precio-final');
+      const descripcion = document.getElementById('descripcion-final');
+      const base        = preciosBase[seleccion.ambiente.valor];
+      const sinDesc     = Math.round(base * parseFloat(seleccion.superficie.valor) * parseFloat(seleccion.estado.valor));
+      const final       = descuentoAplicado === 100 ? 0
+                        : descuentoAplicado > 0 ? Math.round(sinDesc * (1 - descuentoAplicado / 100))
+                        : sinDesc;
+
+      if (descuentoAplicado > 0 && descuentoAplicado < 100) {
+        precioEl.innerHTML = ''
+          + '<span style="font-size:.42em;opacity:.35;text-decoration:line-through;display:block;letter-spacing:.04em;margin-bottom:6px">'
+          +   sinDesc.toLocaleString('es-AR',{style:'currency',currency:'ARS',minimumFractionDigits:0})
+          + '</span>'
+          + final.toLocaleString('es-AR',{style:'currency',currency:'ARS',minimumFractionDigits:0})
+          + '<span style="font-family:Montserrat,sans-serif;font-style:normal;font-size:.16em;letter-spacing:.3em;margin-left:18px;color:rgba(255,255,255,.55);vertical-align:middle">— '
+          +   descuentoAplicado + '% off</span>';
+      } else if (descuentoAplicado === 100) {
+        precioEl.innerHTML = ''
+          + '<span style="font-size:.42em;opacity:.35;text-decoration:line-through;display:block;letter-spacing:.04em;margin-bottom:6px">'
+          +   sinDesc.toLocaleString('es-AR',{style:'currency',currency:'ARS',minimumFractionDigits:0})
+          + '</span>'
+          + '<em>Cortesía</em>';
+      } else {
+        precioEl.textContent = sinDesc.toLocaleString('es-AR',{style:'currency',currency:'ARS',minimumFractionDigits:0});
+      }
+
+      descripcion.textContent = seleccion.ambiente.label + ' · ' + seleccion.superficie.label + ' · ' + seleccion.estado.label;
+    }
+
+    document.getElementById('btn-aplicar-codigo').addEventListener('click', async function() {
+      const input   = document.getElementById('input-codigo');
+      const mensaje = document.getElementById('descuento-mensaje');
+      const codigo  = input.value.trim();
+      if (!codigo) return;
+      this.textContent = '...';
+      this.disabled = true;
+      mensaje.textContent = '';
+      mensaje.className = 'descuento-mensaje';
+      try {
+        const response = await fetch('/api/validar-codigo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ codigo })
+        });
+        const data = await response.json();
+        if (data.valido) {
+          descuentoAplicado   = data.descuento;
+          mensaje.textContent = '✓ ' + data.mensaje + ' — ' + data.descuento + '% de descuento aplicado';
+          mensaje.classList.add('valido');
+          input.disabled      = true;
+          this.textContent    = 'Aplicado';
+          this.disabled       = true;
+          if (seleccion.ambiente && seleccion.superficie && seleccion.estado) {
+            const base  = preciosBase[seleccion.ambiente.valor];
+            const total = Math.round(base * parseFloat(seleccion.superficie.valor) * parseFloat(seleccion.estado.valor));
+            mostrarPrecio(total);
+          }
+        } else {
+          mensaje.textContent = '✗ ' + data.mensaje;
+          mensaje.classList.add('invalido');
+          this.textContent = 'Aplicar';
+          this.disabled    = false;
+        }
+      } catch {
+        mensaje.textContent = '✗ Error al validar. Intentá de nuevo.';
+        mensaje.classList.add('invalido');
+        this.textContent = 'Aplicar';
+        this.disabled    = false;
+      }
+    });
+
+    document.getElementById('boton-continuar').addEventListener('click', function() {
+      if (!this.classList.contains('activo')) return;
+      const codigoUsado = document.getElementById('input-codigo').value.trim().toUpperCase();
+      const params = new URLSearchParams({
+        servicio:         'Asesoría Espacial',
+        ambiente:         seleccion.ambiente.label,
+        superficie:       seleccion.superficie.label,
+        estado:           seleccion.estado.label,
+        precio:           document.getElementById('precio-final').textContent.trim(),
+        descuento_pct:    descuentoAplicado > 0 ? (descuentoAplicado + '%') : '',
+        descuento_codigo: codigoUsado || ''
+      });
+      window.location.href = '../AsesoríaEspacial/confirmación.html?' + params.toString();
+    });
+  </script>
+</body>
+</html>

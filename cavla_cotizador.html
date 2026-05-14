@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --bg: #18110a;
+  --cream: rgba(255,248,235,1);
+  --cream80: rgba(255,248,235,0.80);
+  --cream50: rgba(255, 255, 255, 0.5);
+  --cream30: rgba(255, 255, 255, 0.3);
+  --cream15: rgba(255, 255, 255, 0.15);
+  --cream08: rgba(255, 255, 255, 0.08);
+  --cream04: rgba(255, 255, 255, 0.04);
+  --accent: rgba(255, 255, 255, 0.9);
+  --font-display: 'Playfair Display', serif;
+  --font-ui: 'Montserrat', sans-serif;
+  --radius-pill: 100px;
+  --radius-block: 18px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+}
+
+.cotizador-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.header {
+  margin-bottom: 3rem;
+}
+
+.header__eyebrow {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cream30);
+  margin-bottom: 0.7rem;
+}
+
+.header__titulo {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 400;
+  color: var(--cream80);
+  line-height: 1.1;
+  font-style: italic;
+  margin-bottom: 0.8rem;
+}
+
+.header__instruccion {
+  font-size: 13px;
+  color: var(--cream30);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+
+.sep {
+  width: 100%;
+  height: 0.5px;
+  background: var(--cream15);
+  margin: 2.5rem 0;
+}
+
+.pregunta-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.pregunta-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0 0.25rem;
+}
+
+.pregunta-num {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--cream30);
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.pregunta-titulo {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cream50);
+}
+
+.pregunta-bloque {
+  background: rgba(255,248,235,0.055);
+  border: 0.5px solid var(--cream15);
+  border-radius: var(--radius-block);
+  padding: 1.25rem 1.25rem 1.1rem;
+  position: relative;
+}
+
+.pastillas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pastilla {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--cream50);
+  background: transparent;
+  border: 0.5px solid var(--cream15);
+  border-radius: var(--radius-pill);
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.pastilla:hover {
+  color: var(--cream80);
+  border-color: var(--cream30);
+  background: var(--cream04);
+}
+
+.pastilla.seleccionada {
+  color: var(--bg);
+  background: var(--cream80);
+  border-color: var(--cream80);
+  font-weight: 500;
+}
+
+.ayuda-texto {
+  font-size: 11px;
+  color: var(--cream30);
+  font-weight: 300;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 0.5px solid var(--cream08);
+  line-height: 1.55;
+  cursor: default;
+}
+
+.tooltip-trigger {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  color: var(--cream50);
+  position: relative;
+}
+
+.tooltip-box {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 240px;
+  background: rgba(24,17,10,0.97);
+  border: 0.5px solid var(--cream15);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--cream50);
+  z-index: 10;
+  white-space: normal;
+}
+
+.tooltip-trigger:hover .tooltip-box,
+.tooltip-trigger:focus .tooltip-box {
+  display: block;
+}
+
+.sep-light {
+  width: 100%;
+  height: 0.5px;
+  background: var(--cream08);
+  margin: 1rem 0;
+}
+
+.descuento-bloque {
+  background: rgba(255,248,235,0.04);
+  border: 0.5px solid var(--cream08);
+  border-radius: var(--radius-block);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.descuento-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream30);
+  margin-bottom: 0.8rem;
+}
+
+.descuento-fila {
+  display: flex;
+  gap: 8px;
+}
+
+.descuento-input {
+  flex: 1;
+  background: transparent;
+  border: 0.5px solid var(--cream15);
+  border-radius: var(--radius-pill);
+  color: var(--cream80);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  padding: 9px 16px;
+  letter-spacing: 0.06em;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.descuento-input::placeholder { color: var(--cream30); }
+.descuento-input:focus { border-color: var(--cream30); }
+
+.descuento-btn {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream50);
+  background: transparent;
+  border: 0.5px solid var(--cream15);
+  border-radius: var(--radius-pill);
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.descuento-btn:hover { color: var(--cream80); border-color: var(--cream30); }
+
+.descuento-msg {
+  display: block;
+  font-size: 11px;
+  margin-top: 0.6rem;
+  font-weight: 400;
+}
+.descuento-msg.valido { color: rgba(140,200,140,0.8); }
+.descuento-msg.invalido { color: rgba(200,100,100,0.8); }
+
+.resultado-bloque {
+  border: 0.5px solid var(--cream15);
+  border-radius: var(--radius-block);
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.resultado-bloque.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.resultado-pendiente {
+  font-size: 12px;
+  color: var(--cream30);
+  letter-spacing: 0.04em;
+  font-weight: 300;
+  display: block;
+}
+
+.resultado-precio-wrap { display: none; }
+.resultado-precio-wrap.visible { display: block; }
+
+.resultado-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream30);
+  margin-bottom: 1rem;
+}
+
+.resultado-precio {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 600;
+  color: var(--cream80);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.resultado-desc {
+  font-size: 11px;
+  color: var(--cream30);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.resultado-nota {
+  font-size: 10px;
+  color: var(--cream30);
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.btn-continuar {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--cream80);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 15px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.btn-continuar.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-continuar:hover { background: var(--cream); }
+
+.volver {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  color: var(--cream30);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  font-weight: 300;
+  transition: color 0.15s;
+}
+
+.volver:hover { color: var(--cream50); }
+</style>
+</head>
+<body>
+<div class="cotizador-wrap">
+
+  <div class="header">
+    <p class="header__eyebrow">Asesoría espacial · Residencial</p>
+    <h1 class="header__titulo">Calculá tu proyecto.</h1>
+    <p class="header__instruccion">Seleccioná una opción en cada pregunta para ver el precio estimado.</p>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="pregunta-wrap">
+    <div class="pregunta-label">
+      <span class="pregunta-num">1</span>
+      <span class="pregunta-titulo">¿Qué ambiente querés transformar?</span>
+    </div>
+    <div class="pregunta-bloque">
+      <div class="pastillas">
+        <button class="pastilla" data-grupo="ambiente" data-valor="bajo" data-label="Hall">Hall</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="bajo" data-label="Baño">Baño</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="bajo" data-label="Lavadero">Lavadero</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="medio" data-label="Estudio">Estudio</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="medio" data-label="Dormitorio">Dormitorio</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="alto" data-label="Living">Living</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="alto" data-label="Comedor">Comedor</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="alto" data-label="Cocina">Cocina</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="complejo" data-label="Living-comedor">Living-comedor</button>
+        <button class="pastilla" data-grupo="ambiente" data-valor="complejo" data-label="Ambiente integrado">Ambiente integrado</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pregunta-wrap">
+    <div class="pregunta-label">
+      <span class="pregunta-num">2</span>
+      <span class="pregunta-titulo">¿Cuánto mide aproximadamente?</span>
+    </div>
+    <div class="pregunta-bloque">
+      <div class="pastillas">
+        <button class="pastilla" data-grupo="superficie" data-valor="1.00" data-label="Hasta 15 m²">Hasta 15 m²</button>
+        <button class="pastilla" data-grupo="superficie" data-valor="1.20" data-label="15 – 30 m²">15 – 30 m²</button>
+        <button class="pastilla" data-grupo="superficie" data-valor="1.40" data-label="Más de 30 m²">Más de 30 m²</button>
+      </div>
+      <div class="ayuda-texto">
+        No sabés los metros exactos —
+        <span class="tooltip-trigger" tabindex="0">¿cómo calcularlo?
+          <span class="tooltip-box">
+            <strong style="color:var(--cream50)">Manera fácil:</strong><br>
+            Caminá el largo contando pasos. Cada paso ≈ 0,8 m. Multiplicá largo × ancho.<br><br>
+            Ej: 5 pasos × 4 pasos = 20 ≈ 13 m²
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pregunta-wrap">
+    <div class="pregunta-label">
+      <span class="pregunta-num">3</span>
+      <span class="pregunta-titulo">¿Cómo está el ambiente ahora?</span>
+    </div>
+    <div class="pregunta-bloque">
+      <div class="pastillas">
+        <button class="pastilla" data-grupo="estado" data-valor="1.00" data-label="Sin muebles">Sin muebles</button>
+        <button class="pastilla" data-grupo="estado" data-valor="1.15" data-label="Algunos muebles">Algunos muebles</button>
+        <button class="pastilla" data-grupo="estado" data-valor="1.25" data-label="Completamente amoblado">Completamente amoblado</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="descuento-bloque">
+    <p class="descuento-label">4 — ¿Tenés un código de descuento?</p>
+    <div class="descuento-fila">
+      <input type="text" id="input-codigo" class="descuento-input" placeholder="Ingresá tu código" autocomplete="off" spellcheck="false"/>
+      <button class="descuento-btn" id="btn-aplicar">Aplicar</button>
+    </div>
+    <span class="descuento-msg" id="descuento-msg"></span>
+  </div>
+
+  <div class="resultado-bloque" id="resultado">
+    <span class="resultado-pendiente" id="pendiente">Completá las tres preguntas para ver el precio.</span>
+    <div class="resultado-precio-wrap" id="precio-wrap">
+      <p class="resultado-eyebrow">Precio estimado</p>
+      <span class="resultado-precio" id="precio-final"></span>
+      <span class="resultado-desc" id="desc-final"></span>
+      <span class="resultado-nota">* Valor estimado. Se confirma al inicio del proyecto.</span>
+    </div>
+  </div>
+
+  <button class="btn-continuar" id="btn-continuar">Quiero avanzar con este proyecto</button>
+  <a href="#" class="volver">← Volver al servicio</a>
+
+</div>
+<script>
+const preciosBase={bajo:60000,medio:120000,alto:180000,complejo:270000};
+const sel={ambiente:null,superficie:null,estado:null};
+let descuento=0;
+
+document.querySelectorAll('.pastilla').forEach(p=>{
+  p.addEventListener('click',function(){
+    const g=this.dataset.grupo;
+    document.querySelectorAll(`.pastilla[data-grupo="${g}"]`).forEach(x=>x.classList.remove('seleccionada'));
+    this.classList.add('seleccionada');
+    sel[g]={valor:this.dataset.valor,label:this.dataset.label};
+    calcular();
+  });
+});
+
+function calcular(){
+  const res=document.getElementById('resultado');
+  const btn=document.getElementById('btn-continuar');
+  res.classList.add('visible');
+  if(!sel.ambiente||!sel.superficie||!sel.estado){
+    document.getElementById('pendiente').style.display='block';
+    document.getElementById('precio-wrap').classList.remove('visible');
+    btn.classList.remove('activo');
+    return;
+  }
+  document.getElementById('pendiente').style.display='none';
+  document.getElementById('precio-wrap').classList.add('visible');
+  btn.classList.add('activo');
+  mostrarPrecio();
+}
+
+function mostrarPrecio(){
+  if(!sel.ambiente||!sel.superficie||!sel.estado)return;
+  const base=preciosBase[sel.ambiente.valor];
+  const sinDesc=Math.round(base*parseFloat(sel.superficie.valor)*parseFloat(sel.estado.valor));
+  const final=descuento===100?0:descuento>0?Math.round(sinDesc*(1-descuento/100)):sinDesc;
+  const el=document.getElementById('precio-final');
+  const fmt=n=>n.toLocaleString('es-AR',{style:'currency',currency:'ARS',minimumFractionDigits:0});
+  if(descuento>0&&descuento<100){
+    el.innerHTML=`<span style="font-size:.45em;opacity:.35;text-decoration:line-through;display:block;margin-bottom:4px">${fmt(sinDesc)}</span>${fmt(final)}<span style="font-size:.35em;color:rgba(140,200,140,0.8);margin-left:10px">-${descuento}%</span>`;
+  }else if(descuento===100){
+    el.innerHTML=`<span style="font-size:.45em;opacity:.35;text-decoration:line-through;display:block;margin-bottom:4px">${fmt(sinDesc)}</span><span style="color:rgba(140,200,140,0.8)">Gratis</span>`;
+  }else{
+    el.textContent=fmt(sinDesc);
+  }
+  document.getElementById('desc-final').textContent=`${sel.ambiente.label} · ${sel.superficie.label} · ${sel.estado.label}`;
+}
+
+document.getElementById('btn-aplicar').addEventListener('click',async function(){
+  const input=document.getElementById('input-codigo');
+  const msg=document.getElementById('descuento-msg');
+  const codigo=input.value.trim();
+  if(!codigo)return;
+  this.textContent='...';
+  this.disabled=true;
+  msg.textContent='';
+  msg.className='descuento-msg';
+  try{
+    const r=await fetch('/api/validar-codigo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({codigo})});
+    const d=await r.json();
+    if(d.valido){
+      descuento=d.descuento;
+      msg.textContent=`✓ ${d.mensaje} — ${d.descuento}% de descuento aplicado`;
+      msg.classList.add('valido');
+      input.disabled=true;
+      this.textContent='Aplicado';
+      mostrarPrecio();
+    }else{
+      msg.textContent=`✗ ${d.mensaje}`;
+      msg.classList.add('invalido');
+      this.textContent='Aplicar';
+      this.disabled=false;
+    }
+  }catch{
+    msg.textContent='✗ Error al validar. Intentá de nuevo.';
+    msg.classList.add('invalido');
+    this.textContent='Aplicar';
+    this.disabled=false;
+  }
+});
+
+document.getElementById('btn-continuar').addEventListener('click',function(){
+  if(!this.classList.contains('activo'))return;
+  const codigo=document.getElementById('input-codigo').value.trim().toUpperCase();
+  const params=new URLSearchParams({
+    servicio:'Asesoría Espacial',
+    ambiente:sel.ambiente.label,
+    superficie:sel.superficie.label,
+    estado:sel.estado.label,
+    precio:document.getElementById('precio-final').textContent.trim(),
+    descuento_pct:descuento>0?`${descuento}%`:'',
+    descuento_codigo:codigo||''
+  });
+  window.location.href=`../AsesoríaEspacial/confirmación.html?${params.toString()}`;
+});
+</script>
+</body>
+</html>
