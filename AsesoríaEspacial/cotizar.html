@@ -837,20 +837,36 @@ setTimeout(function(){
       }
     });
 
-    document.getElementById('boton-continuar').addEventListener('click', function() {
-      if (!this.classList.contains('activo')) return;
-      const codigoUsado = document.getElementById('input-codigo').value.trim().toUpperCase();
-      const params = new URLSearchParams({
-        servicio:         'Asesoría Espacial',
-        ambiente:         seleccion.ambiente.label,
-        superficie:       seleccion.superficie.label,
-        estado:           seleccion.estado.label,
-        precio:           document.getElementById('precio-final').textContent.trim(),
-        descuento_pct:    descuentoAplicado > 0 ? (descuentoAplicado + '%') : '',
-        descuento_codigo: codigoUsado || ''
-      });
-      window.location.href = '../AsesoríaEspacial/pago.html?' + params.toString();
-    });
+// calculo de descuento
+function calcularPrecioFinal() {
+  const base = preciosBase[seleccion.ambiente.valor];
+  const sinDesc = Math.round(base * parseFloat(seleccion.superficie.valor) * parseFloat(seleccion.estado.valor));
+  
+  if (descuentoAplicado === 100) return 0;
+  if (descuentoAplicado > 0) return Math.round(sinDesc * (1 - descuentoAplicado / 100));
+  
+  return sinDesc;
+}
+
+// enviar datos
+document.getElementById('boton-continuar').addEventListener('click', function() {
+  if (!this.classList.contains('activo')) return;
+  
+  const codigoUsado = document.getElementById('input-codigo').value.trim().toUpperCase();
+  
+  const params = new URLSearchParams({
+    servicio:         'Asesoría Espacial',
+    ambiente:         seleccion.ambiente.label,
+    superficie:       seleccion.superficie.label,
+    estado:           seleccion.estado.label,
+    // Reemplazo: ahora llamamos a la función en lugar de leer el textContent
+    precio:           calcularPrecioFinal(), 
+    descuento_pct:    descuentoAplicado > 0 ? (descuentoAplicado + '%') : '',
+    descuento_codigo: codigoUsado || ''
+  });
+  
+  window.location.href = '../AsesoríaEspacial/pago.html?' + params.toString();
+});
   </script>
 </body>
 </html>

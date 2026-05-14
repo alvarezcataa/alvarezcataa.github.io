@@ -74,14 +74,14 @@
     .display em { font-style: italic; }
 
     /* ── Metodología globos ── */
-    .method { margin-top: clamp(24px, 4vh, 44px); display: flex; align-items: flex-start; width: 100%; gap: clamp(4px, 1vw, 14px); }
-    .method__step { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.4vw, 14px); flex: 0 0 auto; width: clamp(54px, 10vw, 96px); }
-    .method__bubble { width: clamp(38px, 6.4vw, 56px); height: clamp(38px, 6.4vw, 56px); border: 1px solid var(--w-40); border-radius: 50%; display: grid; place-items: center; color: var(--w-85); background: transparent; transition: border-color .25s ease, color .25s ease; flex-shrink: 0; }
-    .method__bubble svg { width: clamp(16px, 2.6vw, 22px); height: clamp(16px, 2.6vw, 22px); }
-    .method__label { font-size: clamp(8.5px, 1.2vw, 10.5px); letter-spacing: .22em; text-transform: uppercase; color: var(--w-55); text-align: center; line-height: 1.3; }
+    .method { margin-top: clamp(20px, 3vh, 36px); display: flex; align-items: flex-start; width: 100%; gap: clamp(2px, .5vw, 8px); }
+    .method__step { display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 1vw, 10px); flex: 0 0 auto; width: clamp(42px, 6.5vw, 64px); }
+    .method__bubble { width: clamp(26px, 3.8vw, 36px); height: clamp(26px, 3.8vw, 36px); border: 1px solid var(--w-40); border-radius: 50%; display: grid; place-items: center; color: var(--w-85); background: transparent; transition: border-color .25s ease, color .25s ease; flex-shrink: 0; }
+    .method__bubble svg { width: clamp(11px, 1.6vw, 15px); height: clamp(11px, 1.6vw, 15px); }
+    .method__label { font-size: clamp(7px, .85vw, 9px); letter-spacing: .16em; text-transform: uppercase; color: var(--w-55); text-align: center; line-height: 1.3; }
     .method__step.is-current .method__bubble { border-color: var(--w-100); color: var(--w-100); }
     .method__step.is-current .method__label  { color: var(--w-100); }
-    .method__link { flex: 1 1 0; min-width: 0; height: clamp(38px, 6.4vw, 56px); display: flex; align-items: center; padding: 0 clamp(2px, .6vw, 10px); }
+    .method__link { flex: 1 1 0; min-width: 0; height: clamp(26px, 3.8vw, 36px); display: flex; align-items: center; padding: 0 clamp(2px, .4vw, 6px); }
     .method__link::after { content: ''; flex: 1; height: 1px; background: var(--w-18); }
 
     /* ── Resumen ── */
@@ -95,16 +95,18 @@
     .resumen__fila--precio .resumen__val { font-size: clamp(20px, 2.4vw, 28px); color: var(--w-100); }
     .resumen__fila--descuento { display: none; }
 
-    /* ── Desglose ── */
-    .desglose { margin-top: 14px; padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 30px); border: 1px solid var(--w-08); border-radius: 16px; background: var(--w-03); }
+    /* ── Desglose en dos columnas ── */
+    .desglose-par { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    @media (max-width: 810px) { .desglose-par { grid-template-columns: 1fr; } }
+    .desglose { padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 28px); border: 1px solid var(--w-08); border-radius: 16px; background: var(--w-03); height: 100%; }
     .desglose__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 12px; }
     .desglose__items { display: flex; flex-direction: column; gap: 7px; }
     .desglose__item { display: flex; align-items: flex-start; gap: 10px; }
     .desglose__check { width: 14px; height: 14px; flex-shrink: 0; margin-top: 3px; color: var(--w-40); }
     .desglose__texto { font-size: 11.5px; color: var(--w-70); letter-spacing: .02em; line-height: 1.5; }
-    .desglose__sub { margin: 5px 0 2px 24px; display: flex; flex-direction: column; gap: 3px; }
-    .desglose__sub-item { font-size: 10.5px; color: var(--w-40); letter-spacing: .04em; line-height: 1.4; }
-    .desglose__sub-item::before { content: '· '; }
+    .desglose__sub-item { font-size: 10.5px; color: var(--w-55); letter-spacing: .04em; line-height: 1.6; padding: 2px 0; border-bottom: 1px solid var(--w-05); display: flex; align-items: center; gap: 8px; }
+    .desglose__sub-item:last-child { border-bottom: none; }
+    .desglose__sub-item::before { content: '·'; color: var(--w-28); flex-shrink: 0; }
 
     /* ── Formulario ── */
     .form-bloque-titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 14px; }
@@ -122,6 +124,9 @@
     .terminos input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: white; cursor: pointer; }
     .terminos label { font-size: 11px; color: var(--w-55); line-height: 1.6; cursor: pointer; }
     .terminos a { color: var(--w-85); text-decoration: underline; text-underline-offset: 3px; }
+
+    .aviso-terminos { margin-top: 10px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.8); display: none; }
+    .aviso-terminos.visible { display: block; }
 
     .mensaje-error { margin-top: 14px; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.9); display: none; }
     .mensaje-error.visible { display: block; }
@@ -160,12 +165,6 @@
     .precio-fila--main .precio-fila__label { color: var(--w-85); }
     .precio-fila--main .precio-fila__monto  { color: var(--w-100); font-size: clamp(16px, 1.8vw, 20px); }
 
-    /* ── Loading ── */
-    .loading-overlay { position: fixed; inset: 0; background: rgba(19,12,9,.92); backdrop-filter: blur(8px); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
-    .loading-overlay.visible { display: flex; }
-    .loading-spinner { width: 34px; height: 34px; border: 1px solid var(--w-18); border-top-color: var(--w-85); border-radius: 50%; animation: spin .8s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-texto { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-55); }
   </style>
 </head>
 
@@ -195,13 +194,7 @@
   <aside class="rail" aria-hidden="true">
     <button class="rail__dot is-active" data-go="0" aria-label="Resumen"></button>
     <button class="rail__dot" data-go="1" aria-label="Datos"></button>
-    <button class="rail__dot is-locked" data-go="2" aria-label="Pago"></button>
   </aside>
-
-  <div class="loading-overlay" id="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p class="loading-texto">Procesando tu solicitud…</p>
-  </div>
 
   <main class="stage" id="stage">
 
@@ -270,37 +263,42 @@
           </div>
         </div>
 
-        <!-- Desglose -->
-        <div class="desglose">
-          <p class="desglose__titulo">Lo que incluye tu servicio</p>
-          <div class="desglose__items">
-            <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
-              <span class="desglose__texto">Formulario de relevamiento virtual</span>
-            </div>
-            <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
-              <span class="desglose__texto">Sesión de 1 hora de asesoría</span>
-            </div>
-            <div class="desglose__item" style="flex-direction:column;gap:6px">
-              <div style="display:flex;align-items:flex-start;gap:10px">
+        <!-- Desglose en dos tarjetas lado a lado -->
+        <div class="desglose-par">
+          <!-- Tarjeta 1: items generales -->
+          <div class="desglose">
+            <p class="desglose__titulo">Lo que incluye tu servicio</p>
+            <div class="desglose__items">
+              <div class="desglose__item">
+                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                <span class="desglose__texto">Formulario de relevamiento virtual</span>
+              </div>
+              <div class="desglose__item">
+                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                <span class="desglose__texto">Sesión de 1 hora de asesoría</span>
+              </div>
+              <div class="desglose__item">
                 <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
                 <span class="desglose__texto">Plan de acción en PDF</span>
               </div>
-              <div class="desglose__sub">
-                <span class="desglose__sub-item">Brief de cliente</span>
-                <span class="desglose__sub-item">Análisis neuroespacial</span>
-                <span class="desglose__sub-item">Narrativa de diseño</span>
-                <span class="desglose__sub-item">Renders fotorrealistas</span>
-                <span class="desglose__sub-item">Justificación de diseño</span>
-                <span class="desglose__sub-item">Etapabilidad de ejecución</span>
-                <span class="desglose__sub-item">Sugerencias de compra</span>
-                <span class="desglose__sub-item">Presupuesto aproximado</span>
+              <div class="desglose__item">
+                <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                <span class="desglose__texto">Excel de gestión de gastos</span>
               </div>
             </div>
-            <div class="desglose__item">
-              <svg class="desglose__check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>
-              <span class="desglose__texto">Excel de gestión de gastos</span>
+          </div>
+          <!-- Tarjeta 2: contenido del plan de acción -->
+          <div class="desglose">
+            <p class="desglose__titulo">Lo que incluye tu plan de acción</p>
+            <div class="desglose__items">
+              <div class="desglose__sub-item">Brief de cliente</div>
+              <div class="desglose__sub-item">Análisis neuroespacial</div>
+              <div class="desglose__sub-item">Narrativa de diseño</div>
+              <div class="desglose__sub-item">Renders fotorrealistas</div>
+              <div class="desglose__sub-item">Justificación de diseño</div>
+              <div class="desglose__sub-item">Etapabilidad de ejecución</div>
+              <div class="desglose__sub-item">Sugerencias de compra</div>
+              <div class="desglose__sub-item">Presupuesto aproximado</div>
             </div>
           </div>
         </div>
@@ -381,6 +379,7 @@
               Leí y acepto los <a href="../../images/SERVICIOS/Términos y Condiciones.pdf" target="_blank">Términos y Condiciones</a> del servicio.
             </label>
           </div>
+          <p class="aviso-terminos" id="aviso-terminos">* Aceptá los Términos y Condiciones para continuar.</p>
 
           <p class="mensaje-error" id="mensaje-error"></p>
 
@@ -393,69 +392,6 @@
       </div>
       <!-- Cue invisible hasta que el form esté completo -->
       <div class="cue" id="cue-pago" style="opacity:0">Método de pago</div>
-    </section>
-
-    <!-- ══ Pantalla 3: Método de pago ══ -->
-    <section class="scene" data-scene="2" id="scene-pago">
-      <div class="scene__inner">
-
-        <p class="eyebrow">Último paso</p>
-        <h2 class="display"><em>Elegí cómo pagar</em></h2>
-
-        <div style="margin-top: clamp(20px,3.2vh,38px)">
-          <p class="form-bloque-titulo">Seleccioná un método</p>
-
-          <div class="metodos">
-            <!-- Transferencia -->
-            <div class="metodo-card" id="card-transferencia" onclick="seleccionarMetodo('transferencia')">
-              <span class="metodo-card__badge">Sin interés</span>
-              <div class="metodo-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
-              </div>
-              <p class="metodo-card__nombre">Transferencia<br>bancaria</p>
-              <p class="metodo-card__desc">Te enviamos los datos de la cuenta por mail. Confirmamos tu proyecto cuando recibimos el comprobante.</p>
-              <div class="metodo-card__preview">
-                <p class="metodo-card__preview-label">Lo que pagás ahora</p>
-                <div class="precio-fila precio-fila--main">
-                  <span class="precio-fila__label">Pago único</span>
-                  <span class="precio-fila__monto" id="precio-transferencia">—</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Mercado Pago -->
-            <div class="metodo-card" id="card-mp" onclick="seleccionarMetodo('mp')">
-              <span class="metodo-card__badge">Con interés</span>
-              <div class="metodo-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h4l2-4"/><path d="M12 12l2 4"/></svg>
-              </div>
-              <p class="metodo-card__nombre">Mercado<br>Pago</p>
-              <p class="metodo-card__desc">Pagás desde la web con tarjeta. Al acreditarse el pago te enviamos el comprobante y los datos del relevamiento.</p>
-              <div class="metodo-card__preview">
-                <p class="metodo-card__preview-label">Opciones de cuotas</p>
-                <div class="precio-fila precio-fila--main">
-                  <span class="precio-fila__label">1 cuota</span>
-                  <span class="precio-fila__monto" id="precio-mp-1">—</span>
-                </div>
-                <div class="precio-fila">
-                  <span class="precio-fila__label">3 cuotas de</span>
-                  <span class="precio-fila__monto" id="precio-mp-3">—</span>
-                </div>
-                <div class="precio-fila">
-                  <span class="precio-fila__label">6 cuotas de</span>
-                  <span class="precio-fila__monto" id="precio-mp-6">—</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button class="btn-cta" id="btn-pagar" type="button">
-            Confirmar y pagar
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </div>
-
-      </div>
     </section>
 
   </main>
@@ -477,20 +413,11 @@
       if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
     });
 
-    /* ── Rail sync + bloqueo pantalla 3 ── */
+    /* ── Rail sync ── */
     const stage  = document.getElementById('stage');
     const scenes = stage.querySelectorAll('.scene');
     const dots   = document.querySelectorAll('.rail__dot');
     let   formValido = false;
-
-    // Interceptar scroll hacia pantalla 3 si form no está listo
-    stage.addEventListener('scroll', function() {
-      if (formValido) return;
-      const scene2top = scenes[2].offsetTop;
-      if (stage.scrollTop >= scene2top - 10) {
-        scenes[1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, { passive: true });
 
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -504,14 +431,9 @@
 
     dots.forEach(d => {
       d.addEventListener('click', () => {
-        const idx = +d.dataset.go;
-        if (idx === 2 && !formValido) return;
-        scenes[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        scenes[+d.dataset.go].scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
-
-    /* ── Apps Script URL ── */
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyONYIB1BoIiCITQjDJl61UWMRvldSk5vw6eWahm3Z72FWK4E7u2T51d7PJ8gRhm0zU/exec";
 
     /* ── Leer params URL ── */
     const urlParams  = new URLSearchParams(window.location.search);
@@ -576,6 +498,7 @@
     /* ── Validación del formulario ── */
     const camposReq    = ['nombre','apellido','email','telefono','calle','numero','barrio','ciudad','provincia'];
     const btnSiguiente = document.getElementById('btn-siguiente');
+    const avisoTerminos = document.getElementById('aviso-terminos');
 
     function validarForm() {
       const completos = camposReq.every(id => {
@@ -584,37 +507,44 @@
       });
       const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim());
       const acepto  = document.getElementById('acepto-terminos').checked;
-      formValido    = completos && emailOk && acepto;
+
+      // Mostrar aviso de T&C solo si los campos están completos pero no aceptó
+      avisoTerminos.classList.toggle('visible', completos && emailOk && !acepto);
+
+      formValido = completos && emailOk && acepto;
       btnSiguiente.classList.toggle('activo', formValido);
-      // Mostrar cue y desbloquear dot cuando esté listo
-      document.getElementById('cue-pago').style.opacity = formValido ? '1' : '0';
-      dots[2].classList.toggle('is-locked', !formValido);
     }
 
     camposReq.forEach(id => document.getElementById(id)?.addEventListener('input', validarForm));
     document.getElementById('acepto-terminos').addEventListener('change', validarForm);
 
-    /* ── Botón "Elegir método de pago" ── */
+    /* ── Botón "Elegir método de pago" → redirige a metodo-pago.html ── */
     btnSiguiente.addEventListener('click', function() {
       if (!formValido) return;
       document.getElementById('mensaje-error').classList.remove('visible');
-      scenes[2].scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      const cliente = getDatosCliente();
+      // Pasar datos del cliente + cotización a la siguiente página
+      const nextParams = new URLSearchParams({
+        nombre:    cliente.nombre,
+        apellido:  cliente.apellido,
+        email:     cliente.email,
+        telefono:  cliente.telefono,
+        calle:     cliente.calle,
+        numero:    cliente.numero,
+        depto:     cliente.depto,
+        barrio:    cliente.barrio,
+        ciudad:    cliente.ciudad,
+        provincia: cliente.provincia,
+        ambiente,
+        superficie,
+        estado,
+        precio,
+        descuento_pct:    descPct    || '',
+        descuento_codigo: descCodigo || ''
+      });
+      window.location.href = `metodo-pago.html?${nextParams.toString()}`;
     });
-
-    /* ── Selección de método ── */
-    let metodoSeleccionado = null;
-
-    window.seleccionarMetodo = function(metodo) {
-      metodoSeleccionado = metodo;
-      document.getElementById('card-transferencia').classList.toggle('seleccionado', metodo === 'transferencia');
-      document.getElementById('card-mp').classList.toggle('seleccionado', metodo === 'mp');
-      const btn = document.getElementById('btn-pagar');
-      btn.classList.add('activo');
-      btn.innerHTML = (metodo === 'transferencia'
-        ? 'Solicitar datos de transferencia'
-        : 'Pagar con Mercado Pago')
-        + ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;flex-shrink:0"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-    };
 
     /* ── Recopilar datos del cliente ── */
     function getDatosCliente() {
@@ -631,94 +561,6 @@
         provincia: document.getElementById('provincia').value
       };
     }
-
-    /* ── Enviar al Apps Script (iframe evita CORS) ── */
-    function enviarAppsScript(datosCliente, metodoPago, callback) {
-      const data = {
-        cotizacion: {
-          servicio: 'Asesoría Espacial Residencial',
-          ambiente, superficie, estado,
-          total:            precio,
-          descuento_pct:    descPct    || '',
-          descuento_codigo: descCodigo || ''
-        },
-        cliente:     datosCliente,
-        metodo_pago: metodoPago
-      };
-      let iframe = document.getElementById('iframe-post');
-      if (!iframe) {
-        iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.name = 'iframe-post';
-        iframe.id   = 'iframe-post';
-        document.body.appendChild(iframe);
-      }
-      const form = document.createElement('form');
-      form.style.display = 'none';
-      form.method  = 'POST';
-      form.action  = APPS_SCRIPT_URL;
-      form.target  = 'iframe-post';
-      form.enctype = 'application/x-www-form-urlencoded';
-      const input = document.createElement('input');
-      input.type  = 'hidden';
-      input.name  = 'payload';
-      input.value = JSON.stringify(data);
-      form.appendChild(input);
-      document.body.appendChild(form);
-      form.submit();
-      form.remove();
-      setTimeout(callback, 800);
-    }
-
-    /* ── Botón "Confirmar y pagar" ── */
-    document.getElementById('btn-pagar').addEventListener('click', async function() {
-      if (!this.classList.contains('activo') || !metodoSeleccionado) return;
-      const cliente = getDatosCliente();
-      document.getElementById('loading-overlay').classList.add('visible');
-      this.disabled = true;
-
-      if (metodoSeleccionado === 'transferencia') {
-        enviarAppsScript(cliente, 'transferencia', function() {
-          const p = new URLSearchParams({
-            nombre:   cliente.nombre,
-            apellido: cliente.apellido,
-            email:    cliente.email,
-            precio:   formatARS(senia)
-          });
-          window.location.href = `../AsesoríaEspacial/espera.html?${p.toString()}`;
-        });
-
-      } else {
-        try {
-          const resp = await fetch('/api/crear-preferencia', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              monto:    senia,
-              nombre:   cliente.nombre,
-              apellido: cliente.apellido,
-              email:    cliente.email,
-              servicio: `Asesoría Espacial — ${ambiente}`
-            })
-          });
-          const mpData = await resp.json();
-          if (mpData.init_point) {
-            enviarAppsScript(cliente, 'mercadopago', function(){});
-            window.location.href = mpData.init_point;
-          } else {
-            throw new Error('No se recibió init_point');
-          }
-        } catch (err) {
-          document.getElementById('loading-overlay').classList.remove('visible');
-          this.disabled = false;
-          const errEl = document.createElement('p');
-          errEl.style.cssText = 'margin-top:14px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,60,60,.9);text-align:center';
-          errEl.textContent = '* Error al conectar con Mercado Pago. Intentá de nuevo.';
-          this.parentNode.insertBefore(errEl, this.nextSibling);
-          setTimeout(() => errEl.remove(), 4000);
-        }
-      }
-    });
   </script>
 </body>
 </html>
