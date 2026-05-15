@@ -523,7 +523,7 @@
 
   /* Input descuento: placeholder legible */
   .code-row input {
-    font-size: 16px;
+    font-size: 12px;
     letter-spacing: .08em;   /* menos spacing = más espacio para el texto */
     padding: 12px 14px;
   }
@@ -938,6 +938,21 @@ document.getElementById('boton-continuar').addEventListener('click', function() 
   
   window.location.href = '../AsesoríaEspacial/pago.html?' + params.toString();
 });
+
+
+// Fix Safari iOS: resetear zoom al salir del input de descuento
+document.getElementById('input-codigo').addEventListener('blur', function() {
+  if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+      viewport.content = 'width=device-width, initial-scale=1, maximum-scale=1';
+      setTimeout(function() {
+        viewport.content = 'width=device-width, initial-scale=1';
+      }, 300);
+    }
+  }
+});
+
   </script>
 </body>
 </html>
