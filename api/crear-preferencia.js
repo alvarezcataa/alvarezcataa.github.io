@@ -49,9 +49,9 @@ export default async function handler(req, res) {
         default_installments: 1
       },
       back_urls: {
-        success: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/mp-exitoso.html`,
-        failure: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/mp-error.html`,
-        pending: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/mp-exitoso.html`
+        success: `${process.env.SITE_URL}/servicios/Asesor%C3%ADaEspacial/mp-exitoso.html`,
+        failure: `${process.env.SITE_URL}/servicios/Asesor%C3%ADaEspacial/mp-error.html`,
+        pending: `${process.env.SITE_URL}/servicios/Asesor%C3%ADaEspacial/mp-exitoso.html`
       },
       auto_return:          'approved',
       statement_descriptor: 'ESTUDIO CAVLA',
