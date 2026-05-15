@@ -173,6 +173,58 @@
     .precio-fila--main .precio-fila__label { color: var(--w-85); }
     .precio-fila--main .precio-fila__monto  { color: var(--w-100); font-size: clamp(16px, 1.8vw, 20px); }
 
+    @media (max-width: 810px) {
+
+  /* ── Layout general ── */
+  .scene        { padding: 72px 0 50px; }
+  .scene__inner { width: 92vw; max-width: 92vw; }
+  .scene--datos .scene__inner { padding: 72px 0 40px; }
+  .display      { font-size: clamp(32px, 10vw, 52px); margin: 6px 0 0; }
+  .eyebrow      { font-size: 10px; }
+  .cue          { bottom: 16px; }
+
+  /* ── Globos ── */
+  .method        { margin-top: 10px; }
+  .method__step  { width: clamp(38px, 18vw, 60px); gap: 4px; }
+  .method__bubble { width: clamp(28px, 7vw, 36px); height: clamp(28px, 7vw, 36px); }
+  .method__bubble svg { width: clamp(10px, 2.8vw, 14px); height: clamp(10px, 2.8vw, 14px); }
+  .method__label { font-size: clamp(6px, 1.8vw, 8px); letter-spacing: .1em; }
+
+  /* ── Resumen ── */
+  .resumen         { margin-top: 10px; padding: 12px 14px; border-radius: 14px; }
+  .resumen__titulo { margin: 0 0 8px; }
+  .resumen__fila   { padding: 6px 0; }
+  .resumen__key    { font-size: 9px; }
+  .resumen__val    { font-size: 13px; }
+  .resumen__fila--precio .resumen__val { font-size: 18px; }
+
+  /* ── Desglose: mantener 2 columnas en mobile ── */
+  .desglose-par  { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .desglose      { padding: 10px 10px; border-radius: 12px; }
+  .desglose__titulo { font-size: 8.5px; margin: 0 0 8px; letter-spacing: .24em; }
+
+  /* Pastillas desglose más compactas */
+  .desglose__pill  { padding: 6px 10px; font-size: 9.5px; letter-spacing: .12em; white-space: normal; }
+  .desglose__pills { gap: 5px; }
+
+  /* Items plan de acción más compactos */
+  .desglose__sub-item { font-size: 10px; gap: 5px; line-height: 1.3; }
+  .desglose__sub-check { width: 11px; height: 11px; margin-top: 1px; }
+  .desglose__items { gap: 3px; }
+
+  /* ── Formulario pantalla 2 ── */
+  .form-bloque-titulo { font-size: 9px; margin: 0 0 6px; }
+  .form-grid          { gap: 6px; grid-template-columns: 1fr; }
+  .campo              { gap: 3px; }
+  .campo label        { font-size: 9px; }
+  .campo input, .campo select {
+    padding: 10px 14px;
+    font-size: 16px;   /* 16px mínimo para evitar zoom en iOS */
+  }
+  .terminos        { margin-top: 8px; }
+  .terminos label  { font-size: 10px; }
+  .btn-cta         { padding: 12px 20px; font-size: 10.5px; letter-spacing: .18em; margin-top: 10px; }
+}
   </style>
 </head>
 
