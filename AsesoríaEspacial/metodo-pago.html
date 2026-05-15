@@ -11,7 +11,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <script src="https://sdk.mercadopago.com/js/v2"></script>
 
   <style>
     :root {
@@ -449,17 +448,10 @@
             })
           });
           const mpData = await resp.json();
-          if (!mpData.preference_id) throw new Error('No se recibió preference_id');
+          if (!mpData.preference_id && !mpData.init_point) throw new Error('No se recibió respuesta de Mercado Pago');
 
-          overlay.classList.remove('visible');
-
-          // Abrir modal de MP dentro de la página
-          const mp = new MercadoPago('APP_USR-541f81dc-8855-4a87-8c33-dbd32a7e6dde', { locale: 'es-AR' });
-          const checkout = mp.checkout({
-            preference: { id: mpData.preference_id },
-            render: { container: '.cho-container', label: 'Pagar' }
-          });
-          checkout.open();
+          // Redirigir al checkout de MP (más robusto que el modal)
+          window.location.href = mpData.init_point;
 
         } catch (err) {
           overlay.classList.remove('visible');
