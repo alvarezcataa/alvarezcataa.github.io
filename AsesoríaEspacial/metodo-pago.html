@@ -141,35 +141,29 @@
 
     @media (max-width: 810px) {
 
-  /* Usar dvh para descontar la barra de Safari */
-  .stage { height: 100dvh; }
-  .scene { min-height: 100dvh; }
+  /* Sin padding — flex centra el contenido */
+  .stage  { height: 100dvh; }
+  .scene  { min-height: 100dvh; justify-content: flex-start; padding-top: 72px; padding-bottom: 24px; overflow-y: auto; }
+  .scene__inner { width: 92vw; max-width: 92vw; padding: 0; }
 
-  /* Más padding top para que el título no quede bajo la navbar */
-  .scene__inner { 
-    width: 92vw; 
-    max-width: 92vw; 
-    padding: 96px 0 100px;  /* más bottom para barra Safari */
-  }
-
-  /* Título más chico */
+  /* Título */
   .display { font-size: clamp(28px, 9vw, 44px); }
 
-  /* Globos más chicos */
+  /* Globos */
   .method        { margin-top: 8px; }
   .method__step  { width: clamp(36px, 17vw, 56px); gap: 4px; }
   .method__bubble { width: clamp(26px, 7vw, 34px); height: clamp(26px, 7vw, 34px); }
   .method__bubble svg { width: clamp(10px, 2.6vw, 13px); height: clamp(10px, 2.6vw, 13px); }
   .method__label { font-size: clamp(5.5px, 1.7vw, 7.5px); letter-spacing: .08em; }
 
-  /* Precio más compacto */
+  /* Precio */
   .precio-bloque { margin-top: 10px; padding: 10px 12px; gap: 6px; }
   .precio-bloque__key { font-size: 9px; }
   .precio-bloque__val { font-size: 13px; }
   .precio-bloque__fila--senia .precio-bloque__val { font-size: 16px; }
   .precio-bloque__nota { font-size: 8.5px; }
 
-  /* Tarjetas apiladas, más compactas */
+  /* Tarjetas */
   .metodos { grid-template-columns: 1fr; gap: 8px; }
   .metodo-card { padding: 12px 14px; gap: 4px; }
   .metodo-card__nombre { font-size: 15px; }
@@ -181,14 +175,8 @@
   .precio-fila__monto { font-size: 13px; }
   .precio-fila--main .precio-fila__monto { font-size: 14px; }
 
-  /* Botón con más margen bottom para la barra Safari */
-  .btn-cta { 
-    margin-top: 10px; 
-    padding: 12px 20px; 
-    font-size: 10px; 
-    letter-spacing: .18em; 
-  }
-
+  /* Botón */
+  .btn-cta { margin-top: 10px; padding: 12px 20px; font-size: 10px; letter-spacing: .18em; }
   .form-bloque-titulo { margin: 0 0 8px; }
 }
   </style>
