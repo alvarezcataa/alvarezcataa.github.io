@@ -387,11 +387,18 @@
     // Intereses estimados Mercado Pago — actualizá según condiciones vigentes
     const intereses = { 1: 0.08685, 3: 0.4664, 6: 0.67017 };
 
+    // Comisión de la plataforma MP (6,60% + 21% IVA = 7,986%)
+    // Se suma al monto para que el cliente cubra ese costo.
+    // Fórmula: monto_a_cobrar = monto_deseado / (1 - comision)
+    const MP_COMISION = 0.0660 * 1.21; // = 0.07986
+    const seniaMP = senia > 0 ? Math.round(senia / (1 - MP_COMISION)) : 0;
+
     if (senia > 0) {
       document.getElementById('precio-transferencia').textContent = formatARS(senia);
-      document.getElementById('precio-mp-1').textContent          = formatARS(senia * (1 + intereses[1])) ;
-      document.getElementById('precio-mp-3').textContent          = formatARS(senia * (1 + intereses[3]) / 3);
-      document.getElementById('precio-mp-6').textContent          = formatARS(senia * (1 + intereses[6]) / 6);
+      // Los precios de MP usan seniaMP (ya incluye la comisión de la plataforma)
+      document.getElementById('precio-mp-1').textContent          = formatARS(seniaMP * (1 + intereses[1]));
+      document.getElementById('precio-mp-3').textContent          = formatARS(seniaMP * (1 + intereses[3]) / 3);
+      document.getElementById('precio-mp-6').textContent          = formatARS(seniaMP * (1 + intereses[6]) / 6);
     }
 
     /* ── Selección de método ── */
@@ -480,7 +487,7 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              monto:    senia,
+              monto:    seniaMP,   // incluye la comisión MP (6,60% + IVA) → el cliente la absorbe
               nombre, apellido, email, telefono,
               calle, numero, depto, barrio, ciudad, provincia,
               ambiente, superficie, estado,
