@@ -1158,19 +1158,27 @@ a.tarjeta-servicio {
   color: #130c09;
 }
 
-.flecha-btn {
-  font-size: 1rem;
-}
+
 
 @media (max-width: 810px) {
-  .container-derivacion {
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
+  .identificacion-content {
+    max-width: 100%;
+    width: 88%;
+  }
+  .container-circulos {
+    max-width: 75vw;
   }
   .titulo-identif {
-    font-size: 5vw;
-    margin-bottom: 3vh;
+    font-size: clamp(24px, 7vw, 36px);
+    margin-bottom: 16px;
+  }
+  .container-derivacion {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  .derivacion-col {
+    max-width: 280px;
   }
 }
 
