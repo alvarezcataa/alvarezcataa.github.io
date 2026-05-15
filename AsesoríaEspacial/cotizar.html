@@ -487,6 +487,75 @@
       .scene { padding: 96px 0 80px; }
       .cue { bottom: 22px; }
     }
+
+    /* ── FIXES RESPONSIVE MOBILE ── */
+@media (max-width: 810px) {
+
+  /* Pantalla 2: pastillas no se desbordan */
+  .pastilla {
+    white-space: normal;     /* permite que el texto haga wrap */
+    padding: 10px 14px;
+    font-size: 10.5px;
+    letter-spacing: .16em;
+  }
+  .pills--grid-ambiente .pastilla {
+    padding: 10px 14px;
+  }
+  .qcard {
+    padding: 18px 16px;
+    border-radius: 20px;
+  }
+  .qhead {
+    margin-bottom: 14px;
+    gap: 8px;
+  }
+  .qtitle {
+    font-size: 18px;
+  }
+
+  /* Pantalla 3: precio no se desborda */
+  .result__price {
+    font-size: clamp(36px, 12vw, 56px) !important;  /* override del inline style="font-size:150px" */
+    word-break: break-all;
+  }
+
+  /* Input descuento: placeholder legible */
+  .code-row input {
+    font-size: 11px;
+    letter-spacing: .08em;   /* menos spacing = más espacio para el texto */
+    padding: 12px 14px;
+  }
+  .code-row input::placeholder {
+    letter-spacing: .08em;
+  }
+  .btn-outline {
+    padding: 12px 16px;
+    font-size: 10px;
+    letter-spacing: .14em;
+  }
+
+  /* CTA centrado y ancho completo */
+  .cta {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 20px;
+    font-size: 10.5px;
+    letter-spacing: .18em;
+  }
+
+  /* Pantalla 1: globos caben en mobile */
+  .method__step {
+    width: clamp(40px, 18vw, 70px);
+  }
+  .method__bubble {
+    width: clamp(32px, 8vw, 44px);
+    height: clamp(32px, 8vw, 44px);
+  }
+  .method__label {
+    font-size: clamp(6px, 2vw, 9px);
+    letter-spacing: .1em;
+  }
+}
   </style>
 </head>
 
@@ -664,7 +733,8 @@
           <div class="result" id="resultado" style="text-align: center">
             <p class="result__eyebrow" style="text-align: left">Tu cotización</p>
             <div class="result__divider"></div>
-            <p class="result__price" id="precio-final" style="text-align: center; font-size: 150px; margin: 0px 0px 30px">$ —</p>
+            <p class="result__price" id="precio-final" style="text-align: center; margin: 0px 0px 30px">
+              $ —</p>
             <p class="result__desc" id="descripcion-final" style="text-align: center">Completá las 3 preguntas para ver tu precio.</p>
 
             <button class="cta" id="boton-continuar" type="button">
