@@ -62,9 +62,17 @@ export default async function handler(req, res) {
         email:   email
       },
       payment_methods: {
-        installments:         6,
-        default_installments: 1
+        installments:         6,    // máximo de cuotas permitidas
+        default_installments: 1,
+
+        // ── INTERESES AL COMPRADOR ──────────────────────────────────────────
+        // Con esta lista vacía NO se ofrecen cuotas sin interés.
+        // Los intereses de cada cuota los paga el comprador, no vos.
+        // Si en cambio quisieras ofrecer N cuotas sin interés (absorbidas por vos),
+        // agregarías: [{ payment_type_id: 'credit_card', installments: N }]
+        free_methods: []
       },
+
       back_urls: {
         success: exitoUrl,
         failure: exitoUrl,
@@ -72,7 +80,15 @@ export default async function handler(req, res) {
       },
       auto_return:          'approved',
       statement_descriptor: 'ESTUDIO CAVLA',
-      external_reference:   externalRef
+      external_reference:   externalRef,
+
+      // ── ACREDITACIÓN INMEDIATA ──────────────────────────────────────────────
+      // "immediate" → el dinero se acredita al instante en tu cuenta MP.
+      // Nota: esto solo aplica para pagos aprobados con tarjeta de crédito/débito.
+      // Las transferencias bancarias tienen su propio flujo y se acreditan al recibirse.
+      // Si MP no te permite este campo con tu tipo de cuenta, podés eliminarlo y
+      // configurarlo directamente en: mercadopago.com.ar/settings/release-options
+      processing_mode: 'immediate'
     };
 
     const response = await fetch('https://api.mercadopago.com/checkout/preferences', {

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA — Agendar reunión</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:    #130c09;
+      --w-100: rgba(255,255,255,1);
+      --w-85:  rgba(255,255,255,.85);
+      --w-70:  rgba(255,255,255,.70);
+      --w-55:  rgba(255,255,255,.55);
+      --w-40:  rgba(255,255,255,.40);
+      --w-28:  rgba(255,255,255,.28);
+      --w-18:  rgba(255,255,255,.18);
+      --w-12:  rgba(255,255,255,.12);
+      --w-08:  rgba(255,255,255,.08);
+      --w-05:  rgba(255,255,255,.05);
+      --w-03:  rgba(255,255,255,.03);
+      --serif: 'Playfair Display', 'Times New Roman', serif;
+      --sans:  'Montserrat', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--w-85);
+      font-family: var(--sans);
+      font-weight: 300;
+      letter-spacing: .01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      /* Sin scroll en la página */
+      height: 100%;
+      overflow: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+    /* ── Layout: ocupa exactamente el viewport ── */
+    .page-wrap {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* La nav es fixed, así que compensamos con padding-top en el contenido */
+    .contenido {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 60vw;
+      max-width: 60vw;
+      margin: 0 auto;
+      padding: 100px 0 20px; /* 100px = altura nav ~68px + margen respiro */
+      min-height: 0;
+    }
+    @media (max-width: 810px) {
+      .contenido { width: 90vw; max-width: 90vw; padding: 80px 0 12px; }
+    }
+
+    /* ── Encabezado ── */
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--w-55);
+      font-weight: 400;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .display {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--w-100);
+      line-height: 1.02;
+      letter-spacing: -.01em;
+      margin: 10px 0 0;
+      font-size: clamp(36px, 5vw, 68px);
+      flex-shrink: 0;
+    }
+    .display em { font-style: italic; }
+
+    /* ── Instrucción ── */
+    .instruccion {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--w-40);
+      margin: 18px 0 14px;
+      flex-shrink: 0;
+    }
+
+    /* ── Contenedor Cal.com: sin borde, sin fondo, ocupa el espacio restante ── */
+    .cal-wrap {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    #my-cal-inline-presupuesto-diseno-mobiliario {
+      width: 100%;
+      /* Altura = viewport menos: nav (68px) + padding-top (100px) + eyebrow+título+instrucción (~120px) + nota (~40px) + padding-bottom (20px) */
+      height: calc(100vh - 348px);
+      overflow: scroll;
+    }
+
+    @media (max-width: 810px) {
+      #my-cal-inline-presupuesto-diseno-mobiliario {
+        height: calc(100vh - 280px);
+      }
+    }
+
+    /* ── Nota inferior ── */
+    .nota-inferior {
+      flex-shrink: 0;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--w-28);
+      letter-spacing: .06em;
+      line-height: 1.7;
+      text-align: center;
+      font-family: var(--serif);
+      font-style: italic;
+    }
+
+  </style>
+</head>
+
+<body class="pagina">
+
+  <!-- Nav global (igual al resto del sitio) -->
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="../../index.html">Inicio</a>
+      <a href="../../filosofia.html">Filosofía</a>
+      <a href="../../sobremi.html">Sobre mí</a>
+      <a href="../../contacto.html">Contacto</a>
+    </nav>
+    <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="page-wrap">
+    <div class="contenido">
+
+      <!-- Encabezado -->
+      <p class="eyebrow">Diseño de Mobiliario — Residencial</p>
+      <h1 class="display"><em>Agendá tu reunión</em></h1>
+
+      <p class="instruccion">Elegí el día y horario que mejor te quede</p>
+
+      <!-- Calendario Cal.com -->
+      <div class="cal-wrap">
+        <div id="my-cal-inline-presupuesto-diseno-mobiliario"></div>
+      </div>
+
+      <p class="nota-inferior">
+        Una vez que confirmes el turno, te llegará un mail de confirmación con el link de la videollamada.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- ── Scripts ── -->
+
+  <!-- Menu toggle -->
+  <script>
+    const sideMenu = document.getElementById('sideMenu');
+    window.toggleMenu = function() {
+      if (!sideMenu) return;
+      sideMenu.classList.toggle('open');
+    };
+    document.addEventListener('click', function(e) {
+      if (!sideMenu || !sideMenu.classList.contains('open')) return;
+      const toggle = document.querySelector('.menu-toggle');
+      if (sideMenu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+      sideMenu.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
+    });
+  </script>
+
+  <!-- Leer params URL e iniciar Cal.com con metadata + webhook al confirmar -->
+  <script>
+    window.addEventListener('load', function () {
+
+      const p = new URLSearchParams(window.location.search);
+
+      const nombre   = p.get('nombre')   || '';
+      const apellido = p.get('apellido') || '';
+      const email    = p.get('email')    || '';
+      const telefono = p.get('telefono') || '';
+      const mueble   = p.get('mueble')   || '';
+      const ancho    = p.get('ancho')    || '';
+      const largo    = p.get('largo')    || '';
+      const precio   = p.get('precio')   || '';
+      const calle    = p.get('calle')    || '';
+      const numero   = p.get('numero')   || '';
+      const depto    = p.get('depto')    || '';
+      const barrio   = p.get('barrio')   || '';
+      const ciudad   = p.get('ciudad')   || '';
+      const provincia= p.get('provincia')|| '';
+
+      const nombreCompleto = [nombre, apellido].filter(Boolean).join(' ');
+
+      // ── Inicializar Cal.com ──
+      (function (C, A, L) {
+        let p2 = function (a, ar) { a.q.push(ar); };
+        let d = C.document;
+        C.Cal = C.Cal || function () {
+          let cal = C.Cal; let ar = arguments;
+          if (!cal.loaded) {
+            cal.ns = {}; cal.q = cal.q || [];
+            d.head.appendChild(d.createElement("script")).src = A;
+            cal.loaded = true;
+          }
+          if (ar[0] === L) {
+            const api = function () { p2(api, arguments); };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") {
+              cal.ns[namespace] = cal.ns[namespace] || api;
+              p2(cal.ns[namespace], ar);
+              p2(cal, ["initNamespace", namespace]);
+            } else p2(cal, ar);
+            return;
+          }
+          p2(cal, ar);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      Cal("init", "presupuesto-diseno-mobiliario", { origin: "https://app.cal.com" });
+
+      Cal.ns["presupuesto-diseno-mobiliario"]("inline", {
+        elementOrSelector: "#my-cal-inline-presupuesto-diseno-mobiliario",
+        config: {
+          layout: "month_view",
+          useSlotsViewOnSmallScreen: "true",
+          theme: "dark",
+          // Prefill nombre y email — sin notas
+          name:  nombreCompleto || undefined,
+          email: email          || undefined,
+          // Metadata: viaja en el webhook, invisible para el cliente
+          metadata: {
+            mueble,
+            ancho,
+            largo,
+            precio,
+            telefono,
+            apellido,
+            calle,
+            numero,
+            depto,
+            barrio,
+            ciudad,
+            provincia
+          }
+        },
+        calLink: "estudiocavla/presupuesto-diseno-mobiliario",
+      });
+
+      Cal.ns["presupuesto-diseno-mobiliario"]("ui", {
+        theme: "dark",
+        cssVarsPerTheme: {
+          light: { "cal-brand": "#130c09" },
+          dark:  { "cal-brand": "#ffffff" }
+        },
+        hideEventTypeDetails: false,
+        layout: "month_view"
+      });
+
+      // ── Escuchar confirmación del turno y disparar Apps Script ──
+      // Cal.com emite el evento "bookingSuccessful" cuando el cliente confirma.
+      // Lo usamos como respaldo al webhook server-side, por si el webhook falla.
+      Cal("on", {
+        action: "bookingSuccessful",
+        callback: function (e) {
+          const booking = e.detail && e.detail.data;
+          if (!booking) return;
+
+          const payload = {
+            startTime: booking.startTime || '',
+            cliente: {
+              nombre,
+              apellido,
+              email,
+              telefono,
+              calle,
+              numero,
+              depto,
+              barrio,
+              ciudad,
+              provincia
+            },
+            cotizacion: {
+              mueble,
+              ancho,
+              largo,
+              precio,
+              servicio: 'Diseño de Mobiliario'
+            }
+          };
+
+          // Mismo patrón que el resto del sitio: form oculto → iframe, evita CORS
+          const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzK7b8V9ZpbZveZsEhEq1PxCh5Md7diyUCgzWBM6W9353JYG-jTexLBqHffPr791J5hFQ/exec'; // ← reemplazá con tu URL
+
+          let iframe = document.getElementById('iframe-post');
+          if (!iframe) {
+            iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'iframe-post';
+            iframe.id   = 'iframe-post';
+            document.body.appendChild(iframe);
+          }
+          const form   = document.createElement('form');
+          form.style.display = 'none';
+          form.method  = 'POST';
+          form.action  = APPS_SCRIPT_URL;
+          form.target  = 'iframe-post';
+          form.enctype = 'application/x-www-form-urlencoded';
+          const input  = document.createElement('input');
+          input.type   = 'hidden';
+          input.name   = 'payload';
+          input.value  = JSON.stringify(payload);
+          form.appendChild(input);
+          document.body.appendChild(form);
+          form.submit();
+          form.remove();
+        }
+      });
+
+    });
+  </script>
+
+</body>
+</html>
