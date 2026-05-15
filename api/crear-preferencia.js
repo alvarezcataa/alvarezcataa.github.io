@@ -20,14 +20,12 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Faltan datos requeridos (monto, email)' });
   }
 
-  // Empaquetamos todos los datos del cliente y proyecto en external_reference
-  // para recuperarlos en mp-exitoso.html y pasarlos al Apps Script
-  const externalRef = JSON.stringify({
-    nombre, apellido, email, telefono,
-    calle, numero, depto, barrio, ciudad, provincia,
-    ambiente, superficie, estado,
-    precio, descuento_pct, descuento_codigo
-  });
+  // external_reference: solo un ID único, los datos del cliente
+  // ya están en la URL de la página que llama a esta función
+  const externalRef = `CAVLA-${Date.now()}-${(nombre||'').split(' ')[0]}`;
+
+  // Guardamos los datos completos en una variable para pasarlos via notification_url
+  // (en este caso los recuperamos desde la URL de referrer en mp-exitoso.html)
 
   try {
     const preference = {
@@ -49,9 +47,9 @@ export default async function handler(req, res) {
         default_installments: 1
       },
       back_urls: {
-        success: `${process.env.SITE_URL}/Asesor%C3%ADaEspacial/mp-exitoso.html`,
-        failure: `${process.env.SITE_URL}/Asesor%C3%ADaEspacial/mp-error.html`,
-        pending: `${process.env.SITE_URL}/Asesor%C3%ADaEspacial/mp-exitoso.html`
+        success: `${process.env.SITE_URL}/AsesoriaEspacial/mp-exitoso.html`,
+        failure: `${process.env.SITE_URL}/AsesoriaEspacial/mp-exitoso.html`,
+        pending: `${process.env.SITE_URL}/AsesoriaEspacial/mp-exitoso.html`
       },
       auto_return:          'approved',
       statement_descriptor: 'ESTUDIO CAVLA',
@@ -69,11 +67,12 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('MP error:', response.status, errorText);
-      return res.status(500).json({ error: 'Error al crear preferencia en Mercado Pago' });
+      console.error('MP error completo:', response.status, errorText);
+      return res.status(500).json({ error: 'Error al crear preferencia en Mercado Pago', detalle: errorText });
     }
 
     const data = await response.json();
+    console.log('MP preferencia creada:', JSON.stringify({ id: data.id, init_point: data.init_point, status: data.status }));
 
     // Devolvemos preference_id (para el modal) e init_point (fallback redirección)
     return res.status(200).json({
