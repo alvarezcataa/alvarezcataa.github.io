@@ -385,11 +385,11 @@
 
     /* ── Calcular precios de cuotas ── */
     // Intereses estimados Mercado Pago — actualizá según condiciones vigentes
-    const intereses = { 1: 0, 3: 0.15, 6: 0.28 };
+    const intereses = { 1: 0.08685, 3: 0.4664, 6: 0.67017 };
 
     if (senia > 0) {
       document.getElementById('precio-transferencia').textContent = formatARS(senia);
-      document.getElementById('precio-mp-1').textContent          = formatARS(senia);
+      document.getElementById('precio-mp-1').textContent          = formatARS(senia * (1 + intereses[1])) ;
       document.getElementById('precio-mp-3').textContent          = formatARS(senia * (1 + intereses[3]) / 3);
       document.getElementById('precio-mp-6').textContent          = formatARS(senia * (1 + intereses[6]) / 6);
     }
