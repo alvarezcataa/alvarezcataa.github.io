@@ -287,7 +287,7 @@
     .pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 7px;
     }
     .pastilla {
       --bd: var(--w-18);
@@ -297,11 +297,11 @@
       background: var(--bg-pill);
       color: var(--tx);
       border-radius: 999px;
-      padding: 12px 20px;
+      padding: 9px 13px;
       font-family: var(--sans);
-      font-size: 11.5px;
+      font-size: 10.5px;
       font-weight: 400;
-      letter-spacing: .22em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       cursor: pointer;
       transition:
@@ -329,10 +329,10 @@
     .pills--grid-ambiente {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 7px;
     }
     .pills--grid-ambiente .pastilla {
-      padding: 13px 22px;
+      padding: 9px 13px;
       flex: 0 0 auto;
     }
 
@@ -345,7 +345,7 @@
       margin-top: 22px;
     }
     @media (max-width: 810px) {
-      .qpair { grid-template-columns: 1fr; margin-top: 16px; gap: 16px; }
+      .qpair { grid-template-columns: 1fr; margin-top: 10px; gap: 10px; }
     }
 
     /* ---------- Código descuento ---------- */
@@ -484,7 +484,7 @@
 
     @media (max-width: 810px) {
       .display { font-size: clamp(40px, 11vw, 64px); }
-      .scene { padding: 96px 0 80px; }
+      .scene { padding: 70px 0 60px; }
       .cue { bottom: 22px; }
     }
 
@@ -494,24 +494,26 @@
   /* Pantalla 2: pastillas no se desbordan */
   .pastilla {
     white-space: normal;     /* permite que el texto haga wrap */
-    padding: 10px 14px;
+    padding: 9px 13px;
     font-size: 10.5px;
     letter-spacing: .16em;
   }
   .pills--grid-ambiente .pastilla {
-    padding: 10px 14px;
+    padding: 9px 13px;
   }
   .qcard {
-    padding: 18px 16px;
+    padding: 14px 14px;
     border-radius: 20px;
   }
   .qhead {
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     gap: 8px;
   }
   .qtitle {
-    font-size: 18px;
+    font-size: 17px;
   }
+
+  .qnum   { font-size: 20px; }
 
   /* Pantalla 3: precio no se desborda */
   .result__price {
@@ -659,7 +661,6 @@
           <div class="qhead">
             <span class="qnum" style="font-family: 'Playfair Display'; font-weight: 400; font-size: 24px">01.</span>
             <h2 class="qtitle">¿Qué ambiente querés transformar?</h2>
-            <span class="qhint">Elegí uno</span>
           </div>
           <div class="pills pills--grid-ambiente">
             <button class="pastilla" data-grupo="ambiente" data-valor="bajo"     data-label="Hall">Hall</button>
