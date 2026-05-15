@@ -298,8 +298,12 @@
               <div class="metodo-card__preview">
                 <p class="metodo-card__preview-label">Opciones de cuotas</p>
                 <div class="precio-fila precio-fila--main">
-                  <span class="precio-fila__label">1 cuota</span>
+                  <span class="precio-fila__label">1 pago</span>
                   <span class="precio-fila__monto" id="precio-mp-1">—</span>
+                </div>
+                <div class="precio-fila">
+                  <span class="precio-fila__label">2 cuotas de</span>
+                  <span class="precio-fila__monto" id="precio-mp-2">—</span>
                 </div>
                 <div class="precio-fila">
                   <span class="precio-fila__label">3 cuotas de</span>
@@ -384,8 +388,10 @@
     document.getElementById('rc-senia').textContent  = senia > 0 ? formatARS(senia) : '—';
 
     /* ── Calcular precios de cuotas ── */
-    // Intereses estimados Mercado Pago — actualizá según condiciones vigentes
-    const intereses = { 1: 0.08685, 3: 0.4664, 6: 0.67017 };
+    // Coeficientes reales medidos en el checkout de MP (mayo 2025, Visa Crédito BBVA)
+    // Total pagado / monto base → coeficiente por cuotas
+    // Actualizá si MP modifica sus tasas: 2x=1.2106, 3x=1.2382, 6x=1.3214
+    const coef = { 2: 1.2106, 3: 1.2382, 6: 1.3214 };
 
     // Comisión de la plataforma MP (6,60% + 21% IVA = 7,986%)
     // Se suma al monto para que el cliente cubra ese costo.
@@ -395,10 +401,12 @@
 
     if (senia > 0) {
       document.getElementById('precio-transferencia').textContent = formatARS(senia);
-      // Los precios de MP usan seniaMP (ya incluye la comisión de la plataforma)
-      document.getElementById('precio-mp-1').textContent          = formatARS(seniaMP * (1 + intereses[1]));
-      document.getElementById('precio-mp-3').textContent          = formatARS(seniaMP * (1 + intereses[3]) / 3);
-      document.getElementById('precio-mp-6').textContent          = formatARS(seniaMP * (1 + intereses[6]) / 6);
+      // 1 pago: el cliente paga seniaMP exacto (sin interés adicional)
+      document.getElementById('precio-mp-1').textContent = formatARS(seniaMP);
+      // Cuotas: se aplica el coeficiente real y se divide por cantidad
+      document.getElementById('precio-mp-2').textContent = formatARS(seniaMP * coef[2] / 2);
+      document.getElementById('precio-mp-3').textContent = formatARS(seniaMP * coef[3] / 3);
+      document.getElementById('precio-mp-6').textContent = formatARS(seniaMP * coef[6] / 6);
     }
 
     /* ── Selección de método ── */
