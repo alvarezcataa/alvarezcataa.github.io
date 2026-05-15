@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA — Pago recibido</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:    #130c09;
+      --w-100: rgba(255,255,255,1);
+      --w-85:  rgba(255,255,255,.85);
+      --w-70:  rgba(255,255,255,.70);
+      --w-55:  rgba(255,255,255,.55);
+      --w-40:  rgba(255,255,255,.40);
+      --w-28:  rgba(255,255,255,.28);
+      --w-18:  rgba(255,255,255,.18);
+      --w-12:  rgba(255,255,255,.12);
+      --w-08:  rgba(255,255,255,.08);
+      --w-03:  rgba(255,255,255,.03);
+      --serif: 'Playfair Display', 'Times New Roman', serif;
+      --sans:  'Montserrat', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--w-85); font-family: var(--sans); font-weight: 300; letter-spacing: .01em; -webkit-font-smoothing: antialiased; }
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+
+    .stage { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    .stage::-webkit-scrollbar { width: 0; }
+    .scene { min-height: 100vh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; padding: 0; }
+    .scene__inner { width: 60vw; max-width: 60vw; margin: 0 auto; padding: 80px 0 40px; }
+    @media (max-width: 810px) { .scene__inner { width: 90vw; max-width: 90vw; padding: 80px 0 32px; } }
+
+    .eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-55); font-weight: 400; margin: 0; }
+    .display { font-family: var(--serif); font-weight: 400; color: var(--w-100); line-height: 1.02; letter-spacing: -.01em; margin: 10px 0 0; font-size: clamp(32px, 4.5vw, 58px); }
+    .display em { font-style: italic; }
+
+    /* Globos */
+    .method { margin-top: 14px; display: flex; align-items: flex-start; width: 100%; gap: clamp(2px, .5vw, 8px); }
+    .method__step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 0 0 auto; width: clamp(40px, 6vw, 58px); }
+    .method__bubble { width: clamp(24px, 3.4vw, 32px); height: clamp(24px, 3.4vw, 32px); border: 1px solid var(--w-40); border-radius: 50%; display: grid; place-items: center; color: var(--w-85); background: transparent; flex-shrink: 0; }
+    .method__bubble svg { width: clamp(10px, 1.4vw, 13px); height: clamp(10px, 1.4vw, 13px); }
+    .method__label { font-size: clamp(6.5px, .8vw, 8.5px); letter-spacing: .14em; text-transform: uppercase; color: var(--w-55); text-align: center; line-height: 1.3; }
+    .method__step.is-current .method__bubble { border-color: var(--w-100); color: var(--w-100); }
+    .method__step.is-current .method__label  { color: var(--w-100); }
+    .method__link { flex: 1 1 0; min-width: 0; height: clamp(24px, 3.4vw, 32px); display: flex; align-items: center; padding: 0 clamp(2px, .4vw, 6px); }
+    .method__link::after { content: ''; flex: 1; height: 1px; background: var(--w-18); }
+
+    /* Bloque de confirmación */
+    .confirm-card {
+      margin-top: 20px;
+      border: 1px solid var(--w-12); border-radius: 16px;
+      padding: clamp(16px, 2.2vw, 26px) clamp(18px, 2.4vw, 30px);
+      background: var(--w-03);
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .confirm-card__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0; }
+    .confirm-card__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--w-08); }
+    .confirm-card__fila:last-child { border-bottom: none; padding-bottom: 0; }
+    .confirm-card__key { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--w-40); flex-shrink: 0; }
+    .confirm-card__val { font-family: var(--serif); font-style: italic; font-size: clamp(14px, 1.4vw, 17px); color: var(--w-85); text-align: right; }
+
+    .instruccion {
+      margin-top: 12px;
+      padding: 12px clamp(16px, 2vw, 22px);
+      border: 1px solid var(--w-08); border-radius: 12px;
+      background: var(--w-03);
+      font-size: 11.5px; color: var(--w-55); line-height: 1.65; letter-spacing: .02em;
+    }
+    .instruccion strong { color: var(--w-85); font-weight: 500; }
+
+    .btn-relevamiento {
+      margin-top: 18px;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      border: 1px solid var(--w-40); border-radius: 999px;
+      padding: 14px 28px; color: var(--w-100);
+      font-family: var(--sans); font-size: 11px; letter-spacing: .24em;
+      text-transform: uppercase; background: transparent; width: 100%;
+      transition: border-color .25s ease, background .25s ease;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn-relevamiento:hover { background: var(--w-08); border-color: var(--w-100); }
+    .btn-relevamiento svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* Loading */
+    .loading-overlay { position: fixed; inset: 0; background: rgba(19,12,9,.92); backdrop-filter: blur(8px); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+    .loading-overlay.oculto { display: none; }
+    .loading-spinner { width: 34px; height: 34px; border: 1px solid var(--w-18); border-top-color: var(--w-85); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-texto { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-55); }
+  </style>
+</head>
+
+<body class="pagina">
+
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="../../index.html">Inicio</a>
+      <a href="../../filosofia.html">Filosofía</a>
+      <a href="../../sobremi.html">Sobre mí</a>
+      <a href="../../contacto.html">Contacto</a>
+    </nav>
+    <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <!-- Loading mientras corre el Apps Script -->
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-texto">Registrando tu proyecto…</p>
+  </div>
+
+  <main class="stage" id="stage">
+    <section class="scene" data-scene="0">
+      <div class="scene__inner">
+
+        <p class="eyebrow" id="saludo">¡Pago recibido!</p>
+        <h1 class="display"><em>Tu proyecto está confirmado</em></h1>
+
+        <!-- Globos: paso Relevamiento activo -->
+        <div class="method" aria-label="Metodología">
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+            </div>
+            <span class="method__label">Cotización</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+            </div>
+            <span class="method__label">Pago</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step is-current">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            </div>
+            <span class="method__label">Relevamiento</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/><path d="M9.5 10.5l3 1.8-3 1.8z" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <span class="method__label">Videollamada</span>
+          </div>
+        </div>
+
+        <!-- Resumen del pago -->
+        <div class="confirm-card" id="confirm-card">
+          <p class="confirm-card__titulo">Confirmación de pago</p>
+          <div class="confirm-card__fila">
+            <span class="confirm-card__key">ID de pago</span>
+            <span class="confirm-card__val" id="payment-id">—</span>
+          </div>
+          <div class="confirm-card__fila">
+            <span class="confirm-card__key">Estado</span>
+            <span class="confirm-card__val" id="payment-status">—</span>
+          </div>
+          <div class="confirm-card__fila">
+            <span class="confirm-card__key">Monto abonado</span>
+            <span class="confirm-card__val" id="payment-monto">—</span>
+          </div>
+          <div class="confirm-card__fila">
+            <span class="confirm-card__key">Proyecto</span>
+            <span class="confirm-card__val" id="payment-proyecto">—</span>
+          </div>
+        </div>
+
+        <!-- Instrucción -->
+        <div class="instruccion">
+          Te enviamos un mail a <strong id="email-cliente">tu correo</strong> con el comprobante de pago, el PDF del presupuesto y el link al formulario de relevamiento.<br><br>
+          El siguiente paso es <strong>completar el relevamiento virtual</strong> y luego elegir la fecha de tu videollamada de asesoría.
+        </div>
+
+        <!-- Botón al relevamiento -->
+        <a href="relevamiento.html" class="btn-relevamiento" id="btn-relevamiento">
+          Ir al relevamiento
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /* ── Menu toggle ── */
+    const sideMenu = document.getElementById('sideMenu');
+    window.toggleMenu = function() {
+      if (!sideMenu) return;
+      sideMenu.classList.toggle('open');
+    };
+    document.addEventListener('click', function(e) {
+      if (!sideMenu || !sideMenu.classList.contains('open')) return;
+      const toggle = document.querySelector('.menu-toggle');
+      if (sideMenu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+      sideMenu.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
+    });
+
+    /* ── Apps Script URL ── */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzwD_WHi4wGhoKX0CzrTPl1FnSUp5ZPdQ0Z0NB5mQwZ5-zrFY5Yzi6PhZmUdJGz0Cv5sw/exec";
+
+    /* ── Helpers ── */
+    function parsearPrecio(str) {
+      if (!str) return 0;
+      return parseInt(str.replace(/\D/g, ''), 10) || 0;
+    }
+    function formatARS(n) {
+      return Math.round(n).toLocaleString('es-AR', {
+        style: 'currency', currency: 'ARS', minimumFractionDigits: 0
+      });
+    }
+
+    /* ── Leer params de MP de la URL ── */
+    const urlP         = new URLSearchParams(window.location.search);
+    const paymentId    = urlP.get('payment_id')        || '—';
+    const status       = urlP.get('status')            || '—';
+    const extRefRaw    = urlP.get('external_reference') || '{}';
+
+    // Recuperar datos del cliente y proyecto desde external_reference
+    let cliente = {};
+    let cotizacion = {};
+    try {
+      const ref = JSON.parse(extRefRaw);
+      cliente = {
+        nombre:    ref.nombre    || '',
+        apellido:  ref.apellido  || '',
+        email:     ref.email     || '',
+        telefono:  ref.telefono  || '',
+        calle:     ref.calle     || '',
+        numero:    ref.numero    || '',
+        depto:     ref.depto     || '',
+        barrio:    ref.barrio    || '',
+        ciudad:    ref.ciudad    || '',
+        provincia: ref.provincia || ''
+      };
+      cotizacion = {
+        ambiente:         ref.ambiente         || '',
+        superficie:       ref.superficie       || '',
+        estado:           ref.estado           || '',
+        precio:           ref.precio           || '',
+        descuento_pct:    ref.descuento_pct    || '',
+        descuento_codigo: ref.descuento_codigo || ''
+      };
+    } catch(e) {
+      console.error('No se pudo parsear external_reference:', e);
+    }
+
+    const precioNum = parsearPrecio(cotizacion.precio);
+    const senia     = Math.round(precioNum * 0.5);
+
+    /* ── Poblar UI ── */
+    if (cliente.nombre) {
+      document.getElementById('saludo').textContent = `¡Gracias, ${cliente.nombre}!`;
+    }
+    if (cliente.email) {
+      document.getElementById('email-cliente').textContent = cliente.email;
+    }
+
+    document.getElementById('payment-id').textContent      = paymentId;
+    document.getElementById('payment-status').textContent  =
+      status === 'approved' ? 'Aprobado ✓' : status;
+    document.getElementById('payment-monto').textContent   =
+      senia > 0 ? formatARS(senia) : '—';
+    document.getElementById('payment-proyecto').textContent =
+      [cotizacion.ambiente, cotizacion.superficie, cotizacion.estado]
+        .filter(Boolean).join(' · ') || '—';
+
+    // Link al relevamiento con datos del cliente
+    const relevParams = new URLSearchParams({
+      nombre:   cliente.nombre,
+      apellido: cliente.apellido,
+      email:    cliente.email
+    });
+    document.getElementById('btn-relevamiento').href =
+      `relevamiento.html?${relevParams.toString()}`;
+
+    /* ── Llamar al Apps Script ── */
+    // Solo si el pago fue aprobado (o pending, por si hay demora de acreditación)
+    const pagoCorrecto = status === 'approved' || status === 'pending';
+
+    if (pagoCorrecto) {
+      const payload = {
+        cotizacion: {
+          servicio:         'Asesoría Espacial Residencial',
+          ambiente:         cotizacion.ambiente,
+          superficie:       cotizacion.superficie,
+          estado:           cotizacion.estado,
+          total:            cotizacion.precio,
+          descuento_pct:    cotizacion.descuento_pct,
+          descuento_codigo: cotizacion.descuento_codigo
+        },
+        cliente,
+        metodo_pago:  'mercadopago',
+        payment_id:   paymentId,
+        payment_status: status
+      };
+
+      // Usamos iframe para evitar CORS con Apps Script
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.name = 'iframe-mp';
+      document.body.appendChild(iframe);
+
+      const form = document.createElement('form');
+      form.style.display = 'none';
+      form.method  = 'POST';
+      form.action  = APPS_SCRIPT_URL;
+      form.target  = 'iframe-mp';
+      form.enctype = 'application/x-www-form-urlencoded';
+      const input  = document.createElement('input');
+      input.type   = 'hidden';
+      input.name   = 'payload';
+      input.value  = JSON.stringify(payload);
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+      form.remove();
+    }
+
+    // Ocultar loading después de un momento (el Apps Script corre en background)
+    setTimeout(function() {
+      document.getElementById('loading-overlay').classList.add('oculto');
+    }, 1800);
+  </script>
+</body>
+</html>

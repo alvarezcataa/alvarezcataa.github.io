@@ -8,43 +8,58 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Error de configuración del servidor' });
   }
 
-  const { monto, nombre, apellido, email, servicio } = req.body;
+  const {
+    monto, nombre, apellido, email, servicio,
+    // Datos del proyecto para pasar a mp-exitoso via external_reference
+    ambiente, superficie, estado, precio,
+    descuento_pct, descuento_codigo,
+    telefono, calle, numero, depto, barrio, ciudad, provincia
+  } = req.body;
 
   if (!monto || !email) {
     return res.status(400).json({ error: 'Faltan datos requeridos (monto, email)' });
   }
 
+  // Empaquetamos todos los datos del cliente y proyecto en external_reference
+  // para recuperarlos en mp-exitoso.html y pasarlos al Apps Script
+  const externalRef = JSON.stringify({
+    nombre, apellido, email, telefono,
+    calle, numero, depto, barrio, ciudad, provincia,
+    ambiente, superficie, estado,
+    precio, descuento_pct, descuento_codigo
+  });
+
   try {
     const preference = {
       items: [
         {
-          title: servicio || 'Asesoría Espacial Residencial',
-          quantity: 1,
+          title:      servicio || 'Asesoría Espacial Residencial — Seña',
+          quantity:   1,
           unit_price: Number(monto),
           currency_id: 'ARS'
         }
       ],
       payer: {
-        name:    nombre  || '',
+        name:    nombre   || '',
         surname: apellido || '',
         email:   email
       },
       payment_methods: {
-        installments: 6,              // máximo de cuotas habilitadas
+        installments:         6,
         default_installments: 1
       },
       back_urls: {
-        success: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/pago-exitoso.html`,
-        failure: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/pago-error.html`,
-        pending: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/pago-pendiente.html`
+        success: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/mp-exitoso.html`,
+        failure: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/mp-error.html`,
+        pending: `${process.env.SITE_URL}/servicios/AsesoríaEspacial/mp-exitoso.html`
       },
-      auto_return: 'approved',
+      auto_return:          'approved',
       statement_descriptor: 'ESTUDIO CAVLA',
-      external_reference: `CAVLA-${Date.now()}`
+      external_reference:   externalRef
     };
 
     const response = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method: 'POST',
+      method:  'POST',
       headers: {
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${process.env.MP_ACCESS_TOKEN}`
@@ -60,9 +75,10 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
+    // Devolvemos preference_id (para el modal) e init_point (fallback redirección)
     return res.status(200).json({
-      id:          data.id,
-      init_point:  data.init_point   // URL a la que redirigir al usuario
+      preference_id: data.id,
+      init_point:    data.init_point
     });
 
   } catch (error) {

@@ -45,10 +45,17 @@
       display: flex; flex-direction: column; justify-content: center;
       padding: 110px 0 90px; position: relative;
     }
+    /* Pantalla de datos: sin padding fijo, flex centra el contenido */
+    .scene--datos {
+      padding: 0;
+      justify-content: center;
+    }
     .scene__inner { width: 60vw; max-width: 60vw; margin: 0 auto; }
+    .scene--datos .scene__inner { padding: 100px 0 60px; }
     @media (max-width: 810px) {
       .scene__inner { width: 90vw; max-width: 90vw; }
       .scene { padding: 96px 0 80px; }
+      .scene--datos .scene__inner { padding: 88px 0 40px; }
     }
 
     /* ── Rail ── */
@@ -111,18 +118,18 @@
     .desglose__sub-check { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; color: var(--w-55); }
 
     /* ── Formulario ── */
-    .form-bloque-titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 14px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-bloque-titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 10px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .form-grid--full { grid-column: 1 / -1; }
     @media (max-width: 810px) { .form-grid { grid-template-columns: 1fr; } .form-grid--full { grid-column: 1; } }
-    .campo { display: flex; flex-direction: column; gap: 6px; }
+    .campo { display: flex; flex-direction: column; gap: 4px; }
     .campo label { font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-40); }
-    .campo input, .campo select { background: transparent; border: 1px solid var(--w-18); border-radius: 999px; padding: 13px 20px; color: var(--w-100); font-family: var(--sans); font-size: 13px; font-weight: 300; letter-spacing: .04em; outline: none; transition: border-color .22s ease; width: 100%; appearance: none; -webkit-appearance: none; }
+    .campo input, .campo select { background: transparent; border: 1px solid var(--w-18); border-radius: 999px; padding: 10px 18px; color: var(--w-100); font-family: var(--sans); font-size: 13px; font-weight: 300; letter-spacing: .04em; outline: none; transition: border-color .22s ease; width: 100%; appearance: none; -webkit-appearance: none; }
     .campo input::placeholder { color: var(--w-28); }
     .campo input:focus, .campo select:focus { border-color: var(--w-55); }
     .campo select option { background: #1b120e; color: white; }
 
-    .terminos { margin-top: 18px; display: flex; align-items: flex-start; gap: 12px; }
+    .terminos { margin-top: 12px; display: flex; align-items: flex-start; gap: 12px; }
     .terminos input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: white; cursor: pointer; }
     .terminos label { font-size: 11px; color: var(--w-55); line-height: 1.6; cursor: pointer; }
     .terminos a { color: var(--w-85); text-decoration: underline; text-underline-offset: 3px; }
@@ -133,10 +140,9 @@
     .mensaje-error { margin-top: 14px; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.9); display: none; }
     .mensaje-error.visible { display: block; }
 
-    /* ── Botón CTA ── */
-    .btn-cta { margin-top: 24px; display: flex; align-items: center; justify-content: center; gap: 14px; border: 1px solid var(--w-40); border-radius: 999px; padding: 16px 32px; color: var(--w-100); font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase; background: transparent; width: 100%; transition: border-color .25s ease, background .25s ease, opacity .25s ease; opacity: .35; pointer-events: none; }
-    .btn-cta.activo { opacity: 1; pointer-events: auto; }
-    .btn-cta.activo:hover { background: var(--w-08); border-color: var(--w-100); }
+    /* ── Botón CTA — siempre visible, valida al hacer click ── */
+    .btn-cta { margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 14px; border: 1px solid var(--w-40); border-radius: 999px; padding: 14px 32px; color: var(--w-100); font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase; background: transparent; width: 100%; transition: border-color .25s ease, background .25s ease; cursor: pointer; }
+    .btn-cta:hover { background: var(--w-08); border-color: var(--w-85); }
     .btn-cta svg { width: 13px; height: 13px; flex-shrink: 0; }
 
     /* ── Métodos de pago ── */
@@ -298,13 +304,12 @@
     </section>
 
     <!-- ══ Pantalla 2: Datos ══ -->
-    <section class="scene" data-scene="1">
+    <section class="scene scene--datos" data-scene="1">
       <div class="scene__inner">
 
-        <p class="eyebrow">Paso 2 de 3</p>
         <h2 class="display"><em>Tus datos</em></h2>
 
-        <div style="margin-top: clamp(20px,3.2vh,38px)">
+        <div style="margin-top: 14px">
           <p class="form-bloque-titulo">Información personal</p>
           <div class="form-grid">
             <div class="campo">
@@ -325,7 +330,7 @@
             </div>
           </div>
 
-          <p class="form-bloque-titulo" style="margin-top:22px">Dirección del inmueble</p>
+          <p class="form-bloque-titulo" style="margin-top:14px">Dirección del inmueble</p>
           <div class="form-grid">
             <div class="campo form-grid--full">
               <label for="calle">Calle</label>
@@ -407,8 +412,6 @@
     const stage  = document.getElementById('stage');
     const scenes = stage.querySelectorAll('.scene');
     const dots   = document.querySelectorAll('.rail__dot');
-    let   formValido = false;
-
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting && e.intersectionRatio > 0.55) {
@@ -472,33 +475,24 @@
       document.getElementById('r-descuento').textContent = textoDescuento;
     }
 
-    /* ── Validación del formulario ── */
-    const camposReq    = ['nombre','apellido','email','telefono','calle','numero','barrio','ciudad','provincia'];
-    const btnSiguiente = document.getElementById('btn-siguiente');
+    /* ── Validación: se ejecuta al hacer click en el botón ── */
+    const camposReq     = ['nombre','apellido','email','telefono','calle','numero','barrio','ciudad','provincia'];
+    const btnSiguiente  = document.getElementById('btn-siguiente');
     const avisoTerminos = document.getElementById('aviso-terminos');
+    const mensajeError  = document.getElementById('mensaje-error');
 
-    function validarForm() {
-      const completos = camposReq.every(id => {
-        const el = document.getElementById(id);
-        return el && el.value.trim() !== '';
-      });
-      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim());
-      const acepto  = document.getElementById('acepto-terminos').checked;
-
-      // Aviso T&C: aparece cuando campos y email OK pero checkbox no marcado
-      if (avisoTerminos) avisoTerminos.classList.toggle('visible', completos && emailOk && !acepto);
-
-      formValido = completos && emailOk && acepto;
-      btnSiguiente.classList.toggle('activo', formValido);
-    }
-
+    // Limpiar avisos cuando el usuario empieza a escribir
     camposReq.forEach(id => {
       const el = document.getElementById(id);
       if (!el) return;
-      // select necesita 'change', inputs necesitan 'input'
-      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', validarForm);
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', function() {
+        mensajeError.classList.remove('visible');
+        avisoTerminos.classList.remove('visible');
+      });
     });
-    document.getElementById('acepto-terminos').addEventListener('change', validarForm);
+    document.getElementById('acepto-terminos').addEventListener('change', function() {
+      avisoTerminos.classList.remove('visible');
+    });
 
     /* ── Recopilar datos del cliente ── */
     function getDatosCliente() {
@@ -516,11 +510,42 @@
       };
     }
 
-    /* ── Botón "Elegir método de pago" → redirige a metodo-pago.html ── */
+    /* ── Botón: validar al hacer click ── */
     btnSiguiente.addEventListener('click', function() {
-      if (!formValido) return;
-      document.getElementById('mensaje-error').classList.remove('visible');
+      // 1. Verificar campos obligatorios
+      const camposVacios = camposReq.filter(id => {
+        const el = document.getElementById(id);
+        return !el || el.value.trim() === '';
+      });
+      if (camposVacios.length > 0) {
+        mensajeError.textContent = '* Completá todos los campos para continuar.';
+        mensajeError.classList.add('visible');
+        avisoTerminos.classList.remove('visible');
+        // Hacer foco en el primer campo vacío
+        const primerVacio = document.getElementById(camposVacios[0]);
+        if (primerVacio) primerVacio.focus();
+        return;
+      }
 
+      // 2. Verificar email
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())) {
+        mensajeError.textContent = '* Ingresá un e-mail válido.';
+        mensajeError.classList.add('visible');
+        avisoTerminos.classList.remove('visible');
+        document.getElementById('email').focus();
+        return;
+      }
+
+      // 3. Verificar T&C
+      if (!document.getElementById('acepto-terminos').checked) {
+        avisoTerminos.classList.add('visible');
+        mensajeError.classList.remove('visible');
+        return;
+      }
+
+      // Todo OK → redirigir
+      mensajeError.classList.remove('visible');
+      avisoTerminos.classList.remove('visible');
       const cliente = getDatosCliente();
       const nextParams = new URLSearchParams({
         nombre:    cliente.nombre,

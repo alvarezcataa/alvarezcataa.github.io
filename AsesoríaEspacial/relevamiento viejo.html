@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA — Relevamiento</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --fondo:       #13090a;
+      --linea:       #3a261f;
+      --crema:       #ece3d2;
+      --crema-suave: #d8cdb9;
+      --crema-mute:  #a89c89;
+    }
+
+    .relevamiento-pagina {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--fondo);
+      padding: 80px 20px 40px;
+    }
+
+    .relevamiento-luz {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(160,90,40,.22) 0%, transparent 65%);
+      z-index: 0;
+    }
+
+    .relevamiento {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 620px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .relevamiento__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 5vw, 48px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      line-height: 1.05;
+    }
+
+    .relevamiento__subtitulo {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    .separador {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Intro */
+    .intro {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .intro__texto {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+    }
+
+    .intro__texto strong {
+      color: white;
+      font-weight: 500;
+    }
+
+    /* Pasos */
+    .pasos {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pasos__titulo {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .paso {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 18px;
+      border: 1px solid var(--linea);
+      border-radius: 12px;
+    }
+
+    .paso__numero {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      color: rgba(255,255,255,0.3);
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .paso__contenido {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .paso__nombre {
+      font-size: 13px;
+      font-weight: 500;
+      color: white;
+    }
+
+    .paso__descripcion {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    /* Guía visual */
+    .guia-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .guia-visual__titulo {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .guia-visual__imagen {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--linea);
+    }
+
+    .guia-visual__imagen img {
+      width: 100%;
+      display: block;
+    }
+
+    .guia-visual__nota {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* Botón principal */
+    .boton-formulario {
+      display: block;
+      width: 100%;
+      padding: 18px 24px;
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-style: italic;
+      font-size: 1.5vh;
+      font-weight: 700;
+      letter-spacing: .20em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .4s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .boton-formulario:hover {
+      background: white;
+      color: var(--fondo);
+    }
+
+    /* Nota inferior */
+    .nota-inferior {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 16px 20px;
+      border: 1px solid var(--linea);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .nota-inferior__titulo {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .nota-inferior__texto {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    .nota-inferior__codigo {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: .08em;
+    }
+
+    @media (max-width: 600px) {
+      .relevamiento-pagina { padding: 70px 16px 32px; }
+      .relevamiento { gap: 22px; }
+    }
+  </style>
+</head>
+
+<body class="pagina">
+
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="../../index.html">Inicio</a>
+      <a href="../../filosofia.html">Filosofía</a>
+      <a href="../../sobremi.html">Sobre mí</a>
+      <a href="../../contacto.html">Contacto</a>
+    </nav>
+    <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="relevamiento-luz"></div>
+
+  <div class="relevamiento-pagina">
+    <div class="relevamiento">
+
+      <div>
+        <h1 class="relevamiento__titulo">Relevamiento del espacio.</h1>
+        <span class="relevamiento__subtitulo">Asesoría espacial · Residencial</span>
+      </div>
+
+      <div class="separador"></div>
+
+      <!-- Intro -->
+      <div class="intro">
+        <p class="intro__texto">
+          Antes de nuestra reunión necesitamos conocer tu espacio. 
+          <strong>Completá este formulario a tu ritmo</strong>, 
+          pero recordá hacerlo antes de los próximos 6 días para que podamos prepararnos bien.
+        </p>
+        <p class="intro__texto">
+          Vas a necesitar estar <strong>físicamente en el espacio</strong> 
+          y tener el celular a mano para las fotos.
+        </p>
+      </div>
+
+      <div class="separador"></div>
+
+      <!-- Pasos -->
+      <div class="pasos">
+        <span class="pasos__titulo">Qué vas a completar</span>
+        <div class="paso">
+          <span class="paso__numero">01</span>
+          <div class="paso__contenido">
+            <span class="paso__nombre">Datos del espacio</span>
+            <span class="paso__descripcion">Provincia, ciudad, cantidad de personas y a qué se dedican.</span>
+          </div>
+        </div>
+        <div class="paso">
+          <span class="paso__numero">02</span>
+          <div class="paso__contenido">
+            <span class="paso__nombre">Fotos de esquinas</span>
+            <span class="paso__descripcion">4 fotos desde el centro del ambiente hacia cada esquina.</span>
+          </div>
+        </div>
+        <div class="paso">
+          <span class="paso__numero">03</span>
+          <div class="paso__contenido">
+            <span class="paso__nombre">Fotos de paredes</span>
+            <span class="paso__descripcion">4 fotos de frente a cada pared.</span>
+          </div>
+        </div>
+        <div class="paso">
+          <span class="paso__numero">04</span>
+          <div class="paso__contenido">
+            <span class="paso__nombre">Video y aclaraciones</span>
+            <span class="paso__descripcion">Un recorrido corto opcional y cualquier detalle que quieras agregar.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guía visual -->
+      <div class="guia-visual">
+        <span class="guia-visual__titulo">Guía de fotos</span>
+        <div class="guia-visual__imagen">
+          <img src="../../images/SERVICIOS/guia-fotos.webp" alt="Guía visual para tomar las fotos del espacio" />
+        </div>
+        <p class="guia-visual__nota">La imagen muestra cómo encuadrar correctamente cada foto de pared y esquina.</p>
+      </div>
+
+      <div class="separador"></div>
+
+      <!-- Nota con código de proyecto -->
+      <div class="nota-inferior">
+        <span class="nota-inferior__titulo">Antes de empezar</span>
+        <p class="nota-inferior__texto">
+          El formulario te va a pedir tu código de proyecto. Tenelo a mano:
+        </p>
+        <span class="nota-inferior__codigo" id="codigo-proyecto">—</span>
+        <p class="nota-inferior__texto" style="margin-top: 4px;">
+          También te llegó por mail junto con el presupuesto.
+        </p>
+      </div>
+
+      <!-- Botón al formulario -->
+      <a 
+        href="https://docs.google.com/forms/d/e/1FAIpQLSdFMtemnll3k0uTmFUzG-9WaGaZ9R3udVBGKBiKqRJAYj2osw/viewform?usp=header" 
+        class="boton-formulario"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Completar el relevamiento
+      </a>
+
+      <a href="agenda.html" class="boton-formulario" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); font-size: 11px; padding: 14px 24px;">
+        Ya completé el formulario → Agendar mi reunión
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    const sideMenu = document.getElementById('sideMenu');
+    window.toggleMenu = function() {
+      if (!sideMenu) return;
+      sideMenu.classList.toggle('open');
+    };
+    document.addEventListener('click', function(e) {
+      if (!sideMenu || !sideMenu.classList.contains('open')) return;
+      const toggle = document.querySelector('.menu-toggle');
+      if (sideMenu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+      sideMenu.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
+    });
+  </script>
+
+  <script>
+    // Leer parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+
+    // Mostrar código de proyecto si viene en la URL
+    // El código lo genera el Apps Script, por ahora mostramos el apellido + ambiente como referencia
+    const apellido   = params.get('apellido')   || '';
+    const ambiente   = params.get('ambiente')   || '';
+    const nombre     = params.get('nombre')     || '';
+
+    // Si viene un codigo_proyecto explícito lo usamos, sino armamos una referencia
+    const codigoEl = document.getElementById('codigo-proyecto');
+    const codigo   = params.get('codigo_proyecto') || '';
+
+    if (codigo) {
+      codigoEl.textContent = codigo;
+    } else if (apellido) {
+      codigoEl.textContent = `Proyecto ${apellido}${ambiente ? ' · ' + ambiente : ''}`;
+    } else {
+      codigoEl.textContent = 'Revisá tu mail para encontrar el código.';
+    }
+
+    // Personalizar saludo si tenemos el nombre
+    if (nombre) {
+      const titulo = document.querySelector('.relevamiento__titulo');
+      if (titulo) titulo.textContent = `Hola ${nombre}.`;
+    }
+  </script>
+
+</body>
+</html>

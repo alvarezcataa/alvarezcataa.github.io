@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
 
   <style>
     :root {
@@ -39,101 +40,95 @@
     /* ── Scroll-snap (una sola pantalla) ── */
     .stage { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
     .stage::-webkit-scrollbar { width: 0; }
-    .scene { min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; justify-content: center; padding: 110px 0 90px; position: relative; }
-    .scene__inner { width: 60vw; max-width: 60vw; margin: 0 auto; }
-    @media (max-width: 810px) { .scene__inner { width: 90vw; max-width: 90vw; } .scene { padding: 96px 0 80px; } }
+    .scene { min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; justify-content: center; padding: 0; position: relative; }
+    .scene__inner { width: 60vw; max-width: 60vw; margin: 0 auto; padding: 80px 0 40px; }
+    @media (max-width: 810px) { .scene__inner { width: 90vw; max-width: 90vw; padding: 80px 0 32px; } }
 
     /* ── Rail (1 punto) ── */
     .rail { position: fixed; right: clamp(16px, 2.4vw, 36px); top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; gap: 14px; align-items: center; }
     .rail__dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--w-28); background: var(--w-85); border-color: var(--w-85); transform: scale(1.15); padding: 0; }
     @media (max-width: 810px) { .rail { display: none; } }
 
-    /* ── Eyebrow / display ── */
-    .eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-55); font-weight: 400; margin: 0; }
-    .display { font-family: var(--serif); font-weight: 400; color: var(--w-100); line-height: 1.02; letter-spacing: -.01em; margin: 10px 0 0; font-size: clamp(36px, 5vw, 68px); }
+    /* ── Display ── */
+    .display { font-family: var(--serif); font-weight: 400; color: var(--w-100); line-height: 1.02; letter-spacing: -.01em; margin: 0; font-size: clamp(32px, 4.5vw, 58px); }
     .display em { font-style: italic; }
 
     /* ── Metodología globos ── */
-    .method { margin-top: clamp(20px, 3vh, 36px); display: flex; align-items: flex-start; width: 100%; gap: clamp(2px, .5vw, 8px); }
-    .method__step { display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 1vw, 10px); flex: 0 0 auto; width: clamp(42px, 6.5vw, 64px); }
-    .method__bubble { width: clamp(26px, 3.8vw, 36px); height: clamp(26px, 3.8vw, 36px); border: 1px solid var(--w-40); border-radius: 50%; display: grid; place-items: center; color: var(--w-85); background: transparent; transition: border-color .25s, color .25s; flex-shrink: 0; }
-    .method__bubble svg { width: clamp(11px, 1.6vw, 15px); height: clamp(11px, 1.6vw, 15px); }
-    .method__label { font-size: clamp(7px, .85vw, 9px); letter-spacing: .16em; text-transform: uppercase; color: var(--w-55); text-align: center; line-height: 1.3; }
+    .method { margin-top: 14px; display: flex; align-items: flex-start; width: 100%; gap: clamp(2px, .5vw, 8px); }
+    .method__step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 0 0 auto; width: clamp(40px, 6vw, 58px); }
+    .method__bubble { width: clamp(24px, 3.4vw, 32px); height: clamp(24px, 3.4vw, 32px); border: 1px solid var(--w-40); border-radius: 50%; display: grid; place-items: center; color: var(--w-85); background: transparent; transition: border-color .25s, color .25s; flex-shrink: 0; }
+    .method__bubble svg { width: clamp(10px, 1.4vw, 13px); height: clamp(10px, 1.4vw, 13px); }
+    .method__label { font-size: clamp(6.5px, .8vw, 8.5px); letter-spacing: .14em; text-transform: uppercase; color: var(--w-55); text-align: center; line-height: 1.3; }
     .method__step.is-current .method__bubble { border-color: var(--w-100); color: var(--w-100); }
     .method__step.is-current .method__label  { color: var(--w-100); }
-    .method__link { flex: 1 1 0; min-width: 0; height: clamp(26px, 3.8vw, 36px); display: flex; align-items: center; padding: 0 clamp(2px, .4vw, 6px); }
+    .method__link { flex: 1 1 0; min-width: 0; height: clamp(24px, 3.4vw, 32px); display: flex; align-items: center; padding: 0 clamp(2px, .4vw, 6px); }
     .method__link::after { content: ''; flex: 1; height: 1px; background: var(--w-18); }
 
-    /* ── Resumen compacto ── */
-    .resumen-compacto {
-      margin-top: clamp(18px, 2.8vh, 32px);
-      border: 1px solid var(--w-12); border-radius: 16px;
-      padding: 14px clamp(18px, 2.4vw, 28px);
+    /* ── Bloque precio + seña ── */
+    .precio-bloque {
+      margin-top: 14px;
+      border: 1px solid var(--w-12); border-radius: 14px;
+      padding: 12px clamp(16px, 2vw, 24px);
       background: var(--w-03);
-      display: flex; flex-wrap: wrap; gap: 6px 20px; align-items: baseline;
+      display: flex; flex-direction: column; gap: 8px;
     }
-    .resumen-compacto__item { display: flex; gap: 8px; align-items: baseline; }
-    .resumen-compacto__key { font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--w-40); flex-shrink: 0; }
-    .resumen-compacto__val { font-family: var(--serif); font-style: italic; font-size: clamp(13px, 1.3vw, 15px); color: var(--w-70); }
-    .resumen-compacto__sep { color: var(--w-18); font-size: 10px; }
-    .resumen-compacto__precio { font-family: var(--serif); font-style: italic; font-size: clamp(16px, 1.8vw, 20px); color: var(--w-100); margin-left: auto; }
+    .precio-bloque__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+    .precio-bloque__key { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--w-40); }
+    .precio-bloque__val { font-family: var(--serif); font-style: italic; font-size: clamp(14px, 1.5vw, 17px); color: var(--w-85); text-align: right; }
+    .precio-bloque__fila--senia { padding-top: 8px; border-top: 1px solid var(--w-08); }
+    .precio-bloque__fila--senia .precio-bloque__key { color: var(--w-70); }
+    .precio-bloque__fila--senia .precio-bloque__val { font-size: clamp(18px, 2.2vw, 26px); color: var(--w-100); }
+    .precio-bloque__nota { font-size: 9.5px; letter-spacing: .14em; color: var(--w-40); margin-top: 1px; text-align: right; line-height: 1.4; }
 
     /* ── Tarjetas de método ── */
-    .form-bloque-titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 14px; }
+    .form-bloque-titulo { font-size: 10px; letter-spacing: .30em; text-transform: uppercase; color: var(--w-40); margin: 0 0 10px; }
 
-    .metodos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .metodos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     @media (max-width: 810px) { .metodos { grid-template-columns: 1fr; } }
 
     .metodo-card {
-      border: 1px solid var(--w-18); border-radius: 20px;
-      padding: clamp(18px, 2.4vw, 28px); background: var(--w-03);
-      display: flex; flex-direction: column; cursor: pointer; position: relative;
+      border: 1px solid var(--w-18); border-radius: 16px;
+      padding: 14px clamp(14px, 1.8vw, 20px) 14px;
+      background: var(--w-03);
+      display: flex; flex-direction: column; gap: 6px;
+      cursor: pointer;
       transition: border-color .25s ease, background .25s ease;
     }
     .metodo-card:hover { border-color: var(--w-40); background: var(--w-05); }
     .metodo-card.seleccionado { border-color: var(--w-100); background: var(--w-08); }
 
-    .metodo-card__badge {
-      position: absolute; top: 14px; right: 14px;
-      font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--w-40); border: 1px solid var(--w-18); border-radius: 999px; padding: 4px 10px;
-    }
+    /* Cabecera de card: nombre + badge en la misma línea */
+    .metodo-card__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .metodo-card__nombre { font-family: var(--serif); font-weight: 400; font-size: clamp(16px, 1.6vw, 20px); color: var(--w-100); line-height: 1.1; margin: 0; }
+    .metodo-card__badge { font-size: 8.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--w-40); border: 1px solid var(--w-18); border-radius: 999px; padding: 3px 9px; white-space: nowrap; flex-shrink: 0; }
     .metodo-card.seleccionado .metodo-card__badge { color: var(--w-70); border-color: var(--w-28); }
 
-    .metodo-card__icon {
-      width: 34px; height: 34px; border: 1px solid var(--w-28); border-radius: 50%;
-      display: grid; place-items: center; color: var(--w-70); margin-bottom: 14px;
-    }
-    .metodo-card__icon svg { width: 15px; height: 15px; }
-    .metodo-card.seleccionado .metodo-card__icon { border-color: var(--w-85); color: var(--w-100); }
+    .metodo-card__desc { font-size: 10.5px; color: var(--w-55); letter-spacing: .02em; line-height: 1.55; margin: 0; }
 
-    .metodo-card__nombre { font-family: var(--serif); font-weight: 400; font-size: clamp(17px, 1.8vw, 22px); color: var(--w-100); line-height: 1.1; margin-bottom: 8px; }
-    .metodo-card__desc { font-size: 11px; color: var(--w-55); letter-spacing: .03em; line-height: 1.6; flex: 1; }
+    .metodo-card__preview { padding-top: 10px; border-top: 1px solid var(--w-12); }
+    .metodo-card__preview-label { font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--w-40); margin-bottom: 7px; }
 
-    .metodo-card__preview { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--w-12); }
-    .metodo-card__preview-label { font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-40); margin-bottom: 10px; }
-
-    .precio-fila { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid var(--w-05); }
+    .precio-fila { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--w-05); }
     .precio-fila:last-child { border-bottom: none; }
-    .precio-fila__label { font-size: 10.5px; color: var(--w-55); letter-spacing: .1em; }
-    .precio-fila__monto { font-family: var(--serif); font-style: italic; font-size: clamp(14px, 1.5vw, 17px); color: var(--w-85); }
+    .precio-fila__label { font-size: 10px; color: var(--w-55); letter-spacing: .08em; }
+    .precio-fila__monto { font-family: var(--serif); font-style: italic; font-size: clamp(13px, 1.4vw, 16px); color: var(--w-85); }
     .precio-fila--main .precio-fila__label { color: var(--w-85); }
-    .precio-fila--main .precio-fila__monto  { color: var(--w-100); font-size: clamp(16px, 1.8vw, 20px); }
+    .precio-fila--main .precio-fila__monto  { color: var(--w-100); font-size: clamp(15px, 1.7vw, 19px); }
 
     /* ── Botón CTA ── */
     .btn-cta {
-      margin-top: 24px;
-      display: flex; align-items: center; justify-content: center; gap: 14px;
+      margin-top: 14px;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
       border: 1px solid var(--w-40); border-radius: 999px;
-      padding: 16px 32px; color: var(--w-100);
-      font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase;
+      padding: 13px 28px; color: var(--w-100);
+      font-size: 11px; letter-spacing: .24em; text-transform: uppercase;
       background: transparent; width: 100%;
       transition: border-color .25s ease, background .25s ease, opacity .25s ease;
       opacity: .35; pointer-events: none;
     }
     .btn-cta.activo { opacity: 1; pointer-events: auto; }
     .btn-cta.activo:hover { background: var(--w-08); border-color: var(--w-100); }
-    .btn-cta svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .btn-cta svg { width: 12px; height: 12px; flex-shrink: 0; }
 
     /* ── Loading overlay ── */
     .loading-overlay { position: fixed; inset: 0; background: rgba(19,12,9,.92); backdrop-filter: blur(8px); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
@@ -142,7 +137,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-texto { font-size: 11px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-55); }
 
-    .error-pago { margin-top: 14px; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.9); text-align: center; display: none; }
+    .error-pago { margin-top: 10px; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.9); text-align: center; display: none; }
     .error-pago.visible { display: block; }
   </style>
 </head>
@@ -183,7 +178,6 @@
     <section class="scene" data-scene="0">
       <div class="scene__inner">
 
-        <p class="eyebrow">Último paso</p>
         <h1 class="display"><em>Elegí cómo pagar</em></h1>
 
         <!-- Globos metodología, paso 2 activo -->
@@ -217,43 +211,38 @@
           </div>
         </div>
 
-        <!-- Resumen compacto -->
-        <div class="resumen-compacto">
-          <div class="resumen-compacto__item">
-            <span class="resumen-compacto__key">Ambiente</span>
-            <span class="resumen-compacto__val" id="rc-ambiente">—</span>
+        <!-- Precio total + seña -->
+        <div class="precio-bloque">
+          <div class="precio-bloque__fila">
+            <span class="precio-bloque__key">Total del servicio</span>
+            <span class="precio-bloque__val" id="rc-precio">—</span>
           </div>
-          <span class="resumen-compacto__sep">·</span>
-          <div class="resumen-compacto__item">
-            <span class="resumen-compacto__key">Superficie</span>
-            <span class="resumen-compacto__val" id="rc-superficie">—</span>
+          <div class="precio-bloque__fila precio-bloque__fila--senia">
+            <span class="precio-bloque__key">Seña a abonar ahora (50%)</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+              <span class="precio-bloque__val" id="rc-senia">—</span>
+              <span class="precio-bloque__nota">El 50% restante se abona antes de recibir el entregable.</span>
+            </div>
           </div>
-          <span class="resumen-compacto__sep">·</span>
-          <div class="resumen-compacto__item">
-            <span class="resumen-compacto__key">Estado</span>
-            <span class="resumen-compacto__val" id="rc-estado">—</span>
-          </div>
-          <span class="resumen-compacto__precio" id="rc-precio">—</span>
         </div>
 
         <!-- Tarjetas de pago -->
-        <div style="margin-top: clamp(20px,3vh,36px)">
+        <div style="margin-top: 14px">
           <p class="form-bloque-titulo">Seleccioná un método</p>
 
           <div class="metodos">
 
             <!-- Transferencia -->
             <div class="metodo-card" id="card-transferencia" onclick="seleccionarMetodo('transferencia')">
-              <span class="metodo-card__badge">Sin interés</span>
-              <div class="metodo-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+              <div class="metodo-card__head">
+                <p class="metodo-card__nombre">Transferencia bancaria</p>
+                <span class="metodo-card__badge">Sin interés</span>
               </div>
-              <p class="metodo-card__nombre">Transferencia<br>bancaria</p>
-              <p class="metodo-card__desc">Te enviamos los datos de la cuenta por mail. Confirmamos tu proyecto cuando recibimos el comprobante.</p>
+              <p class="metodo-card__desc">Te enviamos los datos de la cuenta por mail. Confirmamos cuando recibimos el comprobante.</p>
               <div class="metodo-card__preview">
                 <p class="metodo-card__preview-label">Lo que pagás ahora</p>
                 <div class="precio-fila precio-fila--main">
-                  <span class="precio-fila__label">Pago único</span>
+                  <span class="precio-fila__label">Seña única</span>
                   <span class="precio-fila__monto" id="precio-transferencia">—</span>
                 </div>
               </div>
@@ -261,11 +250,10 @@
 
             <!-- Mercado Pago -->
             <div class="metodo-card" id="card-mp" onclick="seleccionarMetodo('mp')">
-              <span class="metodo-card__badge">Con interés</span>
-              <div class="metodo-card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h4l2-4"/><path d="M12 12l2 4"/></svg>
+              <div class="metodo-card__head">
+                <p class="metodo-card__nombre">Mercado Pago</p>
+                <span class="metodo-card__badge">Con interés</span>
               </div>
-              <p class="metodo-card__nombre">Mercado<br>Pago</p>
               <p class="metodo-card__desc">Pagás desde la web con tarjeta. Al acreditarse el pago te enviamos el comprobante y los datos del relevamiento.</p>
               <div class="metodo-card__preview">
                 <p class="metodo-card__preview-label">Opciones de cuotas</p>
@@ -296,6 +284,7 @@
       </div>
     </section>
   </main>
+  <div class="cho-container"></div>
 
   <script>
     /* ── Menu toggle ── */
@@ -314,8 +303,8 @@
       if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
     });
 
-    /* ── Apps Script URL ── */
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyONYIB1BoIiCITQjDJl61UWMRvldSk5vw6eWahm3Z72FWK4E7u2T51d7PJ8gRhm0zU/exec";
+    /* ── Apps Script URL (flujo transferencia) ── */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/REEMPLAZAR_CON_URL_DESPLEGADA/exec";
 
     /* ── Leer todos los params de URL ── */
     const p          = new URLSearchParams(window.location.search);
@@ -350,11 +339,9 @@
     const precioNum = parsearPrecio(precio);
     const senia     = Math.round(precioNum * 0.5);
 
-    /* ── Poblar resumen compacto ── */
-    document.getElementById('rc-ambiente').textContent   = ambiente   || '—';
-    document.getElementById('rc-superficie').textContent = superficie || '—';
-    document.getElementById('rc-estado').textContent     = estado     || '—';
-    document.getElementById('rc-precio').textContent     = precioNum > 0 ? formatARS(precioNum) : (precio || '—');
+    /* ── Poblar precio + seña ── */
+    document.getElementById('rc-precio').textContent = precioNum > 0 ? formatARS(precioNum) : (precio || '—');
+    document.getElementById('rc-senia').textContent  = senia > 0 ? formatARS(senia) : '—';
 
     /* ── Calcular precios de cuotas ── */
     // Intereses estimados Mercado Pago — actualizá según condiciones vigentes
@@ -439,10 +426,11 @@
         loadTxt.textContent = 'Registrando tu proyecto…';
         enviarAppsScript('transferencia', function() {
           const nextP = new URLSearchParams({
-            nombre, apellido, email,
-            precio: formatARS(senia)
+            nombre,
+            email,
+            precio: String(senia)   // monto de la seña ya calculado
           });
-          window.location.href = `espera.html?${nextP.toString()}`;
+          window.location.href = `transferencia.html?${nextP.toString()}`;
         });
 
       } else {
@@ -453,20 +441,26 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               monto:    senia,
-              nombre,
-              apellido,
-              email,
+              nombre, apellido, email, telefono,
+              calle, numero, depto, barrio, ciudad, provincia,
+              ambiente, superficie, estado,
+              precio, descuento_pct: descPct, descuento_codigo: descCodigo,
               servicio: `Asesoría Espacial — ${ambiente}`
             })
           });
           const mpData = await resp.json();
-          if (mpData.init_point) {
-            // Registrar en Apps Script de forma no bloqueante
-            enviarAppsScript('mercadopago', function(){});
-            window.location.href = mpData.init_point;
-          } else {
-            throw new Error('No se recibió init_point de Mercado Pago');
-          }
+          if (!mpData.preference_id) throw new Error('No se recibió preference_id');
+
+          overlay.classList.remove('visible');
+
+          // Abrir modal de MP dentro de la página
+          const mp = new MercadoPago('APP_USR-541f81dc-8855-4a87-8c33-dbd32a7e6dde', { locale: 'es-AR' });
+          const checkout = mp.checkout({
+            preference: { id: mpData.preference_id },
+            render: { container: '.cho-container', label: 'Pagar' }
+          });
+          checkout.open();
+
         } catch (err) {
           overlay.classList.remove('visible');
           this.disabled = false;
