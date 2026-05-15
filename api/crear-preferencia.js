@@ -46,10 +46,7 @@ export default async function handler(req, res) {
       },
       payment_methods: {
         installments:         6,
-        default_installments: 1,
-        excluded_payment_types: [
-          { id: "account_money" }   // excluir dinero en cuenta MP — requiere challenge no soportado
-        ]
+        default_installments: 1
       },
       back_urls: {
         success: `${process.env.SITE_URL}/Asesor%C3%ADaEspacial/mp-exitoso.html`,
