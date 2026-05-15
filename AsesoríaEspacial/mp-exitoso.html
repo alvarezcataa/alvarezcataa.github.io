@@ -239,39 +239,33 @@
     const urlP         = new URLSearchParams(window.location.search);
     const paymentId    = urlP.get('payment_id')        || '—';
     const status       = urlP.get('status')            || '—';
-    const extRefRaw    = urlP.get('external_reference') || '{}';
+    const extRefRaw = urlP.get('external_reference') || '';
 
-    // Recuperar datos del cliente y proyecto desde external_reference
-    let cliente = {};
-    let cotizacion = {};
-    try {
-      const ref = JSON.parse(extRefRaw);
-      cliente = {
-        nombre:    ref.nombre    || '',
-        apellido:  ref.apellido  || '',
-        email:     ref.email     || '',
-        telefono:  ref.telefono  || '',
-        calle:     ref.calle     || '',
-        numero:    ref.numero    || '',
-        depto:     ref.depto     || '',
-        barrio:    ref.barrio    || '',
-        ciudad:    ref.ciudad    || '',
-        provincia: ref.provincia || ''
-      };
-      cotizacion = {
-        ambiente:         ref.ambiente         || '',
-        superficie:       ref.superficie       || '',
-        estado:           ref.estado           || '',
-        precio:           ref.precio           || '',
-        descuento_pct:    ref.descuento_pct    || '',
-        descuento_codigo: ref.descuento_codigo || ''
-      };
-    } catch(e) {
-      console.error('No se pudo parsear external_reference:', e);
-    }
+    // Todos los datos del cliente vienen directo en la URL (pasados desde crear-preferencia.js)
+    const cliente = {
+      nombre:    urlP.get('nombre')    || '',
+      apellido:  urlP.get('apellido')  || '',
+      email:     urlP.get('email')     || '',
+      telefono:  urlP.get('telefono')  || '',
+      calle:     urlP.get('calle')     || '',
+      numero:    urlP.get('numero')    || '',
+      depto:     urlP.get('depto')     || '',
+      barrio:    urlP.get('barrio')    || '',
+      ciudad:    urlP.get('ciudad')    || '',
+      provincia: urlP.get('provincia') || ''
+    };
+    const cotizacion = {
+      ambiente:         urlP.get('ambiente')         || '',
+      superficie:       urlP.get('superficie')       || '',
+      estado:           urlP.get('estado')           || '',
+      precio:           urlP.get('precio')           || '',
+      descuento_pct:    urlP.get('descuento_pct')    || '',
+      descuento_codigo: urlP.get('descuento_codigo') || ''
+    };
+    const seniaGuardada = parseInt(urlP.get('senia') || '0', 10);
 
     const precioNum = parsearPrecio(cotizacion.precio);
-    const senia     = Math.round(precioNum * 0.5);
+    const senia     = seniaGuardada || Math.round(precioNum * 0.5);
 
     /* ── Poblar UI ── */
     if (cliente.nombre) {

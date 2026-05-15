@@ -20,12 +20,31 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Faltan datos requeridos (monto, email)' });
   }
 
-  // external_reference: solo un ID único, los datos del cliente
-  // ya están en la URL de la página que llama a esta función
-  const externalRef = `CAVLA-${Date.now()}-${(nombre||'').split(' ')[0]}`;
+  // Codificamos los datos del cliente en la back_url para recuperarlos en mp-exitoso
+  // (sessionStorage no persiste entre dominios al volver de MP)
+  const clienteParams = new URLSearchParams({
+    nombre:    nombre    || '',
+    apellido:  apellido  || '',
+    email:     email     || '',
+    telefono:  telefono  || '',
+    calle:     calle     || '',
+    numero:    numero    || '',
+    depto:     depto     || '',
+    barrio:    barrio    || '',
+    ciudad:    ciudad    || '',
+    provincia: provincia || '',
+    ambiente:  ambiente  || '',
+    superficie:superficie|| '',
+    estado:    estado    || '',
+    precio:    precio    || '',
+    descuento_pct:    descuento_pct    || '',
+    descuento_codigo: descuento_codigo || '',
+    senia:     String(Math.round(Number(monto)))
+  }).toString();
 
-  // Guardamos los datos completos en una variable para pasarlos via notification_url
-  // (en este caso los recuperamos desde la URL de referrer en mp-exitoso.html)
+  const baseUrl    = `${process.env.SITE_URL}/AsesoríaEspacial`;
+  const exitoUrl   = `${baseUrl}/mp-exitoso.html?${clienteParams}`;
+  const externalRef = `CAVLA-${Date.now()}`;
 
   try {
     const preference = {
@@ -47,9 +66,9 @@ export default async function handler(req, res) {
         default_installments: 1
       },
       back_urls: {
-        success: `${process.env.SITE_URL}/AsesoríaEspacial/mp-exitoso.html`,
-        failure: `${process.env.SITE_URL}/AsesoríaEspacial/mp-exitoso.html`,
-        pending: `${process.env.SITE_URL}/AsesoríaEspacial/mp-exitoso.html`
+        success: exitoUrl,
+        failure: exitoUrl,
+        pending: exitoUrl
       },
       auto_return:          'approved',
       statement_descriptor: 'ESTUDIO CAVLA',
