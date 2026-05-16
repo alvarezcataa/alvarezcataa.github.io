@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAVLA — Confirmar proyecto</title>
+
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:    #130c09;
+      --w-100: rgba(255,255,255,1);
+      --w-85:  rgba(255,255,255,.85);
+      --w-70:  rgba(255,255,255,.70);
+      --w-55:  rgba(255,255,255,.55);
+      --w-40:  rgba(255,255,255,.40);
+      --w-28:  rgba(255,255,255,.28);
+      --w-18:  rgba(255,255,255,.18);
+      --w-12:  rgba(255,255,255,.12);
+      --w-08:  rgba(255,255,255,.08);
+      --w-05:  rgba(255,255,255,.05);
+      --w-03:  rgba(255,255,255,.03);
+      --serif: 'Playfair Display', 'Times New Roman', serif;
+      --sans:  'Montserrat', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--w-85); font-family: var(--sans); font-weight: 300; letter-spacing: .01em; -webkit-font-smoothing: antialiased; }
+    body { overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+    /* ── Scroll-snap ── */
+    .stage { height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    .stage::-webkit-scrollbar { width: 0; }
+
+    .scene {
+      min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 110px 0 90px; position: relative;
+    }
+    /* Pantalla de datos: sin padding fijo, flex centra el contenido */
+    .scene--datos {
+      padding: 0;
+      justify-content: center;
+    }
+    .scene__inner { width: 60vw; max-width: 60vw; margin: 0 auto; }
+    .scene--datos .scene__inner { padding: 100px 0 60px; }
+    @media (max-width: 810px) {
+      .scene__inner { width: 90vw; max-width: 90vw; }
+      .scene { padding: 96px 0 80px; }
+      .scene--datos .scene__inner { padding: 88px 0 40px; }
+    }
+
+    /* ── Rail ── */
+    .rail { position: fixed; right: clamp(16px, 2.4vw, 36px); top: 50%; transform: translateY(-50%); z-index: 40; display: flex; flex-direction: column; gap: 14px; align-items: center; }
+    .rail__dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--w-28); background: transparent; cursor: pointer; padding: 0; transition: background .25s ease, border-color .25s ease, transform .25s ease, opacity .25s ease; }
+    .rail__dot.is-active { background: var(--w-85); border-color: var(--w-85); transform: scale(1.15); }
+    .rail__dot.is-locked { opacity: .3; cursor: default; }
+    @media (max-width: 810px) { .rail { display: none; } }
+
+    /* ── Scroll cue ── */
+    .cue { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--w-70); font-size: 10px; letter-spacing: .32em; text-transform: uppercase; pointer-events: none; transition: opacity .3s ease; }
+    .cue::after { content: ''; width: 1px; height: 28px; background: linear-gradient(to bottom, var(--w-70), transparent); animation: cueDrop 2.2s ease-in-out infinite; }
+    @keyframes cueDrop {
+      0%   { transform: scaleY(.2); transform-origin: top; opacity: .2; }
+      50%  { transform: scaleY(1);  transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(.2); transform-origin: bottom; opacity: .2; }
+    }
+    @media (max-width: 810px) { .cue { bottom: 22px; } }
+
+    /* ── Eyebrow / display ── */
+    .eyebrow { font-size: 11px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-55); font-weight: 400; margin: 0; }
+    .display { font-family: var(--serif); font-weight: 400; color: var(--w-100); line-height: 1.02; letter-spacing: -.01em; margin: 10px 0 0; font-size: clamp(36px, 5vw, 68px); }
+    .display em { font-style: italic; }
+
+    /* ── Metodología globos ── */
+    .method { margin-top: clamp(20px, 3vh, 36px); display: flex; align-items: flex-start; width: 100%; gap: clamp(2px, .5vw, 8px); }
+    .method__step { display: flex; flex-direction: column; align-items: center; gap: clamp(6px, 1vw, 10px); flex: 0 0 auto; width: clamp(42px, 6.5vw, 64px); }
+    .method__bubble { width: clamp(26px, 3.8vw, 36px); height: clamp(26px, 3.8vw, 36px); border: 1px solid var(--w-40); border-radius: 50%; display: grid; place-items: center; color: var(--w-85); background: transparent; transition: border-color .25s ease, color .25s ease; flex-shrink: 0; }
+    .method__bubble svg { width: clamp(11px, 1.6vw, 15px); height: clamp(11px, 1.6vw, 15px); }
+    .method__label { font-size: clamp(7px, .85vw, 9px); letter-spacing: .16em; text-transform: uppercase; color: var(--w-55); text-align: center; line-height: 1.3; }
+    .method__step.is-current .method__bubble { border-color: var(--w-100); color: var(--w-100); }
+    .method__step.is-current .method__label  { color: var(--w-100); }
+    .method__link { flex: 1 1 0; min-width: 0; height: clamp(26px, 3.8vw, 36px); display: flex; align-items: center; padding: 0 clamp(2px, .4vw, 6px); }
+    .method__link::after { content: ''; flex: 1; height: 1px; background: var(--w-18); }
+
+    /* ── Resumen ── */
+    .resumen { margin-top: clamp(20px, 3vh, 36px); border: 1px solid var(--w-12); border-radius: 20px; padding: clamp(18px, 2.4vw, 30px) clamp(20px, 2.8vw, 38px); background: var(--w-03); }
+    .resumen__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 16px; }
+    .resumen__filas { display: flex; flex-direction: column; }
+    .resumen__fila { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--w-08); }
+    .resumen__fila:last-child { border-bottom: none; padding-bottom: 0; }
+    .resumen__key { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--w-40); flex-shrink: 0; }
+    .resumen__val { font-family: var(--serif); font-style: italic; font-size: clamp(14px, 1.4vw, 17px); color: var(--w-85); text-align: right; }
+    .resumen__fila--precio .resumen__val { font-size: clamp(20px, 2.4vw, 28px); color: var(--w-100); }
+    .resumen__fila--descuento { display: none; }
+
+    /* ── Desglose en dos columnas ── */
+    .desglose-par { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    @media (max-width: 810px) { .desglose-par { grid-template-columns: 1fr; } }
+    .desglose { padding: clamp(14px, 1.8vw, 22px) clamp(18px, 2.4vw, 28px); border: 1px solid var(--w-08); border-radius: 16px; background: var(--w-03); height: 100%; }
+    .desglose__titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 14px; }
+
+    /* Pastillas para tarjeta 1 */
+    .desglose__pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .desglose__pill { border: 1px solid var(--w-18); border-radius: 999px; padding: 9px 16px; font-size: 11px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: var(--w-70); white-space: nowrap; }
+
+    /* Items con check SVG para tarjeta 2 — sin líneas, espaciado compacto */
+    .desglose__items { display: flex; flex-direction: column; gap: 5px; }
+    .desglose__sub-item { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; color: var(--w-70); letter-spacing: .02em; line-height: 1.4; }
+    .desglose__sub-check { width: 13px; height: 13px; flex-shrink: 0; margin-top: 2px; color: var(--w-55); }
+
+    /* ── Formulario ── */
+    .form-bloque-titulo { font-size: 10px; letter-spacing: .32em; text-transform: uppercase; color: var(--w-40); margin: 0 0 10px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .form-grid--full { grid-column: 1 / -1; }
+    @media (max-width: 810px) { .form-grid { grid-template-columns: 1fr; } .form-grid--full { grid-column: 1; } }
+    .campo { display: flex; flex-direction: column; gap: 4px; }
+    .campo label { font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-40); }
+    .campo input, .campo select { background: transparent; border: 1px solid var(--w-18); border-radius: 999px; padding: 10px 18px; color: var(--w-100); font-family: var(--sans); font-size: 13px; font-weight: 300; letter-spacing: .04em; outline: none; transition: border-color .22s ease; width: 100%; appearance: none; -webkit-appearance: none; }
+    .campo input::placeholder { color: var(--w-28); }
+    .campo input:focus, .campo select:focus { border-color: var(--w-55); }
+    .campo select option { background: #1b120e; color: white; }
+
+    .terminos { margin-top: 12px; display: flex; align-items: flex-start; gap: 12px; }
+    .terminos input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: white; cursor: pointer; }
+    .terminos label { font-size: 11px; color: var(--w-55); line-height: 1.6; cursor: pointer; }
+    .terminos a { color: var(--w-85); text-decoration: underline; text-underline-offset: 3px; }
+
+    .aviso-terminos { margin-top: 10px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.8); display: none; }
+    .aviso-terminos.visible { display: block; }
+
+    .mensaje-error { margin-top: 14px; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: rgba(200,60,60,.9); display: none; }
+    .mensaje-error.visible { display: block; }
+
+    /* ── Botón CTA — siempre visible, valida al hacer click ── */
+    .btn-cta { margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 14px; border: 1px solid var(--w-40); border-radius: 999px; padding: 14px 32px; color: var(--w-100); font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase; background: transparent; width: 100%; transition: border-color .25s ease, background .25s ease; cursor: pointer; }
+    .btn-cta:hover { background: var(--w-08); border-color: var(--w-85); }
+    .btn-cta svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+    /* ── Métodos de pago ── */
+    .metodos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 810px) { .metodos { grid-template-columns: 1fr; } }
+
+    .metodo-card { border: 1px solid var(--w-18); border-radius: 20px; padding: clamp(18px, 2.4vw, 28px); background: var(--w-03); display: flex; flex-direction: column; cursor: pointer; position: relative; transition: border-color .25s ease, background .25s ease; }
+    .metodo-card:hover { border-color: var(--w-40); background: var(--w-05); }
+    .metodo-card.seleccionado { border-color: var(--w-100); background: var(--w-08); }
+
+    .metodo-card__badge { position: absolute; top: 14px; right: 14px; font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--w-40); border: 1px solid var(--w-18); border-radius: 999px; padding: 4px 10px; }
+    .metodo-card.seleccionado .metodo-card__badge { color: var(--w-70); border-color: var(--w-28); }
+
+    .metodo-card__icon { width: 34px; height: 34px; border: 1px solid var(--w-28); border-radius: 50%; display: grid; place-items: center; color: var(--w-70); margin-bottom: 14px; }
+    .metodo-card__icon svg { width: 15px; height: 15px; }
+    .metodo-card.seleccionado .metodo-card__icon { border-color: var(--w-85); color: var(--w-100); }
+
+    .metodo-card__nombre { font-family: var(--serif); font-weight: 400; font-size: clamp(17px, 1.8vw, 22px); color: var(--w-100); line-height: 1.1; margin-bottom: 8px; }
+    .metodo-card__desc { font-size: 11px; color: var(--w-55); letter-spacing: .03em; line-height: 1.6; flex: 1; }
+
+    .metodo-card__preview { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--w-12); }
+    .metodo-card__preview-label { font-size: 9.5px; letter-spacing: .28em; text-transform: uppercase; color: var(--w-40); margin-bottom: 10px; }
+
+    .precio-fila { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px solid var(--w-05); }
+    .precio-fila:last-child { border-bottom: none; }
+    .precio-fila__label { font-size: 10.5px; color: var(--w-55); letter-spacing: .1em; }
+    .precio-fila__monto { font-family: var(--serif); font-style: italic; font-size: clamp(14px, 1.5vw, 17px); color: var(--w-85); }
+    .precio-fila--main .precio-fila__label { color: var(--w-85); }
+    .precio-fila--main .precio-fila__monto  { color: var(--w-100); font-size: clamp(16px, 1.8vw, 20px); }
+
+    @media (max-width: 810px) {
+
+  /* ── Layout general ── */
+  .scene        { padding: 72px 0 50px; }
+  .scene__inner { width: 92vw; max-width: 92vw; }
+  .scene--datos .scene__inner { padding: 72px 0 40px; }
+  .display      { font-size: clamp(32px, 10vw, 52px); margin: 6px 0 0; }
+  .eyebrow      { font-size: 10px; }
+  .cue          { bottom: 16px; }
+
+  /* ── Globos ── */
+  .method        { margin-top: 10px; }
+  .method__step  { width: clamp(38px, 18vw, 60px); gap: 4px; }
+  .method__bubble { width: clamp(28px, 7vw, 36px); height: clamp(28px, 7vw, 36px); }
+  .method__bubble svg { width: clamp(10px, 2.8vw, 14px); height: clamp(10px, 2.8vw, 14px); }
+  .method__label { font-size: clamp(6px, 1.8vw, 8px); letter-spacing: .1em; }
+
+  /* ── Resumen ── */
+  .resumen         { margin-top: 10px; padding: 12px 14px; border-radius: 14px; }
+  .resumen__titulo { margin: 0 0 8px; }
+  .resumen__fila   { padding: 6px 0; }
+  .resumen__key    { font-size: 9px; }
+  .resumen__val    { font-size: 13px; }
+  .resumen__fila--precio .resumen__val { font-size: 18px; }
+
+  /* ── Desglose: mantener 2 columnas en mobile ── */
+  .desglose-par  { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .desglose      { padding: 10px 10px; border-radius: 12px; }
+  .desglose__titulo { font-size: 8.5px; margin: 0 0 8px; letter-spacing: .24em; }
+
+  /* Pastillas desglose más compactas */
+  .desglose__pill  { padding: 6px 10px; font-size: 9.5px; letter-spacing: .12em; white-space: normal; }
+  .desglose__pills { gap: 5px; }
+
+  /* Items plan de acción más compactos */
+  .desglose__sub-item { font-size: 10px; gap: 5px; line-height: 1.3; }
+  .desglose__sub-check { width: 11px; height: 11px; margin-top: 1px; }
+  .desglose__items { gap: 3px; }
+
+  /* ── Formulario pantalla 2 ── */
+  .form-bloque-titulo { font-size: 9px; margin: 0 0 6px; }
+  .form-grid          { gap: 6px; grid-template-columns: 1fr; }
+  .campo              { gap: 3px; }
+  .campo label        { font-size: 9px; }
+  .campo input, .campo select {
+    padding: 10px 14px;
+    font-size: 16px;   /* 16px mínimo para evitar zoom en iOS */
+  }
+  .terminos        { margin-top: 8px; }
+  .terminos label  { font-size: 10px; }
+  .btn-cta         { padding: 12px 20px; font-size: 10.5px; letter-spacing: .18em; margin-top: 10px; }
+}
+  </style>
+</head>
+
+<body class="pagina">
+
+  <nav class="cavla-nav">
+    <a href="../../index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="../../index.html">Inicio</a>
+      <a href="../../filosofia.html">Filosofía</a>
+      <a href="../../sobremi.html">Sobre mí</a>
+      <a href="../../contacto.html">Contacto</a>
+    </nav>
+    <a href="../../test.html" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="../../index.html" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="../../filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="../../sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="../../contacto.html" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <aside class="rail" aria-hidden="true">
+    <button class="rail__dot is-active" data-go="0" aria-label="Resumen"></button>
+    <button class="rail__dot" data-go="1" aria-label="Datos"></button>
+  </aside>
+
+  <main class="stage" id="stage">
+
+    <!-- ══ Pantalla 1: Resumen ══ -->
+    <section class="scene" data-scene="0">
+      <div class="scene__inner">
+
+        <p class="eyebrow">Diseño Integral — Residencial</p>
+        <h1 class="display"><em>Tu proyecto</em></h1>
+
+        <!-- Globos metodología: paso "Pago" activo -->
+        <div class="method" aria-label="Metodología">
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+            </div>
+            <span class="method__label">Cotización</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step is-current">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/></svg>
+            </div>
+            <span class="method__label">Pago</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h3l1.5-2h9L18 8h3v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            </div>
+            <span class="method__label">Relevamiento</span>
+          </div>
+          <div class="method__link"></div>
+          <div class="method__step">
+            <div class="method__bubble">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.2"/><path d="M11 18.5h2"/><path d="M9.5 10.5l3 1.8-3 1.8z" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <span class="method__label">Videollamada</span>
+          </div>
+        </div>
+
+        <!-- Resumen cotización -->
+        <div class="resumen">
+          <p class="resumen__titulo">Resumen de cotización</p>
+          <div class="resumen__filas">
+            <div class="resumen__fila">
+              <span class="resumen__key">Ambientes</span>
+              <span class="resumen__val" id="r-ambiente">—</span>
+            </div>
+            <div class="resumen__fila">
+              <span class="resumen__key">Superficie</span>
+              <span class="resumen__val" id="r-superficie">—</span>
+            </div>
+            <div class="resumen__fila">
+              <span class="resumen__key">Estado actual</span>
+              <span class="resumen__val" id="r-estado">—</span>
+            </div>
+            <div class="resumen__fila resumen__fila--precio">
+              <span class="resumen__key">Precio estimado</span>
+              <span class="resumen__val" id="r-precio">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desglose en dos tarjetas lado a lado -->
+        <div class="desglose-par">
+          <!-- Tarjeta 1: items como pastillas -->
+          <div class="desglose">
+            <p class="desglose__titulo">Lo que incluye tu servicio</p>
+            <div class="desglose__pills">
+              <span class="desglose__pill">Relevamiento virtual</span>
+              <span class="desglose__pill">Dos sesiones virtuales</span>
+              <span class="desglose__pill">Plan de ejecución</span>
+              <span class="desglose__pill">Legajo técnico</span>
+              <span class="desglose__pill">Excel de gastos</span>
+            </div>
+          </div>
+          <!-- Tarjeta 2: entregables con check SVG -->
+          <div class="desglose">
+            <p class="desglose__titulo">Entregables del proyecto</p>
+            <div class="desglose__items">
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Brief de cliente</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Análisis neuroarquitectónico del espacio</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Narrativa de diseño del proyecto</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Renders fotorrealistas de la propuesta</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Planos de obra (según proyecto)</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Detalles de mobiliario (según proyecto)</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Detalles de obra gris (según proyecto)</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Etapabilidad de ejecución</div>
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Sugerencias de compras</div>             
+              <div class="desglose__sub-item"><svg class="desglose__sub-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3.5 3.5L13 5"/></svg>Presupuesto aproximado</div>             
+            </div>
+          </div>
+        </div><!-- /.desglose-par -->
+
+      </div><!-- /.scene__inner -->
+      <div class="cue">Tus datos</div>
+    </section>
+
+    <!-- ══ Pantalla 2: Datos ══ -->
+    <section class="scene scene--datos" data-scene="1">
+      <div class="scene__inner">
+
+        <h2 class="display"><em>Tus datos</em></h2>
+
+        <div style="margin-top: 14px">
+          <p class="form-bloque-titulo">Información personal</p>
+          <div class="form-grid">
+            <div class="campo">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" placeholder="María" autocomplete="given-name" />
+            </div>
+            <div class="campo">
+              <label for="apellido">Apellido</label>
+              <input type="text" id="apellido" placeholder="García" autocomplete="family-name" />
+            </div>
+            <div class="campo form-grid--full">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" placeholder="maria@ejemplo.com" autocomplete="email" />
+            </div>
+            <div class="campo form-grid--full">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" placeholder="+54 9 11 0000 0000" autocomplete="tel" />
+            </div>
+          </div>
+
+          <p class="form-bloque-titulo" style="margin-top:14px">Dirección del inmueble</p>
+          <div class="form-grid">
+            <div class="campo form-grid--full">
+              <label for="calle">Calle</label>
+              <input type="text" id="calle" placeholder="Av. Santa Fe" autocomplete="street-address" />
+            </div>
+            <div class="campo">
+              <label for="numero">Número</label>
+              <input type="text" id="numero" placeholder="1234" />
+            </div>
+            <div class="campo">
+              <label for="depto">Piso / Depto <span style="opacity:.5">(opcional)</span></label>
+              <input type="text" id="depto" placeholder="3° B" />
+            </div>
+            <div class="campo">
+              <label for="barrio">Barrio</label>
+              <input type="text" id="barrio" placeholder="Palermo" />
+            </div>
+            <div class="campo">
+              <label for="ciudad">Ciudad</label>
+              <input type="text" id="ciudad" placeholder="Buenos Aires" autocomplete="address-level2" />
+            </div>
+            <div class="campo form-grid--full">
+              <label for="provincia">Provincia</label>
+              <select id="provincia">
+                <option value="" disabled selected>Seleccioná tu provincia</option>
+                <option>Buenos Aires</option><option>CABA</option><option>Catamarca</option>
+                <option>Chaco</option><option>Chubut</option><option>Córdoba</option>
+                <option>Corrientes</option><option>Entre Ríos</option><option>Formosa</option>
+                <option>Jujuy</option><option>La Pampa</option><option>La Rioja</option>
+                <option>Mendoza</option><option>Misiones</option><option>Neuquén</option>
+                <option>Río Negro</option><option>Salta</option><option>San Juan</option>
+                <option>San Luis</option><option>Santa Cruz</option><option>Santa Fe</option>
+                <option>Santiago del Estero</option><option>Tierra del Fuego</option><option>Tucumán</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="terminos">
+            <input type="checkbox" id="acepto-terminos" />
+            <label for="acepto-terminos">
+              Leí y acepto los <a href="../../images/SERVICIOS/Términos y Condiciones.pdf" target="_blank">Términos y Condiciones</a> del servicio.
+            </label>
+          </div>
+          <p class="aviso-terminos" id="aviso-terminos">* Aceptá los Términos y Condiciones para continuar.</p>
+
+          <p class="mensaje-error" id="mensaje-error"></p>
+
+          <button class="btn-cta" id="btn-siguiente" type="button">
+            Agendar reunión de presupuesto
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+
+      </div>
+      <!-- Cue invisible hasta que el form esté completo -->
+      <div class="cue" id="cue-pago" style="opacity:0">Método de pago</div>
+    </section>
+
+  </main>
+
+  <script>
+    /* ── Menu toggle ── */
+    const sideMenu = document.getElementById('sideMenu');
+    window.toggleMenu = function() {
+      if (!sideMenu) return;
+      sideMenu.classList.toggle('open');
+    };
+    document.addEventListener('click', function(e) {
+      if (!sideMenu || !sideMenu.classList.contains('open')) return;
+      const toggle = document.querySelector('.menu-toggle');
+      if (sideMenu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+      sideMenu.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
+    });
+
+    /* ── Rail sync ── */
+    const stage  = document.getElementById('stage');
+    const scenes = stage.querySelectorAll('.scene');
+    const dots   = document.querySelectorAll('.rail__dot');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio > 0.55) {
+          const idx = +e.target.dataset.scene;
+          dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+        }
+      });
+    }, { root: stage, threshold: [0.55, 0.75] });
+    scenes.forEach(s => io.observe(s));
+
+    dots.forEach(d => {
+      d.addEventListener('click', () => {
+        scenes[+d.dataset.go].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    /* ── Leer params URL ── */
+    const urlParams   = new URLSearchParams(window.location.search);
+    const ambiente    = urlParams.get('ambiente')   || '';
+    const superficie  = urlParams.get('superficie') || '';
+    const estado      = urlParams.get('estado')     || '';
+    const precio      = urlParams.get('precio')     || '';
+
+    /* ── Parsear precio ── */
+    function parsearPrecio(str) {
+      if (!str) return 0;
+      const soloDigitos = str.replace(/\D/g, '');
+      return parseInt(soloDigitos, 10) || 0;
+    }
+
+    function formatARS(n) {
+      return Math.round(n).toLocaleString('es-AR', {
+        style: 'currency', currency: 'ARS', minimumFractionDigits: 0
+      });
+    }
+
+    const precioNum = parsearPrecio(precio);
+
+    /* ── Mostrar resumen ── */
+    document.getElementById('r-ambiente').textContent   = ambiente   || '—';
+    document.getElementById('r-superficie').textContent = superficie || '—';
+    document.getElementById('r-estado').textContent     = estado     || '—';
+    document.getElementById('r-precio').textContent     = precioNum > 0 ? formatARS(precioNum) : (precio || '—');
+
+    /* ── Validación: se ejecuta al hacer click en el botón ── */
+    const camposReq     = ['nombre','apellido','email','telefono','calle','numero','barrio','ciudad','provincia'];
+    const btnSiguiente  = document.getElementById('btn-siguiente');
+    const avisoTerminos = document.getElementById('aviso-terminos');
+    const mensajeError  = document.getElementById('mensaje-error');
+
+    // Limpiar avisos cuando el usuario empieza a escribir
+    camposReq.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', function() {
+        mensajeError.classList.remove('visible');
+        avisoTerminos.classList.remove('visible');
+      });
+    });
+    document.getElementById('acepto-terminos').addEventListener('change', function() {
+      avisoTerminos.classList.remove('visible');
+    });
+
+    /* ── Recopilar datos del cliente ── */
+    function getDatosCliente() {
+      return {
+        nombre:    document.getElementById('nombre').value.trim(),
+        apellido:  document.getElementById('apellido').value.trim(),
+        email:     document.getElementById('email').value.trim(),
+        telefono:  document.getElementById('telefono').value.trim(),
+        calle:     document.getElementById('calle').value.trim(),
+        numero:    document.getElementById('numero').value.trim(),
+        depto:     document.getElementById('depto').value.trim(),
+        barrio:    document.getElementById('barrio').value.trim(),
+        ciudad:    document.getElementById('ciudad').value.trim(),
+        provincia: document.getElementById('provincia').value
+      };
+    }
+
+    /* ── Apps Script URL ── */
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYKDsO-w6sJRsFojFY5aCrlLNv35w0xZfKPLx1qsqAi7kcowKJssbu_z1LvXmVwfc2_w/exec";
+
+    /* ── Enviar al Apps Script (iframe, evita CORS) ── */
+    function enviarAppsScript(callback) {
+      const cliente = getDatosCliente();
+      const data = {
+        cotizacion: {
+          servicio:   'Diseño Integral',
+          ambiente:   ambiente,
+          superficie: superficie,
+          estado:     estado,
+          total:      precio,
+          descuento_pct:    '',
+          descuento_codigo: ''
+        },
+        cliente: {
+          nombre:   cliente.nombre,
+          apellido: cliente.apellido,
+          email:    cliente.email,
+          telefono: cliente.telefono,
+          calle:    cliente.calle,
+          numero:   cliente.numero,
+          depto:    cliente.depto,
+          barrio:   cliente.barrio,
+          ciudad:   cliente.ciudad,
+          provincia: cliente.provincia
+        },
+        metodo_pago: 'reunion'
+      };
+
+      let iframe = document.getElementById('iframe-post');
+      if (!iframe) {
+        iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'iframe-post';
+        iframe.id   = 'iframe-post';
+        document.body.appendChild(iframe);
+      }
+      const form = document.createElement('form');
+      form.style.display = 'none';
+      form.method  = 'POST';
+      form.action  = APPS_SCRIPT_URL;
+      form.target  = 'iframe-post';
+      form.enctype = 'application/x-www-form-urlencoded';
+      const input = document.createElement('input');
+      input.type  = 'hidden';
+      input.name  = 'payload';
+      input.value = JSON.stringify(data);
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+      form.remove();
+      setTimeout(callback, 800);
+    }
+
+    /* ── Botón: validar al hacer click ── */
+    btnSiguiente.addEventListener('click', function() {
+      // 1. Verificar campos obligatorios
+      const camposVacios = camposReq.filter(id => {
+        const el = document.getElementById(id);
+        return !el || el.value.trim() === '';
+      });
+      if (camposVacios.length > 0) {
+        mensajeError.textContent = '* Completá todos los campos para continuar.';
+        mensajeError.classList.add('visible');
+        avisoTerminos.classList.remove('visible');
+        const primerVacio = document.getElementById(camposVacios[0]);
+        if (primerVacio) primerVacio.focus();
+        return;
+      }
+
+      // 2. Verificar email
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())) {
+        mensajeError.textContent = '* Ingresá un e-mail válido.';
+        mensajeError.classList.add('visible');
+        avisoTerminos.classList.remove('visible');
+        document.getElementById('email').focus();
+        return;
+      }
+
+      // 3. Verificar T&C
+      if (!document.getElementById('acepto-terminos').checked) {
+        avisoTerminos.classList.add('visible');
+        mensajeError.classList.remove('visible');
+        return;
+      }
+
+      // Todo OK → disparar Apps Script, navegar dentro del callback
+      mensajeError.classList.remove('visible');
+      avisoTerminos.classList.remove('visible');
+
+      const cliente = getDatosCliente();
+      const nextParams = new URLSearchParams({
+        nombre:    cliente.nombre,
+        apellido:  cliente.apellido,
+        email:     cliente.email,
+        telefono:  cliente.telefono,
+        calle:     cliente.calle,
+        numero:    cliente.numero,
+        depto:     cliente.depto,
+        barrio:    cliente.barrio,
+        ciudad:    cliente.ciudad,
+        provincia: cliente.provincia,
+        ambiente,
+        superficie,
+        estado,
+        precio
+      });
+
+      enviarAppsScript(function() {
+        window.location.href = '/DiseñoIntegral/calendario.html?' + nextParams.toString();
+      });
+    });
+  </script>
+</body>
+</html>
