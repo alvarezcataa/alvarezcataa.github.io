@@ -2466,3 +2466,15 @@ button.boton-cotizar {
     padding: 1.2vh 5vw;
   }
 }
+
+/* ===================================================================
+   SEO: compensación por cambio de etiqueta de encabezado (h1 → h2/h3).
+   Mantiene idéntico el diseño. Usa :where() para no pisar las clases.
+   =================================================================== */
+:where(h2.titulo-pagina, h2.titulo-seccion, h2.titulo-identif, h2.titulo-seccion-superior, h2.titulo-entregable, h2.titulo-grafico) {
+  font-family: 'Playfair Display', serif;
+  font-weight: 100;
+  margin: 0;
+}
+h1.subtitulo-pagina { font-family: 'Montserrat', sans-serif; }
+:where(h3.titulo-virtual, h3.nombre-servicio) { margin-top: 0.83em; margin-bottom: 0.83em; }

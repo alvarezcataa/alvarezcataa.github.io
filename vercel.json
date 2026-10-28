@@ -1,4 +1,18 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/Asesor%C3%ADaEspacial.html", "destination": "/asesoria-espacial", "permanent": true },
+    { "source": "/Asesor%C3%ADaEspacial", "destination": "/asesoria-espacial", "permanent": true },
+    { "source": "/AsesoríaEspacial.html", "destination": "/asesoria-espacial", "permanent": true },
+    { "source": "/AsesoríaEspacial", "destination": "/asesoria-espacial", "permanent": true },
+    { "source": "/Dise%C3%B1oIntegral.html", "destination": "/diseno-integral", "permanent": true },
+    { "source": "/Dise%C3%B1oIntegral", "destination": "/diseno-integral", "permanent": true },
+    { "source": "/DiseñoIntegral.html", "destination": "/diseno-integral", "permanent": true },
+    { "source": "/DiseñoIntegral", "destination": "/diseno-integral", "permanent": true },
+    { "source": "/Dise%C3%B1oMobiliario.html", "destination": "/diseno-mobiliario", "permanent": true },
+    { "source": "/Dise%C3%B1oMobiliario", "destination": "/diseno-mobiliario", "permanent": true },
+    { "source": "/DiseñoMobiliario.html", "destination": "/diseno-mobiliario", "permanent": true },
+    { "source": "/DiseñoMobiliario", "destination": "/diseno-mobiliario", "permanent": true }
+  ]
 }

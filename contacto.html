@@ -3,10 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CAVLA</title>
+  <title>Contacto — Estudio CAVLA</title>
+  <meta name="description" content="Escribime y contame qué espacio querés transformar." />
+  <link rel="canonical" href="https://www.estudiocavla.com/contacto" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Estudio CAVLA" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:title" content="Contacto — Estudio CAVLA" />
+  <meta property="og:description" content="Escribime y contame qué espacio querés transformar." />
+  <meta property="og:url" content="https://www.estudiocavla.com/contacto" />
+  <meta name="twitter:card" content="summary" />
 
   <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.webp">
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
 
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -346,31 +355,30 @@
     }
   </style>
 </head>
-<header>
 <body class="pagina">
 
   <!-- Navbar -->
   <nav class="cavla-nav">
-    <a href="index.html" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <a href="/" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
 
     <nav class="cavla-nav__center" aria-label="Principal">
-      <a href="index.html">Inicio</a>
-      <a href="filosofia.html">Filosofía</a>
-      <a href="sobremi.html">Sobre mí</a>
-      <a href="contacto.html">Contacto</a>
+      <a href="/">Inicio</a>
+      <a href="/filosofia">Filosofía</a>
+      <a href="/sobremi">Sobre mí</a>
+      <a href="/contacto">Contacto</a>
     </nav>
 
-    <a href="test.html" class="cavla-nav__cta">Test de servicios</a>
+    <a href="/test" class="cavla-nav__cta">Test de servicios</a>
 
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
   <div class="side-menu" id="sideMenu">
     <ul>
-      <li><a href="index.html" onclick="toggleMenu()">Inicio</a></li>
-      <li><a href="filosofia.html" onclick="toggleMenu()">Filosofía</a></li>
-      <li><a href="sobremi.html" onclick="toggleMenu()">Sobre mí</a></li>
-      <li><a href="contacto.html" onclick="toggleMenu()">Contacto</a></li>
+      <li><a href="/" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="/filosofia" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="/sobremi" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="/contacto" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
 
@@ -393,7 +401,7 @@
         <span class="scroll-cue__dot"></span>
       </span>
     </div>
-    <img src="images/CONTACTO/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
+    <img alt="" src="images/CONTACTO/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
   </section>
 
   <!-- PANTALLA 1 — FORMULARIO -->
@@ -588,7 +596,7 @@
        ----------------------------------------------- */
     function irAServicios() {
       sessionStorage.setItem('snapSkip', 'servicios');
-      window.location.href = 'index.html';
+      window.location.href = '/';
     }
   </script>
 
