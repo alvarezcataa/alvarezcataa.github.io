@@ -415,3 +415,27 @@ document.addEventListener('scroll', () => {
     }, 400);
   });
 })();
+
+
+// ============================================================
+// 6. WHATSAPP
+//    Los botones con data-wa="Nombre del servicio" abren un chat
+//    de WhatsApp con mensaje prearmado. Mientras CAVLA_WHATSAPP
+//    esté vacío, esos botones llevan a /contacto.
+//    Cuando tengas el número, pegalo acá abajo, solo dígitos con
+//    código de país. Ej: Argentina, celular de Córdoba: '5493515551234'
+// ============================================================
+(function () {
+  const CAVLA_WHATSAPP = '';
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!CAVLA_WHATSAPP) return;
+    document.querySelectorAll('a[data-wa]').forEach(function (a) {
+      const servicio = a.getAttribute('data-wa');
+      const texto = 'Hola Cata, vengo de la web y quiero consultar por ' + servicio + '.';
+      a.href = 'https://wa.me/' + CAVLA_WHATSAPP + '?text=' + encodeURIComponent(texto);
+      a.target = '_blank';
+      a.rel = 'noopener';
+    });
+  });
+})();

@@ -2,17 +2,130 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/Asesor%C3%ADaEspacial.html", "destination": "/asesoria-espacial", "permanent": true },
-    { "source": "/Asesor%C3%ADaEspacial", "destination": "/asesoria-espacial", "permanent": true },
-    { "source": "/AsesoríaEspacial.html", "destination": "/asesoria-espacial", "permanent": true },
-    { "source": "/AsesoríaEspacial", "destination": "/asesoria-espacial", "permanent": true },
-    { "source": "/Dise%C3%B1oIntegral.html", "destination": "/diseno-integral", "permanent": true },
-    { "source": "/Dise%C3%B1oIntegral", "destination": "/diseno-integral", "permanent": true },
-    { "source": "/DiseñoIntegral.html", "destination": "/diseno-integral", "permanent": true },
-    { "source": "/DiseñoIntegral", "destination": "/diseno-integral", "permanent": true },
-    { "source": "/Dise%C3%B1oMobiliario.html", "destination": "/diseno-mobiliario", "permanent": true },
-    { "source": "/Dise%C3%B1oMobiliario", "destination": "/diseno-mobiliario", "permanent": true },
-    { "source": "/DiseñoMobiliario.html", "destination": "/diseno-mobiliario", "permanent": true },
-    { "source": "/DiseñoMobiliario", "destination": "/diseno-mobiliario", "permanent": true }
+    {
+      "source": "/AsesoríaEspacial.html",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/AsesoríaEspacial",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/Asesor%C3%ADaEspacial.html",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/Asesor%C3%ADaEspacial",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoIntegral.html",
+      "destination": "/diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoIntegral",
+      "destination": "/diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oIntegral.html",
+      "destination": "/diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oIntegral",
+      "destination": "/diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoMobiliario.html",
+      "destination": "/diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoMobiliario",
+      "destination": "/diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oMobiliario.html",
+      "destination": "/diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oMobiliario",
+      "destination": "/diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/AsesoríaEspacial/:path*",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/Asesor%C3%ADaEspacial/:path*",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoIntegral/calendario",
+      "destination": "/agendar-diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoIntegral/:path*",
+      "destination": "/diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oIntegral/calendario",
+      "destination": "/agendar-diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oIntegral/:path*",
+      "destination": "/diseno-integral",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoMobiliario/calendario",
+      "destination": "/agendar-diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/DiseñoMobiliario/:path*",
+      "destination": "/diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oMobiliario/calendario",
+      "destination": "/agendar-diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/Dise%C3%B1oMobiliario/:path*",
+      "destination": "/diseno-mobiliario",
+      "permanent": true
+    },
+    {
+      "source": "/cavla_cotizador",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/cavla_cotizador.html",
+      "destination": "/asesoria-espacial",
+      "permanent": true
+    },
+    {
+      "source": "/_archivo/:path*",
+      "destination": "/",
+      "permanent": false
+    }
   ]
 }
