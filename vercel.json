@@ -3,6 +3,16 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/test",
+      "destination": "/empezar",
+      "permanent": true
+    },
+    {
+      "source": "/test.html",
+      "destination": "/empezar",
+      "permanent": true
+    },
+    {
       "source": "/AsesoríaEspacial.html",
       "destination": "/asesoria-espacial",
       "permanent": true

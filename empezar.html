@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empezar tu proyecto — Estudio CAVLA</title>
+  <meta name="description" content="Contanos qué querés diseñar en unos pasos y seguimos la charla por WhatsApp. Diseño de interiores y muebles 100% online para toda Argentina.">
+  <link rel="canonical" href="https://www.estudiocavla.com/empezar">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon_io/favicon-192.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon_io/favicon-48.png" />
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      --fondo:       #13090a;
+      --fondo-suave: #1a0f0c;
+      --fondo-elev:  #2c1c17;
+      --linea:       #3a261f;
+      --crema:       #ece3d2;
+      --crema-suave: #d8cdb9;
+      --crema-mute:  #a89c89;
+      --acento:      #b8843a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: var(--fondo);
+      color: var(--crema);
+      font-family: 'Montserrat', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    /* ── Fondo degradado ── */
+    .fondo-luz {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 100%, rgba(160,90,40,.25) 0%, transparent 65%);
+      z-index: 0;
+    }
+
+    /* ── Contenedor principal ── */
+    .test-contenedor {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 48px;
+    }
+
+    /* ── Header ── */
+    .test-header {
+      text-align: center;
+    }
+
+    .test-marca {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .test-titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 6vw, 52px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--crema);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .test-subtitulo {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--crema-mute);
+    }
+
+    /* ── Barra de progreso ── */
+    .progreso-contenedor {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .progreso-texto {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      text-align: right;
+    }
+
+    .progreso-barra {
+      width: 100%;
+      height: 1px;
+      background: var(--linea);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progreso-fill {
+      height: 100%;
+      background: var(--crema-mute);
+      border-radius: 2px;
+      transition: width .5s cubic-bezier(.2,.7,.2,1);
+    }
+
+    /* ── Tarjeta de pregunta ── */
+    .pregunta-tarjeta {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      gap: 32px;
+      animation: aparecer .4s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .pregunta-tarjeta.activa {
+      display: flex;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .pregunta-numero {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--acento);
+    }
+
+    .pregunta-texto {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.25;
+      color: var(--crema);
+    }
+
+    /* ── Opciones ── */
+    .opciones-lista {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .opcion-btn {
+      width: 100%;
+      padding: 20px 24px;
+      background: transparent;
+      border: 1px solid var(--linea);
+      border-radius: 12px;
+      color: var(--crema-suave);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: left;
+      cursor: pointer;
+      transition: all .35s cubic-bezier(.2,.7,.2,1);
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .opcion-letra {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      padding-top: 2px;
+      flex-shrink: 0;
+      transition: color .35s;
+    }
+
+    .opcion-btn:hover {
+      border-color: var(--crema-mute);
+      background: rgba(236,227,210,.04);
+      color: var(--crema);
+    }
+
+    .opcion-btn:hover .opcion-letra {
+      color: var(--acento);
+    }
+
+    /* ── Botones de acción ── */
+    .acciones {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .boton-principal {
+      display: block;
+      width: 100%;
+      padding: 18px 24px;
+      background: var(--crema);
+      color: var(--fondo);
+      border: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all .4s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .boton-principal:hover {
+      background: var(--acento);
+      color: white;
+    }
+
+    .boton-secundario {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: var(--crema-mute);
+      border: 1px solid var(--linea);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-align: center;
+      cursor: pointer;
+      transition: all .4s;
+    }
+
+    .boton-secundario:hover {
+      border-color: var(--crema-mute);
+      color: var(--crema);
+    }
+
+    /* ── Separador ── */
+    .separador {
+      width: 100%;
+      height: 1px;
+      background: var(--linea);
+    }
+
+    /* ── Volver al inicio ── */
+    .volver-inicio {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--crema-mute);
+      text-decoration: none;
+      transition: color .3s;
+    }
+
+    .volver-inicio:hover {
+      color: var(--crema);
+    }
+
+
+    /* ── Selección múltiple y campos ── */
+    .opcion-btn.sel { border-color: var(--acento); background: rgba(184,132,58,.10); color: var(--crema); }
+    .opcion-btn.sel .opcion-letra { color: var(--acento); }
+    .opcion-btn:focus-visible, .campo input:focus-visible, .campo select:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+    .campos { display: flex; flex-direction: column; gap: 18px; }
+    .campo { display: flex; flex-direction: column; gap: 8px; }
+    .campo label {
+      font-size: 11px; font-weight: 500; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--crema-mute);
+    }
+    .campo input, .campo select {
+      width: 100%; padding: 16px 18px; background: transparent;
+      border: 1px solid var(--linea); border-radius: 12px; color: var(--crema);
+      font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 400;
+      appearance: none; -webkit-appearance: none;
+    }
+    .campo select {
+      background-image: linear-gradient(45deg, transparent 50%, var(--crema-mute) 50%), linear-gradient(135deg, var(--crema-mute) 50%, transparent 50%);
+      background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%;
+      background-size: 6px 6px, 6px 6px; background-repeat: no-repeat;
+    }
+    .campo select option { background: var(--fondo-elev); color: var(--crema); }
+    .campo input::placeholder { color: var(--crema-mute); opacity: .6; }
+    .campo input:focus, .campo select:focus { border-color: var(--crema-mute); outline: none; }
+    .campo.error input, .campo.error select { border-color: #c0614a; }
+    .campo .msg-error { font-size: 12px; color: #d58a76; display: none; }
+    .campo.error .msg-error { display: block; }
+    .campo-check { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--crema-suave); cursor: pointer; }
+    .campo-check input { width: 18px; height: 18px; padding: 0; accent-color: var(--acento); }
+    .trampa { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+    .boton-principal[disabled] { opacity: .35; cursor: not-allowed; }
+    .boton-principal:disabled:hover { background: var(--crema); color: var(--fondo); }
+    .nota-privacidad { font-size: 12px; line-height: 1.6; color: var(--crema-mute); text-align: center; }
+    .gracias-tarjeta { text-align: center; align-items: center; }
+  </style>
+</head>
+<body>
+
+  <div class="fondo-luz"></div>
+
+  <main class="test-contenedor">
+
+    <header class="test-header">
+      <span class="test-marca">Estudio CAVLA</span>
+      <h1 class="test-titulo">Empezá tu proyecto.</h1>
+      <p class="test-subtitulo">Unas pocas preguntas para entender qué necesitás. Al final seguimos la charla por WhatsApp.</p>
+    </header>
+
+    <div class="progreso-contenedor">
+      <span class="progreso-texto" id="texto-progreso"></span>
+      <div class="progreso-barra"><div class="progreso-fill" id="barra-fill" style="width:0"></div></div>
+    </div>
+
+    <section id="paso" class="pregunta-tarjeta activa" aria-live="polite"></section>
+
+    <a href="/" class="volver-inicio">← Volver al inicio</a>
+
+  </main>
+
+  <script src="/js/config.js"></script>
+  <script>
+  (function () {
+    var CFG = window.CAVLA_CONFIG || {};
+    var PROVINCIAS = ['Buenos Aires','Ciudad Autónoma de Buenos Aires','Catamarca','Chaco','Chubut','Córdoba','Corrientes','Entre Ríos','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquén','Río Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucumán','Otro país'];
+
+    // ── Definición del recorrido ──────────────────────────────
+    var PASOS = {
+      tipo:   { tipo: 'single', label: 'Tipo de diseño', q: '¿Qué tipo de diseño necesitás?',
+                opts: ['Solo necesito diseñar muebles', 'Quiero diseñar un espacio'],
+                next: function (a) { return a === 0 ? 'mueble' : 'espacio'; } },
+      mueble: { tipo: 'multi', label: 'Muebles', q: '¿Qué muebles querés diseñar?', ayuda: 'Podés elegir más de uno.',
+                opts: ['Cocina', 'Placard / vestidor', 'Baño', 'Living / TV', 'Escritorio / oficina', 'Otro'],
+                next: function () { return 'presupuesto'; } },
+      espacio:{ tipo: 'single', label: 'Tipo de espacio', q: '¿Qué tipo de espacio es?',
+                opts: ['Casa', 'Departamento', 'Local comercial', 'Local gastronómico'],
+                next: function () { return 'alcance'; } },
+      alcance:{ tipo: 'single', label: 'Alcance', q: '¿Qué nivel de profundidad buscás?',
+                opts: ['Quiero reorganizar lo que ya tengo', 'Quiero un rediseño completo del espacio', 'Tengo problemas de instalaciones, humedades o estructura'],
+                next: function () { return 'ambientes'; } },
+      ambientes:{ tipo: 'multi', label: 'Ambientes', q: '¿Qué ambientes querés trabajar?', ayuda: 'Podés elegir más de uno.',
+                opts: ['Living / comedor', 'Cocina', 'Dormitorios', 'Baños', 'Otro'],
+                next: function () { return 'presupuesto'; } },
+      presupuesto:{ tipo: 'campos', label: 'Presupuesto', q: '¿Con qué presupuesto contás?',
+                ayuda: 'Para el proyecto completo (obra, muebles o ambos). Una cifra aproximada alcanza.',
+                campos: [ { id: 'presupuesto', label: 'Presupuesto aproximado', tipo: 'text', ph: 'Ej: 5.000.000 pesos o 4.000 USD', req: false },
+                          { id: 'presupuesto_nd', label: 'Todavía no lo definí', tipo: 'check' } ],
+                validar: function (v) { return (v.presupuesto || v.presupuesto_nd) ? null : { presupuesto: 'Escribí una cifra o marcá que todavía no lo definiste.' }; },
+                next: function () { return 'ubicacion'; } },
+      ubicacion:{ tipo: 'campos', label: 'Ubicación', q: '¿Dónde está el inmueble?',
+                campos: [ { id: 'provincia', label: 'Provincia', tipo: 'select', req: true },
+                          { id: 'ciudad', label: 'Ciudad', tipo: 'text', ph: 'Ej: Río Ceballos', req: true } ],
+                next: function () { return 'datos'; } },
+      datos:  { tipo: 'campos', label: 'Tus datos', q: 'Por último, ¿cómo te contacto?', final: true,
+                campos: [ { id: 'nombre', label: 'Nombre y apellido', tipo: 'text', req: true, auto: 'name' },
+                          { id: 'telefono', label: 'WhatsApp', tipo: 'tel', ph: 'Ej: 351 555 1234', req: true, auto: 'tel' },
+                          { id: 'email', label: 'Email', tipo: 'email', req: true, auto: 'email' } ],
+                next: function () { return null; } }
+    };
+
+    var respuestas = {};   // id de paso -> texto (o lista) elegido
+    var indices = {};      // id de paso -> índices elegidos (para siguiente)
+    var historial = ['tipo'];
+    var cont = document.getElementById('paso');
+
+    function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+    function letra(i) { return String.fromCharCode(65 + i); }
+
+    function totalPasos() { return respuestas.tipo === undefined ? 6 : (indices.tipo === 0 ? 5 : 7); }
+
+    function progreso() {
+      var n = historial.length, t = totalPasos();
+      document.getElementById('texto-progreso').textContent = 'Paso ' + n + ' de ' + t;
+      document.getElementById('barra-fill').style.width = Math.min(100, (n - 1) / t * 100 + 100 / t * 0.5) + '%';
+    }
+
+    function render() {
+      var id = historial[historial.length - 1], p = PASOS[id];
+      progreso();
+      var h = '<div><span class="pregunta-numero">' + String(historial.length).padStart(2, '0') + '</span><h2 class="pregunta-texto">' + esc(p.q) + '</h2>' +
+              (p.ayuda ? '<p class="test-subtitulo" style="margin-top:10px">' + esc(p.ayuda) + '</p>' : '') + '</div>';
+      if (p.tipo === 'single' || p.tipo === 'multi') {
+        h += '<div class="opciones-lista">';
+        p.opts.forEach(function (o, i) {
+          h += '<button type="button" class="opcion-btn" data-i="' + i + '"><span class="opcion-letra">' + letra(i) + '</span><span>' + esc(o) + '</span></button>';
+        });
+        h += '</div>';
+        h += '<div class="acciones">' + (p.tipo === 'multi' ? '<button type="button" class="boton-principal" id="continuar" disabled>Continuar</button>' : '') +
+             (historial.length > 1 ? '<button type="button" class="boton-secundario" id="volver">Volver</button>' : '') + '</div>';
+      } else {
+        h += '<form class="campos" id="form-paso" novalidate>';
+        p.campos.forEach(function (c) {
+          if (c.tipo === 'check') {
+            h += '<label class="campo-check"><input type="checkbox" id="f-' + c.id + '"> ' + esc(c.label) + '</label>';
+          } else if (c.tipo === 'select') {
+            h += '<div class="campo" data-campo="' + c.id + '"><label for="f-' + c.id + '">' + esc(c.label) + '</label><select id="f-' + c.id + '"><option value="">Elegí una opción</option>' +
+                 PROVINCIAS.map(function (x) { return '<option>' + esc(x) + '</option>'; }).join('') + '</select><span class="msg-error">Completá este campo.</span></div>';
+          } else {
+            h += '<div class="campo" data-campo="' + c.id + '"><label for="f-' + c.id + '">' + esc(c.label) + '</label><input id="f-' + c.id + '" type="' + c.tipo + '"' +
+                 (c.ph ? ' placeholder="' + esc(c.ph) + '"' : '') + (c.auto ? ' autocomplete="' + c.auto + '"' : '') + (c.tipo === 'tel' ? ' inputmode="tel"' : '') + '><span class="msg-error">Completá este campo.</span></div>';
+          }
+        });
+        if (p.final) h += '<div class="trampa" aria-hidden="true"><label>No completar<input type="text" id="f-web" tabindex="-1" autocomplete="off"></label></div>';
+        h += '<div class="acciones"><button type="submit" class="boton-principal">' + (p.final ? 'Enviar por WhatsApp' : 'Continuar') + '</button>' +
+             (historial.length > 1 ? '<button type="button" class="boton-secundario" id="volver">Volver</button>' : '') + '</div>';
+        if (p.final) h += '<p class="nota-privacidad">Se abre WhatsApp con tus respuestas ya escritas. Solo usamos tus datos para responderte.</p>';
+        h += '</form>';
+      }
+      cont.innerHTML = h;
+      cont.classList.remove('activa'); void cont.offsetWidth; cont.classList.add('activa');
+      enlazar(id, p);
+    }
+
+    function enlazar(id, p) {
+      var v = document.getElementById('volver');
+      if (v) v.addEventListener('click', function () { historial.pop(); render(); });
+
+      if (p.tipo === 'single') {
+        cont.querySelectorAll('.opcion-btn').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var i = +b.getAttribute('data-i');
+            guardarUnica(id, p, i);
+          });
+        });
+      } else if (p.tipo === 'multi') {
+        var sel = (indices[id] || []).slice();
+        var btnC = document.getElementById('continuar');
+        function pinta() {
+          cont.querySelectorAll('.opcion-btn').forEach(function (b) { b.classList.toggle('sel', sel.indexOf(+b.getAttribute('data-i')) > -1); });
+          btnC.disabled = sel.length === 0;
+        }
+        cont.querySelectorAll('.opcion-btn').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var i = +b.getAttribute('data-i'), k = sel.indexOf(i);
+            if (k > -1) sel.splice(k, 1); else sel.push(i);
+            pinta();
+          });
+        });
+        btnC.addEventListener('click', function () {
+          sel.sort(function (a, b) { return a - b; });
+          indices[id] = sel; respuestas[id] = sel.map(function (i) { return p.opts[i]; });
+          avanzar(p, sel);
+        });
+        pinta();
+      } else {
+        var form = document.getElementById('form-paso');
+        p.campos.forEach(function (c) {
+          var el = document.getElementById('f-' + c.id), prev = respuestas[id] && respuestas[id][c.id];
+          if (prev !== undefined && el) { if (c.tipo === 'check') el.checked = !!prev; else el.value = prev; }
+          if (id === 'ubicacion' && c.id === 'provincia' && !prev) el.value = 'Córdoba';
+        });
+        form.addEventListener('submit', function (e) { e.preventDefault(); enviarPaso(id, p, form); });
+      }
+    }
+
+    function guardarUnica(id, p, i) {
+      indices[id] = i; respuestas[id] = p.opts[i];
+      // si cambia el tipo de diseño, se descartan las respuestas de la otra rama
+      if (id === 'tipo') { ['mueble','espacio','alcance','ambientes'].forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
+      avanzar(p, i);
+    }
+
+    function avanzar(p, a) {
+      var sig = p.next(a);
+      if (sig) { historial.push(sig); render(); }
+    }
+
+    function enviarPaso(id, p, form) {
+      var vals = {}, ok = true, errores = p.validar ? null : null;
+      p.campos.forEach(function (c) {
+        var el = document.getElementById('f-' + c.id);
+        vals[c.id] = c.tipo === 'check' ? el.checked : el.value.trim();
+        var cont = el.closest('.campo'); if (cont) cont.classList.remove('error');
+      });
+      function marcar(idc, msg) {
+        var el = document.getElementById('f-' + idc), c = el && el.closest('.campo');
+        if (c) { c.classList.add('error'); if (msg) c.querySelector('.msg-error').textContent = msg; }
+        ok = false;
+      }
+      p.campos.forEach(function (c) {
+        if (c.req && !vals[c.id]) marcar(c.id, 'Completá este campo.');
+      });
+      if (vals.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals.email)) marcar('email', 'Revisá el email, parece incompleto.');
+      if (vals.telefono && vals.telefono.replace(/\D/g, '').length < 8) marcar('telefono', 'Escribí tu número con característica.');
+      if (p.validar) { var er = p.validar(vals); if (er) { Object.keys(er).forEach(function (k) { marcar(k, er[k]); }); } }
+      if (!ok) { var primero = form.querySelector('.campo.error input, .campo.error select'); if (primero) primero.focus(); return; }
+      respuestas[id] = vals;
+      if (p.final) { var trampa = document.getElementById('f-web'); finalizar(trampa && trampa.value); return; }
+      avanzar(p, null);
+    }
+
+    // ── Armado del mensaje y envío ────────────────────────────
+    function lista(v) { return Array.isArray(v) ? v.join(', ') : v; }
+    function resumen() {
+      var r = respuestas, d = r.datos || {}, u = r.ubicacion || {}, pr = r.presupuesto || {};
+      var campos = {
+        tipo_diseno: r.tipo || '',
+        muebles: r.mueble ? lista(r.mueble) : '',
+        tipo_espacio: r.espacio || '',
+        alcance: r.alcance || '',
+        ambientes: r.ambientes ? lista(r.ambientes) : '',
+        presupuesto: pr.presupuesto_nd ? 'Todavía no lo definió' : (pr.presupuesto || ''),
+        provincia: u.provincia || '',
+        ciudad: u.ciudad || '',
+        nombre: d.nombre || '',
+        telefono: d.telefono || '',
+        email: d.email || ''
+      };
+      return campos;
+    }
+    function mensaje(c) {
+      var l = ['Hola Cata, soy ' + c.nombre + '. Completé el formulario en la web:', ''];
+      l.push('• Diseño: ' + c.tipo_diseno);
+      if (c.muebles) l.push('• Muebles: ' + c.muebles);
+      if (c.tipo_espacio) l.push('• Espacio: ' + c.tipo_espacio);
+      if (c.alcance) l.push('• Alcance: ' + c.alcance);
+      if (c.ambientes) l.push('• Ambientes: ' + c.ambientes);
+      l.push('• Presupuesto: ' + c.presupuesto);
+      l.push('• Ubicación: ' + c.ciudad + ', ' + c.provincia);
+      l.push('• Email: ' + c.email);
+      l.push('• WhatsApp: ' + c.telefono);
+      return l.join('\n');
+    }
+
+    function finalizar(esBot) {
+      var c = resumen(), url = 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent(mensaje(c));
+      if (!esBot && CFG.appsScriptUrl) {
+        try {
+          fetch(CFG.appsScriptUrl, { method: 'POST', mode: 'no-cors', keepalive: true,
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(Object.assign({ origen: location.href }, c)) });
+        } catch (e) { /* si falla el guardado igual seguimos por WhatsApp */ }
+      }
+      document.getElementById('texto-progreso').textContent = 'Listo';
+      document.getElementById('barra-fill').style.width = '100%';
+      cont.innerHTML = '<div><h2 class="pregunta-texto">Gracias, ' + esc(c.nombre.split(' ')[0]) + '.</h2>' +
+        '<p class="test-subtitulo" style="margin-top:12px">Te llevo a WhatsApp con tus respuestas ya escritas. Solo tenés que apretar enviar.</p></div>' +
+        '<div class="acciones"><a class="boton-principal" id="ir-wsp" href="' + url + '" target="_blank" rel="noopener">Abrir WhatsApp</a></div>';
+      cont.classList.add('gracias-tarjeta');
+      setTimeout(function () { window.location.href = url; }, 900);
+    }
+
+    render();
+  })();
+  </script>
+
+</body>
+</html>
