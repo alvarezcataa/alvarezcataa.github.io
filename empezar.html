@@ -80,9 +80,6 @@
     .opcion.sel { color: var(--w-100); border-color: rgba(255,248,235,.9); background: rgba(255,248,235,.08); }
     .opcion.sel::before { border-color: rgba(255,248,235,.95); background: radial-gradient(circle, rgba(255,248,235,.95) 0 38%, transparent 42%); }
     .opcion:focus-visible { outline: 2px solid var(--w-85); outline-offset: 2px; }
-    /* Selección múltiple: píldoras con casilla */
-    .pastilla::before { content: ""; display: inline-block; width: 11px; height: 11px; margin-right: 9px; vertical-align: -1px; border: 1px solid var(--w-50); border-radius: 3px; }
-    .pastilla.sel::before { background: var(--bg); border-color: var(--bg); box-shadow: inset 0 0 0 2px rgba(255,248,235,.92); }
 
     .campos { display: flex; flex-direction: column; gap: 16px; }
     .campo { display: flex; flex-direction: column; gap: 8px; }
@@ -128,7 +125,7 @@
       <a href="/sobremi">Sobre mí</a>
       <a href="/contacto">Contacto</a>
     </nav>
-    <a href="/empezar" class="cavla-nav__cta">Empezá tu proyecto</a>
+    <a href="/contacto" class="cavla-nav__cta" id="nav-dudas">Tengo dudas</a>
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
@@ -178,6 +175,11 @@
   <script>
   (function () {
     var CFG = window.CAVLA_CONFIG || {};
+    var dudas = document.getElementById('nav-dudas');
+    if (dudas && CFG.whatsapp) {
+      dudas.href = 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent('Hola Cata, tengo una duda antes de empezar mi proyecto.');
+      dudas.target = '_blank'; dudas.rel = 'noopener';
+    }
     var PROVINCIAS = ['Buenos Aires','Ciudad Autónoma de Buenos Aires','Catamarca','Chaco','Chubut','Córdoba','Corrientes','Entre Ríos','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquén','Río Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucumán','Otro país'];
 
     // ── Recorrido del formulario ──────────────────────────────
@@ -190,10 +192,22 @@
                 next: function () { return 'presupuesto'; } },
       espacio:{ tipo: 'single', q: '¿Qué tipo de espacio es?',
                 opts: ['Casa', 'Departamento', 'Local comercial', 'Local gastronómico'],
+                next: function (a) { return a >= 2 ? 'rubro' : 'alcance'; } },
+      rubro:  { tipo: 'single', q: '¿De qué rubro es?',
+                opts: function () { return esLocal() && indices.espacio === 3 ? ['Café', 'Restaurante', 'Bar', 'Otro'] : ['Indumentaria / accesorios', 'Estética y bienestar', 'Salud', 'Servicios / oficina', 'Otro']; },
                 next: function () { return 'alcance'; } },
       alcance:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?',
                 opts: ['Quiero reorganizar lo que ya tengo', 'Quiero un rediseño completo del espacio', 'Tengo problemas de instalaciones, humedades o estructura'],
-                next: function () { return 'ambientes'; } },
+                next: function () { return esLocal() ? 'superficie' : 'ambientes'; } },
+      superficie:{ tipo: 'single', q: '¿Qué superficie tiene, aproximadamente?',
+                opts: ['Hasta 30 m²', 'Entre 30 y 60 m²', 'Entre 60 y 100 m²', 'Más de 100 m²'],
+                next: function () { return 'estado'; } },
+      estado: { tipo: 'single', q: '¿En qué estado está el local?',
+                opts: ['Local nuevo, a estrenar', 'Ya está funcionando y lo quiero renovar'],
+                next: function () { return 'marca'; } },
+      marca:  { tipo: 'single', q: '¿Ya tienen marca?',
+                opts: ['Sí, con identidad definida', 'Está en proceso', 'Todavía no'],
+                next: function () { return 'presupuesto'; } },
       ambientes:{ tipo: 'multi', q: '¿Qué ambientes querés trabajar?', ayuda: 'Podés elegir más de uno.',
                 opts: ['Living / comedor', 'Cocina', 'Dormitorios', 'Baños', 'Otro'],
                 next: function () { return 'presupuesto'; } },
@@ -217,8 +231,10 @@
     var respuestas = {}, indices = {}, historial = ['tipo'];
     var cont = document.getElementById('paso');
 
+    function getOpts(p) { return typeof p.opts === 'function' ? p.opts() : p.opts; }
+    function esLocal() { return indices.espacio >= 2; }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-    function totalPasos() { return indices.tipo === undefined ? 6 : (indices.tipo === 0 ? 5 : 7); }
+    function totalPasos() { return indices.tipo === undefined ? 6 : (indices.tipo === 0 ? 5 : (esLocal() ? 10 : 7)); }
 
     function progreso() {
       var n = historial.length, t = totalPasos();
@@ -233,7 +249,7 @@
       if (p.tipo === 'single' || p.tipo === 'multi') {
         var unica = p.tipo === 'single', cl = unica ? 'opcion' : 'pastilla';
         h += '<div class="bloque"><div class="' + (unica ? 'opciones' : 'pastillas') + '" role="' + (unica ? 'radiogroup' : 'group') + '">';
-        p.opts.forEach(function (o, i) { h += '<button type="button" class="' + cl + '" data-i="' + i + '"' + (unica ? ' role="radio"' : '') + '>' + esc(o) + '</button>'; });
+        getOpts(p).forEach(function (o, i) { h += '<button type="button" class="' + cl + '" data-i="' + i + '"' + (unica ? ' role="radio"' : '') + '>' + esc(o) + '</button>'; });
         h += '</div></div><div class="acciones">' +
              (historial.length > 1 ? '<button type="button" class="volver" id="volver">← Volver</button>' : '<span></span>') +
              (p.tipo === 'multi' ? '<button type="button" class="btn-cta-servicio" id="continuar" disabled>Continuar</button>' : '') + '</div>';
@@ -291,7 +307,7 @@
         });
         btnC.addEventListener('click', function () {
           sel.sort(function (a, b) { return a - b; });
-          indices[id] = sel; respuestas[id] = sel.map(function (i) { return p.opts[i]; });
+          indices[id] = sel; respuestas[id] = sel.map(function (i) { return getOpts(p)[i]; });
           avanzar(p, sel);
         });
         pinta();
@@ -307,8 +323,10 @@
     }
 
     function guardarUnica(id, p, i) {
-      indices[id] = i; respuestas[id] = p.opts[i];
-      if (id === 'tipo') { ['mueble', 'espacio', 'alcance', 'ambientes'].forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
+      var cambio = indices[id] !== undefined && indices[id] !== i;
+      indices[id] = i; respuestas[id] = getOpts(p)[i];
+      if (id === 'espacio' && cambio) { ['rubro', 'alcance', 'ambientes', 'superficie', 'estado', 'marca'].forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
+      if (id === 'tipo') { ['mueble', 'espacio', 'rubro', 'alcance', 'ambientes', 'superficie', 'estado', 'marca'].forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
       avanzar(p, i);
     }
     function avanzar(p, a) { var sig = p.next(a); if (sig) { historial.push(sig); render(); } }
@@ -341,6 +359,7 @@
       var r = respuestas, d = r.datos || {}, u = r.ubicacion || {}, pr = r.presupuesto || {};
       return {
         tipo_diseno: r.tipo || '', muebles: r.mueble ? lista(r.mueble) : '', tipo_espacio: r.espacio || '',
+        rubro: r.rubro || '', superficie: r.superficie || '', estado_local: r.estado || '', marca: r.marca || '',
         alcance: r.alcance || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
         presupuesto: pr.presupuesto_nd ? 'Todavía no lo definió' : (pr.presupuesto || ''),
         provincia: u.provincia || '', ciudad: u.ciudad || '', nombre: d.nombre || '', telefono: d.telefono || '', email: d.email || ''
@@ -351,7 +370,11 @@
       l.push('• Diseño: ' + c.tipo_diseno);
       if (c.muebles) l.push('• Muebles: ' + c.muebles);
       if (c.tipo_espacio) l.push('• Espacio: ' + c.tipo_espacio);
+      if (c.rubro) l.push('• Rubro: ' + c.rubro);
       if (c.alcance) l.push('• Alcance: ' + c.alcance);
+      if (c.superficie) l.push('• Superficie: ' + c.superficie);
+      if (c.estado_local) l.push('• Estado del local: ' + c.estado_local);
+      if (c.marca) l.push('• Marca: ' + c.marca);
       if (c.ambientes) l.push('• Ambientes: ' + c.ambientes);
       l.push('• Presupuesto: ' + c.presupuesto);
       l.push('• Ubicación: ' + c.ciudad + ', ' + c.provincia);
