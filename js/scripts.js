@@ -439,3 +439,18 @@ document.addEventListener('scroll', () => {
     });
   });
 })();
+
+// Botones "Cotizá…" de los servicios: bajan suavemente al bloque "Cómo empezamos"
+(function () {
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest && e.target.closest('a[data-scroll]');
+    if (!a) return;
+    const target = document.getElementById(a.getAttribute('data-scroll'));
+    if (!target) return;
+    e.preventDefault();
+    const sm = window.__CAVLA_SMOOTH;
+    const idx = sm ? sm.sections.indexOf(target) : -1;
+    const top = idx > -1 ? sm.sectionPositions[idx] : target.offsetTop;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  });
+})();

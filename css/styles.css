@@ -2478,3 +2478,48 @@ button.boton-cotizar {
 }
 h1.subtitulo-pagina { font-family: 'Montserrat', sans-serif; }
 :where(h3.titulo-virtual, h3.nombre-servicio) { margin-top: 0.83em; margin-bottom: 0.83em; }
+
+/* ===================================================================
+   23. CÓMO EMPEZAMOS (cierre de cada servicio, lleva a WhatsApp)
+   =================================================================== */
+.como-empezamos .faq-content { max-width: 1100px; }
+.pasos-inicio {
+  list-style: none;
+  margin: 0 0 6vh;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4vw;
+  text-align: left;
+}
+.paso-inicio { border-top: 1px solid rgba(255,255,255,0.45); padding-top: 2vh; }
+.paso-inicio__num {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 2.6rem;
+  line-height: 1;
+  opacity: 0.8;
+}
+.paso-inicio__titulo {
+  margin: 1.2vh 0 1vh;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.paso-inicio p {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+@media (max-width: 810px) {
+  .pasos-inicio { grid-template-columns: 1fr; gap: 3vh; margin-bottom: 4vh; }
+  .paso-inicio__num { font-size: 2rem; }
+  .paso-inicio p { font-size: 0.85rem; }
+  .como-empezamos .faq-content { padding: 10vh 7vw 6vh; box-sizing: border-box; }
+  .como-empezamos .btn-cotizacion { font-size: 1.15rem; padding: 1.4vh 5vw; }
+}

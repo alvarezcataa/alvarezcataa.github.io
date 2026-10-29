@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relevamiento — Estudio CAVLA</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon_io/favicon-192.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon_io/favicon-48.png" />
+  <link rel="icon" type="image/x-icon" href="/favicon_io/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:    #130c09;
+      --w-100: rgba(255,255,255,1);
+      --w-85:  rgba(255,255,255,.85);
+      --w-70:  rgba(255,255,255,.70);
+      --w-55:  rgba(255,255,255,.55);
+      --w-40:  rgba(255,255,255,.40);
+      --w-28:  rgba(255,255,255,.28);
+      --w-18:  rgba(255,255,255,.18);
+      --w-12:  rgba(255,255,255,.12);
+      --w-08:  rgba(255,255,255,.08);
+      --w-05:  rgba(255,255,255,.05);
+      --w-03:  rgba(255,255,255,.03);
+      --serif: 'Playfair Display', 'Times New Roman', serif;
+      --sans:  'Montserrat', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--w-85);
+      font-family: var(--sans);
+      font-weight: 300;
+      letter-spacing: .01em;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      height: 100%;
+      overflow: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+    .page-wrap {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .contenido {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 60vw;
+      max-width: 60vw;
+      margin: 0 auto;
+      padding: 100px 0 20px;
+      min-height: 0;
+    }
+    @media (max-width: 810px) {
+      .contenido { width: 90vw; max-width: 90vw; padding: 80px 0 12px; }
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--w-55);
+      font-weight: 400;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .display {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--w-100);
+      line-height: 1.02;
+      letter-spacing: -.01em;
+      margin: 10px 0 0;
+      font-size: clamp(36px, 5vw, 68px);
+      flex-shrink: 0;
+    }
+    .display em { font-style: italic; }
+
+    .instruccion {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--w-40);
+      margin: 18px 0 14px;
+      flex-shrink: 0;
+    }
+
+    .cal-wrap {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .form-wrap {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .form-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .nota-inferior {
+      flex-shrink: 0;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--w-28);
+      letter-spacing: .06em;
+      line-height: 1.7;
+      text-align: center;
+      font-family: var(--serif);
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body class="pagina">
+
+  <nav class="cavla-nav">
+    <a href="/" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+    <nav class="cavla-nav__center" aria-label="Principal">
+      <a href="/">Inicio</a>
+      <a href="/filosofia">Filosofía</a>
+      <a href="/sobremi">Sobre mí</a>
+      <a href="/contacto">Contacto</a>
+    </nav>
+    <a href="/test" class="cavla-nav__cta">Test de servicios</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="/" onclick="toggleMenu()">Inicio</a></li>
+      <li><a href="/filosofia" onclick="toggleMenu()">Filosofía</a></li>
+      <li><a href="/sobremi" onclick="toggleMenu()">Sobre mí</a></li>
+      <li><a href="/contacto" onclick="toggleMenu()">Contacto</a></li>
+    </ul>
+  </div>
+
+  <div class="page-wrap">
+    <div class="contenido">
+
+      <p class="eyebrow">Estudio CAVLA</p>
+      <h1 class="display"><em>Relevamiento</em></h1>
+
+      <p class="instruccion">Contame cómo es tu espacio y cómo lo vivís</p>
+
+      <div class="form-wrap">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdde5R6PWk9GIlEQuWElyqS7OAjxXSDIDrjWYyZXFHB3aipsA/viewform?embedded=true"
+          title="Formulario de relevamiento de Estudio CAVLA"
+          loading="lazy">Cargando…</iframe>
+      </div>
+
+      <p class="nota-inferior">
+        Cuando termines de completarlo, avisame por WhatsApp y seguimos con la reunión.
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Menu toggle -->
+  <script>
+    const sideMenu = document.getElementById('sideMenu');
+    window.toggleMenu = function() {
+      if (!sideMenu) return;
+      sideMenu.classList.toggle('open');
+    };
+    document.addEventListener('click', function(e) {
+      if (!sideMenu || !sideMenu.classList.contains('open')) return;
+      const toggle = document.querySelector('.menu-toggle');
+      if (sideMenu.contains(e.target) || (toggle && toggle.contains(e.target))) return;
+      sideMenu.classList.remove('open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>
