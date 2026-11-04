@@ -24,7 +24,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <style>
     /* ── Pantalla de proyectos ── */
-    .proyectos-pantalla { position: relative; overflow: hidden; color: #fff; }
+    .proyectos-pantalla { position: relative; overflow: hidden; color: #fff; background: #130c09; }
     .proyectos-contenido { position: relative; z-index: 3; height: calc(var(--vh, 1vh) * 100); padding: 13vh 4vw 5vh; display: flex; flex-direction: column; box-sizing: border-box; }
     .filtros { display: flex; justify-content: center; gap: clamp(16px, 3.5vw, 44px); margin: 0 0 3vh; padding-bottom: 12px; border-bottom: .5px solid rgba(255,255,255,.15); flex: 0 0 auto; overflow-x: auto; scrollbar-width: none; }
     .filtros::-webkit-scrollbar { display: none; }
@@ -34,22 +34,31 @@
     .filtro[aria-pressed="true"]::after { transform: scaleX(1); }
     .filtro:focus-visible { outline: 2px solid rgba(255,255,255,.85); outline-offset: 4px; }
 
-    /* Carril horizontal: 3 filas, se desliza hacia los costados */
-    .carril-wrap { position: relative; flex: 1 1 auto; min-height: 0; }
-    .carril { --gap: 16px; --fila: calc((100% - 2 * var(--gap)) / 3); height: 100%; display: grid; grid-template-rows: repeat(3, 1fr); grid-auto-flow: column; grid-auto-columns: calc((var(--alto-carril, 60vh) - 2 * var(--gap)) / 3 * 1.55); gap: var(--gap); overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.35) transparent; padding-bottom: 14px; cursor: grab; overscroll-behavior-x: contain; }
+    /* Carril horizontal infinito: 3 filas, flechas laterales, bordes que se difuminan */
+    .carril-wrap { position: relative; flex: 1 1 auto; min-height: 0; margin: 0 -4vw; }
+    .carril { --gap: 14px; height: 100%; display: grid; grid-template-rows: repeat(3, 1fr); grid-auto-flow: column; grid-auto-columns: calc((var(--alto-carril, 60vh) - 2 * var(--gap)) / 3 * 1.55); gap: var(--gap); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; cursor: grab; overscroll-behavior-x: contain;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10vw, #000 calc(100% - 10vw), transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 10vw, #000 calc(100% - 10vw), transparent 100%); }
+    .carril::-webkit-scrollbar { display: none; }
     .carril.arrastrando { cursor: grabbing; user-select: none; }
-    .carril::-webkit-scrollbar { height: 4px; }
-    .carril::-webkit-scrollbar-thumb { background: rgba(255,255,255,.35); border-radius: 4px; }
-    .carril-wrap.hay-mas::after { content: ""; position: absolute; top: 0; right: 0; bottom: 14px; width: 60px; pointer-events: none; background: linear-gradient(to left, rgba(19,12,9,.85), transparent); }
+    .flecha-carril { position: absolute; top: 0; bottom: 0; width: clamp(44px, 8vw, 110px); z-index: 4; display: flex; align-items: center; background: none; border: 0; padding: 0; cursor: pointer; color: rgba(255,255,255,.75); transition: color .25s, opacity .25s; }
+    .flecha-carril--izq { left: 0; justify-content: flex-start; padding-left: clamp(10px, 2.2vw, 34px); }
+    .flecha-carril--der { right: 0; justify-content: flex-end; padding-right: clamp(10px, 2.2vw, 34px); }
+    .flecha-carril svg { width: clamp(14px, 1.6vw, 22px); height: clamp(60px, 11vh, 110px); fill: none; stroke: currentColor; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+    .flecha-carril:hover { color: #fff; }
+    .flecha-carril--izq:hover svg { transform: translateX(-4px); }
+    .flecha-carril--der:hover svg { transform: translateX(4px); }
+    .flecha-carril:focus-visible { outline: 1px solid rgba(255,255,255,.7); outline-offset: -6px; }
+    .carril-wrap.sin-flechas .flecha-carril { display: none; }
 
-    .proyecto { position: relative; display: block; min-height: 0; border-radius: 25px; overflow: hidden; text-decoration: none; color: #fff; background-size: cover; background-position: center; border: .5px solid rgba(255,255,255,.15); transition: transform .8s cubic-bezier(.2,.7,.2,1), border-color .3s; }
+    .proyecto { position: relative; display: block; min-height: 0; border-radius: 16px; overflow: hidden; text-decoration: none; color: #fff; background-size: cover; background-position: center; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
     .proyecto[hidden] { display: none; }
-    .proyecto:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.45); }
+    .proyecto--relleno { visibility: hidden; pointer-events: none; }
+    .proyecto:hover { transform: translateY(-3px); }
     .proyecto__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) brightness(.78); transition: filter 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1); }
     .proyecto:hover .proyecto__img { filter: saturate(1.05) brightness(.92); transform: scale(1.04); }
-    .proyecto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(19,9,10,.75) 100%); pointer-events: none; }
-    .proyecto__texto { position: absolute; left: 18px; bottom: 16px; right: 18px; z-index: 2; text-align: left; }
-    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(15px, 2.4vh, 24px); line-height: 1.15; color: #fff; }
+    .proyecto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(19,9,10,.7) 100%); pointer-events: none; }
+    .proyecto__texto { position: absolute; left: 14px; bottom: 12px; right: 14px; z-index: 2; text-align: left; }
+    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(9px, 1.2vh, 12px); line-height: 1.2; color: #fff; }
     .ph--1 { background-image: linear-gradient(160deg, #3a261f, #1a0f0c); }
     .ph--2 { background-image: linear-gradient(160deg, #4a3526, #201410); }
     .ph--3 { background-image: linear-gradient(160deg, #2c1c17, #120a08); }
@@ -59,8 +68,9 @@
     @media (max-width: 810px) {
       .proyectos-contenido { padding: 12vh 5vw 4vh; }
       .filtros { justify-content: flex-start; gap: 18px; }
-      .proyecto { border-radius: 20px; }
-      .carril { --gap: 12px; grid-auto-columns: calc((var(--alto-carril, 55vh) - 2 * var(--gap)) / 3 * 1.5); }
+      .proyecto { border-radius: 14px; }
+      .carril { --gap: 10px; grid-auto-columns: calc((var(--alto-carril, 55vh) - 2 * var(--gap)) / 3 * 1.5); }
+      .carril-wrap { margin: 0 -5vw; }
     }
   </style>
 </head>
@@ -119,11 +129,6 @@
 
   <!-- PROYECTOS -->
   <section class="proyectos-pantalla mainContent">
-    <img alt="" src="images/FILOSOFÍA/TEXTURA.webp" class="page_fondo">
-    <div class="opacidad"></div>
-    <div class="shadowa"></div>
-    <div class="bg-gradient"></div>
-
     <div class="proyectos-contenido">
       <div class="filtros" role="group" aria-label="Filtrar proyectos por tipo">
         <button type="button" class="filtro" data-filtro="Todo" aria-pressed="true">Todo</button>
@@ -160,6 +165,8 @@
             <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto comercial 01</h2></div>
           </article>
         </div>
+        <button type="button" class="flecha-carril flecha-carril--izq" id="flecha-izq" aria-label="Ver proyectos anteriores"><svg viewBox="0 0 20 100" aria-hidden="true"><polyline points="16,4 4,50 16,96"/></svg></button>
+        <button type="button" class="flecha-carril flecha-carril--der" id="flecha-der" aria-label="Ver más proyectos"><svg viewBox="0 0 20 100" aria-hidden="true"><polyline points="4,4 16,50 4,96"/></svg></button>
         <p class="vacio" id="vacio">Muy pronto vas a ver proyectos acá.</p>
       </div>
     </div>
@@ -169,46 +176,78 @@
   <script>
   (function () {
     var wrap = document.getElementById('carril-wrap'), carril = document.getElementById('carril'), vacio = document.getElementById('vacio');
-    var botones = document.querySelectorAll('.filtro'), items = document.querySelectorAll('.proyecto');
+    var botones = document.querySelectorAll('.filtro');
+    var originales = Array.prototype.slice.call(carril.querySelectorAll('.proyecto'));
     var validos = ['Todo', 'Residencial', 'Gastronómico', 'Comercial'];
+    var filtro = 'Todo', W = 0, paso = 0, anim = null;
 
-    function medir() {
+    // Arma el carril infinito: el conjunto visible (completado en columnas de 3) se repite las veces necesarias
+    function construir() {
+      carril.querySelectorAll('[data-clon]').forEach(function (c) { c.remove(); });
+      originales.forEach(function (it) { var ok = filtro === 'Todo' || it.getAttribute('data-cat') === filtro; it.hidden = !ok; });
+      var vis = originales.filter(function (it) { return !it.hidden; });
+      vacio.style.display = vis.length ? 'none' : 'flex';
+      wrap.classList.toggle('sin-flechas', !vis.length);
       carril.style.setProperty('--alto-carril', carril.clientHeight + 'px');
-      wrap.classList.toggle('hay-mas', carril.scrollWidth - carril.clientWidth - carril.scrollLeft > 4);
+      if (!vis.length) { W = 0; return; }
+      var base = vis.slice();
+      while (base.length % 3) { var r = document.createElement('article'); r.className = 'proyecto proyecto--relleno'; r.setAttribute('aria-hidden', 'true'); r.setAttribute('data-clon', '1'); carril.appendChild(r); base.push(r); }
+      var fin = base.length;
+      // medir un conjunto
+      var colW = vis[0].getBoundingClientRect().width, gap = parseFloat(getComputedStyle(carril).columnGap) || 0;
+      paso = colW + gap;
+      W = (fin / 3) * paso;
+      var copias = Math.ceil(carril.clientWidth / W) + 2;
+      for (var c = 1; c < copias; c++) {
+        base.slice(0, fin).forEach(function (it) {
+          var k = it.cloneNode(true); k.setAttribute('data-clon', '1'); k.setAttribute('aria-hidden', 'true'); k.removeAttribute('hidden'); carril.appendChild(k);
+        });
+      }
+      carril.scrollLeft = W;
     }
+    function envolver() {
+      if (!W) return;
+      if (carril.scrollLeft < W) carril.scrollLeft += W;
+      else if (carril.scrollLeft >= 2 * W) carril.scrollLeft -= W;
+    }
+    function mover(dir) {
+      if (!W) return;
+      if (anim) cancelAnimationFrame(anim);
+      var ini = carril.scrollLeft, dist = dir * paso * 2, t0 = null, dur = 650;
+      function paso_(t) {
+        if (t0 === null) t0 = t;
+        var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3), pos = ini + dist * e;
+        carril.scrollLeft = pos;
+        if (carril.scrollLeft < W || carril.scrollLeft >= 2 * W) { var d = carril.scrollLeft < W ? W : -W; carril.scrollLeft += d; ini += d; }
+        if (p < 1) anim = requestAnimationFrame(paso_); else anim = null;
+      }
+      anim = requestAnimationFrame(paso_);
+    }
+    document.getElementById('flecha-izq').addEventListener('click', function () { mover(-1); });
+    document.getElementById('flecha-der').addEventListener('click', function () { mover(1); });
+    carril.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); mover(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); mover(-1); } });
+
     function aplicar(f, url) {
-      var n = 0;
-      items.forEach(function (it) { var ok = f === 'Todo' || it.getAttribute('data-cat') === f; it.hidden = !ok; if (ok) n++; });
+      filtro = f;
       botones.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-filtro') === f ? 'true' : 'false'); });
-      vacio.style.display = n ? 'none' : 'flex';
-      carril.scrollLeft = 0; medir();
+      construir();
       if (url) { try { history.replaceState(null, '', f === 'Todo' ? location.pathname : '?categoria=' + encodeURIComponent(f.toLowerCase())); } catch (e) {} }
     }
     botones.forEach(function (b) { b.addEventListener('click', function () { aplicar(b.getAttribute('data-filtro'), true); }); });
-    var q = new URLSearchParams(location.search).get('categoria');
-    if (q) { var m = validos.filter(function (v) { return v.toLowerCase() === q.toLowerCase(); })[0]; if (m) aplicar(m, false); }
-
-    // Rueda del mouse: en esta última pantalla desliza el carril hacia los costados
-    wrap.addEventListener('wheel', function (e) {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;            // el trackpad ya desliza solo
-      var max = carril.scrollWidth - carril.clientWidth;
-      if (max <= 0) return;
-      var alFondo = (window.scrollY || 0) >= document.body.scrollHeight - window.innerHeight - 4;
-      if (!alFondo) return;
-      if ((e.deltaY > 0 && carril.scrollLeft < max - 1) || (e.deltaY < 0 && carril.scrollLeft > 0)) {
-        carril.scrollLeft += e.deltaY; e.preventDefault();
-      }
-    }, { passive: false });
 
     // Arrastrar con el mouse
     var down = false, x0 = 0, s0 = 0, movio = false;
-    carril.addEventListener('mousedown', function (e) { down = true; movio = false; x0 = e.pageX; s0 = carril.scrollLeft; });
-    window.addEventListener('mousemove', function (e) { if (!down) return; var dx = e.pageX - x0; if (Math.abs(dx) > 4) { movio = true; carril.classList.add('arrastrando'); } carril.scrollLeft = s0 - dx; });
+    carril.addEventListener('mousedown', function (e) { if (anim) { cancelAnimationFrame(anim); anim = null; } down = true; movio = false; x0 = e.pageX; s0 = carril.scrollLeft; });
+    window.addEventListener('mousemove', function (e) { if (!down) return; var dx = e.pageX - x0; if (Math.abs(dx) > 4) { movio = true; carril.classList.add('arrastrando'); } carril.scrollLeft = s0 - dx; envolver(); if (carril.scrollLeft !== s0 - dx) { s0 = carril.scrollLeft + dx; } });
     window.addEventListener('mouseup', function () { down = false; carril.classList.remove('arrastrando'); });
     carril.addEventListener('click', function (e) { if (movio) { e.preventDefault(); e.stopPropagation(); movio = false; } }, true);
+    carril.addEventListener('scroll', envolver, { passive: true });
 
-    carril.addEventListener('scroll', medir, { passive: true });
-    window.addEventListener('resize', medir); window.addEventListener('load', medir); medir();
+    var q = new URLSearchParams(location.search).get('categoria');
+    var m = q && validos.filter(function (v) { return v.toLowerCase() === q.toLowerCase(); })[0];
+    aplicar(m || 'Todo', false);
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(construir, 150); });
+    window.addEventListener('load', construir);
   })();
   </script>
 </body>
