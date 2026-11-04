@@ -28,6 +28,8 @@
     .subtitulo-pagina--letras { justify-content: space-between; width: 60%; }
     .memoria-bloque { position: relative; z-index: 10; width: 100%; box-sizing: border-box; padding: 0 30vw; text-align: left; }
     .memoria-bloque .memoria-meta { margin: 0 0 3vh; font-family: 'Montserrat', sans-serif; font-size: 1.5vh; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); }
+    .memoria-fondo { filter: brightness(.5) blur(4px); transform: scale(1.05); }
+    .memoria-bloque .memoria-meta { line-height: 1.8; }
     .memoria-bloque .texto-grafico { margin: 0 0 2vh; }
     @media (max-width: 810px) {
       .titulo-pagina { font-size: 11vw; }
@@ -85,12 +87,12 @@
 
   <!-- INFORMACIÓN -->
   <section class="pantalla-identificacion mainContent">
-    <img alt="" src="/images/SERVICIOS/RESIDENCIAL/CONC-D.webp" class="page_fondo">
+    <img alt="" src="/images/SERVICIOS/RESIDENCIAL/CONC-D.webp" class="page_fondo memoria-fondo">
     <div class="opacidad"></div>
     <div class="shadowa"></div>
     <div class="bg-gradient"></div>
     <div class="memoria-bloque">
-      <p class="memoria-meta">Nueva Córdoba, Córdoba, Argentina | 2025</p>
+      <p class="memoria-meta">Nueva Córdoba, Córdoba, Argentina<br>2025</p>
       <p class="texto-grafico">Texto de ejemplo. Acá va la memoria descriptiva del proyecto: quiénes son los clientes, qué necesitaban y cuál fue el punto de partida del espacio.</p>
       <p class="texto-grafico"><b>El diseño parte de lo que el espacio les hace sentir.</b> Se trabajó con materiales cálidos, luz natural y recorridos simples, para que cada ambiente se sienta propio desde el primer día.</p>
     </div>
