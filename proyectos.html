@@ -49,16 +49,17 @@
     .flecha-carril--der:hover svg { transform: translateX(4px); }
     .flecha-carril:focus-visible { outline: 1px solid rgba(255,255,255,.7); outline-offset: -6px; }
     .carril-wrap.sin-flechas .flecha-carril { display: none; }
+    .carril-wrap.estatico .carril { padding-left: 4vw; -webkit-mask-image: none; mask-image: none; cursor: default; overflow-x: hidden; }
 
-    .proyecto { position: relative; display: block; min-height: 0; border-radius: 28px; overflow: hidden; text-decoration: none; color: #fff; background-size: cover; background-position: center; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+    .proyecto { position: relative; display: block; min-height: 0; --radio: 28px; border-radius: var(--radio); overflow: hidden; text-decoration: none; color: #fff; background-size: cover; background-position: center; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
     .proyecto[hidden] { display: none; }
     .proyecto--relleno { visibility: hidden; pointer-events: none; }
     .proyecto:hover { transform: translateY(-3px); }
     .proyecto__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) brightness(.78); transition: filter 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1); }
     .proyecto:hover .proyecto__img { filter: saturate(1.05) brightness(.92); transform: scale(1.04); }
     .proyecto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(19,9,10,.7) 100%); pointer-events: none; }
-    .proyecto__texto { position: absolute; left: 20px; bottom: 16px; right: 20px; z-index: 2; text-align: left; }
-    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(9px, 1.2vh, 12px); line-height: 1.2; color: #fff; }
+    .proyecto__texto { position: absolute; left: var(--radio); bottom: calc(var(--radio) - .6em); right: 16px; z-index: 2; text-align: left; }
+    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(11px, 1.55vh, 15px); line-height: 1.2; color: #fff; }
     .ph--1 { background-image: linear-gradient(160deg, #3a261f, #1a0f0c); }
     .ph--2 { background-image: linear-gradient(160deg, #4a3526, #201410); }
     .ph--3 { background-image: linear-gradient(160deg, #2c1c17, #120a08); }
@@ -68,9 +69,10 @@
     @media (max-width: 810px) {
       .proyectos-contenido { padding: 12vh 5vw 4vh; }
       .filtros { justify-content: flex-start; gap: 18px; }
-      .proyecto { border-radius: 20px; }
+      .proyecto { --radio: 20px; }
       .carril { --gap: 6px; grid-auto-columns: calc((var(--alto-carril, 55vh) - 2 * var(--gap)) / 3 * 1.25); }
       .carril-wrap { margin: 0 -5vw; }
+      .carril-wrap.estatico .carril { padding-left: 5vw; }
     }
   </style>
 </head>
@@ -187,53 +189,55 @@
     var botones = document.querySelectorAll('.filtro');
     var originales = Array.prototype.slice.call(carril.querySelectorAll('.proyecto'));
     var validos = ['Todo', 'Residencial', 'Gastronómico', 'Comercial'];
-    var filtro = 'Todo', W = 0, paso = 0, anim = null;
+    var filtro = 'Todo', W = 0, paso = 0, infinito = false;
 
-    // Arma el carril infinito: el conjunto visible (completado en columnas de 3) se repite las veces necesarias
+    // Si los proyectos entran en pantalla: quietos. Si no entran: carril infinito, repitiendo el conjunto las veces necesarias.
     function construir() {
       carril.querySelectorAll('[data-clon]').forEach(function (c) { c.remove(); });
       originales.forEach(function (it) { var ok = filtro === 'Todo' || it.getAttribute('data-cat') === filtro; it.hidden = !ok; });
       var vis = originales.filter(function (it) { return !it.hidden; });
       vacio.style.display = vis.length ? 'none' : 'flex';
-      wrap.classList.toggle('sin-flechas', !vis.length);
       carril.style.setProperty('--alto-carril', carril.clientHeight + 'px');
-      if (!vis.length) { W = 0; return; }
-      var base = vis.slice();
-      while (base.length % 3) { var r = document.createElement('article'); r.className = 'proyecto proyecto--relleno'; r.setAttribute('aria-hidden', 'true'); r.setAttribute('data-clon', '1'); carril.appendChild(r); base.push(r); }
-      var fin = base.length;
-      // medir un conjunto
+      infinito = false; W = 0; carril.scrollLeft = 0;
+      wrap.classList.add('estatico'); wrap.classList.add('sin-flechas');
+      if (!vis.length) return;
       var colW = vis[0].getBoundingClientRect().width, gap = parseFloat(getComputedStyle(carril).columnGap) || 0;
       paso = colW + gap;
-      W = (fin / 3) * paso;
+      var cols = Math.ceil(vis.length / 3), ancho = cols * paso - gap, margen = window.innerWidth * (window.innerWidth <= 810 ? .05 : .04);
+      if (ancho <= window.innerWidth - 2 * margen + 1) return;   // entran todos: sin scroll lateral
+      infinito = true; wrap.classList.remove('estatico'); wrap.classList.remove('sin-flechas');
+      var base = vis.slice();
+      while (base.length % 3) { var r = document.createElement('article'); r.className = 'proyecto proyecto--relleno'; r.setAttribute('aria-hidden', 'true'); r.setAttribute('data-clon', '1'); carril.appendChild(r); base.push(r); }
+      var fin = base.length; W = (fin / 3) * paso;
       var copias = Math.ceil(carril.clientWidth / W) + 2;
       for (var c = 1; c < copias; c++) {
-        base.slice(0, fin).forEach(function (it) {
-          var k = it.cloneNode(true); k.setAttribute('data-clon', '1'); k.setAttribute('aria-hidden', 'true'); k.removeAttribute('hidden'); carril.appendChild(k);
-        });
+        base.slice(0, fin).forEach(function (it) { var k = it.cloneNode(true); k.setAttribute('data-clon', '1'); k.setAttribute('aria-hidden', 'true'); k.removeAttribute('hidden'); carril.appendChild(k); });
       }
       carril.scrollLeft = W;
     }
     function envolver() {
-      if (!W) return;
-      if (carril.scrollLeft < W) carril.scrollLeft += W;
-      else if (carril.scrollLeft >= 2 * W) carril.scrollLeft -= W;
+      if (!infinito) return;
+      if (carril.scrollLeft < W) carril.scrollLeft += W; else if (carril.scrollLeft >= 2 * W) carril.scrollLeft -= W;
     }
-    function mover(dir) {
-      if (!W) return;
-      if (anim) cancelAnimationFrame(anim);
-      var ini = carril.scrollLeft, dist = dir * paso * 2, t0 = null, dur = 650;
-      function paso_(t) {
-        if (t0 === null) t0 = t;
-        var p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3), pos = ini + dist * e;
-        carril.scrollLeft = pos;
-        if (carril.scrollLeft < W || carril.scrollLeft >= 2 * W) { var d = carril.scrollLeft < W ? W : -W; carril.scrollLeft += d; ini += d; }
-        if (p < 1) anim = requestAnimationFrame(paso_); else anim = null;
-      }
-      anim = requestAnimationFrame(paso_);
+
+    // Movimiento suave y progresivo: la velocidad sube de a poco al mantener la flecha y se frena con inercia al soltar
+    var v = 0, dir = 0, loop = null, MAX = 16;
+    function tick() {
+      if (dir) v += (dir * MAX - v) * 0.07; else v *= 0.94;
+      if (!dir && Math.abs(v) < 0.08) { v = 0; loop = null; return; }
+      carril.scrollLeft += v; envolver();
+      loop = requestAnimationFrame(tick);
     }
-    document.getElementById('flecha-izq').addEventListener('click', function () { mover(-1); });
-    document.getElementById('flecha-der').addEventListener('click', function () { mover(1); });
-    carril.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); mover(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); mover(-1); } });
+    function arrancar() { if (!loop) loop = requestAnimationFrame(tick); }
+    function flecha(el, d) {
+      var t0 = 0;
+      function abajo(e) { e.preventDefault(); dir = d; t0 = performance.now(); arrancar(); }
+      function arriba() { if (!dir) return; var corto = performance.now() - t0 < 220; dir = 0; if (corto) v = d * 20; arrancar(); }
+      el.addEventListener('pointerdown', abajo); el.addEventListener('pointerup', arriba); el.addEventListener('pointerleave', arriba); el.addEventListener('pointercancel', arriba);
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); v = d * 20; arrancar(); } });
+    }
+    flecha(document.getElementById('flecha-izq'), -1); flecha(document.getElementById('flecha-der'), 1);
+    carril.addEventListener('keydown', function (e) { if (!infinito) return; if (e.key === 'ArrowRight') { e.preventDefault(); v = 20; arrancar(); } if (e.key === 'ArrowLeft') { e.preventDefault(); v = -20; arrancar(); } });
 
     function aplicar(f, url) {
       filtro = f;
@@ -243,16 +247,19 @@
     }
     botones.forEach(function (b) { b.addEventListener('click', function () { aplicar(b.getAttribute('data-filtro'), true); }); });
 
-    // Arrastrar con el mouse
-    var down = false, x0 = 0, s0 = 0, movio = false;
-    carril.addEventListener('mousedown', function (e) { if (anim) { cancelAnimationFrame(anim); anim = null; } down = true; movio = false; x0 = e.pageX; s0 = carril.scrollLeft; });
-    window.addEventListener('mousemove', function (e) { if (!down) return; var dx = e.pageX - x0; if (Math.abs(dx) > 4) { movio = true; carril.classList.add('arrastrando'); } carril.scrollLeft = s0 - dx; envolver(); if (carril.scrollLeft !== s0 - dx) { s0 = carril.scrollLeft + dx; } });
-    window.addEventListener('mouseup', function () { down = false; carril.classList.remove('arrastrando'); });
+    // Arrastrar con el mouse (con inercia al soltar)
+    var down = false, x0 = 0, s0 = 0, movio = false, ult = 0, vel = 0;
+    carril.addEventListener('mousedown', function (e) { if (!infinito) return; dir = 0; v = 0; down = true; movio = false; x0 = e.pageX; s0 = carril.scrollLeft; ult = e.pageX; vel = 0; });
+    window.addEventListener('mousemove', function (e) {
+      if (!down) return; var dx = e.pageX - x0; if (Math.abs(dx) > 4) { movio = true; carril.classList.add('arrastrando'); }
+      vel = ult - e.pageX; ult = e.pageX; carril.scrollLeft = s0 - dx; var antes = carril.scrollLeft; envolver(); if (carril.scrollLeft !== antes) s0 += carril.scrollLeft - antes;
+    });
+    window.addEventListener('mouseup', function () { if (!down) return; down = false; carril.classList.remove('arrastrando'); if (movio) { v = Math.max(-40, Math.min(40, vel)); arrancar(); } });
     carril.addEventListener('click', function (e) { if (movio) { e.preventDefault(); e.stopPropagation(); movio = false; } }, true);
     carril.addEventListener('scroll', envolver, { passive: true });
 
     var q = new URLSearchParams(location.search).get('categoria');
-    var m = q && validos.filter(function (v) { return v.toLowerCase() === q.toLowerCase(); })[0];
+    var m = q && validos.filter(function (x) { return x.toLowerCase() === q.toLowerCase(); })[0];
     aplicar(m || 'Todo', false);
     var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(construir, 150); });
     window.addEventListener('load', construir);
