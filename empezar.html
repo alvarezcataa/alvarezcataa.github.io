@@ -154,7 +154,7 @@
       <header>
         <p class="eyebrow">Estudio CAVLA</p>
         <h1 class="titulo">Empezá tu proyecto.</h1>
-        <p class="intro">Unas pocas preguntas para entender qué necesitás. Al final seguimos la charla por WhatsApp.</p>
+        <p class="intro">Contanos lo que necesitás y luego seguimos la charla por WhatsApp.</p>
       </header>
 
       <div class="progreso">
@@ -263,16 +263,13 @@
       ejecucionObra:{ tipo: 'single', q: '¿Cómo querés ejecutarlo?',
                 opts: ['Tengo quien ejecute la obra', 'Quiero que el estudio se encargue'],
                 next: function () { return 'presupuesto'; } },
-      presupuesto:{ tipo: 'campos', q: '¿Con qué presupuesto contás?',
-                ayuda: 'Para el proyecto completo (obra, muebles o ambos). Una cifra aproximada alcanza.',
-                campos: [ { id: 'presupuesto', label: 'Presupuesto aproximado', tipo: 'text', ph: 'Ej: 5.000.000 pesos o 4.000 USD' },
-                          { id: 'presupuesto_nd', label: 'Todavía no lo definí', tipo: 'check' } ],
-                validar: function (v) { return (v.presupuesto || v.presupuesto_nd) ? null : { presupuesto: 'Escribí una cifra o marcá que todavía no lo definiste.' }; },
+      presupuesto:{ tipo: 'single', q: '¿Tenés un presupuesto definido?',
+                opts: ['Todavía no lo definí', 'Sí, lo tengo'],
                 next: function () { return 'datos'; } },
       datos:  { tipo: 'campos', q: 'Por último, ¿cómo te contacto?', final: true,
                 campos: [ { id: 'nombre', label: 'Nombre y apellido', tipo: 'text', req: true, auto: 'name' },
                           { id: 'telefono', label: 'WhatsApp', tipo: 'tel', ph: 'Ej: 351 555 1234', req: true, auto: 'tel' },
-                          { id: 'email', label: 'Email', tipo: 'email', req: true, auto: 'email' } ],
+                          { id: 'email', label: 'Email (opcional)', tipo: 'email', auto: 'email' } ],
                 next: function () { return null; } }
     };
 
@@ -300,6 +297,18 @@
       var n = historial.length, t = totalPasos();
       document.getElementById('texto-progreso').textContent = 'Paso ' + n + ' de ' + t;
       document.getElementById('barra-fill').style.width = ((n - 0.5) / t * 100) + '%';
+    }
+
+    // Si recargan la página, retoman donde estaban (solo en esta pestaña)
+    var CLAVE = 'cavla_empezar_v1';
+    function guardarProgreso() { try { sessionStorage.setItem(CLAVE, JSON.stringify({ r: respuestas, i: indices, h: historial })); } catch (e) {} }
+    function limpiarProgreso() { try { sessionStorage.removeItem(CLAVE); } catch (e) {} }
+    function retomar() {
+      try {
+        var g = JSON.parse(sessionStorage.getItem(CLAVE) || 'null');
+        if (!g || !Array.isArray(g.h) || !g.h.length || !g.h.every(function (k) { return PASOS[k]; })) return;
+        respuestas = g.r || {}; indices = g.i || {}; historial = g.h;
+      } catch (e) {}
     }
 
     function render() {
@@ -355,6 +364,7 @@
         if (pr && sc) sc.scrollTo({ top: sc.scrollTop + pr.getBoundingClientRect().top - 90, behavior: 'smooth' });
       }
       enlazar(id, p);
+      guardarProgreso();
     }
 
     function enlazar(id, p) {
@@ -422,11 +432,6 @@
           function muestra() { wrap.hidden = origen.value !== c.siVal; }
           origen.addEventListener('change', muestra); muestra();
         });
-        if (id === 'presupuesto') {   // escribir un monto y marcar "todavía no lo definí" no pueden ir juntos
-          var tx = document.getElementById('f-presupuesto'), nd = document.getElementById('f-presupuesto_nd');
-          tx.addEventListener('input', function () { if (tx.value.trim()) nd.checked = false; });
-          nd.addEventListener('change', function () { if (nd.checked) tx.value = ''; });
-        }
         form.addEventListener('submit', function (e) { e.preventDefault(); enviarPaso(id, p, form); });
       }
     }
@@ -456,6 +461,7 @@
           sel.hidden = true; sel.removeAttribute('data-cba'); txt.hidden = false; wc.hidden = true;
         }
       }
+      if (!prev.provincia) { prov.value = 'Córdoba'; actualiza(); }
       if (prev.provincia) {
         prov.value = prev.provincia; actualiza();
         if (prev.provincia === 'Otro país') { cual.value = prev.ciudad || ''; }
@@ -517,7 +523,7 @@
     // ── Mensaje de WhatsApp y guardado ────────────────────────
     function lista(v) { return Array.isArray(v) ? v.join(', ') : v; }
     function resumen() {
-      var r = respuestas, d = r.datos || {}, l = r.lugar || {}, pr = r.presupuesto || {}, pres = esPresencial();
+      var r = respuestas, d = r.datos || {}, l = r.lugar || {}, pres = esPresencial();
       var ub = l.ciudad ? (l.provincia === 'Otro país' ? l.ciudad : l.ciudad + ', ' + l.provincia) : '';
       var modalidad = pres ? 'Presencial' : (r.virtual === 'Prefiero algo presencial' ? 'Virtual (prefiero algo presencial)' : 'Virtual (estoy de acuerdo)');
       return {
@@ -527,7 +533,7 @@
         condicion: r.estadoEsp || r.condicion || '', problemas: r.problemas ? lista(r.problemas) : '', etapa: r.etapa || '', uso: r.uso || '',
         ejecucion: pres ? (r.ejecucion || r.ejecucionObra || '') : 'Me encargo yo (proyecto virtual)',
         alcance: r.profundidad || r.profundidadC || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
-        presupuesto: pr.presupuesto ? pr.presupuesto : 'Todavía no lo definí',
+        presupuesto: r.presupuesto || '',
         provincia: l.provincia || '', ciudad: l.ciudad || '', nombre: d.nombre || '', telefono: d.telefono || '', email: d.email || ''
       };
     }
@@ -548,8 +554,8 @@
       if (c.marca) l.push('• Identidad de marca: ' + c.marca);
       if (c.ambientes) l.push('• Ambientes: ' + c.ambientes);
       if (c.ejecucion) l.push('• Ejecución: ' + c.ejecucion);
-      l.push('• Presupuesto: ' + c.presupuesto);
-      l.push('• Email: ' + c.email);
+      l.push('• Presupuesto definido: ' + c.presupuesto);
+      if (c.email) l.push('• Email: ' + c.email);
       l.push('• WhatsApp: ' + c.telefono);
       return l.join('\n');
     }
@@ -562,6 +568,7 @@
                 body: JSON.stringify(Object.assign({ origen: location.href }, c)) });
         } catch (e) { /* si falla el guardado igual seguimos por WhatsApp */ }
       }
+      limpiarProgreso();
       document.getElementById('texto-progreso').textContent = 'Listo';
       document.getElementById('barra-fill').style.width = '100%';
       cont.innerHTML = '<h2 class="pregunta">Gracias, ' + esc(c.nombre.split(' ')[0]) + '.</h2>' +
@@ -570,6 +577,7 @@
       setTimeout(function () { window.location.href = url; }, 900);
     }
 
+    retomar();
     render();
   })();
   </script>

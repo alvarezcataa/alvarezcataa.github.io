@@ -219,6 +219,12 @@ section {
   color:white
 }
 
+/* Página actual en negrita (el ::after reserva el ancho para que el menú no se mueva) */
+.cavla-nav__center a { display: inline-flex; flex-direction: column; align-items: center; }
+.cavla-nav__center a::after { content: attr(data-t); height: 0; overflow: hidden; visibility: hidden; font-weight: 700; }
+.cavla-nav__center a[aria-current="page"] { font-weight: 700; color: #fff; }
+.side-menu a[aria-current="page"] { font-weight: 700; }
+
 @media (max-width:810px){ 
   .cavla-nav__center{
     display:none
