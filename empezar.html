@@ -113,7 +113,9 @@
       .acciones { flex-direction: column-reverse; align-items: stretch; text-align: center; }
       .acciones .btn-cta-servicio { text-align: center; }
     }
-      select[hidden], input[hidden], .campo[hidden] { display: none; }
+      select[hidden], input[hidden], .campo[hidden], button[hidden] { display: none; }
+    .progreso { scroll-margin-top: 84px; }
+    @media (max-width: 810px) { .en-curso .intro { display: none; } }
     .campo-otro { margin-top: 18px; }
     .campo-otro[hidden] { display: none; }
   </style>
@@ -192,12 +194,12 @@
     var LOCALIDADES = ['Córdoba Capital', 'Villa Allende', 'Mendiolaza', 'Unquillo', 'Río Ceballos', 'Salsipuedes', 'La Calera', 'Saldán', 'Malagueño', 'Villa Carlos Paz']
       .sort(function (a, b) { return a.localeCompare(b, 'es'); }).concat(['Otra']);   // ciudades donde se trabaja de forma presencial (alfabético) + Otra
     var PROFUNDIDAD = ['Quiero reorganizar lo que ya tengo', 'Quiero un rediseño completo del espacio'];
-    var BORRAR = ['virtual', 'tipo', 'mueble', 'otro_mueble', 'condicion', 'ejecucion', 'espacio', 'rubro', 'ambientes', 'otro_ambientes', 'superficie',
+    var BORRAR = ['virtual', 'tipo', 'mueble', 'otro_mueble', 'condicion', 'ejecucion', 'espacio', 'rubro', 'otro_rubro', 'ambientes', 'otro_ambientes', 'superficie',
                   'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'];
     var DEPENDE = {
       lugar: ['virtual', 'ejecucion', 'ejecucionObra'],
       tipo: BORRAR.slice(2),
-      espacio: ['rubro', 'ambientes', 'otro_ambientes', 'superficie', 'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'],
+      espacio: ['rubro', 'otro_rubro', 'ambientes', 'otro_ambientes', 'superficie', 'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'],
       estadoEsp: ['problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso']
     };
 
@@ -230,6 +232,7 @@
                 next: function (a) { return a >= 2 ? 'rubro' : 'estadoEsp'; } },
       rubro:  { tipo: 'single', q: '¿De qué rubro es?',
                 opts: function () { return indices.espacio === 3 ? ['Café', 'Restaurante', 'Bar', 'Otro'] : ['Indumentaria', 'Alimentos', 'Tecnología', 'Salud y estética', 'Hogar y decoración', 'Librería y juguetería', 'Otro']; },
+                otro: 'ultimo', otroPh: 'Contanos de qué rubro es',
                 next: function () { return 'estadoEsp'; } },
       estadoEsp:{ tipo: 'single', q: '¿En qué condiciones está el espacio?',
                 opts: ['Espacio existente en buen estado', 'Espacio existente en mal estado', 'Espacio a estrenar', 'Obra en construcción'],
@@ -244,7 +247,7 @@
                 next: function (a) { return despuesProfundidad(a); } },
       etapa:  { tipo: 'single', q: '¿En qué etapa está la obra?',
                 opts: ['En etapa inicial (estructura)', 'En etapa avanzada (instalaciones y terminaciones)'],
-                next: function () { return esLocal() ? 'superficie' : 'uso'; } },
+                next: function () { return esLocal() ? 'marca' : 'uso'; } },
       uso:    { tipo: 'single', q: '¿Para qué es el inmueble?',
                 opts: ['Para vivirlo yo', 'Para venderlo/alquilarlo amoblado'],
                 next: function () { return 'ambientes'; } },
@@ -252,7 +255,7 @@
                 opts: ['Living / comedor', 'Cocina', 'Dormitorios', 'Baños', 'Otro'], otro: 4, otroPh: 'Contanos qué ambiente es',
                 next: function () { return 'superficie'; } },
       marca:  { tipo: 'single', q: '¿Ya tenés identidad de marca?',
-                opts: ['Sí, ya tengo identidad de marca', 'Está en proceso', 'No, todavía no'],
+                opts: ['Sí, ya tengo identidad de marca', 'Está en proceso', 'No, todavía no', 'No sé qué es eso'],
                 next: function () { return 'superficie'; } },
       superficie:{ tipo: 'single', q: '¿Qué superficie total tiene el proyecto?',
                 opts: ['Hasta 25 m²', 'Entre 25 m² y 50 m²', 'Entre 50 m² y 100 m²', 'Más de 100 m²', 'No lo sé'],
@@ -277,8 +280,8 @@
     var cont = document.getElementById('paso');
 
     function getOpts(p) { return typeof p.opts === 'function' ? p.opts() : p.opts; }
-    // Tras elegir el nivel de profundidad: en un local, si pide rediseño/diseño completo se pregunta por la marca
-    function despuesProfundidad(a) { return (esLocal() && a === 1) ? 'marca' : (esLocal() ? 'superficie' : 'ambientes'); }
+    // Tras elegir el nivel de profundidad: en un local siempre se pregunta por la identidad de marca
+    function despuesProfundidad() { return esLocal() ? 'marca' : 'ambientes'; }
     function esLocal() { return indices.espacio >= 2; }
     function esPresencial() { var l = respuestas.lugar; return !(l && !l.presencial); }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -286,9 +289,8 @@
       var pres = esPresencial(), ej = pres ? 1 : 0;
       var n = 2 + (pres ? 0 : 1) + (respuestas.virtual === 'Prefiero algo presencial' ? 1 : 0);   // lugar, [virtual], [aviso], tipo
       if (indices.tipo === 0) return n + 4 + ej;                                                    // muebles: mueble, condición, [ejecución], presupuesto, datos → +4 con ejecución
-      if (esLocal()) {                                                                              // espacio, rubro, estado, profundidad|etapa, [problemas], [marca], superficie, presupuesto, datos
-        var extra = (indices.estadoEsp === 1 ? 1 : 0) + ((indices.profundidad === 1 || indices.profundidadC === 1) ? 1 : 0);
-        return n + 7 + extra;
+      if (esLocal()) {                                                                              // espacio, rubro, estado, profundidad|etapa, [problemas], marca, superficie, presupuesto, datos
+        return n + 8 + (indices.estadoEsp === 1 ? 1 : 0);
       }
       var rama = (indices.estadoEsp === 1 || indices.estadoEsp === 3) ? 1 : 0;                      // B: +problemas · D: +uso
       return n + 7 + rama + ej;                                                                     // espacio, estado, profundidad, ambientes, m², [ejecución], presupuesto, datos
@@ -312,7 +314,8 @@
         if (p.otro !== undefined) h += '<div class="campo campo-otro" id="caja-otro" hidden><label for="f-otro">¿Cuál?</label><input id="f-otro" type="text" maxlength="80" placeholder="' + esc(p.otroPh || 'Contanos cuál es') + '"></div>';
         h += '</div><div class="acciones">' +
              (historial.length > 1 ? '<button type="button" class="volver" id="volver">← Volver</button>' : '<span></span>') +
-             (p.tipo === 'multi' ? '<button type="button" class="btn-cta-servicio" id="continuar" disabled>Continuar</button>' : '') + '</div>';
+             (p.tipo === 'multi' ? '<button type="button" class="btn-cta-servicio" id="continuar" disabled>Continuar</button>' : '') +
+             (unica && p.otro !== undefined ? '<button type="button" class="btn-cta-servicio" id="continuar" hidden>Continuar</button>' : '') + '</div>';
       } else if (p.tipo === 'lugar') {
         h += '<form id="form-paso" novalidate><div class="bloque"><div class="campos">' +
              '<div class="campo"><label for="f-provincia">Provincia</label><select id="f-provincia"><option value="">Elegí una opción</option>' +
@@ -346,6 +349,11 @@
       }
       cont.innerHTML = h;
       cont.classList.remove('paso'); void cont.offsetWidth; cont.classList.add('paso');
+      document.body.classList.toggle('en-curso', historial.length > 1);
+      if (historial.length > 1 && cont.getBoundingClientRect().bottom > window.innerHeight) {   // si el paso no entra en pantalla, lo subimos
+        var pr = document.querySelector('.progreso'), sc = [document.scrollingElement, document.body].filter(function (e) { return e && e.scrollHeight > e.clientHeight + 1; })[0];
+        if (pr && sc) sc.scrollTo({ top: sc.scrollTop + pr.getBoundingClientRect().top - 90, behavior: 'smooth' });
+      }
       enlazar(id, p);
     }
 
@@ -364,9 +372,16 @@
           b.addEventListener('click', function () {
             cont.querySelectorAll('.opcion').forEach(function (x) { x.classList.remove('sel'); });
             b.classList.add('sel');
+            if (p.otro !== undefined) { otroSingle(id, p, i, false); if (i === otroIdx(p)) return; }
             setTimeout(function () { guardarUnica(id, p, i); }, 180);
           });
         });
+        if (p.otro !== undefined) {
+          var inO = document.getElementById('f-otro'), bC = document.getElementById('continuar');
+          inO.addEventListener('input', function () { bC.disabled = !inO.value.trim(); });
+          bC.addEventListener('click', function () { guardarUnica(id, p, otroIdx(p), inO.value.trim()); });
+          if (indices[id] === otroIdx(p)) { otroSingle(id, p, indices[id], true); inO.value = respuestas['otro_' + id] || ''; bC.disabled = !inO.value.trim(); }
+        }
       } else if (p.tipo === 'multi') {
         var sel = (indices[id] || []).slice(), btnC = document.getElementById('continuar');
         function pinta() {
@@ -416,6 +431,11 @@
       }
     }
 
+    function otroIdx(p) { return p.otro === 'ultimo' ? getOpts(p).length - 1 : p.otro; }
+    function otroSingle(id, p, i, inicial) {
+      var es = i === otroIdx(p), caja = document.getElementById('caja-otro'), bC = document.getElementById('continuar');
+      caja.hidden = !es; bC.hidden = !es; if (es) { bC.disabled = !document.getElementById('f-otro').value.trim(); if (!inicial) document.getElementById('f-otro').focus(); }
+    }
     function limpiar(id) { (DEPENDE[id] || []).forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
     function enlazarLugar(id, p) {
       var prov = document.getElementById('f-provincia'), sel = document.getElementById('f-ciudad'), txt = document.getElementById('f-ciudad-txt'),
@@ -463,9 +483,10 @@
         avanzar(p, null);
       });
     }
-    function guardarUnica(id, p, i) {
+    function guardarUnica(id, p, i, textoOtro) {
       var cambio = indices[id] !== undefined && indices[id] !== i;
       indices[id] = i; respuestas[id] = getOpts(p)[i];
+      if (textoOtro) { respuestas['otro_' + id] = textoOtro; respuestas[id] = 'Otro: ' + textoOtro; }
       if (cambio) limpiar(id);
       avanzar(p, i);
     }
