@@ -15,7 +15,7 @@
     const logo = document.querySelector(".logo");
 
     // Preferimos secciones marcadas con .mainContent
-    let sections = Array.from(document.querySelectorAll(".mainContent"));
+    let sections = Array.from(document.querySelectorAll(".mainContent")).filter(s => getComputedStyle(s).display !== "none");
     // Fallback: <section> visibles excluyendo nav y sideMenu
     if (!sections.length) {
       sections = Array.from(document.querySelectorAll("section")).filter(s => {

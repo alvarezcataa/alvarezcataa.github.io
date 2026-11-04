@@ -25,15 +25,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
   <style>
     .titulo-pagina { font-size: min(15vh, 8.5vw); }
-    .subtitulo-pagina--letras { align-self: stretch; width: auto; box-sizing: border-box; padding-left: 5%; justify-content: flex-start; gap: .9em; }
+    .subtitulo-pagina--letras { justify-content: space-between; width: 60%; }
     .memoria-bloque { position: relative; z-index: 10; width: 100%; box-sizing: border-box; padding: 0 30vw; text-align: left; }
     .memoria-bloque .memoria-meta { margin: 0 0 3vh; font-family: 'Montserrat', sans-serif; font-size: 1.5vh; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.9); }
     .pantalla-memoria { background: #130c09; }
     .memoria-fondo { filter: brightness(.5) blur(4px); transform: scale(1.05); }
     .memoria-bloque .memoria-meta { line-height: 1.8; }
     .memoria-bloque .texto-grafico { margin: 0 0 2vh; }
-    .render img.page_fondo { background: #130c09; }
-    @media (max-aspect-ratio: 1/1) { .render img.page_fondo { object-fit: contain; } }
+    .render-par { display: none; }
+    .render-par img { position: relative; display: block; width: 100%; height: 50%; object-fit: cover; }
+    .render-par img:only-of-type { height: 100%; }
+    @media (max-aspect-ratio: 1/1) {
+      .render { display: none; }
+      .render-par { display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; }
+    }
     @media (max-width: 810px) {
       .titulo-pagina { font-size: 11vw; }
       .memoria-bloque { padding: 0 10vw; }
@@ -116,6 +121,19 @@
   <!-- RENDER 4 -->
   <section class="pantalla-identificacion render mainContent">
     <img alt="Casa Bemol - render 4" src="/images/SERVICIOS/RESIDENCIAL/CONCEPTUAL.webp" class="page_fondo" loading="lazy">
+  </section>
+
+  <!-- PAR DE RENDERS (celular) -->
+  <section class="pantalla-identificacion render-par mainContent">
+    <div class="bg-gradient"></div>
+    <img alt="Casa Bemol - render 1" src="/images/SERVICIOS/RESIDENCIAL/ANTEPROYECTO.webp" loading="lazy">
+    <img alt="Casa Bemol - render 2" src="/images/SERVICIOS/RESIDENCIAL/CONC-D.webp" loading="lazy">
+  </section>
+
+  <!-- PAR DE RENDERS (celular) -->
+  <section class="pantalla-identificacion render-par mainContent">
+    <img alt="Casa Bemol - render 3" src="/images/SERVICIOS/RESIDENCIAL/OTRO-D.webp" loading="lazy">
+    <img alt="Casa Bemol - render 4" src="/images/SERVICIOS/RESIDENCIAL/CONCEPTUAL.webp" loading="lazy">
   </section>
 
   <script src="/js/scripts.js"></script>
