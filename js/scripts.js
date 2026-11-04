@@ -14,7 +14,6 @@
       const norm = (p) => (p.replace(/\/index(\.html)?$/, "/").replace(/\.html$/, "").replace(/\/+$/, "")) || "/";
       const actual = norm(location.pathname);
       document.querySelectorAll(".cavla-nav__center a, .side-menu a").forEach((a) => {
-        a.setAttribute("data-t", a.textContent.trim());
         const h = norm(a.getAttribute("href") || "");
         if (h === actual || (h !== "/" && actual.indexOf(h + "/") === 0)) a.setAttribute("aria-current", "page");
       });
