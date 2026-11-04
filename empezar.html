@@ -112,7 +112,7 @@
       .acciones { flex-direction: column-reverse; align-items: stretch; text-align: center; }
       .acciones .btn-cta-servicio { text-align: center; }
     }
-      select[hidden], input[hidden] { display: none; }
+      select[hidden], input[hidden], .campo[hidden] { display: none; }
     .campo-otro { margin-top: 18px; }
     .campo-otro[hidden] { display: none; }
   </style>
@@ -320,9 +320,9 @@
         h += '<form id="form-paso" novalidate><div class="bloque"><div class="campos">' +
              '<div class="campo"><label for="f-provincia">Provincia</label><select id="f-provincia"><option value="">Elegí una opción</option>' +
              PROVINCIAS.map(function (x) { return '<option>' + esc(x) + '</option>'; }).join('') + '</select><span class="msg-error">Elegí la provincia.</span></div>' +
-             '<div class="campo"><label for="f-ciudad">Ciudad</label><select id="f-ciudad" disabled><option value="">Primero elegí la provincia</option></select>' +
+             '<div class="campo" id="w-ciudad"><label for="f-ciudad">Ciudad</label><select id="f-ciudad" disabled><option value="">Primero elegí la provincia</option></select>' +
              '<input id="f-ciudad-txt" type="text" placeholder="Escribí la ciudad" hidden><span class="msg-error">Elegí o escribí la ciudad.</span></div>' +
-             '<div class="campo" id="w-cual" hidden><label for="f-cual">¿Cuál?</label><input id="f-cual" type="text" placeholder="Ej: Villa María"><span class="msg-error">Escribí la ciudad.</span></div>' +
+             '<div class="campo" id="w-cual" hidden><label for="f-cual" id="l-cual">¿Cuál?</label><input id="f-cual" type="text" placeholder="Ej: Villa María"><span class="msg-error">Escribí la ciudad.</span></div>' +
              '</div></div><div class="acciones"><span></span><button type="submit" class="btn-cta-servicio">Continuar</button></div></form>';
       } else if (p.tipo === 'info') {
         h += '<div class="acciones">' + (historial.length > 1 ? '<button type="button" class="volver" id="volver">← Volver</button>' : '<span></span>') +
@@ -417,9 +417,12 @@
     function limpiar(id) { (DEPENDE[id] || []).forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
     function enlazarLugar(id, p) {
       var prov = document.getElementById('f-provincia'), sel = document.getElementById('f-ciudad'), txt = document.getElementById('f-ciudad-txt'),
-          wc = document.getElementById('w-cual'), cual = document.getElementById('f-cual'), prev = respuestas.lugar || {};
+          wc = document.getElementById('w-cual'), wCiudad = document.getElementById('w-ciudad'), lCual = document.getElementById('l-cual'), cual = document.getElementById('f-cual'), prev = respuestas.lugar || {};
       function actualiza() {
-        var pv = prov.value, esCba = pv === 'Córdoba';
+        var pv = prov.value, esCba = pv === 'Córdoba', pais = pv === 'Otro país';
+        wCiudad.hidden = pais;
+        lCual.textContent = pais ? 'País' : '¿Cuál?'; cual.placeholder = pais ? 'Ej: España' : 'Ej: Villa María';
+        if (pais) { wc.hidden = false; return; }
         if (!pv) { sel.hidden = false; sel.disabled = true; sel.innerHTML = '<option value="">Primero elegí la provincia</option>'; txt.hidden = true; wc.hidden = true; return; }
         if (esCba) {
           if (!sel.getAttribute('data-cba')) {
@@ -433,10 +436,11 @@
       }
       if (prev.provincia) {
         prov.value = prev.provincia; actualiza();
-        if (prev.provincia === 'Córdoba') { sel.value = prev.enLista ? prev.ciudad : 'Otra'; if (!prev.enLista) { cual.value = prev.ciudad; } actualiza(); }
+        if (prev.provincia === 'Otro país') { cual.value = prev.ciudad || ''; }
+        else if (prev.provincia === 'Córdoba') { sel.value = prev.enLista ? prev.ciudad : 'Otra'; if (!prev.enLista) { cual.value = prev.ciudad; } actualiza(); }
         else txt.value = prev.ciudad || '';
       }
-      prov.addEventListener('change', function () { sel.removeAttribute('data-cba'); sel.value = ''; txt.value = ''; actualiza(); });
+      prov.addEventListener('change', function () { sel.removeAttribute('data-cba'); sel.value = ''; txt.value = ''; cual.value = ''; actualiza(); });
       sel.addEventListener('change', actualiza);
       document.getElementById('form-paso').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -444,6 +448,7 @@
         [prov, sel, txt, cual].forEach(function (el) { var w = el.closest('.campo'); if (w) w.classList.remove('error'); });
         function error(el) { var w = el.closest('.campo'); if (w) w.classList.add('error'); if (ok) el.focus(); ok = false; }
         if (!pv) error(prov);
+        else if (pv === 'Otro país') { ciudad = cual.value.trim(); if (!ciudad) { cual.closest('.campo').querySelector('.msg-error').textContent = 'Escribí el país.'; error(cual); } }
         else if (esCba) {
           if (!sel.value) error(sel);
           else if (sel.value === 'Otra') { ciudad = cual.value.trim(); if (!ciudad) error(cual); }
@@ -490,7 +495,7 @@
     function lista(v) { return Array.isArray(v) ? v.join(', ') : v; }
     function resumen() {
       var r = respuestas, d = r.datos || {}, l = r.lugar || {}, pr = r.presupuesto || {}, pres = esPresencial();
-      var ub = l.ciudad ? (l.ciudad + ', ' + l.provincia) : '';
+      var ub = l.ciudad ? (l.provincia === 'Otro país' ? l.ciudad : l.ciudad + ', ' + l.provincia) : '';
       var modalidad = pres ? 'Presencial' : (r.virtual === 'Prefiero algo presencial' ? 'Virtual (prefiere algo presencial)' : 'Virtual (aceptó)');
       return {
         ubicacion: ub, modalidad: modalidad,
