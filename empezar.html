@@ -112,7 +112,8 @@
       .acciones { flex-direction: column-reverse; align-items: stretch; text-align: center; }
       .acciones .btn-cta-servicio { text-align: center; }
     }
-      .campo-otro { margin-top: 18px; }
+      select[hidden], input[hidden] { display: none; }
+    .campo-otro { margin-top: 18px; }
     .campo-otro[hidden] { display: none; }
   </style>
 </head>
@@ -187,8 +188,8 @@
     var PROVINCIAS = ['Buenos Aires','Ciudad Autónoma de Buenos Aires','Catamarca','Chaco','Chubut','Córdoba','Corrientes','Entre Ríos','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquén','Río Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucumán','Otro país'];
 
     // ── Recorrido del formulario ──────────────────────────────
-    var LOCALIDADES = ['Córdoba Capital', 'Villa Allende', 'Mendiolaza', 'Unquillo', 'Río Ceballos', 'Salsipuedes', 'La Calera', 'Saldán', 'Malagueño', 'Villa Carlos Paz'];
-    var OTRO_LUGAR = 'Otro lugar';
+    var LOCALIDADES = ['Córdoba Capital', 'Villa Allende', 'Mendiolaza', 'Unquillo', 'Río Ceballos', 'Salsipuedes', 'La Calera', 'Saldán', 'Malagueño', 'Villa Carlos Paz']
+      .sort(function (a, b) { return a.localeCompare(b, 'es'); }).concat(['Otra']);   // ciudades donde se trabaja de forma presencial (alfabético) + Otra
     var PROFUNDIDAD = ['Quiero reorganizar lo que ya tengo', 'Quiero un rediseño completo del espacio'];
     var BORRAR = ['virtual', 'tipo', 'mueble', 'otro_mueble', 'condicion', 'ejecucion', 'espacio', 'rubro', 'alcance', 'ambientes', 'otro_ambientes', 'superficie', 'superficieCasa',
                   'estado', 'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'];
@@ -201,11 +202,8 @@
 
     // ── Recorrido del formulario ──────────────────────────────
     var PASOS = {
-      lugar:  { tipo: 'campos', q: '¿Dónde es el proyecto?',
-                ayuda: 'Trabajamos de forma presencial en estas localidades. Para cualquier otro lugar, elegí "Otro lugar".',
-                campos: [ { id: 'lugar', label: 'Localidad', tipo: 'select', opciones: LOCALIDADES.concat([OTRO_LUGAR]), req: true },
-                          { id: 'lugar_otro', label: '¿Dónde? (ciudad y provincia)', tipo: 'text', ph: 'Ej: Rosario, Santa Fe', si: 'lugar', siVal: OTRO_LUGAR } ],
-                validar: function (v) { return (v.lugar === OTRO_LUGAR && !v.lugar_otro) ? { lugar_otro: 'Contanos dónde es el proyecto.' } : null; },
+      lugar:  { tipo: 'lugar', q: '¿Dónde es el proyecto?',
+                ayuda: 'Trabajamos de forma presencial en Córdoba y alrededores. En el resto del país el trabajo es 100% virtual.',
                 next: function () { return esPresencial() ? 'tipo' : 'virtual'; } },
       virtual:{ tipo: 'single', q: '¿Te sirve que el trabajo sea 100% virtual?',
                 ayuda: 'Fuera de las localidades donde trabajamos presencialmente, el trabajo es 100% virtual: no hacemos visitas ni ejecutamos la obra en persona. Funciona muy bien así.',
@@ -288,7 +286,7 @@
 
     function getOpts(p) { return typeof p.opts === 'function' ? p.opts() : p.opts; }
     function esLocal() { return indices.espacio >= 2; }
-    function esPresencial() { var l = respuestas.lugar; return !(l && l.lugar === OTRO_LUGAR); }
+    function esPresencial() { var l = respuestas.lugar; return !(l && !l.presencial); }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
     function totalPasos() {
       var pres = esPresencial(), ej = pres ? 1 : 0;
@@ -318,6 +316,14 @@
         h += '</div><div class="acciones">' +
              (historial.length > 1 ? '<button type="button" class="volver" id="volver">← Volver</button>' : '<span></span>') +
              (p.tipo === 'multi' ? '<button type="button" class="btn-cta-servicio" id="continuar" disabled>Continuar</button>' : '') + '</div>';
+      } else if (p.tipo === 'lugar') {
+        h += '<form id="form-paso" novalidate><div class="bloque"><div class="campos">' +
+             '<div class="campo"><label for="f-provincia">Provincia</label><select id="f-provincia"><option value="">Elegí una opción</option>' +
+             PROVINCIAS.map(function (x) { return '<option>' + esc(x) + '</option>'; }).join('') + '</select><span class="msg-error">Elegí la provincia.</span></div>' +
+             '<div class="campo"><label for="f-ciudad">Ciudad</label><select id="f-ciudad" disabled><option value="">Primero elegí la provincia</option></select>' +
+             '<input id="f-ciudad-txt" type="text" placeholder="Escribí la ciudad" hidden><span class="msg-error">Elegí o escribí la ciudad.</span></div>' +
+             '<div class="campo" id="w-cual" hidden><label for="f-cual">¿Cuál?</label><input id="f-cual" type="text" placeholder="Ej: Villa María"><span class="msg-error">Escribí la ciudad.</span></div>' +
+             '</div></div><div class="acciones"><span></span><button type="submit" class="btn-cta-servicio">Continuar</button></div></form>';
       } else if (p.tipo === 'info') {
         h += '<div class="acciones">' + (historial.length > 1 ? '<button type="button" class="volver" id="volver">← Volver</button>' : '<span></span>') +
              '<button type="button" class="btn-cta-servicio" id="continuar-info">Continuar</button></div>';
@@ -350,7 +356,9 @@
       var v = document.getElementById('volver');
       if (v) v.addEventListener('click', function () { historial.pop(); render(); });
 
-      if (p.tipo === 'info') {
+      if (p.tipo === 'lugar') {
+        enlazarLugar(id, p);
+      } else if (p.tipo === 'info') {
         document.getElementById('continuar-info').addEventListener('click', function () { avanzar(p, null); });
       } else if (p.tipo === 'single') {
         cont.querySelectorAll('.opcion').forEach(function (b) {
@@ -407,6 +415,47 @@
     }
 
     function limpiar(id) { (DEPENDE[id] || []).forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
+    function enlazarLugar(id, p) {
+      var prov = document.getElementById('f-provincia'), sel = document.getElementById('f-ciudad'), txt = document.getElementById('f-ciudad-txt'),
+          wc = document.getElementById('w-cual'), cual = document.getElementById('f-cual'), prev = respuestas.lugar || {};
+      function actualiza() {
+        var pv = prov.value, esCba = pv === 'Córdoba';
+        if (!pv) { sel.hidden = false; sel.disabled = true; sel.innerHTML = '<option value="">Primero elegí la provincia</option>'; txt.hidden = true; wc.hidden = true; return; }
+        if (esCba) {
+          if (!sel.getAttribute('data-cba')) {
+            sel.innerHTML = '<option value="">Elegí una opción</option>' + LOCALIDADES.map(function (x) { return '<option>' + esc(x) + '</option>'; }).join('');
+            sel.setAttribute('data-cba', '1');
+          }
+          sel.hidden = false; sel.disabled = false; txt.hidden = true; wc.hidden = sel.value !== 'Otra';
+        } else {
+          sel.hidden = true; sel.removeAttribute('data-cba'); txt.hidden = false; wc.hidden = true;
+        }
+      }
+      if (prev.provincia) {
+        prov.value = prev.provincia; actualiza();
+        if (prev.provincia === 'Córdoba') { sel.value = prev.enLista ? prev.ciudad : 'Otra'; if (!prev.enLista) { cual.value = prev.ciudad; } actualiza(); }
+        else txt.value = prev.ciudad || '';
+      }
+      prov.addEventListener('change', function () { sel.removeAttribute('data-cba'); sel.value = ''; txt.value = ''; actualiza(); });
+      sel.addEventListener('change', actualiza);
+      document.getElementById('form-paso').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var pv = prov.value, esCba = pv === 'Córdoba', ciudad = '', enLista = false, ok = true;
+        [prov, sel, txt, cual].forEach(function (el) { var w = el.closest('.campo'); if (w) w.classList.remove('error'); });
+        function error(el) { var w = el.closest('.campo'); if (w) w.classList.add('error'); if (ok) el.focus(); ok = false; }
+        if (!pv) error(prov);
+        else if (esCba) {
+          if (!sel.value) error(sel);
+          else if (sel.value === 'Otra') { ciudad = cual.value.trim(); if (!ciudad) error(cual); }
+          else { ciudad = sel.value; enLista = true; }
+        } else { ciudad = txt.value.trim(); if (!ciudad) error(txt); }
+        if (!ok) return;
+        var antes = respuestas.lugar;
+        respuestas.lugar = { provincia: pv, ciudad: ciudad, enLista: enLista, presencial: esCba && enLista };
+        if (antes && antes.presencial !== respuestas.lugar.presencial) limpiar('lugar');
+        avanzar(p, null);
+      });
+    }
     function guardarUnica(id, p, i) {
       var cambio = indices[id] !== undefined && indices[id] !== i;
       indices[id] = i; respuestas[id] = getOpts(p)[i];
@@ -432,8 +481,7 @@
       if (vals.telefono && vals.telefono.replace(/\D/g, '').length < 8) marcar('telefono', 'Escribí tu número con característica.');
       if (p.validar) { var er = p.validar(vals); if (er) Object.keys(er).forEach(function (k) { marcar(k, er[k]); }); }
       if (!ok) { var primero = form.querySelector('.campo.error input, .campo.error select'); if (primero) primero.focus(); return; }
-      var antes = respuestas[id]; respuestas[id] = vals;
-      if (id === 'lugar' && antes && (antes.lugar === OTRO_LUGAR) !== (vals.lugar === OTRO_LUGAR)) limpiar('lugar');
+      respuestas[id] = vals;
       if (p.final) { var tr = document.getElementById('f-web'); finalizar(tr && tr.value); return; }
       avanzar(p, null);
     }
@@ -442,7 +490,7 @@
     function lista(v) { return Array.isArray(v) ? v.join(', ') : v; }
     function resumen() {
       var r = respuestas, d = r.datos || {}, l = r.lugar || {}, pr = r.presupuesto || {}, pres = esPresencial();
-      var ub = pres ? (l.lugar || '') : (l.lugar_otro || '');
+      var ub = l.ciudad ? (l.ciudad + ', ' + l.provincia) : '';
       var modalidad = pres ? 'Presencial' : (r.virtual === 'Prefiero algo presencial' ? 'Virtual (prefiere algo presencial)' : 'Virtual (aceptó)');
       return {
         ubicacion: ub, modalidad: modalidad,
@@ -452,7 +500,7 @@
         ejecucion: pres ? (r.ejecucion || r.ejecucionObra || '') : 'A cargo del cliente (proyecto virtual)',
         alcance: r.profundidad || r.profundidadC || r.alcance || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
         presupuesto: pr.presupuesto_nd ? 'Todavía no lo definió' : (pr.presupuesto || ''),
-        provincia: '', ciudad: ub, nombre: d.nombre || '', telefono: d.telefono || '', email: d.email || ''
+        provincia: l.provincia || '', ciudad: l.ciudad || '', nombre: d.nombre || '', telefono: d.telefono || '', email: d.email || ''
       };
     }
     function mensaje(c) {
