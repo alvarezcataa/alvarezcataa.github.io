@@ -2478,3 +2478,15 @@ button.boton-cotizar {
 }
 h1.subtitulo-pagina { font-family: 'Montserrat', sans-serif; }
 :where(h3.titulo-virtual, h3.nombre-servicio) { margin-top: 0.83em; margin-bottom: 0.83em; }
+
+/* ===================================================================
+   24. NAVBAR EN ANCHOS ESTRECHOS (ventana a mitad de pantalla)
+   Evita que los textos se superpongan: achica tipografía y espacios.
+   =================================================================== */
+@media (min-width: 811px) and (max-width: 1500px) {
+  .cavla-nav { padding-left: 20px; padding-right: 20px; }
+  .cavla-nav__brand-est { display: none; }
+  .cavla-nav__center { gap: clamp(10px, 1.6vw, 3vw); }
+  .cavla-nav__center a { font-size: min(1.3vh, 1.05vw); letter-spacing: .16em; }
+  .cavla-nav__cta { font-size: min(1.3vh, 1.05vw); letter-spacing: .14em; padding: 8px 12px; white-space: nowrap; }
+}

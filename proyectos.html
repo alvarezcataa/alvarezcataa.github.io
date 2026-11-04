@@ -10,73 +10,78 @@
   <meta property="og:site_name" content="Estudio CAVLA" />
   <meta property="og:locale" content="es_AR" />
   <meta property="og:title" content="Estudio CAVLA - Proyectos" />
+  <meta property="og:description" content="Proyectos de diseño de interiores y mobiliario de Estudio CAVLA: residenciales, gastronómicos y comerciales." />
   <meta property="og:url" content="https://www.estudiocavla.com/proyectos" />
+  <meta name="twitter:card" content="summary" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon_io/favicon-192.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
-  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
   <style>
-    :root { --bg:#130c09; --w-100:#fff; --w-85:rgba(255,255,255,.85); --w-70:rgba(255,255,255,.70); --w-50:rgba(255,255,255,.50); --w-30:rgba(255,255,255,.30); --w-15:rgba(255,255,255,.15);
-      --serif:'Playfair Display','Times New Roman',serif; --sans:'Montserrat',system-ui,sans-serif; }
-    *,*::before,*::after{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--w-85);font-family:var(--sans);-webkit-font-smoothing:antialiased;height:auto;min-height:100%;overflow-y:visible}
-    .fondo{position:fixed;inset:0;z-index:0;overflow:hidden}
-    .fondo img{width:100%;height:100%;object-fit:cover;display:block}
-    .fondo::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45);z-index:1}
-    .fondo::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,#130c09 0%,transparent 25%,transparent 75%,#130c09 100%)}
-    .pantalla{position:relative;z-index:3;min-height:100vh;padding:130px 6vw 80px;max-width:1500px;margin:0 auto}
+    /* ── Pantalla de proyectos ── */
+    .proyectos-pantalla { position: relative; overflow: hidden; color: #fff; }
+    .proyectos-contenido { position: relative; z-index: 3; height: calc(var(--vh, 1vh) * 100); padding: 13vh 4vw 5vh; display: flex; flex-direction: column; box-sizing: border-box; }
+    .filtros { display: flex; justify-content: center; gap: clamp(16px, 3.5vw, 44px); margin: 0 0 3vh; padding-bottom: 12px; border-bottom: .5px solid rgba(255,255,255,.15); flex: 0 0 auto; overflow-x: auto; scrollbar-width: none; }
+    .filtros::-webkit-scrollbar { display: none; }
+    .filtro { background: none; border: 0; padding: 6px 2px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: clamp(10px, 1.5vh, 13px); font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.5); position: relative; white-space: nowrap; transition: color .2s; }
+    .filtro::after { content: ""; position: absolute; left: 0; right: 0; bottom: -13px; height: 1px; background: #fff; transform: scaleX(0); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+    .filtro:hover, .filtro[aria-pressed="true"] { color: #fff; }
+    .filtro[aria-pressed="true"]::after { transform: scaleX(1); }
+    .filtro:focus-visible { outline: 2px solid rgba(255,255,255,.85); outline-offset: 4px; }
 
-    .titulo{margin:0;font-family:var(--serif);font-weight:400;color:var(--w-100);line-height:1;font-size:clamp(2.8rem,8vw,6rem);text-align:center}
-    .subtitulo{margin:14px 0 0;text-align:center;font-size:11px;font-weight:400;letter-spacing:.4em;text-transform:uppercase;color:var(--w-70)}
+    /* Carril horizontal: 3 filas, se desliza hacia los costados */
+    .carril-wrap { position: relative; flex: 1 1 auto; min-height: 0; }
+    .carril { --gap: 16px; --fila: calc((100% - 2 * var(--gap)) / 3); height: 100%; display: grid; grid-template-rows: repeat(3, 1fr); grid-auto-flow: column; grid-auto-columns: calc((var(--alto-carril, 60vh) - 2 * var(--gap)) / 3 * 1.55); gap: var(--gap); overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.35) transparent; padding-bottom: 14px; cursor: grab; overscroll-behavior-x: contain; }
+    .carril.arrastrando { cursor: grabbing; user-select: none; }
+    .carril::-webkit-scrollbar { height: 4px; }
+    .carril::-webkit-scrollbar-thumb { background: rgba(255,255,255,.35); border-radius: 4px; }
+    .carril-wrap.hay-mas::after { content: ""; position: absolute; top: 0; right: 0; bottom: 14px; width: 60px; pointer-events: none; background: linear-gradient(to left, rgba(19,12,9,.85), transparent); }
 
-    .filtros{display:flex;justify-content:center;gap:clamp(18px,4vw,44px);margin:48px 0 44px;padding:0 0 14px;border-bottom:.5px solid var(--w-15);overflow-x:auto;scrollbar-width:none}
-    .filtros::-webkit-scrollbar{display:none}
-    .filtro{background:none;border:0;padding:6px 2px;cursor:pointer;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--w-50);position:relative;white-space:nowrap;transition:color .2s}
-    .filtro::after{content:"";position:absolute;left:0;right:0;bottom:-15px;height:1px;background:var(--w-100);transform:scaleX(0);transition:transform .3s cubic-bezier(.2,.7,.2,1)}
-    .filtro:hover{color:var(--w-100)}
-    .filtro[aria-pressed="true"]{color:var(--w-100)}
-    .filtro[aria-pressed="true"]::after{transform:scaleX(1)}
-    .filtro:focus-visible{outline:2px solid var(--w-85);outline-offset:4px}
+    .proyecto { position: relative; display: block; min-height: 0; border-radius: 25px; overflow: hidden; text-decoration: none; color: #fff; background-size: cover; background-position: center; border: .5px solid rgba(255,255,255,.15); transition: transform .8s cubic-bezier(.2,.7,.2,1), border-color .3s; }
+    .proyecto[hidden] { display: none; }
+    .proyecto:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.45); }
+    .proyecto__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) brightness(.78); transition: filter 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1); }
+    .proyecto:hover .proyecto__img { filter: saturate(1.05) brightness(.92); transform: scale(1.04); }
+    .proyecto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(19,9,10,.75) 100%); pointer-events: none; }
+    .proyecto__texto { position: absolute; left: 18px; bottom: 16px; right: 18px; z-index: 2; text-align: left; }
+    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(15px, 2.4vh, 24px); line-height: 1.15; color: #fff; }
+    .ph--1 { background-image: linear-gradient(160deg, #3a261f, #1a0f0c); }
+    .ph--2 { background-image: linear-gradient(160deg, #4a3526, #201410); }
+    .ph--3 { background-image: linear-gradient(160deg, #2c1c17, #120a08); }
+    .ph--4 { background-image: linear-gradient(160deg, #53402c, #241711); }
+    .vacio { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: rgba(255,255,255,.7); }
 
-    .grilla{display:grid;grid-template-columns:repeat(3,1fr);gap:44px 32px}
-    .proyecto{animation:entra .5s cubic-bezier(.2,.7,.2,1) both}
-    .proyecto[hidden]{display:none}
-    @keyframes entra{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-    .proyecto__img{aspect-ratio:4/5;width:100%;overflow:hidden;background-size:cover;background-position:center;border:.5px solid var(--w-15);transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s}
-    .proyecto__img img{width:100%;height:100%;object-fit:cover;display:block}
-    .proyecto:hover .proyecto__img{border-color:var(--w-50)}
-    .proyecto__nombre{margin:16px 0 4px;font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.35rem;color:var(--w-100);line-height:1.2}
-    .proyecto__cat{margin:0;font-size:10px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--w-50)}
-    /* Imágenes pendientes: tonos cálidos del sitio */
-    .ph--1{background:linear-gradient(160deg,#3a261f 0%,#1a0f0c 100%)}
-    .ph--2{background:linear-gradient(160deg,#4a3526 0%,#201410 100%)}
-    .ph--3{background:linear-gradient(160deg,#2c1c17 0%,#120a08 100%)}
-    .ph--4{background:linear-gradient(160deg,#53402c 0%,#241711 100%)}
-    .vacio{display:none;text-align:center;margin:60px 0;font-family:var(--serif);font-style:italic;color:var(--w-70);font-size:1.2rem}
-
-    @media (max-width:1000px){.grilla{grid-template-columns:repeat(2,1fr);gap:36px 22px}}
-    @media (max-width:810px){.pantalla{padding:100px 5vw 60px}.filtros{justify-content:flex-start;gap:20px;margin:36px 0 30px}.filtro{font-size:11px;letter-spacing:.16em}.proyecto__nombre{font-size:1.15rem}}
-    @media (max-width:520px){.grilla{grid-template-columns:1fr}}
+    @media (max-width: 810px) {
+      .proyectos-contenido { padding: 12vh 5vw 4vh; }
+      .filtros { justify-content: flex-start; gap: 18px; }
+      .proyecto { border-radius: 20px; }
+      .carril { --gap: 12px; grid-auto-columns: calc((var(--alto-carril, 55vh) - 2 * var(--gap)) / 3 * 1.5); }
+    }
   </style>
 </head>
-
 <body class="pagina">
 
+   <!-- Navbar -->
   <nav class="cavla-nav">
     <a href="/" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
-    <nav class="cavla-nav__center" aria-label="Principal">
-      <a href="/">Inicio</a>
-      <a href="/proyectos">Proyectos</a>
+
+      <!-- Menú desktop -->
+   <nav class="cavla-nav__center" aria-label="Principal">
+    <a href="/">Inicio</a>
+    <a href="/proyectos">Proyectos</a>
       <a href="/filosofia">Filosofía</a>
-      <a href="/sobremi">Sobre mí</a>
-      <a href="/contacto">Contacto</a>
-    </nav>
-    <a href="/empezar" class="cavla-nav__cta">Empezá tu proyecto</a>
+    <a href="/sobremi">Sobre mí</a>
+    <a href="/contacto">Contacto</a>
+  </nav>
+
+  <a href="/empezar" class="cavla-nav__cta">Empezá tu proyecto</a>
+  
+  <!-- Menú mobile -->
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
@@ -89,98 +94,122 @@
       <li><a href="/contacto" onclick="toggleMenu()">Contacto</a></li>
     </ul>
   </div>
+  
+  <!-- PORTADA-->
+  <section class="page mainContent">
+    <div class="opacidad"></div>
+    <div class="bg-gradient"></div>
+    <div class="shadowa"></div>
 
-  <div class="fondo"><img src="/images/SERVICIOS/RESIDENCIAL/CONC-TEXTURA.webp" alt=""></div>
-  <main class="pantalla">
-    <header>
-      <h1 class="titulo">Proyectos</h1>
-      <p class="subtitulo">Espacios que cuentan historias</p>
-    </header>
-
-    <div class="filtros" role="group" aria-label="Filtrar proyectos por tipo">
-      <button type="button" class="filtro" data-filtro="Todo" aria-pressed="true">Todo</button>
-      <button type="button" class="filtro" data-filtro="Residencial" aria-pressed="false">Residencial</button>
-      <button type="button" class="filtro" data-filtro="Gastronómico" aria-pressed="false">Gastronómico</button>
-      <button type="button" class="filtro" data-filtro="Comercial" aria-pressed="false">Comercial</button>
+    <div class="bloque-titulos translate" data-speed="0.1">
+      <h1 class="titulo-pagina">Proyectos</h1>
+      <h2 class="subtitulo-pagina">
+        <span>ESPACIOS</span> <span>QUE</span> <span>CUENTAN</span> <span>HISTORIAS</span>
+      </h2>
     </div>
 
-    <!-- Para cargar un proyecto real: reemplazá el <div class="proyecto__img ph ..."> por <img src="..." alt="..."> dentro de un <a href="/proyectos/nombre"> -->
-    <section class="grilla" id="grilla" aria-live="polite">
-        <article class="proyecto" data-cat="Residencial">
-          <div class="proyecto__img ph ph--1" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto residencial 01</h2>
-          <p class="proyecto__cat">Residencial</p>
-        </article>
-        <article class="proyecto" data-cat="Residencial">
-          <div class="proyecto__img ph ph--2" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto residencial 02</h2>
-          <p class="proyecto__cat">Residencial</p>
-        </article>
-        <article class="proyecto" data-cat="Residencial">
-          <div class="proyecto__img ph ph--3" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto residencial 03</h2>
-          <p class="proyecto__cat">Residencial</p>
-        </article>
-        <article class="proyecto" data-cat="Residencial">
-          <div class="proyecto__img ph ph--4" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto residencial 04</h2>
-          <p class="proyecto__cat">Residencial</p>
-        </article>
-        <article class="proyecto" data-cat="Residencial">
-          <div class="proyecto__img ph ph--1" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto residencial 05</h2>
-          <p class="proyecto__cat">Residencial</p>
-        </article>
-        <article class="proyecto" data-cat="Gastronómico">
-          <div class="proyecto__img ph ph--2" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto gastronómico 01</h2>
-          <p class="proyecto__cat">Gastronómico</p>
-        </article>
-        <article class="proyecto" data-cat="Gastronómico">
-          <div class="proyecto__img ph ph--3" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto gastronómico 02</h2>
-          <p class="proyecto__cat">Gastronómico</p>
-        </article>
-        <article class="proyecto" data-cat="Comercial">
-          <div class="proyecto__img ph ph--4" role="img" aria-label="Vista previa del proyecto (imagen pendiente)"></div>
-          <h2 class="proyecto__nombre">Proyecto comercial 01</h2>
-          <p class="proyecto__cat">Comercial</p>
-        </article>
-    </section>
-    <p class="vacio" id="vacio">Muy pronto vas a ver proyectos acá.</p>
-  </main>
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Desliza</span>
+      <span class="scroll-cue__line">
+         <span class="scroll-cue__dot"></span>
+      </span>
+    </div>
+    <img alt="" src="images/PROYECTOS/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
+  </section>
 
-  <script>
-    var sideMenu = document.getElementById('sideMenu');
-    window.toggleMenu = function () { if (sideMenu) sideMenu.classList.toggle('open'); };
-    document.addEventListener('click', function (e) {
-      if (!sideMenu || !sideMenu.classList.contains('open')) return;
-      var t = document.querySelector('.menu-toggle');
-      if (sideMenu.contains(e.target) || (t && t.contains(e.target))) return;
-      sideMenu.classList.remove('open');
-    });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && sideMenu) sideMenu.classList.remove('open'); });
-  </script>
+  <!-- PROYECTOS -->
+  <section class="proyectos-pantalla mainContent">
+    <img alt="" src="images/FILOSOFÍA/TEXTURA.webp" class="page_fondo">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div>
 
+    <div class="proyectos-contenido">
+      <div class="filtros" role="group" aria-label="Filtrar proyectos por tipo">
+        <button type="button" class="filtro" data-filtro="Todo" aria-pressed="true">Todo</button>
+        <button type="button" class="filtro" data-filtro="Residencial" aria-pressed="false">Residencial</button>
+        <button type="button" class="filtro" data-filtro="Gastronómico" aria-pressed="false">Gastronómico</button>
+        <button type="button" class="filtro" data-filtro="Comercial" aria-pressed="false">Comercial</button>
+      </div>
+
+      <!-- Para cargar un proyecto real: reemplazá la clase ph--N por una <img class="proyecto__img" src="..." alt="..."> dentro del <article>, y convertí el <article> en <a href="/proyectos/nombre"> -->
+      <div class="carril-wrap" id="carril-wrap">
+        <div class="carril" id="carril" tabindex="0" aria-label="Proyectos (deslizá hacia los costados para ver más)">
+          <article class="proyecto ph--1" data-cat="Residencial">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto residencial 01</h2></div>
+          </article>
+          <article class="proyecto ph--2" data-cat="Residencial">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto residencial 02</h2></div>
+          </article>
+          <article class="proyecto ph--3" data-cat="Residencial">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto residencial 03</h2></div>
+          </article>
+          <article class="proyecto ph--4" data-cat="Residencial">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto residencial 04</h2></div>
+          </article>
+          <article class="proyecto ph--1" data-cat="Residencial">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto residencial 05</h2></div>
+          </article>
+          <article class="proyecto ph--2" data-cat="Gastronómico">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto gastronómico 01</h2></div>
+          </article>
+          <article class="proyecto ph--3" data-cat="Gastronómico">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto gastronómico 02</h2></div>
+          </article>
+          <article class="proyecto ph--4" data-cat="Comercial">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Proyecto comercial 01</h2></div>
+          </article>
+        </div>
+        <p class="vacio" id="vacio">Muy pronto vas a ver proyectos acá.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/scripts.js"></script>
   <script>
   (function () {
-    var botones = document.querySelectorAll('.filtro'), items = document.querySelectorAll('.proyecto'), vacio = document.getElementById('vacio');
+    var wrap = document.getElementById('carril-wrap'), carril = document.getElementById('carril'), vacio = document.getElementById('vacio');
+    var botones = document.querySelectorAll('.filtro'), items = document.querySelectorAll('.proyecto');
     var validos = ['Todo', 'Residencial', 'Gastronómico', 'Comercial'];
-    function aplicar(f, actualizarUrl) {
+
+    function medir() {
+      carril.style.setProperty('--alto-carril', carril.clientHeight + 'px');
+      wrap.classList.toggle('hay-mas', carril.scrollWidth - carril.clientWidth - carril.scrollLeft > 4);
+    }
+    function aplicar(f, url) {
       var n = 0;
-      items.forEach(function (it) {
-        var ok = f === 'Todo' || it.getAttribute('data-cat') === f;
-        it.hidden = !ok; if (ok) { n++; it.style.animation = 'none'; void it.offsetWidth; it.style.animation = ''; }
-      });
+      items.forEach(function (it) { var ok = f === 'Todo' || it.getAttribute('data-cat') === f; it.hidden = !ok; if (ok) n++; });
       botones.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-filtro') === f ? 'true' : 'false'); });
-      vacio.style.display = n ? 'none' : 'block';
-      if (actualizarUrl) { try { history.replaceState(null, '', f === 'Todo' ? location.pathname : '?categoria=' + encodeURIComponent(f.toLowerCase())); } catch (e) {} }
+      vacio.style.display = n ? 'none' : 'flex';
+      carril.scrollLeft = 0; medir();
+      if (url) { try { history.replaceState(null, '', f === 'Todo' ? location.pathname : '?categoria=' + encodeURIComponent(f.toLowerCase())); } catch (e) {} }
     }
     botones.forEach(function (b) { b.addEventListener('click', function () { aplicar(b.getAttribute('data-filtro'), true); }); });
     var q = new URLSearchParams(location.search).get('categoria');
     if (q) { var m = validos.filter(function (v) { return v.toLowerCase() === q.toLowerCase(); })[0]; if (m) aplicar(m, false); }
+
+    // Rueda del mouse: en esta última pantalla desliza el carril hacia los costados
+    wrap.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;            // el trackpad ya desliza solo
+      var max = carril.scrollWidth - carril.clientWidth;
+      if (max <= 0) return;
+      var alFondo = (window.scrollY || 0) >= document.body.scrollHeight - window.innerHeight - 4;
+      if (!alFondo) return;
+      if ((e.deltaY > 0 && carril.scrollLeft < max - 1) || (e.deltaY < 0 && carril.scrollLeft > 0)) {
+        carril.scrollLeft += e.deltaY; e.preventDefault();
+      }
+    }, { passive: false });
+
+    // Arrastrar con el mouse
+    var down = false, x0 = 0, s0 = 0, movio = false;
+    carril.addEventListener('mousedown', function (e) { down = true; movio = false; x0 = e.pageX; s0 = carril.scrollLeft; });
+    window.addEventListener('mousemove', function (e) { if (!down) return; var dx = e.pageX - x0; if (Math.abs(dx) > 4) { movio = true; carril.classList.add('arrastrando'); } carril.scrollLeft = s0 - dx; });
+    window.addEventListener('mouseup', function () { down = false; carril.classList.remove('arrastrando'); });
+    carril.addEventListener('click', function (e) { if (movio) { e.preventDefault(); e.stopPropagation(); movio = false; } }, true);
+
+    carril.addEventListener('scroll', medir, { passive: true });
+    window.addEventListener('resize', medir); window.addEventListener('load', medir); medir();
   })();
   </script>
-
 </body>
 </html>
