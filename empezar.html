@@ -112,6 +112,8 @@
       .acciones { flex-direction: column-reverse; align-items: stretch; text-align: center; }
       .acciones .btn-cta-servicio { text-align: center; }
     }
+      .campo-otro { margin-top: 18px; }
+    .campo-otro[hidden] { display: none; }
   </style>
 </head>
 
@@ -190,7 +192,13 @@
                 opts: ['Solo necesito diseñar muebles', 'Quiero diseñar un espacio'],
                 next: function (a) { return a === 0 ? 'mueble' : 'espacio'; } },
       mueble: { tipo: 'multi', q: '¿Qué muebles querés diseñar?', ayuda: 'Podés elegir más de uno.',
-                opts: ['Cocina', 'Placard / vestidor', 'Baño', 'Living / TV', 'Escritorio / oficina', 'Otro'],
+                opts: ['Cocina', 'Placard / vestidor', 'Baño', 'Living / TV', 'Escritorio / oficina', 'Otro'], otro: 5,
+                next: function () { return 'condicion'; } },
+      condicion:{ tipo: 'single', q: '¿En qué condiciones está el espacio?',
+                opts: ['Espacio existente', 'Obra en construcción'],
+                next: function () { return 'ejecucion'; } },
+      ejecucion:{ tipo: 'single', q: '¿Cómo querés ejecutarlo?',
+                opts: ['Tengo carpintero', 'Quiero que el estudio se encargue'],
                 next: function () { return 'presupuesto'; } },
       espacio:{ tipo: 'single', q: '¿Qué tipo de espacio es?',
                 opts: ['Casa', 'Departamento', 'Local comercial', 'Local gastronómico'],
@@ -236,7 +244,7 @@
     function getOpts(p) { return typeof p.opts === 'function' ? p.opts() : p.opts; }
     function esLocal() { return indices.espacio >= 2; }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-    function totalPasos() { return indices.tipo === undefined ? 6 : (indices.tipo === 0 ? 5 : (esLocal() ? 10 : 7)); }
+    function totalPasos() { return indices.tipo === undefined ? 6 : (indices.tipo === 0 ? 7 : (esLocal() ? 10 : 7)); }
 
     function progreso() {
       var n = historial.length, t = totalPasos();
@@ -252,7 +260,9 @@
         var unica = p.tipo === 'single', cl = unica ? 'opcion' : 'pastilla';
         h += '<div class="bloque"><div class="' + (unica ? 'opciones' : 'pastillas') + '" role="' + (unica ? 'radiogroup' : 'group') + '">';
         getOpts(p).forEach(function (o, i) { h += '<button type="button" class="' + cl + '" data-i="' + i + '"' + (unica ? ' role="radio"' : '') + '>' + esc(o) + '</button>'; });
-        h += '</div></div><div class="acciones">' +
+        h += '</div>';
+        if (p.otro !== undefined) h += '<div class="campo campo-otro" id="caja-otro" hidden><label for="f-otro">¿Cuál?</label><input id="f-otro" type="text" maxlength="80" placeholder="Contanos qué mueble es"></div>';
+        h += '</div><div class="acciones">' +
              (historial.length > 1 ? '<button type="button" class="volver" id="volver">← Volver</button>' : '<span></span>') +
              (p.tipo === 'multi' ? '<button type="button" class="btn-cta-servicio" id="continuar" disabled>Continuar</button>' : '') + '</div>';
       } else {
@@ -298,8 +308,12 @@
         var sel = (indices[id] || []).slice(), btnC = document.getElementById('continuar');
         function pinta() {
           cont.querySelectorAll('.pastilla').forEach(function (b) { b.classList.toggle('sel', sel.indexOf(+b.getAttribute('data-i')) > -1); });
-          btnC.disabled = sel.length === 0;
+          var otroSel = p.otro !== undefined && sel.indexOf(p.otro) > -1, cajaO = document.getElementById('caja-otro');
+          if (cajaO) cajaO.hidden = !otroSel;
+          btnC.disabled = sel.length === 0 || (otroSel && !document.getElementById('f-otro').value.trim());
         }
+        var inpO = document.getElementById('f-otro');
+        if (inpO) { inpO.value = respuestas['otro_' + id] || ''; inpO.addEventListener('input', pinta); }
         cont.querySelectorAll('.pastilla').forEach(function (b) {
           b.addEventListener('click', function () {
             var i = +b.getAttribute('data-i'), k = sel.indexOf(i);
@@ -310,6 +324,11 @@
         btnC.addEventListener('click', function () {
           sel.sort(function (a, b) { return a - b; });
           indices[id] = sel; respuestas[id] = sel.map(function (i) { return getOpts(p)[i]; });
+          if (p.otro !== undefined) {
+            var tO = inpO.value.trim(), k = sel.indexOf(p.otro);
+            respuestas['otro_' + id] = tO;
+            if (k > -1) respuestas[id][k] = 'Otro: ' + tO;
+          }
           avanzar(p, sel);
         });
         pinta();
@@ -328,7 +347,7 @@
       var cambio = indices[id] !== undefined && indices[id] !== i;
       indices[id] = i; respuestas[id] = getOpts(p)[i];
       if (id === 'espacio' && cambio) { ['rubro', 'alcance', 'ambientes', 'superficie', 'estado', 'marca'].forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
-      if (id === 'tipo') { ['mueble', 'espacio', 'rubro', 'alcance', 'ambientes', 'superficie', 'estado', 'marca'].forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
+      if (id === 'tipo') { ['mueble', 'otro_mueble', 'condicion', 'ejecucion', 'otro_mueble', 'condicion', 'ejecucion', 'espacio', 'rubro', 'alcance', 'ambientes', 'superficie', 'estado', 'marca'].forEach(function (k) { delete respuestas[k]; delete indices[k]; }); }
       avanzar(p, i);
     }
     function avanzar(p, a) { var sig = p.next(a); if (sig) { historial.push(sig); render(); } }
@@ -362,7 +381,7 @@
       return {
         tipo_diseno: r.tipo || '', muebles: r.mueble ? lista(r.mueble) : '', tipo_espacio: r.espacio || '',
         rubro: r.rubro || '', superficie: r.superficie || '', estado_local: r.estado || '', marca: r.marca || '',
-        alcance: r.alcance || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
+        condicion: r.condicion || '', ejecucion: r.ejecucion || '', alcance: r.alcance || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
         presupuesto: pr.presupuesto_nd ? 'Todavía no lo definió' : (pr.presupuesto || ''),
         provincia: u.provincia || '', ciudad: u.ciudad || '', nombre: d.nombre || '', telefono: d.telefono || '', email: d.email || ''
       };
@@ -371,6 +390,8 @@
       var l = ['Hola Cata, soy ' + c.nombre + '. Completé el formulario en la web:', ''];
       l.push('• Diseño: ' + c.tipo_diseno);
       if (c.muebles) l.push('• Muebles: ' + c.muebles);
+      if (c.condicion) l.push('• Condición del espacio: ' + c.condicion);
+      if (c.ejecucion) l.push('• Ejecución: ' + c.ejecucion);
       if (c.tipo_espacio) l.push('• Espacio: ' + c.tipo_espacio);
       if (c.rubro) l.push('• Rubro: ' + c.rubro);
       if (c.alcance) l.push('• Alcance: ' + c.alcance);
