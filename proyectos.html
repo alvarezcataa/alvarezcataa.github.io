@@ -49,10 +49,13 @@
     .flecha-carril--der:hover svg { transform: translateX(4px); }
     .flecha-carril:focus-visible { outline: 1px solid rgba(255,255,255,.7); outline-offset: -6px; }
     .carril-wrap.sin-flechas .flecha-carril { display: none; }
-    .carril-wrap.estatico .carril { padding-left: 4vw; -webkit-mask-image: none; mask-image: none; cursor: default; overflow-x: hidden; }
+    .carril-wrap.estatico .carril { justify-content: center; padding-left: 0; -webkit-mask-image: none; mask-image: none; cursor: default; overflow-x: hidden; }
 
     .proyecto { position: relative; display: block; min-height: 0; --radio: 28px; border-radius: var(--radio); overflow: hidden; text-decoration: none; color: #fff; background-size: cover; background-position: center; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
     .proyecto[hidden] { display: none; }
+    @keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
+    .carril.anima .proyecto:not(.proyecto--relleno) { opacity: 0; animation: aparece .7s ease forwards; animation-delay: calc(var(--i, 0) * 55ms); }
+    @media (prefers-reduced-motion: reduce) { .carril.anima .proyecto { animation: none; opacity: 1; } }
     .proyecto--relleno { visibility: hidden; pointer-events: none; }
     .proyecto:hover { transform: translateY(-3px); }
     .proyecto__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) brightness(.78); transition: filter 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1); }
@@ -72,7 +75,6 @@
       .proyecto { --radio: 20px; }
       .carril { --gap: 6px; grid-auto-columns: calc((var(--alto-carril, 55vh) - 2 * var(--gap)) / 3 * 1.25); }
       .carril-wrap { margin: 0 -5vw; }
-      .carril-wrap.estatico .carril { padding-left: 5vw; }
     }
   </style>
 </head>
@@ -215,6 +217,13 @@
       }
       carril.scrollLeft = W;
     }
+    function aparecer() {
+      carril.classList.remove('anima');
+      var n = 0;
+      Array.prototype.forEach.call(carril.querySelectorAll('.proyecto:not([hidden]):not(.proyecto--relleno)'), function (it) { it.style.setProperty('--i', Math.min(n++, 14)); });
+      void carril.offsetWidth;
+      carril.classList.add('anima');
+    }
     function envolver() {
       if (!infinito) return;
       if (carril.scrollLeft < W) carril.scrollLeft += W; else if (carril.scrollLeft >= 2 * W) carril.scrollLeft -= W;
@@ -242,7 +251,7 @@
     function aplicar(f, url) {
       filtro = f;
       botones.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-filtro') === f ? 'true' : 'false'); });
-      construir();
+      construir(); aparecer();
       if (url) { try { history.replaceState(null, '', f === 'Todo' ? location.pathname : '?categoria=' + encodeURIComponent(f.toLowerCase())); } catch (e) {} }
     }
     botones.forEach(function (b) { b.addEventListener('click', function () { aplicar(b.getAttribute('data-filtro'), true); }); });
