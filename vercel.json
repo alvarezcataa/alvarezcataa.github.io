@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
+    { "source": "/proyectos/departamento-quiros", "destination": "/proyectos/quiros", "permanent": true },
     {
       "source": "/test",
       "destination": "/empezar",

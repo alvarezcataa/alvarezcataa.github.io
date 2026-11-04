@@ -62,7 +62,7 @@
     .proyecto:hover .proyecto__img { filter: saturate(1.05) brightness(.92); transform: scale(1.04); }
     .proyecto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(19,9,10,.7) 100%); pointer-events: none; }
     .proyecto__texto { position: absolute; left: var(--radio); bottom: calc(var(--radio) - .6em); right: 16px; z-index: 2; text-align: left; }
-    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(11px, 1.55vh, 15px); line-height: 1.2; color: #fff; }
+    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: normal; font-weight: 400; font-size: clamp(11px, 1.55vh, 15px); line-height: 1.2; color: #fff; }
     .ph--1 { background-image: linear-gradient(160deg, #3a261f, #1a0f0c); }
     .ph--2 { background-image: linear-gradient(160deg, #4a3526, #201410); }
     .ph--3 { background-image: linear-gradient(160deg, #2c1c17, #120a08); }
@@ -144,13 +144,13 @@
       <!-- ORDEN: del más nuevo al más viejo (Casa Bruma, el primero, va al final). Para sumar un proyecto: copiá un <a class="proyecto"> y cambiá data-cat, href, imagen y nombre; después creá proyectos/nombre.html -->
       <div class="carril-wrap" id="carril-wrap">
         <div class="carril" id="carril" tabindex="0" aria-label="Proyectos (deslizá hacia los costados para ver más)">
-          <a class="proyecto" data-cat="Residencial" href="/proyectos/departamento-quiros">
-            <img class="proyecto__img" src="images/SERVICIOS/RESIDENCIAL/CONC-D.webp" alt="Departamento Quirós" loading="lazy">
-            <div class="proyecto__texto"><h2 class="proyecto__nombre">Departamento Quirós</h2></div>
-          </a>
           <a class="proyecto" data-cat="Residencial" href="/proyectos/casa-bemol">
             <img class="proyecto__img" src="images/SERVICIOS/RESIDENCIAL/CONC-B.webp" alt="Casa Bemol" loading="lazy">
             <div class="proyecto__texto"><h2 class="proyecto__nombre">Casa Bemol</h2></div>
+          </a>
+          <a class="proyecto" data-cat="Residencial" href="/proyectos/quiros">
+            <img class="proyecto__img" src="images/SERVICIOS/RESIDENCIAL/CONC-D.webp" alt="Quirós" loading="lazy">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Quirós</h2></div>
           </a>
           <a class="proyecto" data-cat="Residencial" href="/proyectos/casa-bruma">
             <img class="proyecto__img" src="images/PROYECTOS/CASA-BRUMA/07.webp" alt="Casa Bruma" loading="lazy">

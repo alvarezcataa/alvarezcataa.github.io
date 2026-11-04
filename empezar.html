@@ -100,6 +100,7 @@
 
     .acciones { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 26px; flex-wrap: wrap; }
     .acciones .btn-cta-servicio { margin: 0; cursor: pointer; background: transparent; font-family: var(--sans); }
+    .acciones .btn-cta-servicio:hover { background: rgba(255,255,255,.16); color: #fff; }
     .acciones .btn-cta-servicio[disabled] { opacity: .3; cursor: not-allowed; pointer-events: none; }
     .volver { background: none; border: 0; padding: 6px 2px; cursor: pointer; font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--w-50); transition: color .2s; }
     .volver:hover { color: var(--w-100); }
@@ -191,12 +192,12 @@
     var LOCALIDADES = ['Córdoba Capital', 'Villa Allende', 'Mendiolaza', 'Unquillo', 'Río Ceballos', 'Salsipuedes', 'La Calera', 'Saldán', 'Malagueño', 'Villa Carlos Paz']
       .sort(function (a, b) { return a.localeCompare(b, 'es'); }).concat(['Otra']);   // ciudades donde se trabaja de forma presencial (alfabético) + Otra
     var PROFUNDIDAD = ['Quiero reorganizar lo que ya tengo', 'Quiero un rediseño completo del espacio'];
-    var BORRAR = ['virtual', 'tipo', 'mueble', 'otro_mueble', 'condicion', 'ejecucion', 'espacio', 'rubro', 'alcance', 'ambientes', 'otro_ambientes', 'superficie', 'superficieCasa',
-                  'estado', 'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'];
+    var BORRAR = ['virtual', 'tipo', 'mueble', 'otro_mueble', 'condicion', 'ejecucion', 'espacio', 'rubro', 'ambientes', 'otro_ambientes', 'superficie',
+                  'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'];
     var DEPENDE = {
       lugar: ['virtual', 'ejecucion', 'ejecucionObra'],
       tipo: BORRAR.slice(2),
-      espacio: ['rubro', 'alcance', 'ambientes', 'otro_ambientes', 'superficie', 'superficieCasa', 'estado', 'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'],
+      espacio: ['rubro', 'ambientes', 'otro_ambientes', 'superficie', 'marca', 'estadoEsp', 'problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso', 'ejecucionObra'],
       estadoEsp: ['problemas', 'otro_problemas', 'profundidad', 'profundidadC', 'etapa', 'uso']
     };
 
@@ -209,7 +210,7 @@
                 ayuda: 'Fuera de Córdoba Capital y sus alrededores trabajamos de forma virtual. No hacemos visitas ni ejecutamos obras en persona, pero desarrollamos tu proyecto con la misma calidad.',
                 opts: ['Sí, estoy de acuerdo', 'Prefiero algo presencial'],
                 next: function (a) { return a === 0 ? 'tipo' : 'virtualaviso'; } },
-      virtualaviso:{ tipo: 'info', q: 'Por ahora solo trabajamos de forma virtual en tu zona',
+      virtualaviso:{ tipo: 'info', q: 'Solo trabajamos de forma virtual en tu zona',
                 ayuda: 'Igualmente podés continuar con el formulario y buscamos una solución por WhatsApp.',
                 next: function () { return 'tipo'; } },
       tipo:   { tipo: 'single', q: '¿Qué tipo de diseño necesitás?',
@@ -224,49 +225,40 @@
       ejecucion:{ tipo: 'single', q: '¿Cómo querés ejecutarlo?',
                 opts: ['Tengo carpintero', 'Quiero que el estudio se encargue'],
                 next: function () { return 'presupuesto'; } },
-      espacio:{ tipo: 'single', q: '¿Qué tipo de espacio es?',
+      espacio:{ tipo: 'single', q: '¿Qué tipo de inmueble es?',
                 opts: ['Casa', 'Departamento', 'Local comercial', 'Local gastronómico'],
                 next: function (a) { return a >= 2 ? 'rubro' : 'estadoEsp'; } },
+      rubro:  { tipo: 'single', q: '¿De qué rubro es?',
+                opts: function () { return indices.espacio === 3 ? ['Café', 'Restaurante', 'Bar', 'Otro'] : ['Indumentaria', 'Alimentos', 'Tecnología', 'Salud y estética', 'Hogar y decoración', 'Librería y juguetería', 'Otro']; },
+                next: function () { return 'estadoEsp'; } },
       estadoEsp:{ tipo: 'single', q: '¿En qué condiciones está el espacio?',
                 opts: ['Espacio existente en buen estado', 'Espacio existente en mal estado', 'Espacio a estrenar', 'Obra en construcción'],
                 next: function (a) { return ['profundidad', 'problemas', 'profundidadC', 'etapa'][a]; } },
       profundidad:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?', opts: PROFUNDIDAD,
-                next: function () { return 'ambientes'; } },
+                next: function (a) { return despuesProfundidad(a); } },
       problemas:{ tipo: 'multi', q: '¿Qué tipo de problemas tiene el espacio?', ayuda: 'Podés elegir más de uno.',
                 opts: ['Problemas de instalaciones', 'Humedades', 'Problemas estructurales', 'Paredes deterioradas', 'Otro'], otro: 4, otroPh: 'Contanos qué problema es',
                 next: function () { return 'profundidad'; } },
       profundidadC:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?',
-                opts: ['Quiero adaptar mis pertenencias a este nuevo espacio', 'Quiero un diseño completo desde cero'],
-                next: function () { return 'ambientes'; } },
+                opts: function () { return [esLocal() ? 'Quiero trasladar mi mobiliario y equipamiento al nuevo local' : 'Quiero adaptar mis pertenencias a este nuevo espacio', 'Quiero un diseño completo desde cero']; },
+                next: function (a) { return despuesProfundidad(a); } },
       etapa:  { tipo: 'single', q: '¿En qué etapa está la obra?',
-                opts: ['Recién empieza (estructura)', 'En terminaciones', 'Casi terminada'],
-                next: function () { return 'uso'; } },
+                opts: ['En etapa inicial (estructura)', 'En etapa avanzada (instalaciones y terminaciones)'],
+                next: function () { return esLocal() ? 'superficie' : 'uso'; } },
       uso:    { tipo: 'single', q: '¿Para qué es el inmueble?',
-                opts: ['Para vivirlo yo o mi familia', 'Para venderlo amoblado'],
+                opts: ['Para vivirlo yo', 'Para venderlo/alquilarlo amoblado'],
                 next: function () { return 'ambientes'; } },
       ambientes:{ tipo: 'multi', q: '¿Qué ambientes querés trabajar?', ayuda: 'Podés elegir más de uno.',
                 opts: ['Living / comedor', 'Cocina', 'Dormitorios', 'Baños', 'Otro'], otro: 4, otroPh: 'Contanos qué ambiente es',
-                next: function () { return 'superficieCasa'; } },
-      superficieCasa:{ tipo: 'single', q: '¿Cuántos m² tiene, aproximadamente?',
-                opts: ['Hasta 50 m²', 'Entre 50 y 100 m²', 'Entre 100 y 200 m²', 'Más de 200 m²'],
-                next: function () { return esPresencial() ? 'ejecucionObra' : 'presupuesto'; } },
+                next: function () { return 'superficie'; } },
+      marca:  { tipo: 'single', q: '¿Ya tenés identidad de marca?',
+                opts: ['Sí, ya tengo identidad de marca', 'Está en proceso', 'No, todavía no'],
+                next: function () { return 'superficie'; } },
+      superficie:{ tipo: 'single', q: '¿Qué superficie total tiene el proyecto?',
+                opts: ['Hasta 25 m²', 'Entre 25 m² y 50 m²', 'Entre 50 m² y 100 m²', 'Más de 100 m²', 'No lo sé'],
+                next: function () { return (!esLocal() && esPresencial()) ? 'ejecucionObra' : 'presupuesto'; } },
       ejecucionObra:{ tipo: 'single', q: '¿Cómo querés ejecutarlo?',
                 opts: ['Tengo quien ejecute la obra', 'Quiero que el estudio se encargue'],
-                next: function () { return 'presupuesto'; } },
-      rubro:  { tipo: 'single', q: '¿De qué rubro es?',
-                opts: function () { return esLocal() && indices.espacio === 3 ? ['Café', 'Restaurante', 'Bar', 'Otro'] : ['Indumentaria / accesorios', 'Estética y bienestar', 'Salud', 'Servicios / oficina', 'Otro']; },
-                next: function () { return 'alcance'; } },
-      alcance:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?',
-                opts: ['Quiero reorganizar lo que ya tengo', 'Quiero un rediseño completo del espacio', 'Tengo problemas de instalaciones, humedades o estructura'],
-                next: function () { return 'superficie'; } },
-      superficie:{ tipo: 'single', q: '¿Qué superficie tiene, aproximadamente?',
-                opts: ['Hasta 30 m²', 'Entre 30 y 60 m²', 'Entre 60 y 100 m²', 'Más de 100 m²'],
-                next: function () { return 'estado'; } },
-      estado: { tipo: 'single', q: '¿En qué estado está el local?',
-                opts: ['Local nuevo, a estrenar', 'Ya está funcionando y lo quiero renovar'],
-                next: function () { return 'marca'; } },
-      marca:  { tipo: 'single', q: '¿Ya tienen marca?',
-                opts: ['Sí, con identidad definida', 'Está en proceso', 'Todavía no'],
                 next: function () { return 'presupuesto'; } },
       presupuesto:{ tipo: 'campos', q: '¿Con qué presupuesto contás?',
                 ayuda: 'Para el proyecto completo (obra, muebles o ambos). Una cifra aproximada alcanza.',
@@ -285,6 +277,8 @@
     var cont = document.getElementById('paso');
 
     function getOpts(p) { return typeof p.opts === 'function' ? p.opts() : p.opts; }
+    // Tras elegir el nivel de profundidad: en un local, si pide rediseño/diseño completo se pregunta por la marca
+    function despuesProfundidad(a) { return (esLocal() && a === 1) ? 'marca' : (esLocal() ? 'superficie' : 'ambientes'); }
     function esLocal() { return indices.espacio >= 2; }
     function esPresencial() { var l = respuestas.lugar; return !(l && !l.presencial); }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -292,7 +286,10 @@
       var pres = esPresencial(), ej = pres ? 1 : 0;
       var n = 2 + (pres ? 0 : 1) + (respuestas.virtual === 'Prefiero algo presencial' ? 1 : 0);   // lugar, [virtual], [aviso], tipo
       if (indices.tipo === 0) return n + 4 + ej;                                                    // muebles: mueble, condición, [ejecución], presupuesto, datos → +4 con ejecución
-      if (esLocal()) return n + 8;                                                                  // espacio, rubro, alcance, superficie, estado, marca, presupuesto, datos
+      if (esLocal()) {                                                                              // espacio, rubro, estado, profundidad|etapa, [problemas], [marca], superficie, presupuesto, datos
+        var extra = (indices.estadoEsp === 1 ? 1 : 0) + ((indices.profundidad === 1 || indices.profundidadC === 1) ? 1 : 0);
+        return n + 7 + extra;
+      }
       var rama = (indices.estadoEsp === 1 || indices.estadoEsp === 3) ? 1 : 0;                      // B: +problemas · D: +uso
       return n + 7 + rama + ej;                                                                     // espacio, estado, profundidad, ambientes, m², [ejecución], presupuesto, datos
     }
@@ -410,6 +407,11 @@
           function muestra() { wrap.hidden = origen.value !== c.siVal; }
           origen.addEventListener('change', muestra); muestra();
         });
+        if (id === 'presupuesto') {   // escribir un monto y marcar "todavía no lo definí" no pueden ir juntos
+          var tx = document.getElementById('f-presupuesto'), nd = document.getElementById('f-presupuesto_nd');
+          tx.addEventListener('input', function () { if (tx.value.trim()) nd.checked = false; });
+          nd.addEventListener('change', function () { if (nd.checked) tx.value = ''; });
+        }
         form.addEventListener('submit', function (e) { e.preventDefault(); enviarPaso(id, p, form); });
       }
     }
@@ -496,15 +498,15 @@
     function resumen() {
       var r = respuestas, d = r.datos || {}, l = r.lugar || {}, pr = r.presupuesto || {}, pres = esPresencial();
       var ub = l.ciudad ? (l.provincia === 'Otro país' ? l.ciudad : l.ciudad + ', ' + l.provincia) : '';
-      var modalidad = pres ? 'Presencial' : (r.virtual === 'Prefiero algo presencial' ? 'Virtual (prefiere algo presencial)' : 'Virtual (aceptó)');
+      var modalidad = pres ? 'Presencial' : (r.virtual === 'Prefiero algo presencial' ? 'Virtual (prefiero algo presencial)' : 'Virtual (estoy de acuerdo)');
       return {
         ubicacion: ub, modalidad: modalidad,
         tipo_diseno: r.tipo || '', muebles: r.mueble ? lista(r.mueble) : '', tipo_espacio: r.espacio || '',
-        rubro: r.rubro || '', superficie: r.superficie || r.superficieCasa || '', estado_local: r.estado || '', marca: r.marca || '',
+        rubro: r.rubro || '', superficie: r.superficie || '', marca: r.marca || '',
         condicion: r.estadoEsp || r.condicion || '', problemas: r.problemas ? lista(r.problemas) : '', etapa: r.etapa || '', uso: r.uso || '',
-        ejecucion: pres ? (r.ejecucion || r.ejecucionObra || '') : 'A cargo del cliente (proyecto virtual)',
-        alcance: r.profundidad || r.profundidadC || r.alcance || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
-        presupuesto: pr.presupuesto_nd ? 'Todavía no lo definió' : (pr.presupuesto || ''),
+        ejecucion: pres ? (r.ejecucion || r.ejecucionObra || '') : 'Me encargo yo (proyecto virtual)',
+        alcance: r.profundidad || r.profundidadC || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
+        presupuesto: pr.presupuesto ? pr.presupuesto : 'Todavía no lo definí',
         provincia: l.provincia || '', ciudad: l.ciudad || '', nombre: d.nombre || '', telefono: d.telefono || '', email: d.email || ''
       };
     }
@@ -514,7 +516,7 @@
       l.push('• Modalidad: ' + c.modalidad);
       l.push('• Diseño: ' + c.tipo_diseno);
       if (c.muebles) l.push('• Muebles: ' + c.muebles);
-      if (c.tipo_espacio) l.push('• Espacio: ' + c.tipo_espacio);
+      if (c.tipo_espacio) l.push('• Inmueble: ' + c.tipo_espacio);
       if (c.rubro) l.push('• Rubro: ' + c.rubro);
       if (c.condicion) l.push('• Condición del espacio: ' + c.condicion);
       if (c.problemas) l.push('• Problemas: ' + c.problemas);
@@ -522,8 +524,7 @@
       if (c.uso) l.push('• Uso del inmueble: ' + c.uso);
       if (c.alcance) l.push('• Alcance: ' + c.alcance);
       if (c.superficie) l.push('• Superficie: ' + c.superficie);
-      if (c.estado_local) l.push('• Estado del local: ' + c.estado_local);
-      if (c.marca) l.push('• Marca: ' + c.marca);
+      if (c.marca) l.push('• Identidad de marca: ' + c.marca);
       if (c.ambientes) l.push('• Ambientes: ' + c.ambientes);
       if (c.ejecucion) l.push('• Ejecución: ' + c.ejecucion);
       l.push('• Presupuesto: ' + c.presupuesto);
