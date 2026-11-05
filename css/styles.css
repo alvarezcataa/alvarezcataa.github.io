@@ -49,19 +49,19 @@ body, html {
 }
 
 
-/* Celulares / táctiles (la clase la pone scripts.js): mismo scroll imantado que en PC, pero nativo.
-   El documento no se desplaza: lo hace el wrapper (contenedor fijo a pantalla completa) con scroll-snap.
-   Así las barras del navegador no aparecen ni desaparecen y el alto de cada pantalla es siempre el mismo. */
-html.nativo, html.nativo body { height: 100%; overflow: hidden; overscroll-behavior: none; scroll-snap-type: none; scroll-behavior: auto; background-color: #130c09; }
-html.nativo .smooth-scroll-wrapper {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch;
-  scroll-snap-type: y mandatory; scrollbar-width: none; transform: none; will-change: auto; z-index: 0;
-}
-html.nativo .smooth-scroll-wrapper::-webkit-scrollbar { display: none; }
+/* Celulares / táctiles (la clase la pone scripts.js): se desplaza la página entera (así Safari deja pasar el contenido por
+   debajo de la barra de estado y de la barra inferior) con imán por CSS. Cada pantalla mide 100svh (alto con barras visibles,
+   estable) y un espacio al final compensa la diferencia con lvh para que la última pantalla no salte al aparecer/ocultarse la barra. */
+html.nativo { --vh: 1vh; height: auto; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: auto; overscroll-behavior-y: none; background-color: #130c09; }
+html.nativo body { height: auto; min-height: 0; overflow-x: clip; overflow-y: visible; scroll-snap-type: none; background-color: #130c09; }
+html.nativo .smooth-scroll-wrapper { position: static; width: 100%; height: auto; overflow: visible; transform: none; will-change: auto; z-index: auto; }
 html.nativo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; scroll-snap-stop: always; }
-html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla (en PC lo hace el wrapper con transform) */
-@supports (height: 1dvh) { html.nativo { --vh: 1dvh; } html.nativo .smooth-scroll-wrapper { height: 100dvh; } }
+html.nativo .mainContent { overflow-x: clip; }
+html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla */
+@supports (height: 1svh) {
+  html.nativo { --vh: 1svh; }
+  html.nativo .smooth-scroll-wrapper { padding-bottom: calc(100lvh - 100svh); }
+}
 
 /* iPhone: pantalla completa de borde a borde (viewport-fit=cover). El contenido pasa por detrás de la barra de estado
    y del borde inferior, y ahí se difumina con los colores del sitio (efecto "liquid glass"). */
@@ -2554,5 +2554,5 @@ h1.subtitulo-pagina { font-family: 'Montserrat', sans-serif; }
 @media (max-width: 810px) {
   .cavla-nav__cta { font-size: 10px !important; letter-spacing: .12em !important; padding: 9px 14px !important; }
   .titulo-virtual { font-size: 10px !important; }
-  .proyecto__nombre { font-size: 12px !important; }
+  .proyecto__nombre { font-size: 15px !important; }
 }

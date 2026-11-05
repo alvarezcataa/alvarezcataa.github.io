@@ -10,8 +10,7 @@ var CAVLA_NATIVO = window.matchMedia("(hover: none) and (pointer: coarse)").matc
 if (CAVLA_NATIVO) document.documentElement.classList.add("nativo");
 // Desplaza la página: en táctiles el que se desplaza es el wrapper (contenedor fijo), en PC la ventana.
 function cavlaScrollTo(top, behavior) {
-  var w = CAVLA_NATIVO && document.querySelector(".smooth-scroll-wrapper");
-  if (w) w.scrollTo({ top: top, behavior: behavior || "auto" }); else window.scrollTo({ top: top, behavior: behavior || "auto" });
+  window.scrollTo({ top: top, behavior: behavior || "auto" });
 }
 // Sin el wrapper fijo, los espacios en blanco sueltos del <body> se dibujan como una línea de 18px arriba del todo: se quitan.
 if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
@@ -107,21 +106,6 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
     }
     computeSectionPositions();
 
-    /* --- Táctiles: el alto de pantalla es el del contenedor (no cambia con las barras del navegador) --- */
-    if (CAVLA_NATIVO) {
-      const fijaVh = () => {
-        const a = document.activeElement;
-        if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;   // teclado abierto: no se recalcula
-        const h = wrapper.clientHeight;
-        if (h > 0) document.documentElement.style.setProperty("--vh", (h / 100) + "px");
-        computeSectionPositions();
-      };
-      fijaVh();
-      window.addEventListener("resize", fijaVh);
-      window.addEventListener("orientationchange", () => setTimeout(fijaVh, 300));
-      window.addEventListener("load", fijaVh);
-    }
-
     /* --- Loop de interpolación (lerp) --- */
     let current = 0;
     let target = 0;
@@ -157,7 +141,7 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
     }
     if (CAVLA_NATIVO) {
       let ticking = false;
-      wrapper.addEventListener("scroll", () => {
+      window.addEventListener("scroll", () => {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => { actualizaPortada(); ticking = false; });
@@ -276,8 +260,8 @@ document.addEventListener('scroll', () => {
 
   if (!virtualSection || !grillaVirtual) return;
 
-  const viewportHeight = scroller ? scroller.clientHeight : window.innerHeight;
-  const scrollY        = scroller ? scroller.scrollTop : window.scrollY;
+  const viewportHeight = window.innerHeight;
+  const scrollY        = window.scrollY;
   const virtualTop     = virtualSection.offsetTop;
 
   const start = virtualTop - viewportHeight;
@@ -369,7 +353,7 @@ document.addEventListener('scroll', () => {
   const IS_MOBILE = /Mobi|Android|iPhone/i.test(navigator.userAgent);
   if (!IS_MOBILE) return;
   // Con scroll nativo y unidades lvh el alto no depende de la barra del navegador: no hace falta medir
-  const USA_LVH = CAVLA_NATIVO && window.CSS && CSS.supports && CSS.supports('height', '1lvh');
+  const USA_LVH = CAVLA_NATIVO;
 
   function getViewportHeight() {
     return Math.round((window.visualViewport && window.visualViewport.height) || window.innerHeight);
