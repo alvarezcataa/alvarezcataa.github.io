@@ -110,12 +110,15 @@ html.nativo .side-menu {
   background: linear-gradient(to left, rgba(19,9,6,.92), rgba(19,9,6,.35) 70%, rgba(19,9,6,0));
   z-index: 1000; will-change: transform;
 }
-/* desenfoque parejo (mismo en toda la ventana). No se usa 'filter' sobre la página: en Safari dejaba las franjas de la hora y de la barra
-   inferior sin repintar al cerrar el menú. */
+/* desenfoque parejo en la ventana (Google, Instagram, Chrome…) */
 html.nativo .side-menu::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
 }
+/* Safari iOS 26: cualquier desenfoque sobre la página (filter o backdrop-filter) hace que Safari deje de dibujar el contenido detrás de la hora
+   y de la barra inferior y que esas franjas aparezcan marrones, marcadas y tarden en irse. Ahí el menú solo oscurece (sin desenfoque). */
+html.cubre .side-menu::before { content: none; }
+html.cubre .side-menu { background: linear-gradient(to left, rgba(19,9,6,.95), rgba(19,9,6,.82) 55%, rgba(19,9,6,.62)); }
 html.nativo .side-menu.open { visibility: visible; transform: translate3d(0, 0, 0); transition-delay: 0s; }
 html.nativo .blur { filter: none; transition: none; pointer-events: none; }
 html.nativo .side-menu ul li a {
