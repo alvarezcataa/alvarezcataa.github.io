@@ -18,7 +18,7 @@ var CAVLA_FIJO = CAVLA_NATIVO && !CAVLA_SAF26;
 if (CAVLA_NATIVO) document.documentElement.classList.add(CAVLA_SAF26 ? "cubre" : "fijo");
 // Safari de iPhone (iOS 26+): el contenido se ve por detrás de la hora y de la barra inferior, pero la ventana de la página es más corta que
 // la pantalla. Se miden esas franjas y cada pantalla pasa a medir el alto físico completo (ver html.cubre en styles.css). Sin efecto en Google, Chrome, etc.
-var CAVLA_T = 0, CAVLA_CUBRE = false;
+var CAVLA_T = 0, CAVLA_CUBRE = false, CAVLA_SVH = 0;
 (function () {
   if (!CAVLA_SAF26) return;
   var root = document.documentElement;
@@ -30,10 +30,9 @@ var CAVLA_T = 0, CAVLA_CUBRE = false;
   function franjas() {
     var wrapper = document.querySelector(".smooth-scroll-wrapper");
     if (!wrapper) return;
-    var S = parseFloat(root.style.getPropertyValue("--S"));
     Array.prototype.forEach.call(wrapper.children, function (sec) {
       if (!sec.classList.contains("mainContent")) return;
-      var llena = Math.abs(sec.offsetHeight - S) < 3;
+      var llena = sec.classList.contains("pantalla-s") || Math.abs(sec.offsetHeight - CAVLA_SVH) < 3;
       sec.classList.toggle("pantalla-s", llena);
       var tiene = sec.querySelector(":scope > .franja");
       if (llena && !tiene) {
@@ -54,7 +53,7 @@ var CAVLA_T = 0, CAVLA_CUBRE = false;
     document.body.removeChild(probe);
     var T = topeHora(S), Bx = S - T - svh;
     if (!vertical || S - svh < 60 || Bx < 10) { root.classList.remove("medido"); CAVLA_CUBRE = false; CAVLA_T = 0; return; }
-    CAVLA_T = T; CAVLA_CUBRE = true;
+    CAVLA_T = T; CAVLA_CUBRE = true; CAVLA_SVH = svh;
     root.style.setProperty("--S", S + "px");
     root.style.setProperty("--T", T + "px");
     root.style.setProperty("--Bx", Bx + "px");

@@ -74,11 +74,13 @@ html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la 
 
 /* html.medido (la pone scripts.js tras medir): Safari deja la ventana de la página más corta que la pantalla pero dibuja el contenido por
    detrás de la hora y de la barra inferior. Variables (px): --S alto físico, --T franja de la hora, --Bx franja inferior con la barra expandida.
-   Cada pantalla mide --S; el imán la alinea con scroll-margin-top = -T (pegada al borde físico de arriba y abajo). El contenido queda dentro
+   --vh sigue siendo el alto de la zona visible (svh): todo lo que se calcula con él queda como antes. Cada pantalla mide --S; el imán la alinea con scroll-margin-top = -T (pegada al borde físico de arriba y abajo). El contenido queda dentro
    de la zona visible con padding, y en cada borde hay una franja de marrón + desenfoque (de 100 a 0 hacia el centro). */
-html.nativo.cubre.medido { --vh: calc(var(--S) / 100); }
 html.nativo.cubre.medido .smooth-scroll-wrapper > .mainContent { scroll-margin-top: calc(-1 * var(--T)); }
-html.nativo.cubre.medido .smooth-scroll-wrapper > .mainContent.pantalla-s { box-sizing: border-box; padding-top: var(--T); padding-bottom: var(--Bx); }
+html.nativo.cubre.medido .smooth-scroll-wrapper > .mainContent.pantalla-s { box-sizing: border-box; height: var(--S); min-height: 0; padding-top: var(--T); padding-bottom: var(--Bx); }
+/* sus fondos/imágenes (renders) ocupan toda la pantalla física, sin relleno */
+html.nativo.cubre.medido .smooth-scroll-wrapper > .mainContent.pantalla-s.render-par { padding: 0; }
+html.nativo.cubre.medido #vanta-bg { height: var(--S); }
 html.nativo.cubre.medido .scroll-cue { bottom: calc(36px + var(--Bx)); }
 .franja { position: absolute; left: 0; right: 0; z-index: 30; pointer-events: none; -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); }
 .franja--sup {
