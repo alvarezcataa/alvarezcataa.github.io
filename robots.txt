@@ -3,4 +3,3 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://www.estudiocavla.com/sitemap.xml
-Disallow: /pruebas/
