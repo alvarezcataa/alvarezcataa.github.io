@@ -63,6 +63,39 @@ html.nativo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; sc
 html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla (en PC lo hace el wrapper con transform) */
 @supports (height: 1dvh) { html.nativo { --vh: 1dvh; } html.nativo .smooth-scroll-wrapper { height: 100dvh; } }
 
+/* iPhone: pantalla completa de borde a borde (viewport-fit=cover). El contenido pasa por detrás de la barra de estado
+   y del borde inferior, y ahí se difumina con los colores del sitio (efecto "liquid glass"). */
+html.nativo body::before, html.nativo body::after {
+  content: ""; position: fixed; left: 0; right: 0; z-index: 900; pointer-events: none;
+  -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+}
+html.nativo body::before {
+  top: 0; height: calc(env(safe-area-inset-top, 0px) + 6px);
+  background: linear-gradient(to bottom, rgba(19,12,9,.55), rgba(19,12,9,0));
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent); mask-image: linear-gradient(to bottom, #000 60%, transparent);
+}
+html.nativo body::after {
+  bottom: 0; height: calc(env(safe-area-inset-bottom, 0px) + 4px);
+  background: linear-gradient(to top, rgba(19,12,9,.5), rgba(19,12,9,0));
+  -webkit-mask-image: linear-gradient(to top, #000 60%, transparent); mask-image: linear-gradient(to top, #000 60%, transparent);
+}
+/* elementos fijos respetan las zonas seguras */
+html.nativo .cavla-nav { padding-top: calc(22px + env(safe-area-inset-top, 0px)); }
+html.nativo .cavla-nav.is-scrolled { padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
+html.nativo .menu-toggle { top: calc(10px + env(safe-area-inset-top, 0px)); right: calc(30px + env(safe-area-inset-right, 0px)); }
+html.nativo .scroll-cue { bottom: calc(36px + env(safe-area-inset-bottom, 0px)); }
+@media (max-width: 810px) { html.nativo .cavla-nav__cta { top: calc(20px + env(safe-area-inset-top, 0px)); } }
+
+/* Menú lateral en táctiles: se desliza con transform (GPU) y difumina con backdrop-filter, sin filtrar toda la página */
+html.nativo .side-menu {
+  right: 0; transform: translate3d(100%, 0, 0); visibility: hidden; opacity: 0;
+  transition: transform .38s cubic-bezier(.22,.8,.26,1), opacity .3s ease, visibility 0s linear .38s;
+  background: rgba(19,12,9,.55); -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2);
+  will-change: transform; z-index: 1000;
+}
+html.nativo .side-menu.open { transform: translate3d(0,0,0); visibility: visible; opacity: 1; transition-delay: 0s; }
+html.nativo .blur { filter: none; transition: none; pointer-events: none; }
+
 
 /* ===================================================================
    02. TIPOGRAFÍA GLOBAL
