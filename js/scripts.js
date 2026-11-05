@@ -303,6 +303,28 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
       }, { passive: true });
     }
 
+    // Marca en <html> si el menú está abierto (las franjas de Safari y otros estilos lo usan)
+    if (sideMenu) {
+      new MutationObserver(() => document.documentElement.classList.toggle("menu-abierto", sideMenu.classList.contains("open")))
+        .observe(sideMenu, { attributes: true, attributeFilter: ["class"] });
+    }
+
+    // Abrir deslizando de derecha a izquierda desde cualquier pantalla (solo táctiles)
+    if (CAVLA_NATIVO && sideMenu) {
+      let ox = null, oy = null, bloquea = false;
+      document.addEventListener("touchstart", (e) => {
+        if (sideMenu.classList.contains("open") || e.touches.length !== 1) { ox = null; return; }
+        ox = e.touches[0].clientX; oy = e.touches[0].clientY;
+        bloquea = !!(e.target.closest && e.target.closest(".grilla-servicios, .carril, .carril-wrap, .filtros, input, textarea, select, [data-no-menu]"));
+      }, { passive: true });
+      document.addEventListener("touchend", (e) => {
+        if (ox === null || bloquea) { ox = null; return; }
+        const dx = e.changedTouches[0].clientX - ox, dy = Math.abs(e.changedTouches[0].clientY - oy);
+        ox = null;
+        if (dx < -60 && -dx > dy * 1.5) window.toggleMenu();
+      }, { passive: true });
+    }
+
     // Cerrar con ESC
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && sideMenu && sideMenu.classList.contains("open")) {
