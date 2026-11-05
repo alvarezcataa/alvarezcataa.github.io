@@ -190,6 +190,17 @@
     }
     var PROVINCIAS = ['Buenos Aires','Ciudad Autónoma de Buenos Aires','Catamarca','Chaco','Chubut','Córdoba','Corrientes','Entre Ríos','Formosa','Jujuy','La Pampa','La Rioja','Mendoza','Misiones','Neuquén','Río Negro','Salta','San Juan','San Luis','Santa Cruz','Santa Fe','Santiago del Estero','Tierra del Fuego','Tucumán','Otro país'];
 
+    // ── Origen: si viene de la página de un servicio (?desde=...) se salta la pregunta del tipo de diseño ──
+    var ORIGENES = { mobiliario: { tipo: 0, nombre: 'Diseño de mobiliario' }, integral: { tipo: 1, nombre: 'Diseño integral' }, asesoria: { tipo: 1, nombre: 'Asesoría espacial' } };
+    var DESDE = null;
+    try { var qd = new URLSearchParams(location.search).get('desde'); if (qd && ORIGENES.hasOwnProperty(qd)) DESDE = ORIGENES[qd]; } catch (e) {}
+    var TIPOS = ['Solo necesito diseñar muebles', 'Quiero diseñar un espacio'];
+    function pasoTipo() { return DESDE ? (DESDE.tipo === 0 ? 'mueble' : 'espacio') : 'tipo'; }
+    var SESION = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    var ETIQUETA_PASO = { lugar: 'Ubicación', virtual: 'Modalidad', virtualaviso: 'Modalidad', tipo: 'Tipo de diseño', mueble: 'Muebles', condicion: 'Condición del espacio', ejecucion: 'Ejecución',
+      espacio: 'Tipo de espacio', rubro: 'Rubro', estadoEsp: 'Estado del espacio', profundidad: 'Profundidad', profundidadC: 'Profundidad', problemas: 'Problemas', etapa: 'Etapa de la obra',
+      uso: 'Uso del inmueble', ambientes: 'Ambientes', marca: 'Identidad de marca', superficie: 'Superficie', ejecucionObra: 'Ejecución de obra', presupuesto: 'Presupuesto', datos: 'Datos de contacto' };
+
     // ── Recorrido del formulario ──────────────────────────────
     var LOCALIDADES = ['Córdoba Capital', 'Villa Allende', 'Mendiolaza', 'Unquillo', 'Río Ceballos', 'Salsipuedes', 'La Calera', 'Saldán', 'Malagueño', 'Villa Carlos Paz']
       .sort(function (a, b) { return a.localeCompare(b, 'es'); }).concat(['Otra']);   // ciudades donde se trabaja de forma presencial (alfabético) + Otra
@@ -207,16 +218,16 @@
     var PASOS = {
       lugar:  { tipo: 'lugar', q: '¿Dónde es el proyecto?',
                 ayuda: 'Trabajamos de forma presencial en Córdoba y alrededores. En el resto del país el trabajo es 100% virtual.',
-                next: function () { return esPresencial() ? 'tipo' : 'virtual'; } },
+                next: function () { return esPresencial() ? pasoTipo() : 'virtual'; } },
       virtual:{ tipo: 'single', q: '¿Estás de acuerdo con que trabajemos 100% virtual?',
                 ayuda: 'Fuera de Córdoba Capital y sus alrededores trabajamos de forma virtual. No hacemos visitas ni ejecutamos obras en persona, pero desarrollamos tu proyecto con la misma calidad.',
                 opts: ['Sí, estoy de acuerdo', 'Prefiero algo presencial'],
-                next: function (a) { return a === 0 ? 'tipo' : 'virtualaviso'; } },
+                next: function (a) { return a === 0 ? pasoTipo() : 'virtualaviso'; } },
       virtualaviso:{ tipo: 'info', q: 'Solo trabajamos de forma virtual en tu zona',
                 ayuda: 'Igualmente podés continuar con el formulario y buscamos una solución por WhatsApp.',
-                next: function () { return 'tipo'; } },
+                next: function () { return pasoTipo(); } },
       tipo:   { tipo: 'single', q: '¿Qué tipo de diseño necesitás?',
-                opts: ['Solo necesito diseñar muebles', 'Quiero diseñar un espacio'],
+                opts: TIPOS,
                 next: function (a) { return a === 0 ? 'mueble' : 'espacio'; } },
       mueble: { tipo: 'multi', q: '¿Qué muebles querés diseñar?', ayuda: 'Podés elegir más de uno.',
                 opts: ['Cocina', 'Placard / vestidor', 'Baño', 'Living / TV', 'Escritorio / oficina', 'Otro'], otro: 5, otroPh: 'Contanos qué mueble es',
@@ -240,7 +251,7 @@
       profundidad:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?', opts: PROFUNDIDAD,
                 next: function (a) { return despuesProfundidad(a); } },
       problemas:{ tipo: 'multi', q: '¿Qué tipo de problemas tiene el espacio?', ayuda: 'Podés elegir más de uno.',
-                opts: ['Problemas de instalaciones', 'Humedades', 'Problemas estructurales', 'Paredes deterioradas', 'Otro'], otro: 4, otroPh: 'Contanos qué problema es',
+                opts: ['Instalación eléctrica', 'Instalación sanitaria o de gas', 'Cloacas o desagües', 'Humedades', 'Techos o filtraciones', 'Aberturas deterioradas', 'Problemas estructurales', 'Paredes deterioradas', 'Otro'], otro: 8, otroPh: 'Contanos qué problema es',
                 next: function () { return 'profundidad'; } },
       profundidadC:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?',
                 opts: function () { return [esLocal() ? 'Quiero trasladar mi mobiliario y equipamiento al nuevo local' : 'Quiero adaptar mis pertenencias a este nuevo espacio', 'Quiero un diseño completo desde cero']; },
@@ -284,7 +295,7 @@
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
     function totalPasos() {
       var pres = esPresencial(), ej = pres ? 1 : 0;
-      var n = 2 + (pres ? 0 : 1) + (respuestas.virtual === 'Prefiero algo presencial' ? 1 : 0);   // lugar, [virtual], [aviso], tipo
+      var n = (DESDE ? 1 : 2) + (pres ? 0 : 1) + (respuestas.virtual === 'Prefiero algo presencial' ? 1 : 0);   // lugar, [virtual], [aviso], tipo
       if (indices.tipo === 0) return n + 4 + ej;                                                    // muebles: mueble, condición, [ejecución], presupuesto, datos → +4 con ejecución
       if (esLocal()) {                                                                              // espacio, rubro, estado, profundidad|etapa, [problemas], marca, superficie, presupuesto, datos
         return n + 8 + (indices.estadoEsp === 1 ? 1 : 0);
@@ -527,10 +538,11 @@
       var ub = l.ciudad ? (l.provincia === 'Otro país' ? l.ciudad : l.ciudad + ', ' + l.provincia) : '';
       var modalidad = pres ? 'Presencial' : (r.virtual === 'Prefiero algo presencial' ? 'Virtual (prefiero algo presencial)' : 'Virtual (estoy de acuerdo)');
       return {
+        servicio_origen: DESDE ? DESDE.nombre : 'Directo', sesion: SESION,
         ubicacion: ub, modalidad: modalidad,
         tipo_diseno: r.tipo || '', muebles: r.mueble ? lista(r.mueble) : '', tipo_espacio: r.espacio || '',
         rubro: r.rubro || '', superficie: r.superficie || '', marca: r.marca || '',
-        condicion: r.estadoEsp || r.condicion || '', problemas: r.problemas ? lista(r.problemas) : '', etapa: r.etapa || '', uso: r.uso || '',
+        condicion: r.estadoEsp || r.condicion || '', problemas: r.problemas ? lista(r.problemas) : '', problemas_n: r.problemas ? r.problemas.length : 0, etapa: r.etapa || '', uso: r.uso || '',
         ejecucion: pres ? (r.ejecucion || r.ejecucionObra || '') : 'Me encargo yo (proyecto virtual)',
         alcance: r.profundidad || r.profundidadC || '', ambientes: r.ambientes ? lista(r.ambientes) : '',
         presupuesto: r.presupuesto || '',
@@ -562,22 +574,46 @@
 
     function finalizar(esBot) {
       var c = resumen(), url = 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent(mensaje(c));
+      terminado = true;
+      var w = null;
+      try { w = window.open(url, '_blank'); if (w) w.opener = null; } catch (e) {}   // se abre en otra pestaña para que el sitio siga abierto
       if (!esBot && CFG.appsScriptUrl) {
         try {
           fetch(CFG.appsScriptUrl, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(Object.assign({ origen: location.href }, c)) });
+                body: JSON.stringify(Object.assign({ tipo: 'consulta', origen: location.href }, c)) });
         } catch (e) { /* si falla el guardado igual seguimos por WhatsApp */ }
       }
       limpiarProgreso();
       document.getElementById('texto-progreso').textContent = 'Listo';
       document.getElementById('barra-fill').style.width = '100%';
       cont.innerHTML = '<h2 class="pregunta">Gracias, ' + esc(c.nombre.split(' ')[0]) + '.</h2>' +
-        '<p class="ayuda">Te llevo a WhatsApp con tus respuestas ya escritas. Solo tenés que apretar enviar.</p>' +
-        '<div class="acciones"><span></span><a class="btn-cta-servicio" href="' + url + '" target="_blank" rel="noopener">Abrir WhatsApp</a></div>';
-      setTimeout(function () { window.location.href = url; }, 900);
+        '<p class="ayuda">' + (w ? 'Se abrió WhatsApp en otra pestaña con tus respuestas ya escritas. Solo tenés que apretar enviar.' : 'Te llevo a WhatsApp con tus respuestas ya escritas. Solo tenés que apretar enviar.') + '</p>' +
+        '<div class="acciones"><a class="volver" href="' + url + '" target="_blank" rel="noopener">' + (w ? 'Abrir WhatsApp de nuevo' : 'Abrir WhatsApp') + '</a>' +
+        '<a class="btn-cta-servicio" href="/proyectos">¿Querés ver cómo trabajamos?</a></div>';
+      if (!w) setTimeout(function () { window.location.href = url; }, 900);
     }
 
     retomar();
+    if (DESDE) {   // si había un recorrido guardado con otro origen, se empieza de nuevo
+      if (historial.indexOf('tipo') > -1 || (indices.tipo !== undefined && indices.tipo !== DESDE.tipo)) { respuestas = {}; indices = {}; historial = ['lugar']; }
+      indices.tipo = DESDE.tipo; respuestas.tipo = TIPOS[DESDE.tipo];
+    }
+    // Abandonos: si la persona interactuó y se va sin enviar, se registra hasta qué paso llegó
+    var interactuo = false, terminado = false, ultimoEnvio = '';
+    cont.addEventListener('click', function () { interactuo = true; });
+    cont.addEventListener('input', function () { interactuo = true; });
+    function avisarAbandono() {
+      if (terminado || !interactuo || !CFG.appsScriptUrl) return;
+      var paso = historial[historial.length - 1], l = respuestas.lugar || {};
+      var datos = JSON.stringify({ tipo: 'abandono', sesion: SESION, ultimo_paso: ETIQUETA_PASO[paso] || paso,
+        ubicacion: l.ciudad ? (l.provincia === 'Otro país' ? l.ciudad : l.ciudad + ', ' + l.provincia) : '', servicio_origen: DESDE ? DESDE.nombre : 'Directo' });
+      if (datos === ultimoEnvio) return;
+      ultimoEnvio = datos;
+      try { if (!(navigator.sendBeacon && navigator.sendBeacon(CFG.appsScriptUrl, new Blob([datos], { type: 'text/plain;charset=utf-8' })))) throw 0; }
+      catch (e) { try { fetch(CFG.appsScriptUrl, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: datos }); } catch (e2) {} }
+    }
+    window.addEventListener('pagehide', avisarAbandono);
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') avisarAbandono(); });
     render();
   })();
   </script>
