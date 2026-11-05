@@ -8,21 +8,41 @@
 // ============================================================
 var CAVLA_NATIVO = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 if (CAVLA_NATIVO) document.documentElement.classList.add("nativo");
+// Safari de iPhone con iOS 26+ (no Google, Instagram, Chrome…): se desplaza la página entera ("cubre"); el resto, contenedor fijo ("fijo").
+var CAVLA_SAF26 = CAVLA_NATIVO && (function () {
+  var ua = navigator.userAgent, v = /Version\/(\d+)/.exec(ua);
+  return /iPhone/.test(ua) && /Safari\//.test(ua) && !!v && +v[1] >= 26 &&
+    !/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|Instagram|FBAN|FBAV|Line\/|Snapchat|TikTok|Twitter|LinkedIn|Pinterest/.test(ua);
+})();
+var CAVLA_FIJO = CAVLA_NATIVO && !CAVLA_SAF26;
+if (CAVLA_NATIVO) document.documentElement.classList.add(CAVLA_SAF26 ? "cubre" : "fijo");
 // Safari de iPhone (iOS 26+): el contenido se ve por detrás de la hora y de la barra inferior, pero la ventana de la página es más corta que
 // la pantalla. Se miden esas franjas y cada pantalla pasa a medir el alto físico completo (ver html.cubre en styles.css). Sin efecto en Google, Chrome, etc.
 var CAVLA_T = 0, CAVLA_CUBRE = false;
 (function () {
-  if (!CAVLA_NATIVO) return;
-  var ua = navigator.userAgent;
-  var v = /Version\/(\d+)/.exec(ua);
-  var safari = /iPhone/.test(ua) && /Safari\//.test(ua) && v && +v[1] >= 26 &&
-    !/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|Instagram|FBAN|FBAV|Line\/|Snapchat|TikTok|Twitter|LinkedIn|Pinterest/.test(ua);
-  if (!safari) return;
+  if (!CAVLA_SAF26) return;
   var root = document.documentElement;
   function topeHora(S) {   // alto de la barra de estado según el tamaño de pantalla del iPhone
     var t = { 956: 62, 932: 59, 926: 47, 896: 48, 874: 62, 852: 59, 844: 47, 812: 50 }[S];
     if (t) return t;
     return S >= 850 ? 59 : (S >= 800 ? 47 : 20);
+  }
+  function franjas() {
+    var wrapper = document.querySelector(".smooth-scroll-wrapper");
+    if (!wrapper) return;
+    var S = parseFloat(root.style.getPropertyValue("--S"));
+    Array.prototype.forEach.call(wrapper.children, function (sec) {
+      if (!sec.classList.contains("mainContent")) return;
+      var llena = Math.abs(sec.offsetHeight - S) < 3;
+      sec.classList.toggle("pantalla-s", llena);
+      var tiene = sec.querySelector(":scope > .franja");
+      if (llena && !tiene) {
+        if (getComputedStyle(sec).position === "static") sec.style.position = "relative";
+        ["sup", "inf"].forEach(function (k) {
+          var d = document.createElement("i"); d.className = "franja franja--" + k; d.setAttribute("aria-hidden", "true"); sec.appendChild(d);
+        });
+      }
+    });
   }
   function mide() {
     var S = Math.max(screen.width, screen.height);
@@ -33,35 +53,28 @@ var CAVLA_T = 0, CAVLA_CUBRE = false;
     var svh = probe.offsetHeight;
     document.body.removeChild(probe);
     var T = topeHora(S), Bx = S - T - svh;
-    if (!vertical || S - svh < 60 || Bx < 10) { root.classList.remove("cubre"); CAVLA_CUBRE = false; CAVLA_T = 0; return; }
+    if (!vertical || S - svh < 60 || Bx < 10) { root.classList.remove("medido"); CAVLA_CUBRE = false; CAVLA_T = 0; return; }
     CAVLA_T = T; CAVLA_CUBRE = true;
     root.style.setProperty("--S", S + "px");
     root.style.setProperty("--T", T + "px");
     root.style.setProperty("--Bx", Bx + "px");
-    root.classList.add("cubre");
-    actualizaB();
-  }
-  function actualizaB() {
-    if (!CAVLA_CUBRE) return;
-    var S = Math.max(screen.width, screen.height);
-    root.style.setProperty("--B", Math.max(0, S - CAVLA_T - window.innerHeight) + "px");
+    root.classList.add("medido");
+    franjas();
   }
   window.cavlaMideCubre = mide;
-  document.addEventListener("DOMContentLoaded", function () {
+  window.addEventListener("load", function () {
     mide();
     // al arrancar, la primera pantalla queda pegada al borde físico de arriba (posición de imán = T)
-    if (CAVLA_CUBRE) {
-      var sy = window.pageYOffset || 0;
-      if (sy < CAVLA_T) window.scrollTo(0, CAVLA_T);
-    }
+    if (CAVLA_CUBRE && (window.pageYOffset || 0) < CAVLA_T) window.scrollTo(0, CAVLA_T);
+    setTimeout(mide, 400); setTimeout(mide, 1500);   // por si otras partes de la página arman el contenedor más tarde
   }, { once: true });
-  window.addEventListener("resize", actualizaB);
-  window.addEventListener("scroll", actualizaB, { passive: true });
   window.addEventListener("orientationchange", function () { setTimeout(mide, 300); });
 })();
 // Desplaza la página: en táctiles el que se desplaza es el wrapper (contenedor fijo), en PC la ventana.
 function cavlaScrollTo(top, behavior) {
-  window.scrollTo({ top: top + (CAVLA_CUBRE ? CAVLA_T : 0), behavior: behavior || "auto" });
+  var w = CAVLA_FIJO && document.querySelector(".smooth-scroll-wrapper");
+  if (w) w.scrollTo({ top: top, behavior: behavior || "auto" });
+  else window.scrollTo({ top: top + (CAVLA_CUBRE ? CAVLA_T : 0), behavior: behavior || "auto" });
 }
 // Sin el wrapper fijo, los espacios en blanco sueltos del <body> se dibujan como una línea de 18px arriba del todo: se quitan.
 if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
@@ -157,6 +170,21 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
     }
     computeSectionPositions();
 
+    /* --- Contenedor fijo (Google, Instagram, Chrome…): el alto de pantalla es el del contenedor, no cambia con las barras del navegador --- */
+    if (CAVLA_FIJO) {
+      const fijaVh = () => {
+        const a = document.activeElement;
+        if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;   // teclado abierto: no se recalcula
+        const h = wrapper.clientHeight;
+        if (h > 0) document.documentElement.style.setProperty("--vh", (h / 100) + "px");
+        computeSectionPositions();
+      };
+      fijaVh();
+      window.addEventListener("resize", fijaVh);
+      window.addEventListener("orientationchange", () => setTimeout(fijaVh, 300));
+      window.addEventListener("load", fijaVh);
+    }
+
     /* --- Loop de interpolación (lerp) --- */
     let current = 0;
     let target = 0;
@@ -192,7 +220,7 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
     }
     if (CAVLA_NATIVO) {
       let ticking = false;
-      window.addEventListener("scroll", () => {
+      (CAVLA_FIJO ? wrapper : window).addEventListener("scroll", () => {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => { actualizaPortada(); ticking = false; });
@@ -305,14 +333,14 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
 // ============================================================
 
 document.addEventListener('scroll', () => {
-  const scroller = CAVLA_NATIVO && document.querySelector('.smooth-scroll-wrapper');
+  const scroller = CAVLA_FIJO && document.querySelector('.smooth-scroll-wrapper');
   const virtualSection = document.querySelector('.page.mainContent:nth-of-type(2)');
   const grillaVirtual  = document.querySelector('.contenedor-grillavirtual');
 
   if (!virtualSection || !grillaVirtual) return;
 
-  const viewportHeight = window.innerHeight;
-  const scrollY        = window.scrollY;
+  const viewportHeight = scroller ? scroller.clientHeight : window.innerHeight;
+  const scrollY        = scroller ? scroller.scrollTop : window.scrollY;
   const virtualTop     = virtualSection.offsetTop;
 
   const start = virtualTop - viewportHeight;

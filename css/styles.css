@@ -49,41 +49,49 @@ body, html {
 }
 
 
-/* Celulares / táctiles (la clase la pone scripts.js): se desplaza la página entera (así Safari deja pasar el contenido por
-   debajo de la barra de estado y de la barra inferior) con imán por CSS. Cada pantalla mide 100svh (alto con barras visibles,
-   estable) y un espacio al final compensa la diferencia con lvh para que la última pantalla no salte al aparecer/ocultarse la barra. */
-html.nativo { --vh: 1vh; height: auto; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: auto; overscroll-behavior-y: none; background-color: #130c09; }
-html.nativo body { height: auto; min-height: 0; overflow-x: clip; overflow-y: visible; scroll-snap-type: none; background-color: #130c09; }
-html.nativo .smooth-scroll-wrapper { position: static; width: 100%; height: auto; overflow: visible; transform: none; will-change: auto; z-index: auto; }
-html.nativo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; scroll-snap-stop: always; }
+/* Celulares / táctiles (las clases las pone scripts.js).
+   · html.nativo.fijo  → Google, Instagram, Chrome, Safari viejo…: el documento no se desplaza; lo hace un contenedor fijo a pantalla completa
+     con scroll-snap CSS (así las barras del navegador no cambian el alto ni hacen saltar el imán).
+   · html.nativo.cubre → Safari de iPhone con iOS 26+: se desplaza la página entera, porque así Safari deja pasar el contenido por detrás
+     de la hora y de la barra inferior. */
+html.nativo.fijo, html.nativo.fijo body { height: 100%; overflow: hidden; overscroll-behavior: none; scroll-snap-type: none; scroll-behavior: auto; background-color: #130c09; }
+html.nativo.fijo .smooth-scroll-wrapper {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory; scrollbar-width: none; transform: none; will-change: auto; z-index: 0;
+}
+html.nativo.fijo .smooth-scroll-wrapper::-webkit-scrollbar { display: none; }
+html.nativo.fijo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; scroll-snap-stop: always; }
+@supports (height: 1dvh) { html.nativo.fijo { --vh: 1dvh; } html.nativo.fijo .smooth-scroll-wrapper { height: 100dvh; } }
+
+html.nativo.cubre { --vh: 1vh; height: auto; overflow-y: auto; scroll-snap-type: y mandatory; scroll-behavior: auto; overscroll-behavior-y: none; background-color: #130c09; }
+html.nativo.cubre body { height: auto; min-height: 0; overflow-x: clip; overflow-y: visible; scroll-snap-type: none; background-color: #130c09; }
+html.nativo.cubre .smooth-scroll-wrapper { position: static; width: 100%; height: auto; overflow: visible; transform: none; will-change: auto; z-index: auto; }
+html.nativo.cubre .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; scroll-snap-stop: always; }
+@supports (height: 1svh) { html.nativo.cubre { --vh: 1svh; } }
 html.nativo .mainContent { overflow-x: clip; }
 html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla */
-@supports (height: 1svh) { html.nativo { --vh: 1svh; } }
-/* html.cubre (la pone scripts.js solo en Safari de iPhone con iOS 26 o más): Safari deja el contenido visible por detrás de la hora y
-   de la barra inferior, pero la ventana de la página (innerHeight) queda más corta que la pantalla. Variables que calcula scripts.js (px):
-   --S alto físico de la pantalla, --T franja superior (hora), --B franja inferior actual, --Bx franja inferior con la barra expandida.
-   Cada pantalla mide --S y el imán la alinea con scroll-margin-top = -T: queda pegada al borde físico de arriba y abajo. */
-html.nativo.cubre { --vh: calc(var(--S) / 100); }
-html.nativo.cubre .smooth-scroll-wrapper > .mainContent { scroll-margin-top: calc(-1 * var(--T)); }
-html.nativo.cubre .scroll-cue { bottom: calc(36px + var(--Bx)); }
 
-/* iPhone: pantalla completa de borde a borde (viewport-fit=cover). El contenido pasa por detrás de la barra de estado
-   y del borde inferior, y ahí se difumina con los colores del sitio (efecto "liquid glass"). */
-html.nativo.cubre body::before, html.nativo.cubre body::after {
-  content: ""; position: fixed; left: 0; right: 0; z-index: 900; pointer-events: none;
-  -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
-}
-/* Cada franja (por debajo de la hora y del botón flotante): marrón + desenfoque al 100% en el borde físico, bajando a 0 hacia el centro */
-html.nativo.cubre body::before {
-  top: calc(-1 * var(--T)); height: var(--T);
+/* html.medido (la pone scripts.js tras medir): Safari deja la ventana de la página más corta que la pantalla pero dibuja el contenido por
+   detrás de la hora y de la barra inferior. Variables (px): --S alto físico, --T franja de la hora, --Bx franja inferior con la barra expandida.
+   Cada pantalla mide --S; el imán la alinea con scroll-margin-top = -T (pegada al borde físico de arriba y abajo). El contenido queda dentro
+   de la zona visible con padding, y en cada borde hay una franja de marrón + desenfoque (de 100 a 0 hacia el centro). */
+html.nativo.cubre.medido { --vh: calc(var(--S) / 100); }
+html.nativo.cubre.medido .smooth-scroll-wrapper > .mainContent { scroll-margin-top: calc(-1 * var(--T)); }
+html.nativo.cubre.medido .smooth-scroll-wrapper > .mainContent.pantalla-s { box-sizing: border-box; padding-top: var(--T); padding-bottom: var(--Bx); }
+html.nativo.cubre.medido .scroll-cue { bottom: calc(36px + var(--Bx)); }
+.franja { position: absolute; left: 0; right: 0; z-index: 30; pointer-events: none; -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); }
+.franja--sup {
+  top: 0; height: var(--T);
   background: linear-gradient(to bottom, rgba(19,12,9,.95), rgba(19,12,9,0));
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent);
 }
-html.nativo.cubre body::after {
-  bottom: calc(-1 * var(--B)); height: var(--B);
+.franja--inf {
+  bottom: 0; height: var(--Bx);
   background: linear-gradient(to top, rgba(19,12,9,.95), rgba(19,12,9,0));
   -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent);
 }
+
 /* elementos fijos respetan las zonas seguras */
 html.nativo .cavla-nav { padding-top: calc(22px + env(safe-area-inset-top, 0px)); }
 html.nativo .cavla-nav.is-scrolled { padding-top: calc(14px + env(safe-area-inset-top, 0px)); }
