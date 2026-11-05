@@ -102,8 +102,12 @@
     .acciones .btn-cta-servicio { margin: 0; cursor: pointer; background: transparent; font-family: var(--sans); }
     .acciones .btn-cta-servicio:hover { background: rgba(255,255,255,.16); color: #fff; }
     .acciones .btn-cta-servicio[disabled] { opacity: .3; cursor: not-allowed; pointer-events: none; }
+    .cierre { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 30px; text-align: center; }
+    .btn-pildora { text-decoration: none; border: 1px solid #fff; border-radius: 50px; font-family: var(--sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.5); padding: 12px 20px; transition: all .4s; }
+    .btn-pildora:hover, .btn-pildora:focus-visible { color: #fff; background: rgba(255,255,255,.1); }
     .volver { background: none; border: 0; padding: 6px 2px; cursor: pointer; font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--w-50); transition: color .2s; }
     .volver:hover { color: var(--w-100); }
+    a.volver { text-decoration: none; }
     .nota { margin: 18px 0 0; font-size: 11px; font-weight: 300; line-height: 1.6; color: var(--w-50); }
 
     @media (max-width: 810px) {
@@ -251,7 +255,7 @@
       profundidad:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?', opts: PROFUNDIDAD,
                 next: function (a) { return despuesProfundidad(a); } },
       problemas:{ tipo: 'multi', q: '¿Qué tipo de problemas tiene el espacio?', ayuda: 'Podés elegir más de uno.',
-                opts: ['Instalación eléctrica', 'Instalación sanitaria o de gas', 'Cloacas o desagües', 'Humedades', 'Techos o filtraciones', 'Aberturas deterioradas', 'Problemas estructurales', 'Paredes deterioradas', 'Otro'], otro: 8, otroPh: 'Contanos qué problema es',
+                opts: ['Instalación eléctrica', 'Instalación de agua o de gas', 'Cloacas o desagües', 'Humedades', 'Techos o filtraciones', 'Aberturas deterioradas', 'Problemas estructurales', 'Paredes deterioradas', 'Otro'], otro: 8, otroPh: 'Contanos qué problema es',
                 next: function () { return 'profundidad'; } },
       profundidadC:{ tipo: 'single', q: '¿Qué nivel de profundidad buscás?',
                 opts: function () { return [esLocal() ? 'Quiero trasladar mi mobiliario y equipamiento al nuevo local' : 'Quiero adaptar mis pertenencias a este nuevo espacio', 'Quiero un diseño completo desde cero']; },
@@ -588,8 +592,8 @@
       document.getElementById('barra-fill').style.width = '100%';
       cont.innerHTML = '<h2 class="pregunta">Gracias, ' + esc(c.nombre.split(' ')[0]) + '.</h2>' +
         '<p class="ayuda">' + (w ? 'Se abrió WhatsApp en otra pestaña con tus respuestas ya escritas. Solo tenés que apretar enviar.' : 'Te llevo a WhatsApp con tus respuestas ya escritas. Solo tenés que apretar enviar.') + '</p>' +
-        '<div class="acciones"><a class="volver" href="' + url + '" target="_blank" rel="noopener">' + (w ? 'Abrir WhatsApp de nuevo' : 'Abrir WhatsApp') + '</a>' +
-        '<a class="btn-cta-servicio" href="/proyectos">¿Querés ver cómo trabajamos?</a></div>';
+        '<div class="cierre"><a class="btn-pildora" href="/proyectos">¿Querés ver cómo trabajamos?</a>' +
+        '<a class="volver" href="' + url + '" target="_blank" rel="noopener">' + (w ? 'Abrir WhatsApp de nuevo' : 'Abrir WhatsApp') + '</a></div>';
       if (!w) setTimeout(function () { window.location.href = url; }, 900);
     }
 
