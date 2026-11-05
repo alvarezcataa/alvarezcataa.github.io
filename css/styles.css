@@ -115,6 +115,17 @@ html.nativo .side-menu::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
 }
+/* Safari iOS 26 (prueba en /pruebas/g): cualquier capa fija con fondo o con backdrop-filter que cubra la ventana hace que Safari pinte de color
+   (negro/marrón) las franjas de la hora y de la barra inferior. En Safari el menú fijo es transparente: el desenfoque lo da un filter sobre la
+   página (eso no afecta las franjas) y el marrón (100% a la derecha, 0% a la izquierda) va en un velo dentro de cada pantalla, que desliza con el menú. */
+html.cubre .side-menu { background: none; }
+html.cubre .side-menu::before { content: none; }
+html.cubre .smooth-scroll-wrapper { transition: filter .5s cubic-bezier(.22,.8,.26,1); }
+html.cubre.menu-abierto .smooth-scroll-wrapper { filter: blur(8px); }
+.velo { position: absolute; inset: 0; z-index: 29; pointer-events: none; transform: translateX(100%);
+  background: linear-gradient(to left, rgba(19,9,6,.92), rgba(19,9,6,.35) 70%, rgba(19,9,6,0));
+  transition: transform .5s cubic-bezier(.22,.8,.26,1); }
+html.menu-abierto .velo { transform: none; }
 html.nativo .side-menu.open { visibility: visible; transform: translate3d(0, 0, 0); transition-delay: 0s; }
 html.nativo .blur { filter: none; transition: none; pointer-events: none; }
 html.nativo .side-menu ul li a {

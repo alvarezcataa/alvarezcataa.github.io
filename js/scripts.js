@@ -40,6 +40,7 @@ var CAVLA_T = 0, CAVLA_CUBRE = false, CAVLA_SVH = 0;
         ["sup", "inf"].forEach(function (k) {
           var d = document.createElement("i"); d.className = "franja franja--" + k; d.setAttribute("aria-hidden", "true"); sec.appendChild(d);
         });
+        var v = document.createElement("i"); v.className = "velo"; v.setAttribute("aria-hidden", "true"); sec.appendChild(v);
       }
     });
   }
