@@ -90,14 +90,15 @@ html.nativo.cubre.medido .scroll-cue { bottom: calc(36px + var(--Bx)); }
 .franja::before { -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); transition: opacity .35s ease; }
 .franja--sup::before { background: linear-gradient(to bottom, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent); }
 .franja--inf::before { background: linear-gradient(to top, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent); }
-/* con el menú abierto: la franja se tiñe igual que el menú (marrón de derecha 100% a izquierda 0%) y entra deslizando con él;
-   el desenfoque lo da toda la página (ver html.menu-abierto más abajo), así es parejo también en las franjas */
-.franja::after {
-  background: linear-gradient(to left, rgba(19,9,6,.92), rgba(19,9,6,.35) 70%, rgba(19,9,6,0));
-  transform: translateX(100%); transition: transform .5s cubic-bezier(.22,.8,.26,1);
-}
-html.menu-abierto .franja::after { transform: none; }
+/* con el menú abierto la página se desenfoca y Safari no dibuja ese desenfoque en las franjas de la hora y de la barra inferior (quedan del
+   color de fondo, #130c09): por eso las franjas normales se ocultan y un viñeteado marrón (ver abajo) las funde con el resto sin que se note el corte */
+.franja::after { content: none; }
 html.menu-abierto .franja::before { opacity: 0; }
+html.cubre body::before {
+  content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; transition: opacity .4s ease;
+  background: linear-gradient(to bottom, #130c09 0, rgba(19,12,9,.7) 45px, rgba(19,12,9,0) 150px, rgba(19,12,9,0) calc(100% - 170px), rgba(19,12,9,.7) calc(100% - 50px), #130c09 100%);
+}
+html.cubre.menu-abierto body::before { opacity: 1; }
 
 /* elementos fijos respetan las zonas seguras */
 html.nativo .cavla-nav { padding-top: calc(22px + env(safe-area-inset-top, 0px)); }
