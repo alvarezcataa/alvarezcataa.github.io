@@ -83,23 +83,16 @@ html.nativo.cubre.medido .smooth-scroll-wrapper > .mainContent.pantalla-s.render
 html.nativo.cubre.medido #vanta-bg { height: var(--S); }
 html.nativo.cubre.medido .scroll-cue { bottom: calc(36px + var(--Bx)); }
 .franja { position: absolute; left: 0; right: 0; z-index: 30; pointer-events: none; }
-.franja--sup { top: 0; height: var(--T); }
-.franja--inf { bottom: 0; height: var(--Bx); }
+.franja--sup { top: 0; height: calc(var(--T) + 40px); }
+.franja--inf { bottom: 0; height: calc(var(--Bx) + 40px); }
 .franja::before, .franja::after { content: ""; position: absolute; inset: 0; }
 /* franja normal: marrón + desenfoque al 100% en el borde físico, bajando a 0 hacia el centro */
 .franja::before { -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); transition: opacity .5s cubic-bezier(.22,.8,.26,1); }
 .franja--sup::before { background: linear-gradient(to bottom, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent); }
 .franja--inf::before { background: linear-gradient(to top, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent); }
-/* con el menú abierto la página se desenfoca y Safari no dibuja ese desenfoque en las franjas de la hora y de la barra inferior (quedan del
-   color de fondo, #130c09): por eso las franjas normales se ocultan y un viñeteado marrón (ver abajo) las funde con el resto sin que se note el corte */
-.franja::after { background-color: rgba(19,12,9,0); transition: background-color .5s cubic-bezier(.22,.8,.26,1); }   /* sin filtros ni capas propias: Safari sí la dibuja en las franjas */
-html.menu-abierto .franja::after { background-color: #130c09; }
-html.menu-abierto .franja::before { opacity: 0; }
-html.cubre body::before {
-  content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; transition: opacity .5s cubic-bezier(.22,.8,.26,1);
-  background: linear-gradient(to bottom, #130c09 0, rgba(19,12,9,.7) 45px, rgba(19,12,9,0) 150px, rgba(19,12,9,0) calc(100% - 170px), rgba(19,12,9,.7) calc(100% - 50px), #130c09 100%);
-}
-html.cubre.menu-abierto body::before { opacity: 1; }
+/* Las franjas no cambian nunca (ni con el menú abierto): Safari no las repinta de forma confiable cuando cambian. Se extienden 40px hacia
+   adentro de la zona visible para que el degradado marrón sea más suave; con el menú abierto el desenfoque de la ventana las cubre. */
+.franja::after { content: none; }
 
 /* elementos fijos respetan las zonas seguras */
 html.nativo .cavla-nav { padding-top: calc(22px + env(safe-area-inset-top, 0px)); }
