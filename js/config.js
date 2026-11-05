@@ -6,5 +6,5 @@
 // ============================================================
 window.CAVLA_CONFIG = {
   whatsapp: '5493513410355',
-  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbw1_MIG6BpTy6ARrCJDj25jbw2jbyj3Tjq6beYvgX-6xDgZ3c1EpORcKr-IKFTynodu/exec'
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbyNLbns8eR9_oX5M7O4bZC4F6lfIswazxhDts7hCoYQZyq8ASnVfYxwaJBt9hfuJGi9/exec'
 };
