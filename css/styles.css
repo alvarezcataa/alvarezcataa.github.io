@@ -117,9 +117,12 @@ html.nativo .side-menu {
   background: linear-gradient(to left, rgba(19,9,6,.92), rgba(19,9,6,.35) 70%, rgba(19,9,6,0));
   z-index: 1000; will-change: transform;
 }
-/* desenfoque parejo de toda la página (también por detrás de la hora y de la barra inferior) mientras el menú está abierto */
-html.nativo .smooth-scroll-wrapper { transition: filter .5s cubic-bezier(.22,.8,.26,1); }
-html.nativo.menu-abierto .smooth-scroll-wrapper { filter: blur(8px); }
+/* desenfoque parejo (mismo en toda la ventana). No se usa 'filter' sobre la página: en Safari dejaba las franjas de la hora y de la barra
+   inferior sin repintar al cerrar el menú. */
+html.nativo .side-menu::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
 html.nativo .side-menu.open { visibility: visible; transform: translate3d(0, 0, 0); transition-delay: 0s; }
 html.nativo .blur { filter: none; transition: none; pointer-events: none; }
 html.nativo .side-menu ul li a {
