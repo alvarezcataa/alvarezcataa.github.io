@@ -59,25 +59,31 @@ html.nativo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; sc
 html.nativo .mainContent { overflow-x: clip; }
 html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla */
 @supports (height: 1svh) {
-  html.nativo { --vh: 1svh; }
-  html.nativo .smooth-scroll-wrapper { padding-bottom: calc(100lvh - 100svh); }
+  html.nativo { --vh: 1svh; --franja-sup: env(safe-area-inset-top, 0px); --franja-inf: max(0px, calc(100lvh - 100svh - env(safe-area-inset-top, 0px))); }
+  /* Safari alinea cada pantalla entre la barra de estado y la barra inferior: la primera baja por la franja de arriba (la niebla la cubre)
+     y la última se alarga por la franja de abajo, así el contenido continúa por debajo y se ve difuminado. */
+  html.nativo body { padding-top: var(--franja-sup); }
+  html.nativo .smooth-scroll-wrapper > .mainContent:last-child { height: calc(var(--vh) * 100 + var(--franja-inf)); }
+  html.nativo #vanta-bg { top: 0; height: calc(var(--vh) * 100 + var(--franja-sup)); }
+  html.nativo .smooth-scroll-wrapper > .mainContent:first-child { margin-top: 0; }
 }
 
 /* iPhone: pantalla completa de borde a borde (viewport-fit=cover). El contenido pasa por detrás de la barra de estado
    y del borde inferior, y ahí se difumina con los colores del sitio (efecto "liquid glass"). */
 html.nativo body::before, html.nativo body::after {
   content: ""; position: fixed; left: 0; right: 0; z-index: 900; pointer-events: none;
-  -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
 }
+/* Cada franja: marrón + desenfoque al 100% en el borde de pantalla, bajando a 0 hacia el centro, ocupando todo su espesor */
 html.nativo body::before {
-  top: 0; height: calc(env(safe-area-inset-top, 0px) * 1.8);
-  background: linear-gradient(to bottom, rgba(19,12,9,.85), rgba(19,12,9,0));
-  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent); mask-image: linear-gradient(to bottom, #000 30%, transparent);
+  top: 0; height: var(--franja-sup, 0px);
+  background: linear-gradient(to bottom, rgba(19,12,9,.92), rgba(19,12,9,0));
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent);
 }
 html.nativo body::after {
-  bottom: 0; height: calc(env(safe-area-inset-bottom, 0px) * 2.8);
-  background: linear-gradient(to top, rgba(19,12,9,.8), rgba(19,12,9,0));
-  -webkit-mask-image: linear-gradient(to top, #000 30%, transparent); mask-image: linear-gradient(to top, #000 30%, transparent);
+  bottom: 0; height: var(--franja-inf, 0px);
+  background: linear-gradient(to top, rgba(19,12,9,.92), rgba(19,12,9,0));
+  -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent);
 }
 /* elementos fijos respetan las zonas seguras */
 html.nativo .cavla-nav { padding-top: calc(22px + env(safe-area-inset-top, 0px)); }
@@ -548,11 +554,11 @@ nav {
 /* Degradado inferior — suaviza la transición entre secciones */
 .shadowa {
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 0;
   width: 100vw;
   pointer-events: none;
-  height: 25vh;
+  height: calc(25vh + 2px);
   z-index: 2;
   background: linear-gradient(to top, #130c09, transparent);
 }
