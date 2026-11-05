@@ -8,17 +8,60 @@
 // ============================================================
 var CAVLA_NATIVO = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 if (CAVLA_NATIVO) document.documentElement.classList.add("nativo");
-// ¿Hay zona segura arriba (Safari de borde a borde)? Entonces las pantallas miden el alto físico completo.
-if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
-  var t = document.createElement("div");
-  t.style.cssText = "position:absolute;visibility:hidden;padding-top:env(safe-area-inset-top,0px)";
-  document.body.appendChild(t);
-  if (t.offsetHeight > 0) document.documentElement.classList.add("cubre");
-  document.body.removeChild(t);
-}, { once: true });
+// Safari de iPhone (iOS 26+): el contenido se ve por detrás de la hora y de la barra inferior, pero la ventana de la página es más corta que
+// la pantalla. Se miden esas franjas y cada pantalla pasa a medir el alto físico completo (ver html.cubre en styles.css). Sin efecto en Google, Chrome, etc.
+var CAVLA_T = 0, CAVLA_CUBRE = false;
+(function () {
+  if (!CAVLA_NATIVO) return;
+  var ua = navigator.userAgent;
+  var v = /Version\/(\d+)/.exec(ua);
+  var safari = /iPhone/.test(ua) && /Safari\//.test(ua) && v && +v[1] >= 26 &&
+    !/CriOS|FxiOS|EdgiOS|OPiOS|GSA\/|Instagram|FBAN|FBAV|Line\/|Snapchat|TikTok|Twitter|LinkedIn|Pinterest/.test(ua);
+  if (!safari) return;
+  var root = document.documentElement;
+  function topeHora(S) {   // alto de la barra de estado según el tamaño de pantalla del iPhone
+    var t = { 956: 62, 932: 59, 926: 47, 896: 48, 874: 62, 852: 59, 844: 47, 812: 50 }[S];
+    if (t) return t;
+    return S >= 850 ? 59 : (S >= 800 ? 47 : 20);
+  }
+  function mide() {
+    var S = Math.max(screen.width, screen.height);
+    var vertical = window.innerHeight > window.innerWidth;
+    var probe = document.createElement("div");
+    probe.style.cssText = "position:absolute;visibility:hidden;left:0;width:1px;height:100svh";
+    document.body.appendChild(probe);
+    var svh = probe.offsetHeight;
+    document.body.removeChild(probe);
+    var T = topeHora(S), Bx = S - T - svh;
+    if (!vertical || S - svh < 60 || Bx < 10) { root.classList.remove("cubre"); CAVLA_CUBRE = false; CAVLA_T = 0; return; }
+    CAVLA_T = T; CAVLA_CUBRE = true;
+    root.style.setProperty("--S", S + "px");
+    root.style.setProperty("--T", T + "px");
+    root.style.setProperty("--Bx", Bx + "px");
+    root.classList.add("cubre");
+    actualizaB();
+  }
+  function actualizaB() {
+    if (!CAVLA_CUBRE) return;
+    var S = Math.max(screen.width, screen.height);
+    root.style.setProperty("--B", Math.max(0, S - CAVLA_T - window.innerHeight) + "px");
+  }
+  window.cavlaMideCubre = mide;
+  document.addEventListener("DOMContentLoaded", function () {
+    mide();
+    // al arrancar, la primera pantalla queda pegada al borde físico de arriba (posición de imán = T)
+    if (CAVLA_CUBRE) {
+      var sy = window.pageYOffset || 0;
+      if (sy < CAVLA_T) window.scrollTo(0, CAVLA_T);
+    }
+  }, { once: true });
+  window.addEventListener("resize", actualizaB);
+  window.addEventListener("scroll", actualizaB, { passive: true });
+  window.addEventListener("orientationchange", function () { setTimeout(mide, 300); });
+})();
 // Desplaza la página: en táctiles el que se desplaza es el wrapper (contenedor fijo), en PC la ventana.
 function cavlaScrollTo(top, behavior) {
-  window.scrollTo({ top: top, behavior: behavior || "auto" });
+  window.scrollTo({ top: top + (CAVLA_CUBRE ? CAVLA_T : 0), behavior: behavior || "auto" });
 }
 // Sin el wrapper fijo, los espacios en blanco sueltos del <body> se dibujan como una línea de 18px arriba del todo: se quitan.
 if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {

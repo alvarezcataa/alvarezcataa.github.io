@@ -59,30 +59,29 @@ html.nativo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; sc
 html.nativo .mainContent { overflow-x: clip; }
 html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla */
 @supports (height: 1svh) { html.nativo { --vh: 1svh; } }
-/* html.cubre = la página se dibuja de borde a borde (Safari con zonas seguras); la pone scripts.js solo si hay zona segura arriba */
-@supports (height: 1lvh) {
-  /* Cada pantalla mide el alto físico completo (100lvh, también por debajo de la hora y de la barra inferior de Safari).
-     Safari alinea el imán entre sus barras (a 'safe-area-inset-top' del borde): el margen negativo lo compensa y cada pantalla
-     queda pegada al borde superior, sin ver nunca la anterior ni la siguiente. En Google (sin zonas seguras) vale 0. */
-  html.nativo.cubre { --vh: 1lvh; --franja-sup: env(safe-area-inset-top, 0px); --franja-inf: max(0px, calc(100lvh - 100svh - env(safe-area-inset-top, 0px))); }
-  html.nativo.cubre .smooth-scroll-wrapper > .mainContent { scroll-margin-top: calc(-1 * env(safe-area-inset-top, 0px)); }
-}
+/* html.cubre (la pone scripts.js solo en Safari de iPhone con iOS 26 o más): Safari deja el contenido visible por detrás de la hora y
+   de la barra inferior, pero la ventana de la página (innerHeight) queda más corta que la pantalla. Variables que calcula scripts.js (px):
+   --S alto físico de la pantalla, --T franja superior (hora), --B franja inferior actual, --Bx franja inferior con la barra expandida.
+   Cada pantalla mide --S y el imán la alinea con scroll-margin-top = -T: queda pegada al borde físico de arriba y abajo. */
+html.nativo.cubre { --vh: calc(var(--S) / 100); }
+html.nativo.cubre .smooth-scroll-wrapper > .mainContent { scroll-margin-top: calc(-1 * var(--T)); }
+html.nativo.cubre .scroll-cue { bottom: calc(36px + var(--Bx)); }
 
 /* iPhone: pantalla completa de borde a borde (viewport-fit=cover). El contenido pasa por detrás de la barra de estado
    y del borde inferior, y ahí se difumina con los colores del sitio (efecto "liquid glass"). */
-html.nativo body::before, html.nativo body::after {
+html.nativo.cubre body::before, html.nativo.cubre body::after {
   content: ""; position: fixed; left: 0; right: 0; z-index: 900; pointer-events: none;
   -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
 }
-/* Cada franja: marrón + desenfoque al 100% en el borde de pantalla, bajando a 0 hacia el centro, ocupando todo su espesor */
-html.nativo body::before {
-  top: 0; height: var(--franja-sup, 0px);
-  background: linear-gradient(to bottom, rgba(19,12,9,.92), rgba(19,12,9,0));
+/* Cada franja (por debajo de la hora y del botón flotante): marrón + desenfoque al 100% en el borde físico, bajando a 0 hacia el centro */
+html.nativo.cubre body::before {
+  top: calc(-1 * var(--T)); height: var(--T);
+  background: linear-gradient(to bottom, rgba(19,12,9,.95), rgba(19,12,9,0));
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent);
 }
-html.nativo body::after {
-  bottom: 0; height: var(--franja-inf, 0px);
-  background: linear-gradient(to top, rgba(19,12,9,.92), rgba(19,12,9,0));
+html.nativo.cubre body::after {
+  bottom: calc(-1 * var(--B)); height: var(--B);
+  background: linear-gradient(to top, rgba(19,12,9,.95), rgba(19,12,9,0));
   -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent);
 }
 /* elementos fijos respetan las zonas seguras */
