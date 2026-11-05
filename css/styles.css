@@ -49,6 +49,14 @@ body, html {
 }
 
 
+/* Celulares / táctiles: scroll nativo del navegador + snap por CSS (la clase la pone scripts.js).
+   Se usa lvh para que el alto no cambie cuando aparece o desaparece la barra del navegador. */
+html.nativo { height: auto; scroll-behavior: auto; scroll-snap-type: y mandatory; overflow-y: auto; }
+html.nativo body { height: auto !important; min-height: calc(var(--vh, 1vh) * 100); overflow-x: clip; overflow-y: visible; scroll-snap-type: none; }
+html.nativo .smooth-scroll-wrapper { position: static; transform: none; will-change: auto; overflow: visible; }
+@supports (height: 1lvh) { html.nativo { --vh: 1lvh; } }
+
+
 /* ===================================================================
    02. TIPOGRAFÍA GLOBAL
    =================================================================== */

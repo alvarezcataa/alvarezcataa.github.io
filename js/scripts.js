@@ -1,4 +1,17 @@
 // ============================================================
+// 0. CELULARES / TÁCTILES: scroll nativo
+//    En pantallas táctiles no se usa el wrapper con interpolación
+//    (se sentía pesado) ni el snap por JS: se deja el scroll nativo
+//    del navegador con scroll-snap por CSS (ver html.nativo en styles.css).
+// ============================================================
+var CAVLA_NATIVO = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+if (CAVLA_NATIVO) document.documentElement.classList.add("nativo");
+// Sin el wrapper fijo, los espacios en blanco sueltos del <body> se dibujan como una línea de 18px arriba del todo: se quitan.
+if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
+  Array.prototype.slice.call(document.body.childNodes).forEach(function (n) { if (n.nodeType === 3 && !n.textContent.trim()) n.parentNode.removeChild(n); });
+}, { once: true });
+
+// ============================================================
 // 1. SMOOTH SCROLL + SNAP IMANTADO + MENÚ LATERAL
 //    Construye el wrapper de scroll suave, calcula posiciones
 //    de sección, aplica lerp en cada frame y snappea al soltar.
@@ -46,7 +59,7 @@
 
     sections.forEach(s => wrapper.appendChild(s));
 
-    Object.assign(wrapper.style, {
+    if (!CAVLA_NATIVO) Object.assign(wrapper.style, {
       position: "fixed",
       top: "0",
       left: "0",
@@ -58,6 +71,7 @@
 
     /* --- Altura del body = altura real del contenido --- */
     const setBodyHeight = () => {
+      if (CAVLA_NATIVO) return;
       const h = wrapper.getBoundingClientRect().height;
       document.body.style.height = `${Math.ceil(h)}px`;
     };
@@ -93,6 +107,15 @@
     const portada = wrapper.querySelector(".page_fondo-proyecto");
     const maxScale = 1.12;
 
+    function actualizaPortada() {
+      if (!portada) return;
+      const rect = portada.getBoundingClientRect();
+      const vh = window.innerHeight;
+      let visibleRatio = (vh - rect.top) / (vh + rect.height);
+      visibleRatio = Math.min(Math.max(visibleRatio, 0), 1);
+      portada.style.transform = `scale(${1 + visibleRatio * (maxScale - 1)})`;
+    }
+
     function rafLoop() {
       target = window.scrollY || window.pageYOffset;
       current += (target - current) * ease;
@@ -110,7 +133,17 @@
 
       requestAnimationFrame(rafLoop);
     }
-    requestAnimationFrame(rafLoop);
+    if (CAVLA_NATIVO) {
+      let ticking = false;
+      window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => { actualizaPortada(); ticking = false; });
+      }, { passive: true });
+      actualizaPortada();
+    } else {
+      requestAnimationFrame(rafLoop);
+    }
 
     /* --- Snap: se activa tras soltar el scroll --- */
     let scrollTimer = null;
@@ -140,10 +173,12 @@
       window.scrollTo({ top: sectionPositions[closestIndex], behavior: "smooth" });
     }
 
-    window.addEventListener("wheel",       scheduleSnap, { passive: true });
-    window.addEventListener("touchend",    scheduleSnap, { passive: true });
-    window.addEventListener("touchcancel", scheduleSnap, { passive: true });
-    window.addEventListener("keydown",     () => { scheduleSnap(); });
+    if (!CAVLA_NATIVO) {   // en táctiles el snap lo hace el navegador (CSS)
+      window.addEventListener("wheel",       scheduleSnap, { passive: true });
+      window.addEventListener("touchend",    scheduleSnap, { passive: true });
+      window.addEventListener("touchcancel", scheduleSnap, { passive: true });
+      window.addEventListener("keydown",     () => { scheduleSnap(); });
+    }
 
     /* --- Menú lateral: abrir / cerrar --- */
     // Se llama con onclick="toggleMenu()" en el HTML
@@ -290,6 +325,8 @@ document.addEventListener('scroll', () => {
 (function () {
   const IS_MOBILE = /Mobi|Android|iPhone/i.test(navigator.userAgent);
   if (!IS_MOBILE) return;
+  // Con scroll nativo y unidades lvh el alto no depende de la barra del navegador: no hace falta medir
+  const USA_LVH = CAVLA_NATIVO && window.CSS && CSS.supports && CSS.supports('height', '1lvh');
 
   function getViewportHeight() {
     return Math.round((window.visualViewport && window.visualViewport.height) || window.innerHeight);
@@ -338,7 +375,7 @@ document.addEventListener('scroll', () => {
   }
 
   window.addEventListener('load', async () => {
-    lastLocked = await measureAndLock(700, 80);
+    lastLocked = USA_LVH ? 0 : await measureAndLock(700, 80);
 
     // --------------------------------------------------------
     // FIX: Redirección a sección #servicios desde contacto.html
@@ -371,6 +408,7 @@ document.addEventListener('scroll', () => {
     }
 
     window.addEventListener('orientationchange', () => {
+      if (USA_LVH) return;
       setTimeout(async () => {
         lastLocked = await measureAndLock(500, 80);
         if (window.__CAVLA_SMOOTH) {
@@ -380,10 +418,12 @@ document.addEventListener('scroll', () => {
       }, 300);
     });
 
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', maybeUpdateOnHugeChange);
+    if (!USA_LVH) {
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', maybeUpdateOnHugeChange);
+      }
+      window.addEventListener('resize', maybeUpdateOnHugeChange);
     }
-    window.addEventListener('resize', maybeUpdateOnHugeChange);
   });
 })();
 
