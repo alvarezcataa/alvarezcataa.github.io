@@ -221,6 +221,26 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
       sections.forEach(s => s.classList.remove("blur"));
     });
 
+    // Cerrar tocando cualquier parte del menú que no sea un enlace, o deslizando de izquierda a derecha
+    if (sideMenu) {
+      const cerrarMenu = () => {
+        sideMenu.classList.remove("open");
+        wrapper.classList.remove("blur");
+        sections.forEach(s => s.classList.remove("blur"));
+      };
+      sideMenu.addEventListener("click", (e) => {
+        if (!e.target.closest("a")) cerrarMenu();
+      });
+      let tx = null, ty = null;
+      sideMenu.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+      sideMenu.addEventListener("touchend", (e) => {
+        if (tx === null) return;
+        const dx = e.changedTouches[0].clientX - tx, dy = Math.abs(e.changedTouches[0].clientY - ty);
+        tx = null;
+        if (dx > 50 && dx > dy) cerrarMenu();
+      }, { passive: true });
+    }
+
     // Cerrar con ESC
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && sideMenu && sideMenu.classList.contains("open")) {
