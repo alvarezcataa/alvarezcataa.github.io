@@ -49,12 +49,19 @@ body, html {
 }
 
 
-/* Celulares / táctiles: scroll nativo del navegador + snap por CSS (la clase la pone scripts.js).
-   Se usa lvh para que el alto no cambie cuando aparece o desaparece la barra del navegador. */
-html.nativo { height: auto; scroll-behavior: auto; scroll-snap-type: y mandatory; overflow-y: auto; }
-html.nativo body { height: auto !important; min-height: calc(var(--vh, 1vh) * 100); overflow-x: clip; overflow-y: visible; scroll-snap-type: none; }
-html.nativo .smooth-scroll-wrapper { position: static; transform: none; will-change: auto; overflow: visible; }
-@supports (height: 1lvh) { html.nativo { --vh: 1lvh; } }
+/* Celulares / táctiles (la clase la pone scripts.js): mismo scroll imantado que en PC, pero nativo.
+   El documento no se desplaza: lo hace el wrapper (contenedor fijo a pantalla completa) con scroll-snap.
+   Así las barras del navegador no aparecen ni desaparecen y el alto de cada pantalla es siempre el mismo. */
+html.nativo, html.nativo body { height: 100%; overflow: hidden; overscroll-behavior: none; scroll-snap-type: none; scroll-behavior: auto; background-color: #130c09; }
+html.nativo .smooth-scroll-wrapper {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory; scrollbar-width: none; transform: none; will-change: auto; z-index: 0;
+}
+html.nativo .smooth-scroll-wrapper::-webkit-scrollbar { display: none; }
+html.nativo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; scroll-snap-stop: always; }
+html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla (en PC lo hace el wrapper con transform) */
+@supports (height: 1dvh) { html.nativo { --vh: 1dvh; } html.nativo .smooth-scroll-wrapper { height: 100dvh; } }
 
 
 /* ===================================================================

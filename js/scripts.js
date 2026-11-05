@@ -1,11 +1,18 @@
 // ============================================================
 // 0. CELULARES / TÁCTILES: scroll nativo
-//    En pantallas táctiles no se usa el wrapper con interpolación
-//    (se sentía pesado) ni el snap por JS: se deja el scroll nativo
-//    del navegador con scroll-snap por CSS (ver html.nativo en styles.css).
+//    En pantallas táctiles no se usa la interpolación por JS (se sentía
+//    pesada) ni el snap por JS: el wrapper pasa a ser un contenedor fijo
+//    con scroll nativo y snap por CSS (ver html.nativo en styles.css).
+//    El documento no scrollea, así que las barras del navegador del
+//    celular no aparecen ni desaparecen y el alto de pantalla es estable.
 // ============================================================
 var CAVLA_NATIVO = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 if (CAVLA_NATIVO) document.documentElement.classList.add("nativo");
+// Desplaza la página: en táctiles el que se desplaza es el wrapper (contenedor fijo), en PC la ventana.
+function cavlaScrollTo(top, behavior) {
+  var w = CAVLA_NATIVO && document.querySelector(".smooth-scroll-wrapper");
+  if (w) w.scrollTo({ top: top, behavior: behavior || "auto" }); else window.scrollTo({ top: top, behavior: behavior || "auto" });
+}
 // Sin el wrapper fijo, los espacios en blanco sueltos del <body> se dibujan como una línea de 18px arriba del todo: se quitan.
 if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
   Array.prototype.slice.call(document.body.childNodes).forEach(function (n) { if (n.nodeType === 3 && !n.textContent.trim()) n.parentNode.removeChild(n); });
@@ -100,6 +107,21 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
     }
     computeSectionPositions();
 
+    /* --- Táctiles: el alto de pantalla es el del contenedor (no cambia con las barras del navegador) --- */
+    if (CAVLA_NATIVO) {
+      const fijaVh = () => {
+        const a = document.activeElement;
+        if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)) return;   // teclado abierto: no se recalcula
+        const h = wrapper.clientHeight;
+        if (h > 0) document.documentElement.style.setProperty("--vh", (h / 100) + "px");
+        computeSectionPositions();
+      };
+      fijaVh();
+      window.addEventListener("resize", fijaVh);
+      window.addEventListener("orientationchange", () => setTimeout(fijaVh, 300));
+      window.addEventListener("load", fijaVh);
+    }
+
     /* --- Loop de interpolación (lerp) --- */
     let current = 0;
     let target = 0;
@@ -135,7 +157,7 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
     }
     if (CAVLA_NATIVO) {
       let ticking = false;
-      window.addEventListener("scroll", () => {
+      wrapper.addEventListener("scroll", () => {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => { actualizaPortada(); ticking = false; });
@@ -228,13 +250,14 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
 // ============================================================
 
 document.addEventListener('scroll', () => {
+  const scroller = CAVLA_NATIVO && document.querySelector('.smooth-scroll-wrapper');
   const virtualSection = document.querySelector('.page.mainContent:nth-of-type(2)');
   const grillaVirtual  = document.querySelector('.contenedor-grillavirtual');
 
   if (!virtualSection || !grillaVirtual) return;
 
-  const viewportHeight = window.innerHeight;
-  const scrollY        = window.scrollY;
+  const viewportHeight = scroller ? scroller.clientHeight : window.innerHeight;
+  const scrollY        = scroller ? scroller.scrollTop : window.scrollY;
   const virtualTop     = virtualSection.offsetTop;
 
   const start = virtualTop - viewportHeight;
@@ -245,7 +268,7 @@ document.addEventListener('scroll', () => {
 
   const translateY = 200 - (progress * 200);
   grillaVirtual.style.transform = `translateY(${translateY}px)`;
-});
+}, true);   // captura: en táctiles el scroll ocurre dentro del wrapper y esos eventos no suben
 
 
 // ============================================================
@@ -397,9 +420,9 @@ document.addEventListener('scroll', () => {
             const idx = window.__CAVLA_SMOOTH.sections.indexOf(targetEl);
             const pos = window.__CAVLA_SMOOTH.sectionPositions[idx];
             if (pos !== undefined) {
-              window.scrollTo({ top: pos, behavior: 'instant' });
+              cavlaScrollTo(pos, 'instant');
             } else {
-              window.scrollTo({ top: targetEl.offsetTop, behavior: 'instant' });
+              cavlaScrollTo(targetEl.offsetTop, 'instant');
             }
           }
           setTimeout(() => { window.__snapInhibited = false; }, 800);
@@ -456,9 +479,9 @@ document.addEventListener('scroll', () => {
         const idx = window.__CAVLA_SMOOTH.sections.indexOf(targetEl);
         const pos = window.__CAVLA_SMOOTH.sectionPositions[idx];
         if (pos !== undefined) {
-          window.scrollTo({ top: pos, behavior: 'instant' });
+          cavlaScrollTo(pos, 'instant');
         } else {
-          window.scrollTo({ top: targetEl.offsetTop, behavior: 'instant' });
+          cavlaScrollTo(targetEl.offsetTop, 'instant');
         }
       }
       setTimeout(() => { window.__snapInhibited = false; }, 800);
