@@ -2547,3 +2547,16 @@ h1.subtitulo-pagina { font-family: 'Montserrat', sans-serif; }
   .cavla-nav__center a { font-size: min(1.3vh, 1.2vw); letter-spacing: .18em; }
   .cavla-nav__cta { font-size: min(1.3vh, 1.2vw); letter-spacing: .16em; padding: 9px 14px; white-space: nowrap; }
 }
+
+/* ===================================================================
+   MÓVIL: tamaño mínimo de texto (nada por debajo de 12 px)
+   =================================================================== */
+@media (max-width: 810px) {
+  .cavla-nav__cta { font-size: 12px !important; letter-spacing: .1em !important; padding: 9px 14px !important; }
+  .scroll-cue__label, .filtro, .proyecto__nombre, .boton-servicio, .contacto-form__label, .btn-enviar,
+  .tarjeta-red__boton, .label-foto, .memoria-bloque .memoria-meta, .eyebrow, .progreso-texto,
+  .msg-error, .nota-inferior, .instruccion, .ayuda, .titulo-virtual { font-size: 12px !important; }
+  .proyecto__nombre { font-size: 13px !important; }
+  .diseno-integral p, .diseno-mobiliario p, .sub-nota { font-size: max(12px, 1em); }
+  .menu-toggle + * a, .side-menu ul li a { font-size: 16px; }
+}
