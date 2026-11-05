@@ -8,6 +8,14 @@
 // ============================================================
 var CAVLA_NATIVO = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 if (CAVLA_NATIVO) document.documentElement.classList.add("nativo");
+// ¿Hay zona segura arriba (Safari de borde a borde)? Entonces las pantallas miden el alto físico completo.
+if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
+  var t = document.createElement("div");
+  t.style.cssText = "position:absolute;visibility:hidden;padding-top:env(safe-area-inset-top,0px)";
+  document.body.appendChild(t);
+  if (t.offsetHeight > 0) document.documentElement.classList.add("cubre");
+  document.body.removeChild(t);
+}, { once: true });
 // Desplaza la página: en táctiles el que se desplaza es el wrapper (contenedor fijo), en PC la ventana.
 function cavlaScrollTo(top, behavior) {
   window.scrollTo({ top: top, behavior: behavior || "auto" });

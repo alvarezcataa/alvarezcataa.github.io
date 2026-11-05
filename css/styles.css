@@ -58,14 +58,14 @@ html.nativo .smooth-scroll-wrapper { position: static; width: 100%; height: auto
 html.nativo .smooth-scroll-wrapper > .mainContent { scroll-snap-align: start; scroll-snap-stop: always; }
 html.nativo .mainContent { overflow-x: clip; }
 html.nativo #vanta-bg { position: absolute; }   /* la niebla solo detrás de la primera pantalla */
-@supports (height: 1svh) {
-  html.nativo { --vh: 1svh; --franja-sup: env(safe-area-inset-top, 0px); --franja-inf: max(0px, calc(100lvh - 100svh - env(safe-area-inset-top, 0px))); }
-  /* Safari alinea cada pantalla entre la barra de estado y la barra inferior: la primera baja por la franja de arriba (la niebla la cubre)
-     y la última se alarga por la franja de abajo, así el contenido continúa por debajo y se ve difuminado. */
-  html.nativo body { padding-top: var(--franja-sup); }
-  html.nativo .smooth-scroll-wrapper > .mainContent:last-child { height: calc(var(--vh) * 100 + var(--franja-inf)); }
-  html.nativo #vanta-bg { top: 0; height: calc(var(--vh) * 100 + var(--franja-sup)); }
-  html.nativo .smooth-scroll-wrapper > .mainContent:first-child { margin-top: 0; }
+@supports (height: 1svh) { html.nativo { --vh: 1svh; } }
+/* html.cubre = la página se dibuja de borde a borde (Safari con zonas seguras); la pone scripts.js solo si hay zona segura arriba */
+@supports (height: 1lvh) {
+  /* Cada pantalla mide el alto físico completo (100lvh, también por debajo de la hora y de la barra inferior de Safari).
+     Safari alinea el imán entre sus barras (a 'safe-area-inset-top' del borde): el margen negativo lo compensa y cada pantalla
+     queda pegada al borde superior, sin ver nunca la anterior ni la siguiente. En Google (sin zonas seguras) vale 0. */
+  html.nativo.cubre { --vh: 1lvh; --franja-sup: env(safe-area-inset-top, 0px); --franja-inf: max(0px, calc(100lvh - 100svh - env(safe-area-inset-top, 0px))); }
+  html.nativo.cubre .smooth-scroll-wrapper > .mainContent { scroll-margin-top: calc(-1 * env(safe-area-inset-top, 0px)); }
 }
 
 /* iPhone: pantalla completa de borde a borde (viewport-fit=cover). El contenido pasa por detrás de la barra de estado
