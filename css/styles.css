@@ -87,15 +87,16 @@ html.nativo.cubre.medido .scroll-cue { bottom: calc(36px + var(--Bx)); }
 .franja--inf { bottom: 0; height: var(--Bx); }
 .franja::before, .franja::after { content: ""; position: absolute; inset: 0; }
 /* franja normal: marrón + desenfoque al 100% en el borde físico, bajando a 0 hacia el centro */
-.franja::before { -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); transition: opacity .35s ease; }
+.franja::before { -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); transition: opacity .5s cubic-bezier(.22,.8,.26,1); }
 .franja--sup::before { background: linear-gradient(to bottom, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent); }
 .franja--inf::before { background: linear-gradient(to top, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent); }
 /* con el menú abierto la página se desenfoca y Safari no dibuja ese desenfoque en las franjas de la hora y de la barra inferior (quedan del
    color de fondo, #130c09): por eso las franjas normales se ocultan y un viñeteado marrón (ver abajo) las funde con el resto sin que se note el corte */
-.franja::after { content: none; }
+.franja::after { background-color: rgba(19,12,9,0); transition: background-color .5s cubic-bezier(.22,.8,.26,1); }   /* sin filtros ni capas propias: Safari sí la dibuja en las franjas */
+html.menu-abierto .franja::after { background-color: #130c09; }
 html.menu-abierto .franja::before { opacity: 0; }
 html.cubre body::before {
-  content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; transition: opacity .4s ease;
+  content: ""; position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; transition: opacity .5s cubic-bezier(.22,.8,.26,1);
   background: linear-gradient(to bottom, #130c09 0, rgba(19,12,9,.7) 45px, rgba(19,12,9,0) 150px, rgba(19,12,9,0) calc(100% - 170px), rgba(19,12,9,.7) calc(100% - 50px), #130c09 100%);
 }
 html.cubre.menu-abierto body::before { opacity: 1; }
@@ -117,7 +118,7 @@ html.nativo .side-menu {
   z-index: 1000; will-change: transform;
 }
 /* desenfoque parejo de toda la página (también por detrás de la hora y de la barra inferior) mientras el menú está abierto */
-html.nativo .smooth-scroll-wrapper { transition: filter .4s ease; }
+html.nativo .smooth-scroll-wrapper { transition: filter .5s cubic-bezier(.22,.8,.26,1); }
 html.nativo.menu-abierto .smooth-scroll-wrapper { filter: blur(8px); }
 html.nativo .side-menu.open { visibility: visible; transform: translate3d(0, 0, 0); transition-delay: 0s; }
 html.nativo .blur { filter: none; transition: none; pointer-events: none; }
