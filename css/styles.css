@@ -90,11 +90,10 @@ html.nativo.cubre.medido .scroll-cue { bottom: calc(36px + var(--Bx)); }
 .franja::before { -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); transition: opacity .35s ease; }
 .franja--sup::before { background: linear-gradient(to bottom, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent); }
 .franja--inf::before { background: linear-gradient(to top, rgba(19,12,9,.95), rgba(19,12,9,0)); -webkit-mask-image: linear-gradient(to top, #000, transparent); mask-image: linear-gradient(to top, #000, transparent); }
-/* con el menú abierto: la franja se tiñe y desenfoca igual que el menú (de derecha 100% a izquierda 0%) y entra deslizando con él */
+/* con el menú abierto: la franja se tiñe igual que el menú (marrón de derecha 100% a izquierda 0%) y entra deslizando con él;
+   el desenfoque lo da toda la página (ver html.menu-abierto más abajo), así es parejo también en las franjas */
 .franja::after {
   background: linear-gradient(to left, rgba(19,9,6,.92), rgba(19,9,6,.35) 70%, rgba(19,9,6,0));
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  -webkit-mask-image: linear-gradient(to left, #000, transparent); mask-image: linear-gradient(to left, #000, transparent);
   transform: translateX(100%); transition: transform .5s cubic-bezier(.22,.8,.26,1);
 }
 html.menu-abierto .franja::after { transform: none; }
@@ -116,11 +115,9 @@ html.nativo .side-menu {
   background: linear-gradient(to left, rgba(19,9,6,.92), rgba(19,9,6,.35) 70%, rgba(19,9,6,0));
   z-index: 1000; will-change: transform;
 }
-html.nativo .side-menu::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  -webkit-mask-image: linear-gradient(to left, #000, transparent); mask-image: linear-gradient(to left, #000, transparent);
-}
+/* desenfoque parejo de toda la página (también por detrás de la hora y de la barra inferior) mientras el menú está abierto */
+html.nativo .smooth-scroll-wrapper { transition: filter .4s ease; }
+html.nativo.menu-abierto .smooth-scroll-wrapper { filter: blur(8px); }
 html.nativo .side-menu.open { visibility: visible; transform: translate3d(0, 0, 0); transition-delay: 0s; }
 html.nativo .blur { filter: none; transition: none; pointer-events: none; }
 html.nativo .side-menu ul li a {
