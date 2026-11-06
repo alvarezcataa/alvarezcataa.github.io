@@ -2721,3 +2721,6 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 @media (max-width: 810px) {
   .marquesina__grupo li { font-size: 12px; letter-spacing: .16em; }
 }
+
+/* en compu las esquinas de la portada van en un solo renglón; en celular, en dos */
+@media (min-width: 811px) { .esq-br { display: none; } }
