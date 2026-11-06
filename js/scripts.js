@@ -641,7 +641,7 @@ document.addEventListener('scroll', () => {
     xl = Math.max(xl, limiteIzq + r4);
     if (dx > dy * 1.5 && xl > xr - 10) {
       // una sola curva suave que ocupa todo el ancho entre A y B (sin tramos rectos largos)
-      const h = dx * 0.5;
+      const h = dx * 0.3;
       return `M${A.x},${A.y} C${A.x + h},${A.y} ${B.x - h},${B.y} ${B.x},${B.y}`;
     }
     xl = Math.min(xl, xr - 10);
