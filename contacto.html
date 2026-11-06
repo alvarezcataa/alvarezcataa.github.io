@@ -186,13 +186,13 @@
       align-items: stretch;
       justify-content: flex-start;
       box-sizing: border-box;
-      padding: calc(56px + clamp(16px, 17vh, 160px)) 0 54px;
+      padding: calc(56px + clamp(16px, 22vh, 200px)) 0 54px;
     }
 
     /* zonas seguras del celular (la barra de Safari y la hora), igual que el zócalo de Inicio */
     html.nativo.fijo .contacto-directo { padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px)); }
     html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s {
-      padding-top: calc(var(--T) + 56px + clamp(16px, 17vh, 160px));
+      padding-top: calc(var(--T) + 56px + clamp(16px, 22vh, 200px));
       padding-bottom: calc(var(--Bx) + 54px);
     }
 
@@ -208,6 +208,12 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
+    }
+
+    .contacto-directo__horario {
+      margin: 0 0 clamp(14px, 2.2vh, 22px);
+      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .contacto-directo__arriba { display: flex; flex-direction: column; align-items: center; width: 100%; }
@@ -262,39 +268,6 @@
     }
 
     .btn-whatsapp:hover { background: rgba(255, 255, 255, 0.14); }
-
-    .contacto-directo__datos {
-      display: grid;
-      grid-template-columns: 1fr;
-      width: 100%;
-      max-width: 640px;
-      margin: clamp(28px, 4.5vh, 48px) 0 0;
-      padding-top: clamp(24px, 4vh, 40px);
-      border-top: 0.5px solid rgba(255, 255, 255, 0.16);
-    }
-
-    .contacto-directo__dato { display: flex; flex-direction: column; gap: 10px; }
-
-    .contacto-directo__label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .contacto-directo__valor {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 14px;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.92);
-      text-decoration: none;
-    }
-
-    a.contacto-directo__valor { border-bottom: 0.5px solid rgba(255, 255, 255, 0.4); align-self: center; transition: border-color .4s; }
-    a.contacto-directo__valor:hover { border-bottom-color: white; }
 
     .contacto-directo__guia { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
     .contacto-directo__guia-texto {
@@ -354,8 +327,8 @@
     html.nativo.cubre.medido .contacto-directo__equipo { bottom: calc(40px + var(--Bx)); }
 
     @media (max-height: 700px) {
-      .contacto-directo { padding-top: calc(56px + 9vh); }
-      html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s { padding-top: calc(var(--T) + 56px + 9vh); }
+      .contacto-directo { padding-top: calc(56px + 13vh); }
+      html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s { padding-top: calc(var(--T) + 56px + 13vh); }
     }
 
     @media (max-width: 810px) {
@@ -436,6 +409,8 @@
   <section class="page contacto-directo mainContent">
     <div class="contacto-directo__inner">
 
+      <p class="contacto-directo__horario">Lunes a viernes de 9hs a 18hs</p>
+
       <h2 class="contacto-directo__titulo">¿Tenés dudas?<span class="contacto-directo__titulo-2">Hablemos.</span></h2>
 
       <div class="contacto-directo__arriba">
@@ -448,13 +423,6 @@
         <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener" aria-label="YouTube de Estudio CAVLA"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg></a>
         <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener" aria-label="Facebook de Estudio CAVLA"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M13.2 20.4v-7h2.3l.4-2.7h-2.7V9.1c0-.8.3-1.3 1.4-1.3h1.4V5.4c-.3 0-1.1-.1-2.1-.1-2.1 0-3.4 1.2-3.4 3.4v2h-2.3v2.7h2.3v7"/></svg></a>
       </div>
-
-        <div class="contacto-directo__datos">
-          <div class="contacto-directo__dato">
-            <span class="contacto-directo__label">Horario</span>
-            <span class="contacto-directo__valor">Lunes a viernes<br>de 9hs a 18hs</span>
-          </div>
-        </div>
       </div>
 
       <div class="contacto-directo__guia">
@@ -476,7 +444,7 @@
 
       <button type="button" class="contacto-form__volver" onclick="cerrarFormulario()">&larr; Volver</button>
 
-      <h2 class="contacto-form__titulo">¿Tenés dudas?<br>Hablemos.</h2>
+      <h2 class="contacto-form__titulo">Tu consulta.</h2>
 
       <form class="contacto-form__grid" id="form-contacto">
 
