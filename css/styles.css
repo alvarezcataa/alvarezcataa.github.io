@@ -2641,7 +2641,7 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 10vh;
+  bottom: 19vh;
   overflow: hidden;
   z-index: 10;
   transform: translateY(200px);
@@ -2668,25 +2668,25 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
   white-space: nowrap;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-size: 2.6vh;
+  font-size: 1.95vh;
   letter-spacing: .22em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.78);
 }
 .marquesina__grupo li::after {
   content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  flex-shrink: 0;
+  width: 1.5em;
+  height: 1.5em;
+  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><polygon fill='white' fill-opacity='.6' points='12.00,1.00 12.88,8.72 17.50,2.47 14.40,9.60 21.53,6.50 15.28,11.12 23.00,12.00 15.28,12.88 21.53,17.50 14.40,14.40 17.50,21.53 12.88,15.28 12.00,23.00 11.12,15.28 6.50,21.53 9.60,14.40 2.47,17.50 8.72,12.88 1.00,12.00 8.72,11.12 2.47,6.50 9.60,9.60 6.50,2.47 11.12,8.72'/></svg>") center / contain no-repeat;
   margin: 0 4vw;
 }
 @keyframes marquesina { to { transform: translateX(-50%); } }
 @media (max-width: 810px) {
-  .marquesina { bottom: 14vh; }
+  .marquesina { bottom: 23vh; }
   .marquesina__pista { animation-duration: 45s; }
-  .marquesina__grupo li { font-size: 13px; letter-spacing: .16em; }
-  .marquesina__grupo li::after { margin: 0 8vw; }
+  .marquesina__grupo li { font-size: 10px; letter-spacing: .16em; }
+  .marquesina__grupo li::after { width: 1.7em; height: 1.7em; margin: 0 8vw; }
 }
 @media (prefers-reduced-motion: reduce) {
   .marquesina { -webkit-mask-image: none; mask-image: none; }
@@ -2695,4 +2695,11 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
   .marquesina__grupo { flex-wrap: wrap; justify-content: center; row-gap: 2vh; }
   .marquesina__grupo li:nth-child(n+5) { display: none; }
   .marquesina__grupo li:nth-child(4)::after { display: none; }
+}
+
+/* esquinas de la pantalla de presentación (mismo estilo que la portada) */
+.portada-esq--izq { text-align: left; }
+.portada-esq--der { text-align: right; }
+@media (max-width: 810px) {
+  .portada-esq--ancha { width: 44vw; text-wrap: balance; }
 }
