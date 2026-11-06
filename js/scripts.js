@@ -620,14 +620,26 @@ document.addEventListener('scroll', () => {
   const sua = (x) => x * x * (3 - 2 * x);                       // suave
   const tramo = (t, a, b) => clamp((t - a) / (b - a));
 
+  // Altura del centro de las letras bajas (e, c, o...) respecto del borde superior del renglón, para que los puntos queden a esa altura
+  const lienzo = document.createElement('canvas').getContext('2d');
+  function centroLetrasBajas(f, rect) {
+    const cs = getComputedStyle(f);
+    lienzo.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    const m = lienzo.measureText('x');
+    const asc = m.fontBoundingBoxAscent || rect.height * 0.8;
+    const xh = m.actualBoundingBoxAscent || parseFloat(cs.fontSize) * 0.45;
+    return asc - xh / 2;   // desde el tope del renglón hasta el centro de la "x"
+  }
+
   function extremos(f, base, k) {
     const rg = document.createRange();
     rg.selectNodeContents(f);
     const rs = [...rg.getClientRects()].filter(r => r.width > 1);
     const a = rs[0], z = rs[rs.length - 1];
+    const off = centroLetrasBajas(f, a);
     return {
-      ini: { x: (a.left - base.left) / k, y: (a.top + a.height / 2 - base.top) / k },
-      fin: { x: (z.right - base.left) / k, y: (z.top + z.height / 2 - base.top) / k }
+      ini: { x: (a.left - base.left) / k, y: (a.top + off - base.top) / k },
+      fin: { x: (z.right - base.left) / k, y: (z.top + off - base.top) / k }
     };
   }
 
