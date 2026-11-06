@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /_archivo/
 
 Sitemap: https://www.estudiocavla.com/sitemap.xml

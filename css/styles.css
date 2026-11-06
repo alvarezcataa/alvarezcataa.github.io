@@ -2759,3 +2759,193 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
   transition: background .4s;
 }
 .btn-cta-pagina:hover { background: rgba(255, 255, 255, 0.14); }
+
+
+/* ===================================================================
+   SERVICIOS v2 (estructura de 5 pantallas, empieza por Diseño Integral)
+   Pantallas .sv-pantalla: para quién es, cómo funciona, lo que recibís
+   =================================================================== */
+
+.sv-pantalla {
+  position: relative;
+  min-height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  --sv-top: 56px;
+  padding: calc(var(--sv-top) + 3vh) 6vw 4vh;
+  color: #fff;
+}
+html.nativo.fijo .sv-pantalla { padding-bottom: calc(4vh + env(safe-area-inset-bottom, 0px)); }
+html.nativo.cubre.medido .smooth-scroll-wrapper > .sv-pantalla.pantalla-s {
+  height: auto; min-height: var(--S);
+  padding-top: calc(var(--T) + var(--sv-top) + 3vh);
+  padding-bottom: calc(var(--Bx) + 4vh);
+}
+
+.sv-contenido {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sv-titulo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 100;
+  font-size: clamp(2rem, 6vh, 3.4rem);
+  line-height: 1.05;
+  margin: 0 0 3.5vh;
+}
+
+/* 2. Para quién es */
+.sv-texto { max-width: 620px; }
+.sv-texto p {
+  font-size: clamp(0.92rem, 2.1vh, 1.1rem);
+  font-weight: 300;
+  line-height: 1.5;
+  text-align: justify;
+  opacity: 0.92;
+  margin: 0 0 1.8vh;
+}
+.sv-texto b { font-weight: 600; }
+.sv-deriva {
+  display: flex;
+  gap: 6vh;
+  justify-content: center;
+  margin-top: 2.5vh;
+}
+
+/* 3. Cómo funciona */
+.sv-pasos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4vw;
+}
+.sv-paso { display: flex; flex-direction: column; align-items: center; }
+.sv-paso > img {
+  height: clamp(120px, 28vh, 290px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  margin-bottom: 2vh;
+}
+.sv-paso__texto { max-width: 330px; }
+.sv-paso__num {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 100;
+  font-size: clamp(1.8rem, 4.4vh, 2.6rem);
+  line-height: 1;
+  opacity: 0.55;
+  margin-bottom: 0.6vh;
+}
+.sv-paso h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.72rem, 1.6vh, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 1vh;
+}
+.sv-paso p {
+  font-size: clamp(0.88rem, 2.1vh, 1.1rem);
+  font-weight: 300;
+  line-height: 1.45;
+  margin: 0;
+  opacity: 0.9;
+}
+.sv-paso b { font-weight: 600; }
+
+/* 4. Lo que recibís */
+.sv-recibis {
+  flex-direction: row;
+  align-items: center;
+  gap: 5vw;
+  text-align: left;
+}
+.sv-recibis__img {
+  flex: 0 1 46%;
+  min-width: 0;
+  max-height: 68vh;
+  object-fit: contain;
+}
+.sv-recibis__texto { flex: 1 1 54%; min-width: 0; }
+.sv-recibis .sv-titulo { text-align: left; margin-bottom: 3vh; }
+.sv-listas { display: flex; flex-direction: column; gap: 3vh; }
+.sv-lista h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(0.72rem, 1.6vh, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 1.2vh;
+}
+.sv-lista ul { list-style: none; margin: 0; padding: 0; }
+.sv-lista li {
+  position: relative;
+  padding-left: 18px;
+  font-size: clamp(0.88rem, 2.15vh, 1.1rem);
+  font-weight: 300;
+  line-height: 1.35;
+  margin-bottom: 1vh;
+  opacity: 0.92;
+}
+.sv-lista li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+.sv-lista--no li { opacity: 0.8; }
+.sv-lista--no li::before { background: none; border: 1px solid rgba(255,255,255,0.75); box-sizing: border-box; }
+.sv-lista__nota {
+  margin: 1.2vh 0 0;
+  font-size: clamp(0.78rem, 1.7vh, 0.9rem);
+  font-weight: 300;
+  font-style: italic;
+  opacity: 0.65;
+}
+
+@media (max-width: 810px) {
+  .sv-pantalla { padding-left: 7vw; padding-right: 7vw; }
+  .sv-titulo { font-size: 2rem; margin-bottom: 2.5vh; }
+  .sv-texto p { text-align: left; font-size: 0.86rem; line-height: 1.42; margin-bottom: 1.3vh; }
+  .sv-contenido .sv-deriva { margin-top: 1vh; gap: 1.4vh; }
+  .sv-deriva .derivacion-col p { margin-bottom: 0.6vh; }
+  .sv-deriva { flex-direction: column; gap: 2vh; align-items: center; }
+  .sv-deriva .derivacion-col { max-width: none; width: 100%; }
+  .sv-pasos { grid-template-columns: 1fr; gap: 2.2vh; }
+  .sv-paso { flex-direction: row; align-items: center; gap: 16px; text-align: left; }
+  .sv-paso > img { height: auto; width: 26vw; max-width: 120px; margin: 0; flex: none; }
+  .sv-paso__texto { max-width: none; }
+  .sv-paso__num { display: inline; font-size: 1.3rem; margin-right: 8px; vertical-align: -1px; }
+  .sv-paso h3 { display: inline; }
+  .sv-paso p { margin-top: 0.8vh; font-size: 0.85rem; }
+  .sv-recibis { flex-direction: column; gap: 2vh; text-align: center; }
+  .sv-recibis__img { flex: none; max-height: 22vh; width: auto; max-width: 70vw; }
+  .sv-recibis .sv-titulo { text-align: center; margin-bottom: 1.8vh; }
+  .sv-listas { flex-direction: row; gap: 5vw; text-align: left; }
+  .sv-lista { flex: 1; min-width: 0; }
+  .sv-lista li { font-size: 0.78rem; padding-left: 14px; margin-bottom: 0.7vh; }
+  .sv-lista h3 { margin-bottom: 0.8vh; }
+  .sv-lista__nota { font-size: 0.72rem; }
+}
