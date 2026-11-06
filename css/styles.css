@@ -2588,3 +2588,74 @@ h1.subtitulo-pagina { font-family: 'Montserrat', sans-serif; }
   .titulo-virtual { font-size: 10px !important; }
   .proyecto__nombre { font-size: 15px !important; }
 }
+
+/* ===================================================================
+   INICIO: esquinas de la portada + frase de presentación
+   =================================================================== */
+.portada-esq {
+  --esq-b: 92px;
+  position: absolute;
+  bottom: var(--esq-b);
+  transform: translateY(50%);
+  z-index: 4;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3vh;
+  line-height: 1;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  white-space: nowrap;
+}
+.portada-esq--izq { left: 28px; }
+.portada-esq--der { right: 28px; margin-right: -.22em; }
+html.nativo .portada-esq { bottom: calc(var(--esq-b) + env(safe-area-inset-bottom, 0px)); }
+html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); }
+@media (min-width: 811px) and (max-width: 1500px) {
+  .portada-esq--izq { left: 20px; }
+  .portada-esq--der { right: 20px; }
+}
+@media (max-width: 810px) {
+  /* en celular van en dos renglones para no pisar el "Desliza"; el último renglón queda a la altura de "Desliza" */
+  .portada-esq { --esq-b: 86px; transform: none; font-size: 10px; letter-spacing: .12em; line-height: 1.6; white-space: normal; width: 28vw; }
+  .portada-esq--izq { text-align: left; }
+  .portada-esq--der { text-align: right; margin-right: -.12em; }
+}
+
+.frase-presentacion {
+  font-family: 'Playfair Display', serif;
+  font-weight: 100;
+  color: #fff;
+  margin: 0;
+  text-align: center;
+  line-height: 1.15;
+  font-size: 5.6vh;
+  max-width: min(78vw, 17em);
+}
+@media (max-width: 810px) {
+  .frase-presentacion { font-size: 8vw; max-width: 82vw; }
+}
+
+/* palabras sueltas: centradas, y visibles también en celular */
+.contenedor-grillavirtual {
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: max-content;
+  max-width: 90vw;
+}
+.item-virtual .titulo-virtual { text-align: center; letter-spacing: .22em; margin: 0; }
+@media (max-width: 810px) {
+  .contenedor-grillavirtual {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    justify-items: center;
+    gap: 3.2vh 12vw;
+    width: max-content;
+    margin: 0 auto;
+    bottom: 14vh;
+  }
+  .item-virtual { width: auto; }
+}
+@media (min-width: 811px) { .esq-br { display: none; } }
