@@ -2741,3 +2741,21 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .cuerpo-tarjeta { padding-top: 16px; }
 .nombre-servicio { margin-top: 0; margin-bottom: 11px; }
 .descripcion-servicio { margin-top: 0; }
+
+/* Botón de cierre de página (Sobre mí) */
+.btn-cta-pagina {
+  display: inline-block;
+  margin-top: 3vh;
+  text-decoration: none;
+  border: 1px solid #fff;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 15px 40px;
+  transition: background .4s;
+}
+.btn-cta-pagina:hover { background: rgba(255, 255, 255, 0.14); }
