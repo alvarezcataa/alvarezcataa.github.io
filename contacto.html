@@ -180,21 +180,23 @@
 
     .contacto-directo {
       background: #0e0b0b;
-      min-height: 100vh;
+      height: auto;                       /* crece si el contenido no entra, así el zócalo nunca se superpone */
+      min-height: calc(var(--vh, 1vh) * 100);
       display: flex;
       flex-direction: column;
       align-items: stretch;
       justify-content: flex-start;
       box-sizing: border-box;
-      --Z: clamp(60px, 23.5vh, 280px);   /* distancia entre la navbar y el primer renglón (el horario) */
-      padding: calc(56px + var(--Z)) 0 54px;
+      --Z: clamp(16px, calc((var(--vh, 1vh) * 100 - 665px) * 0.95), 280px);   /* distancia entre la navbar y el horario: usa el espacio que sobra y se achica si la pantalla es corta */
+      padding: calc(56px + var(--Z)) 0 40px;
     }
 
     /* zonas seguras del celular (la barra de Safari y la hora), igual que el zócalo de Inicio */
-    html.nativo.fijo .contacto-directo { padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px)); }
+    html.nativo.fijo .contacto-directo { padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
     html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s {
+      height: auto; min-height: var(--S);
       padding-top: calc(var(--T) + 56px + var(--Z));
-      padding-bottom: calc(var(--Bx) + 54px);
+      padding-bottom: calc(var(--Bx) + 40px);
     }
 
     .contacto-directo__inner {
@@ -212,7 +214,7 @@
     }
 
     .contacto-directo__horario {
-      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      display: flex; flex-direction: column; align-items: center; gap: 0;
       margin: 0 0 clamp(14px, 2.2vh, 22px);
     }
 
@@ -222,16 +224,16 @@
     }
 
     /* la línea queda a mitad de camino entre las redes y la guía; la guía queda centrada hasta el zócalo */
-    .contacto-directo__sep { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+    .contacto-directo__sep { flex: 1; min-height: 14px; display: flex; align-items: center; justify-content: center; width: 100%; }
     .contacto-directo__guia-in { display: flex; flex-direction: column; align-items: center; gap: 14px; }
 
     .contacto-directo__label {
-      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.25;
       color: rgba(255, 255, 255, 0.94);
     }
 
     .contacto-directo__valor {
-      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300; letter-spacing: 0.04em; line-height: 1.4;
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300; letter-spacing: 0.04em; line-height: 1.25;
       color: rgba(255, 255, 255, 0.6);
     }
 
@@ -293,11 +295,11 @@
     .contacto-directo__guia-texto {
       margin: 0; max-width: 440px;
       font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300;
-      line-height: 1.4; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6);
+      line-height: 1.25; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6);
     }
     .guia-pregunta {
-      display: block; margin-bottom: 3px;
-      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.4;
+      display: block; margin-bottom: 0;
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.25;
       color: rgba(255, 255, 255, 0.94);
     }
     .contacto-directo__guia-botones { display: flex; gap: 12px; justify-content: center; }
@@ -329,10 +331,7 @@
 
     /* zócalo: abajo de todo, respetando las zonas seguras del celular */
     .contacto-directo__equipo {
-      position: absolute;
-      left: 0; right: 0;
-      bottom: 40px;
-      margin: 0;
+      margin: 16px 0 0;
       text-align: center;
       font-family: 'Montserrat', sans-serif;
       font-size: 12px;
@@ -348,12 +347,6 @@
       border-bottom: 0.5px solid rgba(255, 255, 255, 0.35);
     }
 
-    html.nativo .contacto-directo__equipo { bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
-    html.nativo.cubre.medido .contacto-directo__equipo { bottom: calc(40px + var(--Bx)); }
-
-    @media (max-height: 700px) {
-      .contacto-directo { --Z: clamp(40px, 17vh, 280px); }
-    }
 
     @media (max-width: 810px) {
       .btn-guia { padding: 10px 14px; letter-spacing: 0.14em; }
@@ -556,9 +549,15 @@
       }
     };
     var modoActual = MODOS.consulta;
+    var disparador = null, abierto = false;
+    function limpiarExito() {
+      ['mensaje-exito', 'mensaje-exito-2'].forEach(function (id) { var n = document.getElementById(id); if (n) n.parentNode.removeChild(n); });
+    }
     function irAlFormulario(e, modo) {
       e.preventDefault();
+      disparador = e.currentTarget || null;
       modoActual = MODOS[modo || 'consulta'];
+      limpiarExito();
       formEl.querySelector('.contacto-form__titulo').textContent = modoActual.titulo;
       document.getElementById('asunto').placeholder = modoActual.asunto;
       document.getElementById('mensaje').placeholder = modoActual.mensaje;
@@ -566,12 +565,28 @@
       formEl.setAttribute('aria-hidden', 'false');
       formEl.scrollTop = 0;
       window.__snapInhibited = true;
+      /* la página de atrás queda inactiva: el teclado (Tab) no se escapa del formulario */
+      var w = document.querySelector('.smooth-scroll-wrapper'); if (w) w.setAttribute('inert', '');
+      /* con el botón "atrás" del celular se cierra el formulario en vez de salir de la página */
+      if (!abierto) { try { history.pushState({ formulario: true }, ''); } catch (err) {} }
+      abierto = true;
+      /* en computadora el cursor va al primer campo; en celular no, para que no se abra el teclado solo */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        setTimeout(function () { document.getElementById('nombre').focus({ preventScroll: true }); }, 450);
+      }
     }
-    function cerrarFormulario() {
+    function cerrarFormulario(desdeHistorial) {
+      if (!abierto) return;
+      abierto = false;
       formEl.classList.remove('abierto');
       formEl.setAttribute('aria-hidden', 'true');
       window.__snapInhibited = false;
+      limpiarExito();
+      var w = document.querySelector('.smooth-scroll-wrapper'); if (w) w.removeAttribute('inert');
+      if (disparador && disparador.focus) { try { disparador.focus({ preventScroll: true }); } catch (err) {} }
+      if (desdeHistorial !== true && history.state && history.state.formulario) { try { history.back(); } catch (err) {} }
     }
+    window.addEventListener('popstate', function () { if (abierto) cerrarFormulario(true); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarFormulario(); });
     /* que la rueda y el deslizar dentro del formulario no muevan la página de atrás */
     ['wheel', 'touchmove'].forEach(function (t) { formEl.addEventListener(t, function (e) { e.stopPropagation(); }, { passive: true }); });
@@ -632,6 +647,7 @@
           p.style.cssText = 'color: #4caf50; font-family: Montserrat, sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 8px;';
           botones.appendChild(p);
           var p2 = document.createElement('p');
+          p2.id = 'mensaje-exito-2';
           p2.textContent = 'Te respondo dentro del horario de atención (lunes a viernes, de 9hs a 18hs).';
           p2.style.cssText = 'color: rgba(255,255,255,0.6); font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 300; letter-spacing: 0.04em; margin-top: 4px; text-align: center;';
           botones.appendChild(p2);
