@@ -527,7 +527,7 @@
         </div>
 
         <div class="contacto-form__botones contacto-form__campo--full">
-          <button type="button" class="btn-enviar" id="btn-enviar" onclick="enviarMail()">Enviar mensaje</button>
+          <button type="button" class="btn-enviar" id="btn-enviar" onclick="enviarMail()">Enviar mail</button>
         </div>
 
       </form>
@@ -603,14 +603,14 @@
         mensaje: mensaje
       })
       .then(function() {
-        btn.textContent = 'Enviar mensaje';
+        btn.textContent = 'Enviar mail';
         btn.disabled = false;
 
         var botones = document.querySelector('.contacto-form__botones');
         if (!document.getElementById('mensaje-exito')) {
           var p = document.createElement('p');
           p.id = 'mensaje-exito';
-          p.textContent = '¡Mensaje enviado con éxito!';
+          p.textContent = '¡Mail enviado con éxito!';
           p.style.cssText = 'color: #4caf50; font-family: Montserrat, sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 8px;';
           botones.appendChild(p);
         }
@@ -618,7 +618,7 @@
         document.getElementById('form-contacto').reset();
       })
       .catch(function() {
-        btn.textContent = 'Enviar mensaje';
+        btn.textContent = 'Enviar mail';
         btn.disabled = false;
         alert('Hubo un error al enviar. Intentá de nuevo o escribinos directamente a office@estudiocavla.com');
       });
