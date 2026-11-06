@@ -212,7 +212,7 @@
     }
 
     .contacto-directo__horario {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
       margin: 0 0 clamp(14px, 2.2vh, 22px);
     }
 
@@ -231,8 +231,8 @@
     }
 
     .contacto-directo__valor {
-      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.5);
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300; letter-spacing: 0.04em; line-height: 1.4;
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .contacto-directo__arriba { display: flex; flex-direction: column; align-items: center; width: 100%; }
@@ -293,9 +293,13 @@
     .contacto-directo__guia-texto {
       margin: 0; max-width: 440px;
       font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300;
-      line-height: 1.6; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6);
     }
-    .guia-pregunta { display: block; margin-bottom: 4px; color: rgba(255, 255, 255, 0.85); }
+    .guia-pregunta {
+      display: block; margin-bottom: 3px;
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.4;
+      color: rgba(255, 255, 255, 0.85);
+    }
     .contacto-directo__guia-botones { display: flex; gap: 12px; justify-content: center; }
     .btn-guia {
       display: inline-block; text-decoration: none;
@@ -451,7 +455,7 @@
       <div class="contacto-directo__guia">
         <div class="contacto-directo__sep"><div class="contacto-directo__linea"></div></div>
         <div class="contacto-directo__guia-in">
-        <p class="contacto-directo__guia-texto"><span class="guia-pregunta">¿Todavía no sabés por dónde empezar?</span>Mirá los servicios o armá tu proyecto en unos pasos.</p>
+        <p class="contacto-directo__guia-texto"><span class="guia-pregunta">¿No sabés por dónde empezar?</span>Mirá los servicios o armá tu proyecto en unos pasos.</p>
         <div class="contacto-directo__guia-botones">
           <a href="/" class="btn-guia" onclick="try{sessionStorage.setItem('snapSkip','servicios')}catch(e){}">Ver servicios</a>
           <a href="/empezar" class="btn-guia">Empezá tu proyecto</a>
