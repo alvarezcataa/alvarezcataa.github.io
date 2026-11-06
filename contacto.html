@@ -250,75 +250,37 @@
     a.contacto-directo__valor { border-bottom: 0.5px solid rgba(255, 255, 255, 0.4); align-self: center; transition: border-color .4s; }
     a.contacto-directo__valor:hover { border-bottom-color: white; }
 
-    .contacto-directo__mail {
-      margin-top: clamp(16px, 2.4vh, 24px);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 12px;
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      border-bottom: 0.5px solid rgba(255, 255, 255, 0.35);
-      transition: color .4s, border-color .4s;
-    }
-    .contacto-directo__mail:hover { color: white; border-bottom-color: white; }
+    .contacto-directo__acciones { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
-    /* tres tarjetas chicas, vista previa de las redes */
-    .contacto-directo__tarjetas {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-top: clamp(24px, 4vh, 40px);
+    .btn-whatsapp--mail {
+      border-color: rgba(255, 255, 255, 0.42);
+      color: rgba(255, 255, 255, 0.78);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      font-size: 13px;
     }
+    .btn-whatsapp--mail:hover { color: #fff; border-color: #fff; }
 
-    .mini-red {
-      position: relative;
-      display: block;
-      width: clamp(150px, 12vw, 180px);
-      aspect-ratio: 1 / 1;
-      overflow: hidden;
-      border-radius: 18px;
-      text-decoration: none;
-      transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    .contacto-directo__guia { margin-top: clamp(24px, 4vh, 40px); display: flex; flex-direction: column; align-items: center; gap: 14px; }
+    .contacto-directo__guia-texto {
+      margin: 0; max-width: 440px;
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300;
+      line-height: 1.6; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6);
     }
-    .mini-red:hover { transform: translateY(-4px); }
+    .contacto-directo__guia-botones { display: flex; gap: 12px; justify-content: center; }
+    .btn-guia {
+      display: inline-block; text-decoration: none;
+      border: 0.5px solid rgba(255, 255, 255, 0.4); border-radius: 50px;
+      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65); padding: 11px 22px; transition: all .4s;
+    }
+    .btn-guia:hover { color: #fff; border-color: rgba(255, 255, 255, 0.8); background: rgba(255, 255, 255, 0.06); }
 
-    .mini-red img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      filter: saturate(0.85) brightness(0.72);
-      transition: filter 1.2s cubic-bezier(0.2, 0.7, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
-    }
-    .mini-red:hover img { filter: saturate(1.05) brightness(0.88); transform: scale(1.05); }
+    .contacto-directo__iconos { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: clamp(22px, 3.5vh, 36px); }
+    .contacto-directo__iconos a { color: rgba(255, 255, 255, 0.6); display: inline-flex; transition: color .4s, transform .4s; }
+    .contacto-directo__iconos a:hover { color: #fff; transform: translateY(-2px); }
 
-    .mini-red::after {
-      content: ""; position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(14, 11, 11, 0.8) 100%);
-    }
-
-    .mini-red__texto {
-      position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 1;
-      display: flex; flex-direction: column; gap: 3px; text-align: left;
-    }
-    .mini-red__nombre {
-      font-family: 'Playfair Display', serif; font-style: italic;
-      font-size: 17px; color: white; line-height: 1.1;
-    }
-    .mini-red__handle {
-      font-family: 'Montserrat', sans-serif; font-size: 10px;
-      letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.7);
-    }
-
-    .contacto-directo__redes {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px clamp(20px, 3vw, 36px);
-      margin-top: clamp(24px, 3.5vh, 36px);
-    }
-
-    .contacto-directo__redes a,
     .contacto-directo__equipo a {
       font-family: 'Montserrat', sans-serif;
       font-size: 11px;
@@ -329,7 +291,6 @@
       transition: color .4s;
     }
 
-    .contacto-directo__redes a:hover,
     .contacto-directo__equipo a:hover { color: white; }
 
     .contacto-directo { position: relative; }
@@ -360,11 +321,9 @@
 
     @media (max-width: 810px) {
       .contacto-directo { padding-top: 56px; box-sizing: border-box; }
-      .contacto-directo__tarjetas { gap: 10px; padding: 0 16px; width: 100%; box-sizing: border-box; }
-      .mini-red { width: auto; flex: 1 1 0; border-radius: 14px; }
-      .mini-red__texto { left: 9px; right: 9px; bottom: 9px; }
-      .mini-red__nombre { font-size: 14px; }
-      .mini-red__handle { display: none; }
+      .contacto-directo__acciones { flex-direction: column; align-items: center; gap: 12px; }
+      .contacto-directo__acciones .btn-whatsapp { width: 270px; box-sizing: border-box; padding-left: 0; padding-right: 0; }
+      .btn-guia { padding: 10px 14px; letter-spacing: 0.14em; }
     }
 
     /* ===================================================
@@ -602,9 +561,10 @@
 
       <h2 class="contacto-directo__titulo">¿Tenés dudas?<span class="contacto-directo__titulo-2">Hablemos.</span></h2>
 
-      <a href="/empezar" class="btn-whatsapp" id="btn-whatsapp" target="_blank" rel="noopener">Escribir por WhatsApp</a>
-
-      <a class="contacto-directo__mail" href="mailto:office@estudiocavla.com">office@estudiocavla.com</a>
+      <div class="contacto-directo__acciones">
+        <a href="/empezar" class="btn-whatsapp" id="btn-whatsapp" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <a href="mailto:office@estudiocavla.com" class="btn-whatsapp btn-whatsapp--mail">office@estudiocavla.com</a>
+      </div>
 
       <div class="contacto-directo__datos">
         <div class="contacto-directo__dato">
@@ -613,19 +573,18 @@
         </div>
       </div>
 
-      <div class="contacto-directo__tarjetas">
-        <a class="mini-red" href="https://www.instagram.com/estudio.cavla" target="_blank" rel="noopener">
-          <img src="images/CONTACTO/instagram.webp" loading="lazy" alt="Instagram de Estudio CAVLA" />
-          <span class="mini-red__texto"><span class="mini-red__nombre">Instagram</span><span class="mini-red__handle">@estudio.cavla</span></span>
-        </a>
-        <a class="mini-red" href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener">
-          <img src="images/CONTACTO/youtube.webp" loading="lazy" alt="YouTube de Estudio CAVLA" />
-          <span class="mini-red__texto"><span class="mini-red__nombre">YouTube</span><span class="mini-red__handle">Estudio CAVLA</span></span>
-        </a>
-        <a class="mini-red" href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener">
-          <img src="images/CONTACTO/facebook.webp" loading="lazy" alt="Facebook de Estudio CAVLA" />
-          <span class="mini-red__texto"><span class="mini-red__nombre">Facebook</span><span class="mini-red__handle">Estudio CAVLA</span></span>
-        </a>
+      <div class="contacto-directo__guia">
+        <p class="contacto-directo__guia-texto">Si todavía no sabés por dónde empezar, podés mirar los servicios o completar el formulario de inicio.</p>
+        <div class="contacto-directo__guia-botones">
+          <a href="/" class="btn-guia" onclick="try{sessionStorage.setItem('snapSkip','servicios')}catch(e){}">Ver servicios</a>
+          <a href="/empezar" class="btn-guia">Empezar mi proyecto</a>
+        </div>
+      </div>
+
+      <div class="contacto-directo__iconos">
+        <a href="https://www.instagram.com/estudio.cavla" target="_blank" rel="noopener" aria-label="Instagram de Estudio CAVLA"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></a>
+        <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener" aria-label="YouTube de Estudio CAVLA"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener" aria-label="Facebook de Estudio CAVLA"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M13.2 20.4v-7h2.3l.4-2.7h-2.7V9.1c0-.8.3-1.3 1.4-1.3h1.4V5.4c-.3 0-1.1-.1-2.1-.1-2.1 0-3.4 1.2-3.4 3.4v2h-2.3v2.7h2.3v7"/></svg></a>
       </div>
 
     </div>
