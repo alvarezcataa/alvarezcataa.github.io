@@ -186,13 +186,14 @@
       align-items: stretch;
       justify-content: flex-start;
       box-sizing: border-box;
-      padding: calc(56px + clamp(16px, 16vh, 150px)) 0 54px;
+      --Z: clamp(110px, 29vh, 300px);   /* alto de la franja entre la navbar y el título, donde va el horario */
+      padding: calc(56px + var(--Z)) 0 54px;
     }
 
     /* zonas seguras del celular (la barra de Safari y la hora), igual que el zócalo de Inicio */
     html.nativo.fijo .contacto-directo { padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px)); }
     html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s {
-      padding-top: calc(var(--T) + 56px + clamp(16px, 16vh, 150px));
+      padding-top: calc(var(--T) + 56px + var(--Z));
       padding-bottom: calc(var(--Bx) + 54px);
     }
 
@@ -210,12 +211,18 @@
       text-align: center;
     }
 
+    /* el horario queda a igual distancia entre la navbar y el título */
     .contacto-directo__horario {
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      width: 100%; max-width: 640px; box-sizing: border-box;
-      padding-bottom: clamp(18px, 3vh, 30px);
-      margin-bottom: clamp(18px, 3vh, 30px);
-      border-bottom: 0.5px solid rgba(255, 255, 255, 0.16);
+      position: absolute; left: 0; right: 0;
+      top: 56px; height: var(--Z);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    }
+    html.nativo.cubre.medido .contacto-directo__horario { top: calc(var(--T) + 56px); }
+
+    .contacto-directo__linea {
+      width: 100%; max-width: 640px; height: 0;
+      margin-top: clamp(20px, 3.2vh, 32px);
+      border-top: 0.5px solid rgba(255, 255, 255, 0.16);
     }
 
     .contacto-directo__label {
@@ -337,8 +344,7 @@
     html.nativo.cubre.medido .contacto-directo__equipo { bottom: calc(40px + var(--Bx)); }
 
     @media (max-height: 700px) {
-      .contacto-directo { padding-top: calc(56px + 7vh); }
-      html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s { padding-top: calc(var(--T) + 56px + 7vh); }
+      .contacto-directo { --Z: clamp(110px, 24vh, 300px); }
     }
 
     @media (max-width: 810px) {
@@ -436,6 +442,7 @@
         <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener" aria-label="YouTube de Estudio CAVLA"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg></a>
         <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener" aria-label="Facebook de Estudio CAVLA"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M13.2 20.4v-7h2.3l.4-2.7h-2.7V9.1c0-.8.3-1.3 1.4-1.3h1.4V5.4c-.3 0-1.1-.1-2.1-.1-2.1 0-3.4 1.2-3.4 3.4v2h-2.3v2.7h2.3v7"/></svg></a>
       </div>
+        <div class="contacto-directo__linea"></div>
       </div>
 
       <div class="contacto-directo__guia">
