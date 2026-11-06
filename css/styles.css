@@ -2733,6 +2733,8 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 @media (max-width: 810px) {
   .encabezado-servicios { padding: 0 16px; }
   .encabezado-servicios .titulo-seccion { font-size: 9.6vw; }
+  .contenedor-servicios { box-sizing: border-box; padding-top: 56px; }
+  html.nativo.fijo .contenedor-servicios { padding-top: calc(56px + env(safe-area-inset-top, 0px)); }
   .encabezado-servicios { margin-bottom: 0; }
   .grilla-servicios { scroll-padding-left: 16px; padding-top: 18px; padding-bottom: 0; }
 }
