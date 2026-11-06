@@ -596,33 +596,29 @@ document.addEventListener('scroll', () => {
 
 
 // ============================================================
-// FRASE DE PRESENTACIÓN — línea que une los fragmentos del texto
-//    Mide dónde cae cada fragmento (en cualquier pantalla), dibuja
-//    una línea redondeada en zigzag entre ellos y la anima al
-//    entrar la sección en pantalla.
+// FRASE DE PRESENTACIÓN — línea que une los bloques del texto
+//    Mide dónde cae cada bloque (en cualquier pantalla) y dibuja
+//    la línea curva entre ellos. Al entrar la sección en pantalla
+//    la línea se traza de punta a punta y el texto va apareciendo
+//    a medida que la línea avanza.
 // ============================================================
 (function () {
   const wrap = document.querySelector('.frase-wrap');
   if (!wrap) return;
-  const svg  = wrap.querySelector('.frase-lineas');
+  const svg   = wrap.querySelector('.frase-lineas');
   const frags = [...wrap.querySelectorAll('.frag')];
-  if (!svg || frags.length < 2) return;
+  if (!svg || frags.length !== 3) return;
   const NS = 'http://www.w3.org/2000/svg';
+  const reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // polilínea con esquinas redondeadas
-  function redondeada(p, r) {
-    let d = `M${p[0][0]},${p[0][1]}`;
-    for (let i = 1; i < p.length - 1; i++) {
-      const [x0, y0] = p[i - 1], [x1, y1] = p[i], [x2, y2] = p[i + 1];
-      const l1 = Math.hypot(x1 - x0, y1 - y0), l2 = Math.hypot(x2 - x1, y2 - y1);
-      const rr = Math.min(r, l1 / 2, l2 / 2);
-      const ax = x1 - (x1 - x0) / l1 * rr, ay = y1 - (y1 - y0) / l1 * rr;
-      const bx = x1 + (x2 - x1) / l2 * rr, by = y1 + (y2 - y1) / l2 * rr;
-      d += ` L${ax},${ay} Q${x1},${y1} ${bx},${by}`;
-    }
-    const u = p[p.length - 1];
-    return d + ` L${u[0]},${u[1]}`;
-  }
+  const crear = (tag, cls) => { const e = document.createElementNS(NS, tag); e.setAttribute('class', cls); svg.appendChild(e); return e; };
+  const path = [crear('path', 'l1'), crear('path', 'l2')];
+  const dot  = [crear('circle', 'd1'), crear('circle', 'd2'), crear('circle', 'd2b'), crear('circle', 'd3')];
+  const largo = [0, 0];
+
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+  const sua = (x) => x * x * (3 - 2 * x);                       // suave
+  const tramo = (t, a, b) => clamp((t - a) / (b - a));
 
   function extremos(f, base, k) {
     const rg = document.createRange();
@@ -635,61 +631,95 @@ document.addEventListener('scroll', () => {
     };
   }
 
+  // Une A con B. Si B queda a la derecha de A: una S de dos curvas. Si queda a la izquierda: una serpiente de dos medias vueltas.
+  function unir(A, B, fs, limiteIzq, limiteDer) {
+    const dx = B.x - A.x, dy = B.y - A.y;
+    const entrada = fs * 0.55, salida = fs * 0.35;
+    const r4 = dy / 4;
+    let xr = Math.min(A.x + salida, limiteDer - r4);
+    let xl = Math.max(B.x - entrada, limiteIzq + r4);
+    if (dx > dy * 0.9 && xl > xr - 10) {
+      const r = Math.min(dy / 2, dx / 2), xm = (A.x + B.x) / 2;
+      return `M${A.x},${A.y} L${xm - r},${A.y} A${r},${r} 0 0 1 ${xm},${A.y + r} L${xm},${B.y - r} A${r},${r} 0 0 0 ${xm + r},${B.y} L${B.x},${B.y}`;
+    }
+    xl = Math.min(xl, xr - 10);
+    return `M${A.x},${A.y} L${xr},${A.y} A${r4},${r4} 0 0 1 ${xr},${A.y + 2 * r4} L${xl},${A.y + 2 * r4} A${r4},${r4} 0 0 0 ${xl},${A.y + 4 * r4} L${B.x},${B.y}`;
+  }
+
+  let radioPunto = 3;
   function trazar() {
     const base = wrap.getBoundingClientRect();
     const k = base.width / wrap.offsetWidth || 1;
     const m = frags.map(f => extremos(f, base, k));
-    const fs = parseFloat(getComputedStyle(frags[0]).fontSize);
-    const sepDot = Math.max(10, fs * 0.28);   // distancia texto-punto
-    const salida = Math.max(22, fs * 0.55);   // cuánto sale hacia la derecha
-    const entrada = Math.max(22, fs * 0.55);  // cuánto entra por la izquierda
-    const radio = Math.max(14, fs * 0.45);
+    const fs = parseFloat(getComputedStyle(wrap).fontSize);
+    const sep = fs * 0.3, margen = 12;
+    const limIzq = (margen - base.left) / k, limDer = (window.innerWidth - margen - base.left) / k;
     svg.setAttribute('viewBox', `0 0 ${wrap.offsetWidth} ${wrap.offsetHeight}`);
-    svg.innerHTML = '';
-    const el = (n, a) => { const e = document.createElementNS(NS, n); for (const k2 in a) e.setAttribute(k2, a[k2]); svg.appendChild(e); return e; };
-
-    const pts = [];
-    for (let i = 0; i < m.length; i++) {
-      const dIni = { x: m[i].ini.x - sepDot, y: m[i].ini.y };
-      const dFin = { x: m[i].fin.x + sepDot, y: m[i].fin.y };
-      pts.push({ dIni, dFin });
-    }
-    // puntos
-    const r = Math.max(3, fs * 0.09);
-    el('circle', { class: 'd1', cx: pts[0].dFin.x, cy: pts[0].dFin.y, r });
-    // tramos
-    for (let i = 0; i < m.length - 1; i++) {
-      const A = pts[i].dFin, B = pts[i + 1].dIni;
-      const ym = (A.y + B.y) / 2;
-      const margen = 12;   // la línea nunca se acerca más que esto al borde de la pantalla
-      const xr = Math.min(A.x + salida, (window.innerWidth - margen - base.left) / k);
-      const xl = Math.max(Math.min(B.x - entrada, xr - 20), (margen - base.left) / k);
-      const p = [[A.x, A.y], [xr, A.y], [xr, ym], [xl, ym], [xl, B.y], [B.x, B.y]];
-      const path = el('path', { class: 'l' + (i + 1), d: redondeada(p, radio) });
-      const len = path.getTotalLength();
-      path.style.strokeDasharray = len;
-      path.style.strokeDashoffset = len;
-      el('circle', { class: 'd' + (i + 2), cx: B.x, cy: B.y, r });
-      if (i < m.length - 2) {
-        el('circle', { class: 'd' + (i + 2) + 'b', cx: pts[i + 1].dFin.x, cy: pts[i + 1].dFin.y, r });
-      }
-    }
+    const p = [
+      { x: m[0].fin.x + sep, y: m[0].fin.y }, { x: m[1].ini.x - sep, y: m[1].ini.y },
+      { x: m[1].fin.x + sep, y: m[1].fin.y }, { x: m[2].ini.x - sep, y: m[2].ini.y }
+    ];
+    radioPunto = Math.max(2.5, fs * 0.075);
+    dot.forEach((d, i) => { d.setAttribute('cx', p[i].x); d.setAttribute('cy', p[i].y); d.setAttribute('r', radioPunto); });
+    path[0].setAttribute('d', unir(p[0], p[1], fs, limIzq, limDer));
+    path[1].setAttribute('d', unir(p[2], p[3], fs, limIzq, limDer));
+    path.forEach((e, i) => { largo[i] = e.getTotalLength(); e.style.strokeDasharray = largo[i]; });
   }
 
-  // la animación se dispara cada vez que la sección entra en pantalla
-  const sec = wrap.closest('section');
-  if ('IntersectionObserver' in window && sec) {
+  // Línea de tiempo (segundos): el texto aparece a medida que la línea llega
+  const DURACION = 5.4;
+  function dibujar(t) {
+    const txt = (el, a, b) => {
+      const p = sua(tramo(t, a, b));
+      el.style.opacity = Math.min(1, p * 2.5);
+      el.style.clipPath = p >= 1 ? 'none' : `inset(-15% ${(1 - p) * 100}% -15% -4%)`;
+    };
+    txt(frags[0], 0.0, 1.0);
+    txt(frags[1], 2.3, 3.2);
+    txt(frags[2], 4.6, 5.4);
+    const punto = (el, a, b) => { el.style.opacity = sua(tramo(t, a, b)); };
+    punto(dot[0], 0.8, 1.1);
+    punto(dot[1], 2.2, 2.4);
+    punto(dot[2], 3.1, 3.4);
+    punto(dot[3], 4.5, 4.7);
+    const linea = (i, a, b) => {
+      const p = sua(tramo(t, a, b));
+      path[i].style.strokeDashoffset = largo[i] * (1 - p);
+      path[i].style.opacity = p > 0 ? 0.9 : 0;
+    };
+    linea(0, 1.1, 2.3);
+    linea(1, 3.4, 4.6);
+  }
+
+  let tActual = 0, raf = null, inicio = 0;
+  function reproducir() {
+    cancelAnimationFrame(raf);
+    inicio = performance.now();
+    const paso = (ahora) => {
+      tActual = Math.min(DURACION, (ahora - inicio) / 1000);
+      dibujar(tActual);
+      if (tActual < DURACION) raf = requestAnimationFrame(paso);
+    };
+    raf = requestAnimationFrame(paso);
+  }
+  function reiniciar() { cancelAnimationFrame(raf); tActual = 0; dibujar(0); }
+
+  const medir = () => { trazar(); dibujar(tActual); };
+  trazar();
+  if (reducido || !('IntersectionObserver' in window)) { tActual = DURACION; dibujar(DURACION); }
+  else {
+    dibujar(0);
+    const sec = wrap.closest('section');
+    let reproduciendo = false;
     new IntersectionObserver((es) => {
       es.forEach(e => {
-        if (e.isIntersecting) { trazar(); void svg.getBoundingClientRect(); wrap.classList.add('dibujar'); }
-        else wrap.classList.remove('dibujar');
+        if (e.intersectionRatio >= 0.55 && !reproduciendo) { reproduciendo = true; trazar(); reproducir(); }
+        else if (e.intersectionRatio <= 0.02 && reproduciendo) { reproduciendo = false; reiniciar(); }
       });
-    }, { threshold: 0.6 }).observe(sec);
-  } else { trazar(); wrap.classList.add('dibujar'); }
-
-  let t;
-  window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(trazar, 150); });
-  window.addEventListener('load', trazar);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(trazar);
-  trazar();
+    }, { threshold: [0, 0.02, 0.55, 1] }).observe(sec);
+  }
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(medir, 150); });
+  window.addEventListener('load', medir);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
 })();

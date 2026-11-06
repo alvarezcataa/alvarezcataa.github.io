@@ -2704,31 +2704,16 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 @media (max-width: 810px) { .portada-esq--sobre { --esq-b: 104px; width: auto; } }
 
 /* frase con línea animada */
-.frase-wrap { position: relative; width: min(80vw, 1000px); }
-.frase-presentacion { max-width: none; text-align: left; line-height: 1.2; }
-.frase-presentacion .frag { display: block; width: fit-content; max-width: 92%; }
-.frase-presentacion .frag + .frag { margin-top: 1.25em; }
-.frase-presentacion .frag:nth-child(2) { margin-left: 18%; }
-.frase-presentacion .frag:nth-child(3) { margin-left: 6%; }
+.frase-wrap { position: relative; font-size: 4.2vh; width: min(20em, 84vw); }
+.frase-presentacion { font-size: inherit; max-width: none; text-align: left; line-height: 1.2; margin: 0; }
+.frase-presentacion .frag { display: block; width: fit-content; white-space: nowrap; text-align: left; will-change: clip-path, opacity; }
+.frase-presentacion .frag + .frag { margin-top: 1.2em; }               /* un renglón libre entre bloques */
+.frase-presentacion .frag-a { margin-right: auto; }                    /* A: a la izquierda del bloque */
+.frase-presentacion .frag-b { margin-left: auto; }                     /* B: a la derecha del bloque, texto a la izquierda */
+.frase-presentacion .frag-c { margin-left: auto; margin-right: auto; text-align: center; }  /* C: centrado */
 .frase-lineas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .frase-lineas path { fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; opacity: .9; }
-.frase-lineas circle { fill: #fff; opacity: 0; transition: opacity .5s ease; }
-.frase-lineas path { transition: stroke-dashoffset 1.3s cubic-bezier(.45,.05,.25,1); }
-.frase-wrap.dibujar .frase-lineas circle { opacity: 1; }
-.frase-wrap.dibujar .frase-lineas path { stroke-dashoffset: 0 !important; }
-.frase-lineas .d1 { transition-delay: .4s; }
-.frase-lineas .l1 { transition-delay: .8s; }
-.frase-lineas .d2 { transition-delay: 2.1s; }
-.frase-lineas .l2 { transition-delay: 2.4s; }
-.frase-lineas .d3 { transition-delay: 3.7s; }
+.frase-lineas circle { fill: #fff; }
 @media (max-width: 810px) {
-  .frase-wrap { width: 84vw; }
-  .frase-presentacion { font-size: 7.4vw; max-width: none; }
-  .frase-presentacion .frag { max-width: 88%; }
-  .frase-presentacion .frag:nth-child(2) { margin-left: 14%; }
-  .frase-presentacion .frag:nth-child(3) { margin-left: 4%; }
+  .frase-wrap { font-size: 5.55vw; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .frase-lineas path, .frase-lineas circle { transition: none; }
-}
-.frase-lineas .d2b { transition-delay: 2.1s; }
