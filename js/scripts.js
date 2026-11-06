@@ -640,8 +640,9 @@ document.addEventListener('scroll', () => {
     let xl = xlFijo != null ? xlFijo + r4 : B.x - fs * 0.55;
     xl = Math.max(xl, limiteIzq + r4);
     if (dx > dy * 1.5 && xl > xr - 10) {
-      const ry = dy / 2, rx = Math.min(dx * 0.32, fs * 2.4), xm = (A.x + B.x) / 2;
-      return `M${A.x},${A.y} L${xm - rx},${A.y} A${rx},${ry} 0 0 1 ${xm},${A.y + ry} A${rx},${ry} 0 0 0 ${xm + rx},${B.y} L${B.x},${B.y}`;
+      // una sola curva suave que ocupa todo el ancho entre A y B (sin tramos rectos largos)
+      const h = dx * 0.5;
+      return `M${A.x},${A.y} C${A.x + h},${A.y} ${B.x - h},${B.y} ${B.x},${B.y}`;
     }
     xl = Math.min(xl, xr - 10);
     return `M${A.x},${A.y} L${xr},${A.y} A${r4},${r4} 0 0 1 ${xr},${A.y + 2 * r4} L${xl},${A.y + 2 * r4} A${r4},${r4} 0 0 0 ${xl},${A.y + 4 * r4} L${B.x},${B.y}`;
