@@ -2729,11 +2729,12 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 }
 
 /* Inicio, pantalla de servicios: título en regular con menos interlineado; imagen más cerca del nombre; descripción más cerca del título */
-.encabezado-servicios .titulo-seccion { font-style: normal; line-height: 1.05; font-weight: 100; display: block; width: max-content; margin-left: 0; transform: scaleX(0.9); transform-origin: left center; white-space: nowrap; }
+.encabezado-servicios .titulo-seccion { font-style: normal; line-height: 1.05; font-weight: 100; display: block; width: max-content; margin-left: auto; margin-right: auto; text-align: center; transform: scaleX(0.9); transform-origin: center; white-space: nowrap; }
 @media (max-width: 810px) {
   .encabezado-servicios { padding: 0 16px; }
   .encabezado-servicios .titulo-seccion { font-size: 9.6vw; }
-  .grilla-servicios { scroll-padding-left: 16px; }
+  .encabezado-servicios { margin-bottom: 0; }
+  .grilla-servicios { scroll-padding-left: 16px; padding-top: 18px; }
 }
 .cuerpo-tarjeta { padding-top: 16px; }
 .nombre-servicio { margin-top: 0; margin-bottom: 11px; }
