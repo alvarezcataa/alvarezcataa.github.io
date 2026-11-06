@@ -30,17 +30,35 @@
        PANTALLA 1 — FORMULARIO DE CONTACTO
        =================================================== */
 
+    /* Pantalla que solo aparece al tocar "o enviame un mail" (no forma parte del scroll de la página) */
     .contacto-form {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
       background: #0e0b0b;
-      min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .45s ease, visibility 0s linear .45s;
     }
+    .contacto-form { scroll-snap-align: none; scroll-snap-stop: normal; }
+    .contacto-form.abierto { opacity: 1; visibility: visible; transition: opacity .45s ease; }
+
+    .contacto-form__volver {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55); padding: 6px 4px; margin-bottom: clamp(8px, 2vh, 20px);
+      transition: color .4s;
+    }
+    .contacto-form__volver:hover { color: #fff; }
 
     .contacto-form__inner {
       width: 100%;
       max-width: 680px;
+      margin: auto;
+      padding: 90px 5vw 48px;
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -168,13 +186,13 @@
       align-items: stretch;
       justify-content: flex-start;
       box-sizing: border-box;
-      padding: calc(56px + clamp(16px, 9vh, 100px)) 0 54px;
+      padding: calc(56px + clamp(16px, 17vh, 160px)) 0 54px;
     }
 
     /* zonas seguras del celular (la barra de Safari y la hora), igual que el zócalo de Inicio */
     html.nativo.fijo .contacto-directo { padding-bottom: calc(54px + env(safe-area-inset-bottom, 0px)); }
     html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s {
-      padding-top: calc(var(--T) + 56px + clamp(16px, 9vh, 100px));
+      padding-top: calc(var(--T) + 56px + clamp(16px, 17vh, 160px));
       padding-bottom: calc(var(--Bx) + 54px);
     }
 
@@ -195,8 +213,8 @@
     .contacto-directo__arriba { display: flex; flex-direction: column; align-items: center; width: 100%; }
 
     .contacto-directo__mail-txt {
-      margin: clamp(16px, 2.4vh, 24px) 0 0;
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      margin: clamp(8px, 1.3vh, 12px) 0 0;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
       font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300;
       letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.55);
     }
@@ -213,7 +231,7 @@
       font-style: italic;
       color: white;
       line-height: 1.1;
-      margin: 0 0 clamp(28px, 4.5vh, 48px);
+      margin: 0 0 clamp(14px, 2.2vh, 22px);
     }
 
     /* "Hablemos." en regular, 20% más chico y con el mismo trazo esbelto del título de la sección de servicios */
@@ -335,147 +353,13 @@
     html.nativo .contacto-directo__equipo { bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
     html.nativo.cubre.medido .contacto-directo__equipo { bottom: calc(40px + var(--Bx)); }
 
+    @media (max-height: 700px) {
+      .contacto-directo { padding-top: calc(56px + 9vh); }
+      html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s { padding-top: calc(var(--T) + 56px + 9vh); }
+    }
+
     @media (max-width: 810px) {
       .btn-guia { padding: 10px 14px; letter-spacing: 0.14em; }
-    }
-
-    /* ===================================================
-       PANTALLA 2 — REDES SOCIALES
-       =================================================== */
-
-    .contacto-redes {
-      background: #0e0b0b;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .contacto-redes__inner {
-      width: 100%;
-      max-width: 1280px;
-    }
-
-    .contacto-redes__titulo {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(38px, 6vh, 72px);
-      font-weight: 300;
-      font-style: italic;
-      color: white;
-      margin-bottom: clamp(28px, 4vh, 48px);
-      text-align: left;
-    }
-
-    .contacto-redes__grilla {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2vw;
-    }
-
-    /* --- Tarjeta red social --- */
-    .tarjeta-red {
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-    }
-
-    .tarjeta-red:hover {
-      transform: translateY(-6px);
-    }
-
-    .tarjeta-red__imagen {
-      aspect-ratio: 5 / 4;
-      position: relative;
-      overflow: hidden;
-      border-radius: 25px 25px 0 0;
-    }
-
-    .tarjeta-red__imagen img.tarjeta-red__bg {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(0.85) brightness(0.72);
-      transition: filter 1.4s cubic-bezier(0.2, 0.7, 0.2, 1),
-                  transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1);
-    }
-
-    .tarjeta-red:hover .tarjeta-red__bg {
-      filter: saturate(1.05) brightness(0.88);
-      transform: scale(1.04);
-    }
-
-    .tarjeta-red__degradado {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 25%, rgba(14, 11, 11, 0.65) 100%);
-    }
-
-    .tarjeta-red__perfil {
-      position: absolute;
-      bottom: 18px;
-      left: 20px;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.7);
-      overflow: hidden;
-      background: #1a1010;
-    }
-
-    .tarjeta-red__perfil img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .tarjeta-red__cuerpo {
-      padding: clamp(14px, 2.2vw, 28px);
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .tarjeta-red__nombre {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(18px, 2.6vh, 26px);
-      font-weight: 400;
-      font-style: italic;
-      color: white;
-      margin-bottom: 6px;
-    }
-
-    .tarjeta-red__handle {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      color: rgba(255, 255, 255, 0.55);
-      margin-bottom: clamp(14px, 2vh, 24px);
-      flex: 1;
-    }
-
-    .tarjeta-red__boton {
-      display: inline-block;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 50px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.5);
-      padding: 10px 20px;
-      text-align: center;
-      transition: all 0.4s;
-      align-self: stretch;
-    }
-
-    .tarjeta-red:hover .tarjeta-red__boton {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border-color: rgba(255, 255, 255, 0.7);
     }
 
     /* ===================================================
@@ -493,26 +377,6 @@
 
       .contacto-form__campo--full {
         grid-column: 1;
-      }
-
-      .contacto-redes__grilla {
-        display: flex;
-        flex-direction: row;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        gap: 16px;
-        padding: 4vw 16px;
-        scrollbar-width: none;
-      }
-
-      .contacto-redes__grilla::-webkit-scrollbar {
-        display: none;
-      }
-
-      .tarjeta-red {
-        flex: 0 0 78vw;
-        scroll-snap-align: start;
       }
     }
   </style>
@@ -588,7 +452,7 @@
         <div class="contacto-directo__datos">
           <div class="contacto-directo__dato">
             <span class="contacto-directo__label">Horario</span>
-            <span class="contacto-directo__valor">Lunes a viernes<br>de 9 a 18 h</span>
+            <span class="contacto-directo__valor">Lunes a viernes<br>de 9hs a 18hs</span>
           </div>
         </div>
       </div>
@@ -607,8 +471,10 @@
   </section>
 
   <!-- PANTALLA 1 — FORMULARIO -->
-  <section class="page contacto-form mainContent" id="formulario">
+  <section class="contacto-form" id="formulario" aria-hidden="true">
     <div class="contacto-form__inner">
+
+      <button type="button" class="contacto-form__volver" onclick="cerrarFormulario()">&larr; Volver</button>
 
       <h2 class="contacto-form__titulo">¿Tenés dudas?<br>Hablemos.</h2>
 
@@ -668,85 +534,29 @@
     </div>
   </section>
 
-  <!-- PANTALLA 2 — REDES SOCIALES -->
-  <section class="page contacto-redes mainContent">
-    <div class="contacto-redes__inner">
-
-      <h2 class="contacto-redes__titulo">Seguinos.</h2>
-
-      <div class="contacto-redes__grilla">
-
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/estudio.cavla" target="_blank" class="tarjeta-red">
-          <div class="tarjeta-red__imagen">
-            <img class="tarjeta-red__bg" src="images/CONTACTO/instagram.webp" loading="lazy" alt="Instagram Estudio CAVLA" />
-            <div class="tarjeta-red__degradado"></div>
-            <div class="tarjeta-red__perfil">
-              <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
-            </div>
-          </div>
-          <div class="tarjeta-red__cuerpo">
-            <h3 class="tarjeta-red__nombre">Instagram</h3>
-            <p class="tarjeta-red__handle">@estudio.cavla</p>
-            <span class="tarjeta-red__boton">Seguir</span>
-          </div>
-        </a>
-
-        <!-- YouTube -->
-        <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" class="tarjeta-red">
-          <div class="tarjeta-red__imagen">
-            <img class="tarjeta-red__bg" src="images/CONTACTO/youtube.webp" loading="lazy" alt="YouTube Estudio CAVLA" />
-            <div class="tarjeta-red__degradado"></div>
-            <div class="tarjeta-red__perfil">
-              <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
-            </div>
-          </div>
-          <div class="tarjeta-red__cuerpo">
-            <h3 class="tarjeta-red__nombre">YouTube</h3>
-            <p class="tarjeta-red__handle">Estudio CAVLA</p>
-            <span class="tarjeta-red__boton">Suscribirse</span>
-          </div>
-        </a>
-
-        <!-- Facebook -->
-        <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" class="tarjeta-red">
-          <div class="tarjeta-red__imagen">
-            <img class="tarjeta-red__bg" src="images/CONTACTO/facebook.webp" loading="lazy" alt="Facebook Estudio CAVLA" />
-            <div class="tarjeta-red__degradado"></div>
-            <div class="tarjeta-red__perfil">
-              <img src="images/CONTACTO/perfil.png" alt="Logo CAVLA" />
-            </div>
-          </div>
-          <div class="tarjeta-red__cuerpo">
-            <h3 class="tarjeta-red__nombre">Facebook</h3>
-            <p class="tarjeta-red__handle">Estudio CAVLA</p>
-            <span class="tarjeta-red__boton">Seguir</span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
   <!-- EmailJS — cargar ANTES de scripts.js -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script src="js/config.js"></script>
   <script src="js/scripts.js"></script>
 
   <script>
-    /* "o enviame un mail": baja a la pantalla del formulario */
+    /* "o enviame un mail": abre la pantalla del formulario por encima de la página */
+    var formEl = document.getElementById('formulario');
     function irAlFormulario(e) {
       e.preventDefault();
-      var el = document.getElementById('formulario');
-      var S = window.__CAVLA_SMOOTH, pos;
-      if (S && S.sections) {
-        S.computeSectionPositions && S.computeSectionPositions();
-        var i = S.sections.indexOf(el);
-        pos = S.sectionPositions[i];
-      }
-      if (pos === undefined) pos = el.offsetTop;
-      cavlaScrollTo(pos, 'smooth');
+      formEl.classList.add('abierto');
+      formEl.setAttribute('aria-hidden', 'false');
+      formEl.scrollTop = 0;
+      window.__snapInhibited = true;
     }
+    function cerrarFormulario() {
+      formEl.classList.remove('abierto');
+      formEl.setAttribute('aria-hidden', 'true');
+      window.__snapInhibited = false;
+    }
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarFormulario(); });
+    /* que la rueda y el deslizar dentro del formulario no muevan la página de atrás */
+    ['wheel', 'touchmove'].forEach(function (t) { formEl.addEventListener(t, function (e) { e.stopPropagation(); }, { passive: true }); });
 
     /* WhatsApp: el número sale de js/config.js */
     (function () {
