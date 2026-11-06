@@ -193,7 +193,7 @@
       display: block;
       width: max-content;
       margin: 0 auto;
-      font-size: 0.8em;
+      font-size: 0.7em;
       font-style: normal;
       font-weight: 100;
       transform: scaleX(0.9);
@@ -224,7 +224,7 @@
       max-width: 640px;
       margin: clamp(28px, 4.5vh, 48px) 0 0;
       padding-top: clamp(24px, 4vh, 40px);
-      border-top: 0.5px solid rgba(255, 255, 255, 0.28);
+      border-top: 0.5px solid rgba(255, 255, 255, 0.16);
     }
 
     .contacto-directo__dato { display: flex; flex-direction: column; gap: 10px; }
@@ -249,6 +249,66 @@
 
     a.contacto-directo__valor { border-bottom: 0.5px solid rgba(255, 255, 255, 0.4); align-self: center; transition: border-color .4s; }
     a.contacto-directo__valor:hover { border-bottom-color: white; }
+
+    .contacto-directo__mail {
+      margin-top: clamp(16px, 2.4vh, 24px);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.35);
+      transition: color .4s, border-color .4s;
+    }
+    .contacto-directo__mail:hover { color: white; border-bottom-color: white; }
+
+    /* tres tarjetas chicas, vista previa de las redes */
+    .contacto-directo__tarjetas {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: clamp(24px, 4vh, 40px);
+    }
+
+    .mini-red {
+      position: relative;
+      display: block;
+      width: clamp(150px, 12vw, 180px);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 18px;
+      text-decoration: none;
+      transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .mini-red:hover { transform: translateY(-4px); }
+
+    .mini-red img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: saturate(0.85) brightness(0.72);
+      transition: filter 1.2s cubic-bezier(0.2, 0.7, 0.2, 1), transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+    .mini-red:hover img { filter: saturate(1.05) brightness(0.88); transform: scale(1.05); }
+
+    .mini-red::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(14, 11, 11, 0.8) 100%);
+    }
+
+    .mini-red__texto {
+      position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 1;
+      display: flex; flex-direction: column; gap: 3px; text-align: left;
+    }
+    .mini-red__nombre {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 17px; color: white; line-height: 1.1;
+    }
+    .mini-red__handle {
+      font-family: 'Montserrat', sans-serif; font-size: 10px;
+      letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.7);
+    }
 
     .contacto-directo__redes {
       display: flex;
@@ -300,6 +360,11 @@
 
     @media (max-width: 810px) {
       .contacto-directo { padding-top: 56px; box-sizing: border-box; }
+      .contacto-directo__tarjetas { gap: 10px; padding: 0 16px; width: 100%; box-sizing: border-box; }
+      .mini-red { width: auto; flex: 1 1 0; border-radius: 14px; }
+      .mini-red__texto { left: 9px; right: 9px; bottom: 9px; }
+      .mini-red__nombre { font-size: 14px; }
+      .mini-red__handle { display: none; }
     }
 
     /* ===================================================
@@ -539,17 +604,28 @@
 
       <a href="/empezar" class="btn-whatsapp" id="btn-whatsapp" target="_blank" rel="noopener">Escribir por WhatsApp</a>
 
-      <div class="contacto-directo__redes">
-        <a href="https://www.instagram.com/estudio.cavla" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener">YouTube</a>
-        <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener">Facebook</a>
-      </div>
+      <a class="contacto-directo__mail" href="mailto:office@estudiocavla.com">office@estudiocavla.com</a>
 
       <div class="contacto-directo__datos">
         <div class="contacto-directo__dato">
           <span class="contacto-directo__label">Horario</span>
-          <span class="contacto-directo__valor">Lunes a viernes de 9 a 18 h</span>
+          <span class="contacto-directo__valor">Lunes a viernes<br>de 9 a 18 h</span>
         </div>
+      </div>
+
+      <div class="contacto-directo__tarjetas">
+        <a class="mini-red" href="https://www.instagram.com/estudio.cavla" target="_blank" rel="noopener">
+          <img src="images/CONTACTO/instagram.webp" loading="lazy" alt="Instagram de Estudio CAVLA" />
+          <span class="mini-red__texto"><span class="mini-red__nombre">Instagram</span><span class="mini-red__handle">@estudio.cavla</span></span>
+        </a>
+        <a class="mini-red" href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener">
+          <img src="images/CONTACTO/youtube.webp" loading="lazy" alt="YouTube de Estudio CAVLA" />
+          <span class="mini-red__texto"><span class="mini-red__nombre">YouTube</span><span class="mini-red__handle">Estudio CAVLA</span></span>
+        </a>
+        <a class="mini-red" href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener">
+          <img src="images/CONTACTO/facebook.webp" loading="lazy" alt="Facebook de Estudio CAVLA" />
+          <span class="mini-red__texto"><span class="mini-red__nombre">Facebook</span><span class="mini-red__handle">Estudio CAVLA</span></span>
+        </a>
       </div>
 
     </div>
