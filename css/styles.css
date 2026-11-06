@@ -2641,7 +2641,7 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 19vh;
+  bottom: 40px;
   overflow: hidden;
   z-index: 10;
   transform: translateY(200px);
@@ -2672,21 +2672,13 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
   letter-spacing: .22em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.78);
-}
-.marquesina__grupo li::after {
-  content: "";
-  flex-shrink: 0;
-  width: 1.5em;
-  height: 1.5em;
-  background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><polygon fill='white' fill-opacity='.6' points='12.00,1.00 12.88,8.72 17.50,2.47 14.40,9.60 21.53,6.50 15.28,11.12 23.00,12.00 15.28,12.88 21.53,17.50 14.40,14.40 17.50,21.53 12.88,15.28 12.00,23.00 11.12,15.28 6.50,21.53 9.60,14.40 2.47,17.50 8.72,12.88 1.00,12.00 8.72,11.12 2.47,6.50 9.60,9.60 6.50,2.47 11.12,8.72'/></svg>") center / contain no-repeat;
-  margin: 0 4vw;
+  padding: 0 3.5vw;
 }
 @keyframes marquesina { to { transform: translateX(-50%); } }
 @media (max-width: 810px) {
-  .marquesina { bottom: 23vh; }
+  .marquesina { bottom: 40px; }
   .marquesina__pista { animation-duration: 45s; }
   .marquesina__grupo li { font-size: 10px; letter-spacing: .16em; }
-  .marquesina__grupo li::after { width: 1.7em; height: 1.7em; margin: 0 8vw; }
 }
 @media (prefers-reduced-motion: reduce) {
   .marquesina { -webkit-mask-image: none; mask-image: none; }
@@ -2694,7 +2686,6 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
   .marquesina__grupo[aria-hidden="true"] { display: none; }
   .marquesina__grupo { flex-wrap: wrap; justify-content: center; row-gap: 2vh; }
   .marquesina__grupo li:nth-child(n+5) { display: none; }
-  .marquesina__grupo li:nth-child(4)::after { display: none; }
 }
 
 /* esquinas de la pantalla de presentación (mismo estilo que la portada) */
@@ -2703,3 +2694,41 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
 @media (max-width: 810px) {
   .portada-esq--ancha { width: 44vw; text-wrap: balance; }
 }
+
+/* zócalo: el carrusel va abajo de todo, respetando las zonas seguras del celular */
+html.nativo .marquesina { bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
+
+/* esquinas de la presentación: dos renglones, encima del zócalo */
+.portada-esq--sobre { --esq-b: 118px; transform: none; line-height: 1.7; }
+@media (max-width: 810px) { .portada-esq--sobre { --esq-b: 104px; width: auto; } }
+
+/* frase con línea animada */
+.frase-wrap { position: relative; width: min(80vw, 1000px); }
+.frase-presentacion { max-width: none; text-align: left; line-height: 1.2; }
+.frase-presentacion .frag { display: block; width: fit-content; max-width: 92%; }
+.frase-presentacion .frag + .frag { margin-top: 1.25em; }
+.frase-presentacion .frag:nth-child(2) { margin-left: 18%; }
+.frase-presentacion .frag:nth-child(3) { margin-left: 6%; }
+.frase-lineas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.frase-lineas path { fill: none; stroke: #fff; stroke-width: 1.5; stroke-linecap: round; opacity: .9; }
+.frase-lineas circle { fill: #fff; opacity: 0; transition: opacity .5s ease; }
+.frase-lineas path { transition: stroke-dashoffset 1.3s cubic-bezier(.45,.05,.25,1); }
+.frase-wrap.dibujar .frase-lineas circle { opacity: 1; }
+.frase-wrap.dibujar .frase-lineas path { stroke-dashoffset: 0 !important; }
+.frase-lineas .d1 { transition-delay: .4s; }
+.frase-lineas .l1 { transition-delay: .8s; }
+.frase-lineas .d2 { transition-delay: 2.1s; }
+.frase-lineas .l2 { transition-delay: 2.4s; }
+.frase-lineas .d3 { transition-delay: 3.7s; }
+@media (max-width: 810px) {
+  .frase-wrap { width: 84vw; }
+  .frase-presentacion { font-size: 7.4vw; max-width: none; }
+  .frase-presentacion .frag { max-width: 88%; }
+  .frase-presentacion .frag:nth-child(2) { margin-left: 14%; }
+  .frase-presentacion .frag:nth-child(3) { margin-left: 4%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .frase-lineas path, .frase-lineas circle { transition: none; }
+}
+.frase-lineas .d2b { transition-delay: 2.1s; }
