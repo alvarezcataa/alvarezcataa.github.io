@@ -227,7 +227,7 @@
 
     .contacto-directo__label {
       font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.94);
     }
 
     .contacto-directo__valor {
@@ -298,7 +298,7 @@
     .guia-pregunta {
       display: block; margin-bottom: 3px;
       font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.4;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.94);
     }
     .contacto-directo__guia-botones { display: flex; gap: 12px; justify-content: center; }
     .btn-guia {
@@ -434,7 +434,7 @@
     <div class="contacto-directo__inner">
 
       <div class="contacto-directo__horario">
-        <span class="contacto-directo__label">Horario de atención</span>
+        <span class="contacto-directo__label">Horario</span>
         <span class="contacto-directo__valor">Lunes a viernes de 9hs a 18hs</span>
       </div>
 
@@ -580,7 +580,7 @@
     (function () {
       var n = window.CAVLA_CONFIG && window.CAVLA_CONFIG.whatsapp;
       var a = document.getElementById('btn-whatsapp');
-      if (n && a) a.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent('Hola, quiero consultar por un proyecto.');
+      if (n && a) a.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent('¡Hola Cata! Tengo una duda.');
     })();
 
     try { emailjs.init('y0ioHk2OfmM89TNpJ'); } catch (e) {}
