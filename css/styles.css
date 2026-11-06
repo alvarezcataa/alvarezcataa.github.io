@@ -2636,26 +2636,63 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
   .frase-presentacion { font-size: 8vw; max-width: 82vw; }
 }
 
-/* palabras sueltas: centradas, y visibles también en celular */
-.contenedor-grillavirtual {
+/* palabras sueltas en carrusel (marquesina) que se desliza en loop hacia la izquierda */
+.marquesina {
+  position: absolute;
   left: 0;
   right: 0;
-  margin: 0 auto;
+  bottom: 10vh;
+  overflow: hidden;
+  z-index: 10;
+  transform: translateY(200px);
+  transition: transform 0.4s ease-out;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  pointer-events: none;
+}
+.marquesina__pista {
+  display: flex;
   width: max-content;
-  max-width: 90vw;
+  animation: marquesina 60s linear infinite;
 }
-.item-virtual .titulo-virtual { text-align: center; letter-spacing: .22em; margin: 0; }
+.marquesina__grupo {
+  display: flex;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.marquesina__grupo li {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 2.6vh;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+.marquesina__grupo li::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  margin: 0 4vw;
+}
+@keyframes marquesina { to { transform: translateX(-50%); } }
 @media (max-width: 810px) {
-  .contenedor-grillavirtual {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    justify-content: center;
-    justify-items: center;
-    gap: 3.2vh 12vw;
-    width: max-content;
-    margin: 0 auto;
-    bottom: 14vh;
-  }
-  .item-virtual { width: auto; }
+  .marquesina { bottom: 14vh; }
+  .marquesina__pista { animation-duration: 45s; }
+  .marquesina__grupo li { font-size: 13px; letter-spacing: .16em; }
+  .marquesina__grupo li::after { margin: 0 8vw; }
 }
-@media (min-width: 811px) { .esq-br { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .marquesina { -webkit-mask-image: none; mask-image: none; }
+  .marquesina__pista { animation: none; width: 100%; justify-content: center; }
+  .marquesina__grupo[aria-hidden="true"] { display: none; }
+  .marquesina__grupo { flex-wrap: wrap; justify-content: center; row-gap: 2vh; }
+  .marquesina__grupo li:nth-child(n+5) { display: none; }
+  .marquesina__grupo li:nth-child(4)::after { display: none; }
+}

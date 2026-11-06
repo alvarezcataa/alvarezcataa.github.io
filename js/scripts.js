@@ -357,7 +357,7 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener('scroll', () => {
   const scroller = CAVLA_FIJO && document.querySelector('.smooth-scroll-wrapper');
   const virtualSection = document.querySelector('.page.mainContent:nth-of-type(2)');
-  const grillaVirtual  = document.querySelector('.contenedor-grillavirtual');
+  const grillaVirtual  = document.querySelector('.marquesina');
 
   if (!virtualSection || !grillaVirtual) return;
 
