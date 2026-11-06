@@ -2727,3 +2727,9 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 @media (max-width: 810px) {
   .scroll-cue__label--dos { font-size: 10px; letter-spacing: .12em; margin-right: -.12em; }
 }
+
+/* Inicio, pantalla de servicios: título en regular con menos interlineado; imagen más cerca del nombre; descripción más cerca del título */
+.encabezado-servicios .titulo-seccion { font-style: normal; line-height: 1.05; }
+.cuerpo-tarjeta { padding-top: 16px; }
+.nombre-servicio { margin-top: 0; margin-bottom: 11px; }
+.descripcion-servicio { margin-top: 0; }
