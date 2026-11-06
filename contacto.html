@@ -127,30 +127,6 @@
       width: 100%;
     }
 
-    /* CTA principal — ver servicios */
-    .btn-servicios {
-      display: inline-block;
-      text-decoration: none;
-      background: rgba(255, 255, 255, 0);
-      border: 1px solid white;
-      border-radius: 50px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2vh;
-      font-weight: 800;
-      font-style: italic;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #ffffff;
-      padding: 13px 36px;
-      text-align: center;
-      transition: all 0.4s;
-      cursor: pointer;
-    }
-
-    .btn-servicios:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
     /* Enviar — outline secundario */
     .btn-enviar {
       display: inline-block;
@@ -178,6 +154,131 @@
     .btn-enviar:disabled {
       opacity: 0.4;
       cursor: not-allowed;
+    }
+
+    /* ===================================================
+       PANTALLA — CONTACTO DIRECTO
+       =================================================== */
+
+    .contacto-directo {
+      background: #0e0b0b;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contacto-directo__inner {
+      width: 100%;
+      max-width: 880px;
+      padding: 0 5vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .contacto-directo__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6.5vh, 76px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      line-height: 1.1;
+      margin: 0 0 clamp(28px, 4.5vh, 48px);
+    }
+
+    .btn-whatsapp {
+      display: inline-block;
+      text-decoration: none;
+      border: 1px solid white;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ffffff;
+      padding: 15px 40px;
+      transition: all 0.4s;
+    }
+
+    .btn-whatsapp:hover { background: rgba(255, 255, 255, 0.14); }
+
+    .contacto-directo__datos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0 clamp(24px, 4vw, 56px);
+      width: 100%;
+      margin: clamp(40px, 7vh, 72px) 0 0;
+      padding-top: clamp(28px, 4.5vh, 44px);
+      border-top: 0.5px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .contacto-directo__dato { display: flex; flex-direction: column; gap: 10px; }
+
+    .contacto-directo__label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .contacto-directo__valor {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.92);
+      text-decoration: none;
+    }
+
+    a.contacto-directo__valor { border-bottom: 0.5px solid rgba(255, 255, 255, 0.4); align-self: center; transition: border-color .4s; }
+    a.contacto-directo__valor:hover { border-bottom-color: white; }
+
+    .contacto-directo__redes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px clamp(20px, 3vw, 36px);
+      margin-top: clamp(28px, 4.5vh, 44px);
+    }
+
+    .contacto-directo__redes a,
+    .contacto-directo__equipo a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color .4s;
+    }
+
+    .contacto-directo__redes a:hover,
+    .contacto-directo__equipo a:hover { color: white; }
+
+    .contacto-directo__equipo {
+      margin: clamp(22px, 3.5vh, 36px) 0 0;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .contacto-directo__equipo a {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.35);
+    }
+
+    @media (max-width: 810px) {
+      .contacto-directo { padding-top: 56px; box-sizing: border-box; }
+      .contacto-directo__datos { grid-template-columns: 1fr; gap: 22px; }
     }
 
     /* ===================================================
@@ -409,11 +510,43 @@
     <img alt="" src="images/CONTACTO/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
   </section>
 
+  <!-- PANTALLA — CONTACTO DIRECTO (propuesta) -->
+  <section class="page contacto-directo mainContent">
+    <div class="contacto-directo__inner">
+
+      <h2 class="contacto-directo__titulo">Escribinos directo.</h2>
+
+      <a href="/empezar" class="btn-whatsapp" id="btn-whatsapp" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+
+      <div class="contacto-directo__datos">
+        <div class="contacto-directo__dato">
+          <span class="contacto-directo__label">Email</span>
+          <a class="contacto-directo__valor" href="mailto:office@estudiocavla.com">office@estudiocavla.com</a>
+        </div>
+        <div class="contacto-directo__dato">
+          <span class="contacto-directo__label">Horario</span>
+          <span class="contacto-directo__valor">Lunes a viernes<br>de 9 a 18 h</span>
+        </div>
+        <div class="contacto-directo__dato">
+          <span class="contacto-directo__label">Estudio</span>
+          <span class="contacto-directo__valor">Córdoba, Argentina<br>Proyectos en todo el mundo</span>
+        </div>
+      </div>
+
+      <div class="contacto-directo__redes">
+        <a href="https://www.instagram.com/estudio.cavla" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener">Facebook</a>
+      </div>
+
+      <p class="contacto-directo__equipo">¿Querés sumarte al equipo? <a href="mailto:office@estudiocavla.com?subject=Quiero%20sumarme%20al%20equipo">Escribinos</a></p>
+
+    </div>
+  </section>
+
   <!-- PANTALLA 1 — FORMULARIO -->
   <section class="page contacto-form mainContent">
     <div class="contacto-form__inner">
-
-      <button type="button" class="btn-servicios" onclick="irAServicios()">Ver servicios</button>
 
       <h2 class="contacto-form__titulo">¿Tenés dudas?<br>Hablemos.</h2>
 
@@ -535,10 +668,19 @@
 
   <!-- EmailJS — cargar ANTES de scripts.js -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/config.js"></script>
   <script src="js/scripts.js"></script>
 
   <script>
-    emailjs.init('y0ioHk2OfmM89TNpJ');
+    /* WhatsApp: el número sale de js/config.js */
+    (function () {
+      var n = window.CAVLA_CONFIG && window.CAVLA_CONFIG.whatsapp;
+      var a = document.getElementById('btn-whatsapp');
+      if (n && a) a.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent('Hola, quiero consultar por un proyecto.');
+    })();
+
+    try { emailjs.init('y0ioHk2OfmM89TNpJ'); } catch (e) {}
+
 
     /* -----------------------------------------------
        Inhibir snap mientras un campo está enfocado
@@ -594,14 +736,6 @@
         btn.disabled = false;
         alert('Hubo un error al enviar. Intentá de nuevo o escribinos directamente a office@estudiocavla.com');
       });
-    }
-
-    /* -----------------------------------------------
-       Ir a servicios — guardar flag para scripts.js
-       ----------------------------------------------- */
-    function irAServicios() {
-      sessionStorage.setItem('snapSkip', 'servicios');
-      window.location.href = '/';
     }
   </script>
 
