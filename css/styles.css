@@ -2593,14 +2593,13 @@ h1.subtitulo-pagina { font-family: 'Montserrat', sans-serif; }
    INICIO: esquinas de la portada + frase de presentación
    =================================================================== */
 .portada-esq {
-  --esq-b: 92px;
+  --esq-b: 86px;
   position: absolute;
   bottom: var(--esq-b);
-  transform: translateY(50%);
   z-index: 4;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.3vh;
-  line-height: 1;
+  line-height: 1.7;
   letter-spacing: .22em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.5);
@@ -2617,7 +2616,7 @@ html.nativo.cubre.medido .portada-esq { bottom: calc(var(--esq-b) + var(--Bx)); 
 }
 @media (max-width: 810px) {
   /* en celular van en dos renglones para no pisar el "Desliza"; el último renglón queda a la altura de "Desliza" */
-  .portada-esq { --esq-b: 86px; transform: none; font-size: 10px; letter-spacing: .12em; line-height: 1.6; white-space: normal; width: 28vw; }
+  .portada-esq { --esq-b: 86px; transform: none; font-size: 10px; letter-spacing: .12em; line-height: 1.7; white-space: normal; width: 28vw; }
   .portada-esq--izq { text-align: left; }
   .portada-esq--der { text-align: right; margin-right: -.12em; }
 }
@@ -2722,5 +2721,9 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
   .marquesina__grupo li { font-size: 12px; letter-spacing: .16em; }
 }
 
-/* en compu las esquinas de la portada van en un solo renglón; en celular, en dos */
-@media (min-width: 811px) { .esq-br { display: none; } }
+
+/* portada: las tres leyendas inferiores (izquierda, centro y derecha) son bloques de dos renglones con la misma tipografía y alineados entre sí */
+.scroll-cue__label--dos { font-size: 1.3vh; line-height: 1.7; text-align: center; letter-spacing: .22em; margin-right: -.22em; }
+@media (max-width: 810px) {
+  .scroll-cue__label--dos { font-size: 10px; letter-spacing: .12em; margin-right: -.12em; }
+}
