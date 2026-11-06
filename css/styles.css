@@ -2708,7 +2708,7 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .frase-presentacion { font-size: inherit; max-width: none; text-align: left; line-height: 1.2; margin: 0; }
 .frase-presentacion .frag { display: block; width: fit-content; white-space: nowrap; text-align: left; will-change: clip-path, opacity; }
 .frase-presentacion .frag + .frag { margin-top: 1.2em; }               /* un renglón libre entre B y C */
-.frase-presentacion .frag-b { margin-top: 0; }                         /* A y B van pegados */
+.frase-presentacion .frag.frag-b { margin-top: 0; }                         /* A y B van pegados */
 .frase-presentacion .frag-a { margin-right: auto; }                    /* A: pegado a la izquierda del bloque (alineado con la curva que entra a C) */
 .frase-presentacion .frag-b { margin-left: auto; }                     /* B: a la derecha del bloque, texto a la izquierda */
 .frase-presentacion .frag-c { margin-left: auto; margin-right: auto; text-align: center; }  /* C: centrado */
