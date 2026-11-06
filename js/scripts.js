@@ -648,6 +648,14 @@ document.addEventListener('scroll', () => {
 
   let radioPunto = 3;
   function trazar() {
+    // El bloque mide lo justo para que A (alineado con la curva que entra a C), B (a la derecha) y C (centrado) queden en un mismo bloque simétrico
+    const fs0 = parseFloat(getComputedStyle(wrap).fontSize);
+    const izqC = fs0 * (0.3 + 0.55 + 0.6);   // separación punto + entrada + radio de la curva
+    wrap.style.width = 'auto';
+    const anchoC = frags[2].offsetWidth;
+    const anchoMin = Math.max(frags[0].offsetWidth, frags[1].offsetWidth);
+    wrap.style.width = Math.min(Math.max(anchoC + 2 * izqC, anchoMin), window.innerWidth * 0.94) + 'px';
+    frags[0].style.marginLeft = '0px';
     const base = wrap.getBoundingClientRect();
     const k = base.width / wrap.offsetWidth || 1;
     const m = frags.map(f => extremos(f, base, k));

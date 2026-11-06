@@ -2707,8 +2707,9 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .frase-wrap { position: relative; font-size: 4.2vh; width: min(20em, 84vw); }
 .frase-presentacion { font-size: inherit; max-width: none; text-align: left; line-height: 1.2; margin: 0; }
 .frase-presentacion .frag { display: block; width: fit-content; white-space: nowrap; text-align: left; will-change: clip-path, opacity; }
-.frase-presentacion .frag + .frag { margin-top: 1.2em; }               /* un renglón libre entre bloques */
-.frase-presentacion .frag-a { margin-right: auto; }                    /* A: a la izquierda del bloque */
+.frase-presentacion .frag + .frag { margin-top: 1.2em; }               /* un renglón libre entre B y C */
+.frase-presentacion .frag-b { margin-top: 0; }                         /* A y B van pegados */
+.frase-presentacion .frag-a { margin-right: auto; }                    /* A: pegado a la izquierda del bloque (alineado con la curva que entra a C) */
 .frase-presentacion .frag-b { margin-left: auto; }                     /* B: a la derecha del bloque, texto a la izquierda */
 .frase-presentacion .frag-c { margin-left: auto; margin-right: auto; text-align: center; }  /* C: centrado */
 .frase-lineas { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
@@ -2716,4 +2717,7 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .frase-lineas circle { fill: #fff; }
 @media (max-width: 810px) {
   .frase-wrap { font-size: 5.55vw; }
+}
+@media (max-width: 810px) {
+  .marquesina__grupo li { font-size: 12px; letter-spacing: .16em; }
 }
