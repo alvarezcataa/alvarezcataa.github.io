@@ -631,30 +631,32 @@ document.addEventListener('scroll', () => {
     };
   }
 
-  // Une A con B. Si B queda a la derecha de A: una S de dos curvas. Si queda a la izquierda: una serpiente de dos medias vueltas.
-  function unir(A, B, fs, limiteIzq, limiteDer) {
+  // Une A con B. Si B queda a la derecha de A: una S suave. Si queda a la izquierda: una serpiente de dos medias vueltas.
+  // xlFijo: x donde la serpiente da la vuelta hacia C (la punta izquierda de la curva), si se conoce.
+  function unir(A, B, fs, limiteIzq, limiteDer, xlFijo) {
     const dx = B.x - A.x, dy = B.y - A.y;
-    const entrada = fs * 0.55, salida = fs * 0.35;
     const r4 = dy / 4;
-    let xr = Math.min(A.x + salida, limiteDer - r4);
-    let xl = Math.max(B.x - entrada, limiteIzq + r4);
-    if (dx > dy * 0.9 && xl > xr - 10) {
-      const r = Math.min(dy / 2, dx / 2), xm = (A.x + B.x) / 2;
-      return `M${A.x},${A.y} L${xm - r},${A.y} A${r},${r} 0 0 1 ${xm},${A.y + r} L${xm},${B.y - r} A${r},${r} 0 0 0 ${xm + r},${B.y} L${B.x},${B.y}`;
+    let xr = Math.min(A.x + fs * 0.35, limiteDer - r4);
+    let xl = xlFijo != null ? xlFijo + r4 : B.x - fs * 0.55;
+    xl = Math.max(xl, limiteIzq + r4);
+    if (dx > dy * 1.5 && xl > xr - 10) {
+      const ry = dy / 2, rx = Math.min(dx * 0.32, fs * 2.4), xm = (A.x + B.x) / 2;
+      return `M${A.x},${A.y} L${xm - rx},${A.y} A${rx},${ry} 0 0 1 ${xm},${A.y + ry} A${rx},${ry} 0 0 0 ${xm + rx},${B.y} L${B.x},${B.y}`;
     }
     xl = Math.min(xl, xr - 10);
     return `M${A.x},${A.y} L${xr},${A.y} A${r4},${r4} 0 0 1 ${xr},${A.y + 2 * r4} L${xl},${A.y + 2 * r4} A${r4},${r4} 0 0 0 ${xl},${A.y + 4 * r4} L${B.x},${B.y}`;
   }
 
   let radioPunto = 3;
+  let izqC = 0;
   function trazar() {
-    // El bloque mide lo justo para que A (alineado con la curva que entra a C), B (a la derecha) y C (centrado) queden en un mismo bloque simétrico
+    // El bloque es ancho: A queda alineado con la punta izquierda de la curva que entra a C, B pegado a la derecha y C centrado.
     const fs0 = parseFloat(getComputedStyle(wrap).fontSize);
-    const izqC = fs0 * (0.3 + 0.55 + 0.6);   // separación punto + entrada + radio de la curva
     wrap.style.width = 'auto';
     const anchoC = frags[2].offsetWidth;
     const anchoMin = Math.max(frags[0].offsetWidth, frags[1].offsetWidth);
-    wrap.style.width = Math.min(Math.max(anchoC + 2 * izqC, anchoMin), window.innerWidth * 0.94) + 'px';
+    izqC = Math.min(fs0 * 3.5, Math.max(fs0 * 1.45, (window.innerWidth * 0.94 - anchoC) / 2));   // de la punta de la curva a la C
+    wrap.style.width = Math.max(anchoC + 2 * izqC, anchoMin) + 'px';
     frags[0].style.marginLeft = '0px';
     const base = wrap.getBoundingClientRect();
     const k = base.width / wrap.offsetWidth || 1;
@@ -670,7 +672,7 @@ document.addEventListener('scroll', () => {
     radioPunto = Math.max(2.5, fs * 0.075);
     dot.forEach((d, i) => { d.setAttribute('cx', p[i].x); d.setAttribute('cy', p[i].y); d.setAttribute('r', radioPunto); });
     path[0].setAttribute('d', unir(p[0], p[1], fs, limIzq, limDer));
-    path[1].setAttribute('d', unir(p[2], p[3], fs, limIzq, limDer));
+    path[1].setAttribute('d', unir(p[2], p[3], fs, limIzq, limDer, p[3].x + sep - izqC));
     path.forEach((e, i) => { largo[i] = e.getTotalLength(); e.style.strokeDasharray = largo[i]; });
   }
 
