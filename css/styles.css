@@ -2734,7 +2734,7 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
   .encabezado-servicios { padding: 0 16px; }
   .encabezado-servicios .titulo-seccion { font-size: 9.6vw; }
   .encabezado-servicios { margin-bottom: 0; }
-  .grilla-servicios { scroll-padding-left: 16px; padding-top: 18px; }
+  .grilla-servicios { scroll-padding-left: 16px; padding-top: 18px; padding-bottom: 0; }
 }
 .cuerpo-tarjeta { padding-top: 16px; }
 .nombre-servicio { margin-top: 0; margin-bottom: 11px; }
