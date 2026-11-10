@@ -2997,3 +2997,9 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-avance { position: fixed; right: 9px; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: 9px; pointer-events: none; }
 .sv-avance i { display: block; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .4s, transform .4s; }
 .sv-avance i.on { background: #fff; transform: scale(1.5); }
+
+/* FAQ: el + va a la izquierda para no competir con los puntitos de avance */
+.sv-faq__q { flex-direction: row-reverse; justify-content: flex-end; gap: 14px; text-align: left; }
+.sv-faq__q > span { flex: 1; }
+.sv-faq__a p { padding-left: 30px; padding-right: 4px; }
+@media (max-width: 810px) { .sv-faq__a p { padding-left: 28px; padding-right: 4px; } }
