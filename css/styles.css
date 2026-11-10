@@ -2938,11 +2938,10 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-desc2__sub { margin: 1.1em 0 0; font-family: 'Playfair Display', serif; font-weight: 100; font-style: normal; font-size: 4.2vh; line-height: 1.2; text-align: center; text-wrap: balance; color: #fff; }
 .sv-desc2__btn { margin: 2.2vh 0 0; text-shadow: none; }
 .sv-desc2 .sv-pal { opacity: 0; transition: opacity 1.4s ease, transform 1.4s cubic-bezier(.2,.7,.2,1), filter 1.4s ease; }
-.sv-desc2__btn { opacity: 0; transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1), background .4s; }
+.sv-desc2__btn { opacity: 0; transition: opacity 1.2s ease, background .4s; }
 .sv-desc2 .sv-pal { display: inline-block; transform: translate3d(0,.5em,0); filter: blur(6px); }
-.sv-desc2__btn { transform: translateY(12px); }
 .sv-desc2.visto .sv-pal { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); transition-delay: calc(var(--k) * 110ms); }
-.sv-desc2.visto .sv-desc2__btn { opacity: 1; transform: none; transition-delay: 2.8s; }
+.sv-desc2.visto .sv-desc2__btn { opacity: 1; transition: opacity 1.2s ease 2.8s, background .4s; }
 @media (prefers-reduced-motion: reduce) { .sv-desc2 .sv-pal, .sv-desc2__btn { opacity: 1; transform: none; filter: none; transition: none; } }
 @media (max-width: 810px) { .sv-desc2__bloque { width: 84vw; } .sv-desc2__sub { font-size: 5.55vw; } }
 
