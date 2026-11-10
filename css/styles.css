@@ -2937,11 +2937,12 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-desc2__titulo { margin: 0; font-family: 'Playfair Display', serif; font-weight: 100; font-style: italic; line-height: 1.2; font-size: clamp(2rem, 5vh, 5rem); text-align: center; color: #fff; }
 .sv-desc2__sub { margin: 1.1em 0 0; font-family: 'Playfair Display', serif; font-weight: 100; font-style: normal; font-size: 4.2vh; line-height: 1.2; text-align: center; text-wrap: balance; color: #fff; }
 .sv-desc2__btn { margin: 2.2vh 0 0; text-shadow: none; }
-.sv-desc2 .sv-pal, .sv-desc2__btn { opacity: 0; transition: opacity 1.4s ease, transform 1.4s cubic-bezier(.2,.7,.2,1), filter 1.4s ease; }
-.sv-desc2 .sv-pal { display: inline-block; transform: translate3d(0,.5em,0); filter: blur(6px); will-change: transform, opacity, filter; backface-visibility: hidden; }
-.sv-desc2__btn { transform: translate3d(0,12px,0); will-change: transform, opacity; backface-visibility: hidden; transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1), background .4s !important; }
+.sv-desc2 .sv-pal { opacity: 0; transition: opacity 1.4s ease, transform 1.4s cubic-bezier(.2,.7,.2,1), filter 1.4s ease; }
+.sv-desc2__btn { opacity: 0; transition: opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1), background .4s; }
+.sv-desc2 .sv-pal { display: inline-block; transform: translate3d(0,.5em,0); filter: blur(6px); }
+.sv-desc2__btn { transform: translateY(12px); }
 .sv-desc2.visto .sv-pal { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); transition-delay: calc(var(--k) * 110ms); }
-.sv-desc2.visto .sv-desc2__btn { opacity: 1; transform: translate3d(0,0,0); transition-delay: 2.8s; }
+.sv-desc2.visto .sv-desc2__btn { opacity: 1; transform: none; transition-delay: 2.8s; }
 @media (prefers-reduced-motion: reduce) { .sv-desc2 .sv-pal, .sv-desc2__btn { opacity: 1; transform: none; filter: none; transition: none; } }
 @media (max-width: 810px) { .sv-desc2__bloque { width: 84vw; } .sv-desc2__sub { font-size: 5.55vw; } }
 
@@ -2984,3 +2985,20 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-id6 .sv-ident-main .btn-cta-servicio { margin: 1.4vh 0 0; }
 .sv-id6 .sv-ident-main { padding: 1.6vh 0 4.4vh; }
 .sv-time-sec .opacidad { background: rgba(7, 5, 4, 0.6); }
+
+/* Flechas del carrusel */
+.sv-carrusel__flecha { all: unset; box-sizing: border-box; position: absolute; top: 50%; width: 38px; height: 38px; margin-top: -19px; z-index: 3; border-radius: 50%; background: rgba(7,5,4,.35); cursor: pointer; display: grid; place-items: center; transition: background .3s; }
+.sv-carrusel__flecha::before { content: ""; width: 9px; height: 9px; border-top: 1px solid #fff; border-right: 1px solid #fff; }
+.sv-carrusel__flecha--ant { left: 12px; } .sv-carrusel__flecha--ant::before { transform: translateX(2px) rotate(-135deg); }
+.sv-carrusel__flecha--sig { right: 12px; } .sv-carrusel__flecha--sig::before { transform: translateX(-2px) rotate(45deg); }
+@media (hover: hover) { .sv-carrusel__flecha:hover { background: rgba(7,5,4,.6); } }
+
+/* Indicador de avance de la página */
+.sv-avance { position: fixed; right: 9px; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: 9px; pointer-events: none; }
+.sv-avance i { display: block; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .4s, transform .4s; }
+.sv-avance i.on { background: #fff; transform: scale(1.5); }
+
+/* Cierre: frase, botón y aclaración */
+.sv-cierre { margin: 3.4vh 0 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 100; font-size: clamp(1.2rem, 3vh, 1.8rem); text-align: center; }
+.sv-cierre__btn { margin-top: 1.6vh; }
+.sv-cierre__nota { margin: 1.2vh 0 0; font-size: 0.72rem; font-weight: 300; letter-spacing: .04em; opacity: .65; text-align: center; }

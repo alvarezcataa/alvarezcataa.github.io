@@ -62,6 +62,51 @@
           "item": "https://www.estudiocavla.com/diseno-integral"
         }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Cuántos espacios puedo consultar por diseño?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "La cantidad que necesites. Podés proyectar solo un ambiente o unificar el diseño de todo el lugar, sea una casa, un local comercial o gastronómico. El servicio se presupuesta de forma personalizada, según la escala y la complejidad de tu encargo."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Puedo trabajar con vos si vivo fuera de Córdoba?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí. Todo el proceso es virtual y recibís la documentación completa estés donde estés, incluso en otro país."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué necesito preparar antes del primer encuentro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Solo tenés que completar el formulario de relevamiento para enviarnos las fotos y medidas de tu espacio. Te guiamos en el proceso de registrar las medidas, pero vas a necesitar una cinta métrica para completar este paso."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿En cuánto tiempo recibo mi plan de ejecución?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El plazo se especifica en la cotización según la complejidad del proyecto, aunque el tiempo estimado de entrega es de un mes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cómo ejecuto el proyecto?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "En Córdoba Capital o alrededores, podemos ejecutar tu proyecto. Si vivís en otra ciudad o preferís ejecutar con otro personal, podés elegir el equipo de obra que gustes. El plan de ejecución está pensado para que cualquier profesional de confianza pueda ejecutarlo de forma autónoma."
+          }
+        }
+      ]
     }
   ]
 }
@@ -250,7 +295,8 @@
                 <img src="images/SERVICIOS/RESIDENCIAL/ANT-DESPUES.webp" alt="Cocina y comedor con isla, proyecto de diseño integral de Estudio CAVLA" loading="lazy" decoding="async">
                 <img src="images/SERVICIOS/RESIDENCIAL/CONC-DESCR.webp" alt="Sillón y cocina de madera, proyecto de interiorismo de Estudio CAVLA" loading="lazy" decoding="async">
             </div></div>
-            <div class="sv-carrusel__puntos" role="tablist" aria-label="Elegir foto"><button type="button" class="activo" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button></div>
+            <button type="button" class="sv-carrusel__flecha sv-carrusel__flecha--ant" aria-label="Foto anterior"></button><button type="button" class="sv-carrusel__flecha sv-carrusel__flecha--sig" aria-label="Foto siguiente"></button>
+        <div class="sv-carrusel__puntos" role="tablist" aria-label="Elegir foto"><button type="button" class="activo" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button></div>
         </div>
         <div class="sv-ident-main">
             <h2 class="titulo-identif">Este servicio es para vos.</h2>
@@ -317,9 +363,13 @@
                 <div class="sv-faq__a" id="faq-5"><div><p>En <b>Córdoba Capital o alrededores,</b> podemos ejecutar tu proyecto. Si vivís en otra ciudad o preferís ejecutar con otro personal, <b>podés elegir el equipo de obra</b> que gustes. El plan de ejecución está pensado para que cualquier <b>profesional de confianza</b> pueda ejecutarlo de forma autónoma.</p></div></div>
             </div>
         </div>
-        <a href="/empezar?desde=integral" class="btn-cta-servicio">Empezar mi proyecto</a>
+        <p class="sv-cierre">Contame qué espacio querés transformar.</p>
+        <a href="/empezar?desde=integral" class="btn-cta-servicio sv-cierre__btn">Empezar mi proyecto</a>
+        <p class="sv-cierre__nota">Respondés unas preguntas y seguimos por WhatsApp.</p>
     </div>
 </section>
+
+<div class="sv-avance" aria-hidden="true"></div>
 
 <script src="js/scripts.js"></script>
 
@@ -354,6 +404,8 @@
   }
   function auto() { clearInterval(t); if (!reducido) t = setInterval(function () { ir(i + 1); }, 4500); }
   pts.forEach(function (b, j) { b.addEventListener('click', function () { ir(j); auto(); }); });
+  document.querySelector('.sv-carrusel__flecha--ant').addEventListener('click', function () { ir(i - 1); auto(); });
+  document.querySelector('.sv-carrusel__flecha--sig').addEventListener('click', function () { ir(i + 1); auto(); });
   var x0 = null, vista = document.querySelector('.sv-carrusel__vista');
   vista.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
   vista.addEventListener('touchend', function (e) {
@@ -372,6 +424,16 @@
       else if (e.intersectionRatio < 0.05) sec.classList.remove('visto');
     });
   }, { threshold: [0, 0.05, 0.55] }).observe(sec);
+})();
+
+(function () {
+  var secs = [].slice.call(document.querySelectorAll('.mainContent')), cont = document.querySelector('.sv-avance');
+  if (!cont || !secs.length || !('IntersectionObserver' in window)) return;
+  var pts = secs.map(function () { var d = document.createElement('i'); cont.appendChild(d); return d; });
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting && e.intersectionRatio >= 0.5) pts.forEach(function (d, k) { d.classList.toggle('on', secs[k] === e.target); }); });
+  }, { threshold: [0.5] });
+  secs.forEach(function (x) { io.observe(x); });
 })();
 </script>
 
