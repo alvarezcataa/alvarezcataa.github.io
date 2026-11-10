@@ -3022,7 +3022,7 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
   .sv-recibe .btn-cta-servicio { grid-area: boton; top: 0; justify-self: center; align-self: start; margin-top: 5vh; }
 
   /* 07 · línea de tiempo horizontal: ícono arriba, línea en el medio, texto abajo */
-  .sv-linea { --g: 0; flex-direction: row; display: grid; grid-template-columns: repeat(5, 1fr); width: min(1080px, 94vw); gap: 0; position: relative; }
+  .sv-linea { --g: 0; flex-direction: row; display: grid; grid-template-columns: repeat(var(--n, 5), 1fr); width: min(1080px, 94vw); gap: 0; position: relative; }
   .sv-linea::before { top: 41px; bottom: auto; left: -6%; right: -6%; width: auto; height: 1px; background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,.5) 12%, rgba(255,255,255,.5) 88%, rgba(255,255,255,0)); }
   .sv-nodo { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; row-gap: 0; justify-items: center; text-align: center; padding: 0 6px; }
   .sv-nodo h3 { white-space: nowrap; letter-spacing: .1em; }

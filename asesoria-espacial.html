@@ -23,7 +23,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon_io/favicon-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
-  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -41,8 +41,8 @@
         "@id": "https://www.estudiocavla.com/#organization"
       },
       "areaServed": {
-        "@type": "Country",
-        "name": "Argentina"
+        "@type": "Place",
+        "name": "Todo el mundo (servicio virtual)"
       }
     },
     {
@@ -59,6 +59,51 @@
           "position": 2,
           "name": "Asesoría espacial",
           "item": "https://www.estudiocavla.com/asesoria-espacial"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Cómo sé si este servicio es para mí?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Es para vos si buscás un diseño profesional y ejecutarlo a tu propio ritmo. Ideal para renovar la estética y funcionalidad de un ambiente sin entrar en la complejidad de una obra o de un mobiliario a medida."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué necesito preparar antes de la asesoría?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Solo tenés que completar el formulario de relevamiento para enviarnos las fotos de tu espacio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué pasa si después necesito documentación técnica?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Si luego necesitás documentación técnica o mobiliario a medida, podés evolucionar al servicio de Diseño Integral. En ese caso, tomamos parte del valor de esta asesoría como crédito a tu favor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuántos espacios puedo consultar por asesoría?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Analizamos un ambiente por sesión para poder profundizar en la complejidad funcional y estética de cada diseño. Si querés intervenir más de uno, coordinamos una sesión para cada espacio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿En cuánto tiempo recibo mi plan de acción?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "El plazo se especifica en la cotización según la complejidad del proyecto, aunque el tiempo estimado de entrega es de una semana."
+          }
         }
       ]
     }
@@ -97,142 +142,105 @@
     </ul>
   </div>
 
+
   <!-- PORTADA-->
   <section class="page mainContent">
     <div class="opacidad"></div>
     <div class="shadowa"></div>
     <div class="bg-gradient"></div>
+
     <div class="bloque-titulos translate" data-speed="0.1">
     <h1 class="titulo-servicios">Asesoría Espacial</h1>
-    <h2 class="subtitulo-pagina">
-      <span>RESIDENCIAL</span> 
+    <h2 class="subtitulo-pagina subtitulo-pagina--largo">
+      <span>UN</span> <span>ENCUENTRO</span> <span>VIRTUAL</span> <span>Y</span> <span>UN</span> <span>PLAN</span> <span>DE</span> <span>ACCIÓN</span>
     </h2>
   </div>
-        <div class="scroll-cue" aria-hidden="true">
+
+    <div class="scroll-cue" aria-hidden="true">
       <span class="scroll-cue__label">Desliza</span>
       <span class="scroll-cue__line">
          <span class="scroll-cue__dot"></span>
       </span>
     </div>
-    <img alt="Living con sillones verdes y alfombra geométrica, proyecto de Estudio CAVLA" src="/images/SERVICIOS/RESIDENCIAL/CONCEPTUAL.webp" class="page_fondo translate" data-speed="0.6">
+    <img alt="Living con sillones verdes y alfombra geométrica, proyecto de Estudio CAVLA" src="images/SERVICIOS/RESIDENCIAL/CONCEPTUAL.webp" class="page_fondo translate" data-speed="0.6">
   </section>
 
-  <!-- DESCRIPCIÓN -->
-<section class="contacto mainContent">
-    <div class="section__data">
-      <div class="opacidad"></div>
-      <div class="shadowa"></div>
-      <div class="bg-gradient"></div>
-        <p class="texto-memoria">En <b>un encuentro virtual</b> te ayudo a transformar tu espacio utilizando <b>lo que ya tenés</b> y seleccionando con precisión <b>lo que te falta.</b></p>
-        <p class="texto-memoria">Te entrego un <b>plan estratégico</b> para que dejes de adivinar y <b>materialices el hogar de tus sueños.</b></p>
-        <img alt="" src="/images/SERVICIOS/RESIDENCIAL/CONC-DESCR.webp" class="page_fondo">
+<!-- DESCRIPCIÓN -->
+<section class="page mainContent sv-desc2">
+  <div class="opacidad"></div>
+  <div class="shadowa"></div>
+  <div class="bg-gradient"></div>
+  <img alt="" src="images/SERVICIOS/RESIDENCIAL/CONC-DESCR.webp" class="page_fondo">
+  <div class="sv-desc2__bloque">
+    <p class="sv-desc2__sub"><span class="sv-pal" style="--k:0">Un</span> <span class="sv-pal" style="--k:1">encuentro</span> <span class="sv-pal" style="--k:2">virtual</span> <span class="sv-pal" style="--k:3">y</span> <span class="sv-pal" style="--k:4">un</span> <span class="sv-pal" style="--k:5">plan</span> <span class="sv-pal" style="--k:6">de</span> <span class="sv-pal" style="--k:7">acción</span> <span class="sv-pal" style="--k:8">para</span> <span class="sv-pal" style="--k:9">transformar</span> <span class="sv-pal" style="--k:10">tu</span> <span class="sv-pal" style="--k:11">espacio</span> <span class="sv-pal" style="--k:12">con</span> <span class="sv-pal" style="--k:13">lo</span> <span class="sv-pal" style="--k:14">que</span> <span class="sv-pal" style="--k:15">ya</span> <span class="sv-pal" style="--k:16">tenés.</span></p>
+    <a href="/empezar?desde=asesoria" class="btn-cta-servicio sv-desc2__btn">Empezar mi proyecto</a>
+  </div>
+  <span class="portada-esq portada-esq--izq portada-esq--sobre">UN AMBIENTE<br>POR SESIÓN</span>
+  <span class="portada-esq portada-esq--der portada-esq--sobre">ASESORÍA VIRTUAL A<br>TODO EL MUNDO</span>
+  <div class="marquesina">
+    <div class="marquesina__pista">
+    <ul class="marquesina__grupo">
+      <li>ASESORÍA DE INTERIORISMO</li>
+      <li>PLAN DE ACCIÓN EN PDF</li>
+      <li>SESIÓN VIRTUAL DE 1 HORA</li>
+      <li>ASESORÍA DE INTERIORISMO</li>
+      <li>PLAN DE ACCIÓN EN PDF</li>
+      <li>SESIÓN VIRTUAL DE 1 HORA</li>
+    </ul>
+    <ul class="marquesina__grupo" aria-hidden="true">
+      <li>ASESORÍA DE INTERIORISMO</li>
+      <li>PLAN DE ACCIÓN EN PDF</li>
+      <li>SESIÓN VIRTUAL DE 1 HORA</li>
+      <li>ASESORÍA DE INTERIORISMO</li>
+      <li>PLAN DE ACCIÓN EN PDF</li>
+      <li>SESIÓN VIRTUAL DE 1 HORA</li>
+    </ul>
     </div>
+  </div>
+
 </section>
-
-<!-- IDENTIFICACIÓN -->
-<section class="pantalla-identificacion mainContent">
-    <img src="/images/SERVICIOS/RESIDENCIAL/CONC-TEXTURA.webp" class="page_fondo" alt="">
-    <div class="opacidad"></div>
-    <div class="shadowa"></div>
-    <div class="bg-gradient"></div> 
-    <div class="identificacion-content">
-        
-        <div class="container-circulos">
-            <img alt="¿Te acabás de mudar? ¿Hay algo que no te gusta… y no sabés qué es? ¿Querés renovar tu casa de siempre?" src="/images/SERVICIOS/RESIDENCIAL/CONC-IDENTIF.webp" class="imagen-circulos">
-        </div>
-
-        <h2 class="titulo-identif">Este servicio es para vos.</h2>
-
-        <a href="/empezar?desde=asesoria" class="btn-cta-servicio">Empezar mi proyecto</a>
-
-        <div class="container-derivacion">
-            <div class="derivacion-col">
-                <p>¿Necesitás <b>documentación ejecutable</b> para obra?</p>
-                <a href="/diseno-integral" class="btn-derivacion">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                Ver <b>Diseño Integral</b>
-                </a>
-            </div>
-            
-            <div class="derivacion-col">
-                <p>¿Necesitás <b>diseñar un mueble</b> en específico?</p>
-                <a href="/diseno-mobiliario" class="btn-derivacion">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:4px"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                Ver <b>Diseño Mobiliario</b>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
 
   <!-- ANTES Y DESPÚES -->
 <section class="antes-despues mainContent">
     <div class="section__data split-container">
-        <div class="opacidad"></div>
         <div class="shadowa"></div>
         <div class="bg-gradient"></div>
 
         <div class="split-side antes">
-            <img alt="Ambiente vacío antes de la asesoría" src="/images/SERVICIOS/RESIDENCIAL/CONC-ANTES.webp" class="img-split">
-            <span class="label-foto">ANTES</span> </div>
-
-        <div class="split-side despues">
-            <img alt="El ambiente amoblado y decorado después de la asesoría" src="/images/SERVICIOS/RESIDENCIAL/CONC-DESPUES.webp" class="img-split">
-            <span class="label-foto">DESPUÉS</span>
+            <img alt="Ambiente vacío antes de la asesoría" src="images/SERVICIOS/RESIDENCIAL/CONC-ANTES.webp" class="img-split">
         </div>
 
-        <div class="papelito-center">
-            <img src="/images/SERVICIOS/RESIDENCIAL/CONC-PAPEL.webp" alt="De un montón de ideas sueltas, al lugar que querés volver.">
+        <div class="split-side despues">
+            <img alt="El ambiente amoblado y decorado después de la asesoría" src="images/SERVICIOS/RESIDENCIAL/CONC-DESPUES.webp" class="img-split">
+        </div>
+
+        <div class="papelito-center papelito-texto">
+            <p>De un montón de ideas sueltas, al lugar que querés volver.</p>
         </div>
     </div>
 </section>
 
-<!-- INCLUYE -->
-<section class="entregable mainContent">
-    <img src="/images/SERVICIOS/RESIDENCIAL/CONC-INCLUYE.webp" class="page_fondo" alt="">
+<!-- LO QUE RECIBÍS -->
+<section class="entregable mainContent sv-recibe-sec">
+    <img src="images/SERVICIOS/RESIDENCIAL/CONC-INCLUYE.webp" class="page_fondo" alt="" loading="lazy" decoding="async">
     <div class="opacidad"></div>
     <div class="bg-gradient"></div>
     <div class="shadowa"></div>
-    <div class="entregable-content">     
-            <h2 class="titulo-seccion-superior">Lo que recibís.</h2>
-        <div class="listado-ecuacion">
-            <div class="item-ecuacion">
-                <img alt="Enviame fotos de tu espacio. ¿Cuántas personas lo usan?" src="/images/SERVICIOS/RESIDENCIAL/CONC-A.webp" class="imagen-abc">
-                <p>Guía de <b>Relevamiento virtual.</b></p>
-            </div>
-
-            <img alt="" src="/images/SERVICIOS/RESIDENCIAL/SUMA.webp" class="simbolo-suma">
-
-            <div class="item-ecuacion">
-                <img alt="¿Cómo usás el espacio todos los días?" src="/images/SERVICIOS/RESIDENCIAL/CONC-B.webp" class="imagen-abc">
-                <p>Sesión de <b>1 hora de asesoría.</b></p>
-            </div>
-
-            <img alt="" src="/images/SERVICIOS/RESIDENCIAL/SUMA.webp" class="simbolo-suma">
-
-            <div class="item-ecuacion">
-                <img alt="Portada del Plan de acción de Asesoría Espacial en PDF" src="/images/SERVICIOS/RESIDENCIAL/CONC-C.webp" class="imagen-abc">
-                <p><b>Plan de acción</b> en PDF</p>
-            </div>
-
-            <img alt="" src="/images/SERVICIOS/RESIDENCIAL/SUMA.webp" class="simbolo-suma">
-
-            <div class="item-ecuacion">
-                <img alt="Checklist de ejecución: muebles, pintura y mano de obra" src="/images/SERVICIOS/RESIDENCIAL/CONC-D.webp" class="imagen-abc">
-                <p>Excel de <b>gestión de gastos</b></p>
-            </div>
+    <div class="entregable-content sv-recibe">
+        <h2 class="titulo-seccion-superior">Lo que recibís.</h2>
+        <div class="sv-recibe-bloque">
+        <div class="item-ecuacion">
+            <img alt="Entregables de la Asesoría Espacial: análisis neuroespacial, narrativa de diseño, visualización arquitectónica, hoja de ruta, listado de compras y planilla de gestión de gastos" src="images/SERVICIOS/RESIDENCIAL/CONC-ENTREGA.webp" class="imagen-abc">
         </div>
-     <div class="detalles-plan-container">
-            <h2 class="titulo-detalles">TU PLAN DE ACCIÓN INCLUYE</h2>
-            
+        <div class="detalles-plan-container">
+            <h2 class="titulo-detalles">Tu plan de acción incluye</h2>
             <div class="detalles-plan">
                 <div class="col-detalles">
                     <ul>
                         <li>Brief de cliente</li>
-                        <li>Análisis neuroarquitectónico del espacio</li>
-                        <li>Narrativa de diseño del proyecto</li>
-                        <li>Renders fotorrealistas de la propuesta</li>
+                        <li>Análisis neuroarquitectónico</li>
+                        <li>Narrativa de diseño</li>
+                        <li>Renders fotorrealistas</li>
                     </ul>
                 </div>
                 <div class="col-detalles">
@@ -245,143 +253,167 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- MOCKUP -->
-<section class="entregable mainContent">
-    <img src="/images/SERVICIOS/RESIDENCIAL/CONC-MOCKUP.webp" class="page_fondo" alt="">
-    <div class="opacidad"></div>
-    <div class="shadowa"></div>
-    <div class="bg-gradient"></div>
-    <div class="entregable-content">
-        
-        <div class="container-mockup">
-            <img alt="Entregables de la Asesoría Espacial: análisis neuroespacial, narrativa de diseño, visualización arquitectónica, hoja de ruta, listado de compras y planilla de gestión de gastos" src="/images/SERVICIOS/RESIDENCIAL/CONC-ENTREGA.webp" class="imagen-mockup">
         </div>
-
-        <div class="info-entregable">
-            <h2 class="titulo-entregable">Todo listo para <br>hacerse realidad.</h2>
-        </div>
-
-        <a href="/empezar?desde=asesoria" class="btn-cta-servicio btn-cta-servicio--invertido">Empezar mi proyecto</a>
-
+        <a href="/empezar?desde=asesoria" class="btn-cta-servicio">Empezar mi proyecto</a>
     </div>
 </section>
 
   <!-- NO INCLUYE -->
-<section class="contacto mainContent">
-    <div class="section__data">
-      <div class="opacidad"></div>
-      <div class="shadowa"></div>
-      <div class="bg-gradient"></div>
-        <h2 class="titulo-importante">¡Importante!</h2>
-        <p class="texto-memoria">Este servicio está diseñado para darte autonomía. Por eso, <b>no incluye dirección de obra, visitas presenciales, gestión de gremios ni trámites municipales.</b></p>
-        <p class="texto-memoria">La documentación entregada es estética y estratégica, <b>no técnica ni apta para ejecución de obra civil.</b></p>
-        <p class="texto-memoria">Los <b>valores</b> en el presupuesto son <b>estimados de referencia,</b> el costo final dependerá de tus elecciones al momento de comprar.</p>
-        <img alt="" src="/images/SERVICIOS/RESIDENCIAL/CONC-NO.webp" class="page_fondo">
-    </div>
-</section>
-
-
-  <!-- FAQ -->
-<section class="faq-section mainContent">
-    <img src="/images/SERVICIOS/RESIDENCIAL/CONC-INCLUYE.webp" class="page_fondo" alt="">
+<section class="entregable mainContent sv-no-sec">
+    <img alt="" src="images/SERVICIOS/RESIDENCIAL/CONC-NO.webp" class="page_fondo" loading="lazy" decoding="async">
     <div class="opacidad"></div>
     <div class="shadowa"></div>
     <div class="bg-gradient"></div>
-    
-    <div class="faq-content">
-        <h2 class="faq-titulo">Preguntas Frecuentes</h2>
-
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Cómo sé si <b>este servicio es para mí?</b></span>
-                    <div class="plus-icon"></div>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Es para vos si buscás un <b>diseño profesional</b> y ejecutarlo a tu propio ritmo. Ideal para renovar la <b>estética y funcionalidad</b> de un ambiente <b>sin entrar en</b> la complejidad de una <b>obra o mobiliario a medida</b>.
-                    </p>
-                </div>
+    <div class="entregable-content sv-cont">
+        <h2 class="titulo-importante">¡Importante!</h2>
+        <p class="sv-bajada">Este servicio <b>no incluye:</b></p>
+        <ul class="sv-iconos">
+            <li><span class="sv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12M6 20h12M12 4v16M9 4v1M15 4v1M9 20v-1M15 20v-1"/></svg></span>Visitas y dirección de obra</li>
+            <li><span class="sv-icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg></span>Trámites municipales</li>
+        </ul>
+        <div class="sv-notas">
+            <div class="sv-nota">
+                <h3>Documentación estética y estratégica</h3>
+                <p>No es técnica ni apta para ejecutar obra civil. Los valores del presupuesto son estimados de referencia, el costo final depende de tus elecciones al comprar.</p>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Qué necesito <b>preparar antes</b> de la asesoría?</span>
-                    <div class="plus-icon"></div>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Solo tenés que completar el <b>formulario de relevamiento</b> para <b>enviarnos las fotos</b> de tu espacio. 
-                    </p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Qué pasa si luego necesito <b>documentación técnica?</b></span>
-                    <div class="plus-icon"></div>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Si luego de la asesoría necesitás <b>documentación</b> técnica o <b>mobiliario a medida</b>, podés evolucionar al servicio de <b>Diseño Integral</b>. En ese caso, tomaremos <b>parte del valor</b> de esta consultoría como un <b>crédito a tu favor.</b>
-                    </p>
-                    </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Cuántos <b>espacios</b> puedo consultar <b>por asesoría?</b></span>
-                    <div class="plus-icon"></div>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        Analizamos <b>un ambiente por sesión</b> para poder profundizar en la complejidad funcional y estética de cada diseño. Si buscás intervenir <b>más de un espacio,</b> te ofrecemos un <b>descuento por cantidad.</b>
-                    </p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿En <b>cuánto tiempo</b> recibo mi <b>Plan de Acción?</b></span>
-                    <div class="plus-icon"></div>
-                </div>
-                <div class="faq-answer">
-                    <p>
-                        El plazo <b>se especifica en la cotización</b> según la complejidad del proyecto, aunque el <b>tiempo estimado</b> de entrega es de <b>una semana</b>. 
-                    </p>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="cta-container">
-            <a href="/empezar?desde=asesoria" class="btn-cta-servicio">Empezar mi proyecto</a>
-            <p class="cta-subtexto">Comenzá hoy la transformación de tu espacio.</p>
         </div>
     </div>
 </section>
 
-<script src="/js/scripts.js"></script>
+<!-- ESTE SERVICIO ES PARA VOS -->
+<section class="pantalla-identificacion mainContent sv-id6">
+    <img alt="" src="images/SERVICIOS/RESIDENCIAL/CONC-TEXTURA.webp" class="page_fondo" loading="lazy" decoding="async">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="identificacion-content sv-ident">
+        <div class="sv-carrusel" aria-label="Proyectos de Asesoría espacial">
+            <div class="sv-carrusel__vista"><div class="sv-carrusel__pista">
+                <img src="images/SERVICIOS/RESIDENCIAL/CONC-DESPUES.webp" alt="Ambiente amoblado y decorado, proyecto de asesoría espacial de Estudio CAVLA" loading="lazy" decoding="async">
+                <img src="images/SERVICIOS/RESIDENCIAL/CONC-ANTES.webp" alt="Ambiente antes de la asesoría espacial de Estudio CAVLA" loading="lazy" decoding="async">
+                <img src="images/SERVICIOS/RESIDENCIAL/CONCEPTUAL.webp" alt="Living con sillones verdes y alfombra geométrica, proyecto de Estudio CAVLA" loading="lazy" decoding="async">
+            </div></div>
+            <div class="sv-carrusel__puntos" role="tablist" aria-label="Elegir foto"><button type="button" class="activo" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button></div>
+        </div>
+        <div class="sv-ident-main">
+            <h2 class="titulo-identif">Este servicio es para vos.</h2>
+            <a href="/empezar?desde=asesoria" class="btn-cta-servicio">Empezar mi proyecto</a>
+        </div>
+        <div class="container-derivacion sv-zocalo">
+            <div class="derivacion-col">
+                <p>¿Necesitás <b>documentación ejecutable</b> para obra?</p>
+                <a href="/diseno-integral" class="btn-derivacion">Ver <b>Diseño Integral</b></a>
+            </div>
+            <div class="derivacion-col">
+                <p>¿Necesitás <b>diseñar un mueble</b> en específico?</p>
+                <a href="/diseno-mobiliario" class="btn-derivacion">Ver <b>Diseño Mobiliario</b></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CÓMO TRABAJAMOS -->
+<section class="entregable mainContent sv-time-sec">
+    <img src="images/SERVICIOS/RESIDENCIAL/CONC-MOCKUP.webp" class="page_fondo" alt="" loading="lazy" decoding="async">
+    <div class="opacidad"></div>
+    <div class="shadowa"></div>
+    <div class="bg-gradient"></div>
+    <div class="entregable-content sv-cont sv-time">
+        <h2 class="sv-titulo">Cómo trabajamos.</h2>
+        <ol class="sv-linea" style="--n:4">
+            <li class="sv-nodo"><span class="sv-punto"></span><svg class="sv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5 16.5 3 21 7.5 7.5 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></svg><h3>Relevamiento</h3><p>Fotos de tu espacio</p></li>
+            <li class="sv-nodo"><span class="sv-punto"></span><svg class="sv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></svg><h3>Encuentro virtual</h3><p>1 hora de asesoría</p></li>
+            <li class="sv-nodo"><span class="sv-punto"></span><svg class="sv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19z"/><path d="M14.5 6.5l3 3"/></svg><h3>Desarrollo</h3><p>Preparamos tu plan de acción</p></li>
+            <li class="sv-nodo"><span class="sv-punto"></span><svg class="sv-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg><h3>Entrega</h3><p>Te enviamos el plan en PDF</p></li>
+        </ol>
+        <div class="sv-time__pie">
+        <p class="sv-aclara">La asesoría se presupuesta a medida. Con el pago de una seña damos inicio y con el pago restante te entregamos el plan de acción.</p>
+        <a href="/empezar?desde=asesoria" class="btn-cta-servicio sv-cta">Empezar mi proyecto</a>
+    </div>
+    </div>
+</section>
+
+<!-- PREGUNTAS FRECUENTES -->
+<section class="entregable mainContent">
+    <div class="entregable-content sv-cont">
+        <h2 class="sv-titulo">Preguntas frecuentes</h2>
+        <div class="sv-faq">
+            <div class="sv-faq__item">
+                <h3><button class="sv-faq__q" type="button" aria-expanded="false" aria-controls="faq-1"><span>¿Cómo sé si este servicio <b>es para mí?</b></span><i class="sv-faq__mas" aria-hidden="true"></i></button></h3>
+                <div class="sv-faq__a" id="faq-1"><div><p>Es para vos si buscás <b>un diseño profesional</b> y ejecutarlo a tu propio ritmo. Ideal para renovar la <b>estética y funcionalidad</b> de un ambiente sin entrar en la complejidad de una obra o de un mobiliario a medida.</p></div></div>
+            </div>
+            <div class="sv-faq__item">
+                <h3><button class="sv-faq__q" type="button" aria-expanded="false" aria-controls="faq-2"><span>¿Qué necesito <b>preparar antes</b> de la asesoría?</span><i class="sv-faq__mas" aria-hidden="true"></i></button></h3>
+                <div class="sv-faq__a" id="faq-2"><div><p>Solo tenés que completar el <b>formulario de relevamiento</b> para enviarnos las <b>fotos de tu espacio.</b></p></div></div>
+            </div>
+            <div class="sv-faq__item">
+                <h3><button class="sv-faq__q" type="button" aria-expanded="false" aria-controls="faq-3"><span>¿Qué pasa si <b>después necesito documentación técnica?</b></span><i class="sv-faq__mas" aria-hidden="true"></i></button></h3>
+                <div class="sv-faq__a" id="faq-3"><div><p>Si luego necesitás documentación técnica o mobiliario a medida, podés <b>evolucionar al servicio de Diseño Integral.</b> En ese caso, tomamos <b>parte del valor de esta asesoría como crédito</b> a tu favor.</p></div></div>
+            </div>
+            <div class="sv-faq__item">
+                <h3><button class="sv-faq__q" type="button" aria-expanded="false" aria-controls="faq-4"><span>¿Cuántos <b>espacios</b> puedo consultar <b>por asesoría?</b></span><i class="sv-faq__mas" aria-hidden="true"></i></button></h3>
+                <div class="sv-faq__a" id="faq-4"><div><p>Analizamos <b>un ambiente por sesión</b> para poder profundizar en la complejidad funcional y estética de cada diseño. Si querés intervenir más de uno, coordinamos <b>una sesión para cada espacio.</b></p></div></div>
+            </div>
+            <div class="sv-faq__item">
+                <h3><button class="sv-faq__q" type="button" aria-expanded="false" aria-controls="faq-5"><span>¿En <b>cuánto tiempo</b> recibo mi <b>plan de acción?</b></span><i class="sv-faq__mas" aria-hidden="true"></i></button></h3>
+                <div class="sv-faq__a" id="faq-5"><div><p>El plazo <b>se especifica en la cotización</b> según la complejidad del proyecto, aunque el <b>tiempo estimado</b> de entrega es de <b>una semana</b>.</p></div></div>
+            </div>
+        </div>
+        <a href="/empezar?desde=asesoria" class="btn-cta-servicio">Empezar mi proyecto</a>
+    </div>
+</section>
+
+<script src="js/scripts.js"></script>
 
 <script>
-    document.querySelectorAll('.faq-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        
-        // Cerramos todos los items primero
-        document.querySelectorAll('.faq-item').forEach(el => {
-            el.classList.remove('active');
-        });
-
-        // Si el que clickeamos no estaba activo, lo abrimos
-        if (!isActive) {
-            item.classList.add('active');
-        }
+(function () {
+  var items = document.querySelectorAll('.sv-faq__item');
+  items.forEach(function (item) {
+    var btn = item.querySelector('.sv-faq__q');
+    btn.addEventListener('click', function () {
+      var abre = !item.classList.contains('activo');
+      items.forEach(function (o) {
+        o.classList.remove('activo');
+        o.querySelector('.sv-faq__q').setAttribute('aria-expanded', 'false');
+      });
+      if (abre) {
+        item.classList.add('activo');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
-});
+  });
+})();
+
+(function () {
+  var pista = document.querySelector('.sv-carrusel__pista'); if (!pista) return;
+  var pts = [].slice.call(document.querySelectorAll('.sv-carrusel__puntos button'));
+  var n = pista.children.length, i = 0, t;
+  var reducido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function ir(k) {
+    i = (k + n) % n;
+    pista.style.transform = 'translateX(' + (-100 * i) + '%)';
+    pts.forEach(function (b, j) { b.classList.toggle('activo', j === i); });
+  }
+  function auto() { clearInterval(t); if (!reducido) t = setInterval(function () { ir(i + 1); }, 4500); }
+  pts.forEach(function (b, j) { b.addEventListener('click', function () { ir(j); auto(); }); });
+  var x0 = null, vista = document.querySelector('.sv-carrusel__vista');
+  vista.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  vista.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var d = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(d) > 40) { ir(i + (d < 0 ? 1 : -1)); auto(); }
+  }, { passive: true });
+  auto();
+})();
+
+(function () {
+  var sec = document.querySelector('.sv-desc2'); if (!sec || !('IntersectionObserver' in window)) { if (sec) sec.classList.add('visto'); return; }
+  new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.intersectionRatio > 0.55) sec.classList.add('visto');
+      else if (e.intersectionRatio < 0.05) sec.classList.remove('visto');
+    });
+  }, { threshold: [0, 0.05, 0.55] }).observe(sec);
+})();
 </script>
 
 </body>
