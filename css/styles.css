@@ -2985,13 +2985,6 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-id6 .sv-ident-main { padding: 1.6vh 0 4.4vh; }
 .sv-time-sec .opacidad { background: rgba(7, 5, 4, 0.6); }
 
-/* Flechas del carrusel (mismo estilo que en Proyectos) */
-.sv-carrusel__flecha { all: unset; box-sizing: border-box; position: absolute; top: 0; bottom: 0; width: clamp(44px, 8vw, 110px); z-index: 3; display: flex; align-items: center; cursor: pointer; color: rgba(255,255,255,.75); transition: color .25s; }
-.sv-carrusel__flecha--ant { left: 0; justify-content: flex-start; padding-left: clamp(10px, 2.2vw, 34px); }
-.sv-carrusel__flecha--sig { right: 0; justify-content: flex-end; padding-right: clamp(10px, 2.2vw, 34px); }
-.sv-carrusel__flecha svg { width: clamp(14px, 1.6vw, 22px); height: clamp(60px, 11vh, 110px); fill: none; stroke: currentColor; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(0,0,0,.45)); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
-@media (hover: hover) { .sv-carrusel__flecha:hover { color: #fff; } .sv-carrusel__flecha--ant:hover svg { transform: translateX(-4px); } .sv-carrusel__flecha--sig:hover svg { transform: translateX(4px); } }
-
 /* Indicador de avance de la página */
 .sv-avance { position: fixed; right: 9px; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: 9px; pointer-events: none; }
 .sv-avance i { display: block; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .4s, transform .4s; }

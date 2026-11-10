@@ -295,8 +295,7 @@
                 <img src="images/SERVICIOS/RESIDENCIAL/ANT-DESPUES.webp" alt="Cocina y comedor con isla, proyecto de diseño integral de Estudio CAVLA" loading="lazy" decoding="async">
                 <img src="images/SERVICIOS/RESIDENCIAL/CONC-DESCR.webp" alt="Sillón y cocina de madera, proyecto de interiorismo de Estudio CAVLA" loading="lazy" decoding="async">
             </div></div>
-            <button type="button" class="sv-carrusel__flecha sv-carrusel__flecha--ant" aria-label="Foto anterior"><svg viewBox="0 0 20 100" aria-hidden="true"><polyline points="16,4 4,50 16,96"/></svg></button><button type="button" class="sv-carrusel__flecha sv-carrusel__flecha--sig" aria-label="Foto siguiente"><svg viewBox="0 0 20 100" aria-hidden="true"><polyline points="4,4 16,50 4,96"/></svg></button>
-        <div class="sv-carrusel__puntos" role="tablist" aria-label="Elegir foto"><button type="button" class="activo" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button></div>
+            <div class="sv-carrusel__puntos" role="tablist" aria-label="Elegir foto"><button type="button" class="activo" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button></div>
         </div>
         <div class="sv-ident-main">
             <h2 class="titulo-identif">Este servicio es para vos.</h2>
@@ -402,8 +401,6 @@
   }
   function auto() { clearInterval(t); if (!reducido) t = setInterval(function () { ir(i + 1); }, 4500); }
   pts.forEach(function (b, j) { b.addEventListener('click', function () { ir(j); auto(); }); });
-  document.querySelector('.sv-carrusel__flecha--ant').addEventListener('click', function () { ir(i - 1); auto(); });
-  document.querySelector('.sv-carrusel__flecha--sig').addEventListener('click', function () { ir(i + 1); auto(); });
   var x0 = null, vista = document.querySelector('.sv-carrusel__vista');
   vista.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
   vista.addEventListener('touchend', function (e) {
