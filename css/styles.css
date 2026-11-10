@@ -3007,18 +3007,19 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
   .sv-aclara { width: var(--sv-ancho-p); max-width: none; }
 
   /* 02 · la frase ocupa 4 renglones */
-  .sv-desc2__bloque { width: 44vh; }
+  .sv-desc2__bloque { width: 50.5vh; }
 
-  /* 04 · imagen grande a la izquierda, listado a la derecha, botón abajo */
-  .sv-recibe .sv-recibe-bloque { width: auto; max-width: 92vw; flex-direction: row; align-items: center; justify-content: center; gap: clamp(40px, 6vw, 110px); container-type: normal; top: 0; }
-  .sv-recibe .sv-recibe-bloque .item-ecuacion { width: auto; flex: none; }
-  .sv-recibe .sv-recibe-bloque .imagen-abc { width: auto; height: min(60vh, 640px); max-width: 48vw; object-fit: contain; }
-  .sv-recibe .sv-recibe-bloque .detalles-plan-container { width: fit-content; margin: 0; }
+  /* 04 · imagen grande a la izquierda; a la derecha título, listado y botón */
+  .entregable-content.sv-recibe { display: grid; grid-template-columns: auto auto; grid-template-areas: "img titulo" "img lista" "img boton"; justify-content: center; align-content: center; align-items: center; column-gap: clamp(40px, 6vw, 110px); row-gap: 0; }
+  .sv-recibe .sv-recibe-bloque { display: contents; }
+  .sv-recibe .sv-recibe-bloque .item-ecuacion { grid-area: img; width: auto; align-self: center; }
+  .sv-recibe .sv-recibe-bloque .imagen-abc { width: auto; height: min(62vh, 660px); max-width: 52vw; object-fit: contain; }
+  .sv-recibe .titulo-seccion-superior { grid-area: titulo; position: static; top: 0; left: 0; transform: none; justify-self: center; align-self: end; margin: 0 0 4vh; }
+  .sv-recibe .sv-recibe-bloque .detalles-plan-container { grid-area: lista; width: fit-content; margin: 0; justify-self: center; }
   .sv-recibe .sv-recibe-bloque .titulo-detalles { font-size: 0.8rem; text-align: center; }
   .sv-recibe .sv-recibe-bloque .detalles-plan { justify-content: center; gap: clamp(28px, 3vw, 48px); }
   .sv-recibe .sv-recibe-bloque .col-detalles li { font-size: 0.85rem; margin-bottom: 1vh; }
-  .sv-recibe .titulo-seccion-superior { top: 0; left: 0; align-self: center; margin-bottom: 3vh; }
-  .sv-recibe .btn-cta-servicio { top: 0; margin-top: 4vh; }
+  .sv-recibe .btn-cta-servicio { grid-area: boton; top: 0; justify-self: center; align-self: start; margin-top: 5vh; }
 
   /* 07 · línea de tiempo horizontal: ícono arriba, línea en el medio, texto abajo */
   .sv-linea { --g: 0; flex-direction: row; display: grid; grid-template-columns: repeat(5, 1fr); width: min(1080px, 94vw); gap: 0; position: relative; }
@@ -3026,6 +3027,7 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
   .sv-nodo { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; row-gap: 0; justify-items: center; text-align: center; padding: 0 6px; }
   .sv-nodo h3 { white-space: nowrap; letter-spacing: .1em; }
   .sv-nodo p { text-wrap: balance; }
+  .sv-time .sv-aclara { margin-top: clamp(48px, 12vh, 120px); }
   .sv-ico { grid-column: 1; grid-row: 1; align-self: center; margin-bottom: 14px; }
   .sv-punto { grid-column: 1; grid-row: 2; align-self: center; margin: 0 0 14px; }
   .sv-nodo h3 { grid-column: 1; grid-row: 3; text-align: center; }
