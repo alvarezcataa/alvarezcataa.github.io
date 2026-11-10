@@ -2521,39 +2521,29 @@ button.boton-cotizar {
    22. CTA BOTÓN DE SERVICIO (pantallas de identificación y mockup)
    =================================================================== */
 
-.btn-cta-servicio {
+.btn-cta-servicio,
+.btn-cta-pagina {
   display: inline-block;
-  padding: 1.4vh 4vh;
-  border: 2px solid #ffffff;
+  padding: .86em 1.4em;
+  border: 1px solid #ffffff;
   border-radius: 50px;
   text-decoration: none;
   color: #ffffff;
   background-color: transparent;
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(0.75rem, 2vh, 0.95rem);
-  font-weight: 800;
-  letter-spacing: 0.18em;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  transition: all 0.4s cubic-bezier(.2,.7,.2,1);
-  margin:1vh 0;
+  transition: background .4s;
+  margin: 1vh 0;
   white-space: nowrap;
 }
-
-.btn-cta-servicio:hover {
-  background-color: #ffffff;
-  color: #13090a;
-}
-
-/* Variante para fondo claro o imagen clara (pantalla 06) */
-.btn-cta-servicio--invertido {
-  margin-top: 3vh;
-}
-
+.btn-cta-servicio:hover,
+.btn-cta-pagina:hover { background-color: rgba(255, 255, 255, 0.14); color:#fff; }
+.btn-cta-servicio--invertido { margin-top: 3vh; }
 @media (max-width: 810px) {
-  .btn-cta-servicio {
-    font-size: 0.8rem;
-    padding: 1.2vh 5vw;
-  }
+  .btn-cta-servicio, .btn-cta-pagina { font-size: 12px; }
 }
 
 /* ===================================================================
@@ -2742,23 +2732,7 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .nombre-servicio { margin-top: 0; margin-bottom: 11px; }
 .descripcion-servicio { margin-top: 0; }
 
-/* Botón de cierre de página (Sobre mí) */
-.btn-cta-pagina {
-  display: inline-block;
-  margin-top: 3vh;
-  text-decoration: none;
-  border: 1px solid #fff;
-  border-radius: 50px;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #fff;
-  padding: 15px 40px;
-  transition: background .4s;
-}
-.btn-cta-pagina:hover { background: rgba(255, 255, 255, 0.14); }
+.btn-cta-pagina { margin-top: 3vh; }
 
 /* Subtítulo de portada con frase larga: más chico en celular para que las palabras no se toquen */
 @media (max-width: 810px) {
@@ -2785,20 +2759,39 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-cta-desc { position: relative; z-index: 10; display: block; width: fit-content; margin: 3vh auto 0; }
 .sv-cta-desc ~ .page_fondo { left: 0; }
 
-/* Lo que recibís: solo la imagen del plan, el detalle y el botón */
-.sv-recibe .titulo-seccion-superior { position: static; transform: none; margin-bottom: 3vh; }
+/* Lo que recibís: collage de entregables, listado y botón */
+.sv-recibe .titulo-seccion-superior { position: static; transform: none; margin-bottom: 2.5vh; }
 .sv-recibe .item-ecuacion { flex: none; width: auto; }
-.sv-recibe .imagen-abc { width: auto; height: clamp(150px, 32vh, 340px); max-width: 80vw; margin-bottom: 1.5vh; }
-.sv-recibe .detalles-plan-container { position: static; margin-top: 4vh; margin-bottom: 1vh; }
+.sv-recibe .imagen-abc { width: auto; height: clamp(170px, 36vh, 400px); max-width: 80vw; margin-bottom: 0; }
+.sv-recibe .detalles-plan-container { position: static; width: fit-content; max-width: 94vw; margin: 3vh auto 1vh; }
+.sv-recibe .titulo-detalles { font-size: clamp(0.62rem, 1.5vh, 0.8rem); white-space: nowrap; text-align: left; letter-spacing: .12em; opacity: .8; }
+.sv-recibe .detalles-plan { flex-direction: row; gap: clamp(24px, 4vw, 56px); justify-content: flex-start; }
+.sv-recibe .col-detalles { flex: none; text-align: left; }
+.sv-recibe .col-detalles li { font-size: clamp(0.72rem, 1.6vh, 0.85rem); color: rgba(255,255,255,0.8); margin-bottom: 0.8vh; text-align: left; }
 .sv-recibe .btn-cta-servicio { margin-top: 3vh; }
 
-/* Este servicio es para vos: imagen del collage en lugar de los círculos */
-.sv-mockup-id { width: 100%; max-width: none; margin-bottom: 2vh; }
-.sv-mockup-id .imagen-mockup { width: auto; height: clamp(150px, 30vh, 320px); max-width: 70vw; }
+/* Antes/después: frase en código sobre difuminado, sin papel ni etiquetas */
+.antes-despues .papelito-texto { height: auto; width: min(34vw, 460px); text-align: center; }
+.antes-despues .papelito-texto::before { content: ""; position: absolute; inset: -40% -25%; background: radial-gradient(ellipse at center, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 40%, rgba(0,0,0,0) 70%); z-index: -1; pointer-events: none; }
+.antes-despues .papelito-texto p { margin: 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(1.4rem, 3.4vh, 2.3rem); line-height: 1.25; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+
+/* No incluye */
+.sv-no-titulo { font-size: clamp(1.6rem, 4.6vh, 2.8rem); margin-bottom: 5vh; }
+.sv-no-titulo b { font-weight: 700; }
+.sv-notas { justify-content: center; }
+.sv-notas .sv-nota { max-width: 560px; text-align: center; }
+
+/* Este servicio es para vos: círculos de tipologías arriba, derivaciones como zócalo */
+.pantalla-identificacion .sv-ident { max-width: none; width: 100%; height: 100%; justify-content: space-between; padding: 0 5vw; box-sizing: border-box; }
+.sv-ident-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+.sv-iconos--tipos { margin-bottom: 4vh; }
+.sv-zocalo { width: 100%; max-width: 760px; gap: 6vw; align-items: flex-start; border-top: 1px solid rgba(255,255,255,0.25); padding: 2.4vh 0 4vh; }
+.sv-zocalo .derivacion-col { max-width: 300px; text-align: center; }
+.sv-zocalo .derivacion-col p { padding: 0; margin: 0 0 1.2vh; text-wrap: balance; }
 
 /* Cómo trabajamos: línea de tiempo vertical con íconos */
 .sv-linea {
-  --g: clamp(14px, 3.1vh, 32px);
+  --g: clamp(18px, 4.6vh, 46px);
   list-style: none;
   margin: 0 auto;
   padding: 0;
@@ -2831,7 +2824,8 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-ico { grid-column: 2; grid-row: 1 / span 2; align-self: center; width: 24px; height: 24px; opacity: 0.9; }
 .sv-nodo h3 { grid-column: 3; grid-row: 1; margin: 0; font-family: 'Montserrat', sans-serif; font-size: clamp(0.7rem, 1.55vh, 0.82rem); line-height: 1.25; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
 .sv-nodo p { grid-column: 3; grid-row: 2; margin: 0.3vh 0 0; font-size: clamp(0.85rem, 1.9vh, 1rem); font-style: italic; font-weight: 300; line-height: 1.3; opacity: 0.9; }
-.sv-cta { margin-top: 4vh; }
+.sv-cta { margin-top: 3vh; }
+.sv-aclara { max-width: 440px; margin: 5vh auto 0; text-align: center; font-size: clamp(0.72rem, 1.55vh, 0.85rem); font-weight: 300; line-height: 1.5; opacity: .75; text-wrap: balance; }
 
 /* Preguntas frecuentes */
 .sv-faq { width: 100%; max-width: 640px; margin: 0 auto 2vh; }
@@ -2891,11 +2885,21 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 @media (max-width: 810px) {
   .sv-cont { padding-left: 6vw; padding-right: 6vw; width: 100%; }
   .sv-titulo { font-size: 2rem; margin-bottom: 3vh; }
-  .sv-recibe .item-ecuacion { flex: none; width: auto; }
-.sv-recibe .imagen-abc { height: 22vh; }
+  .sv-recibe .imagen-abc { height: 27vh; }
   .sv-recibe .detalles-plan-container { margin-top: 2vh; }
+  .sv-recibe .detalles-plan { gap: 5vw; }
+  .sv-recibe .col-detalles li { font-size: 0.72rem; margin-bottom: 0.5vh; }
+  .sv-recibe .titulo-detalles { font-size: clamp(0.5rem, 2.55vw, 0.7rem); letter-spacing: .08em; }
   .sv-recibe .btn-cta-servicio { margin-top: 2vh; }
-  .sv-mockup-id .imagen-mockup { height: 24vh; }
+  .antes-despues .papelito-texto { width: 78vw; }
+  .antes-despues .papelito-texto p { font-size: 1.25rem; }
+  .sv-iconos--tipos { margin-bottom: 3vh; }
+  .sv-no-titulo { font-size: 1.45rem; letter-spacing: 0; white-space: nowrap; }
+  .sv-zocalo { flex-direction: row; align-items: flex-start; gap: 4vw; padding-bottom: 2.5vh; }
+  .sv-zocalo .derivacion-col { flex: 1; max-width: none; }
+  .sv-zocalo .derivacion-col p { font-size: 0.72rem; }
+  .sv-zocalo .btn-derivacion { font-size: 0.68rem; padding: 0.9vh 2.6vw; letter-spacing: 0; }
+  .sv-ident-main { padding-top: 2vh; }
   .sv-cta { margin-top: 3vh; }
   .sv-faq__q { padding: 2vh 2px; }
   .sv-faq__a p { padding-right: 24px; }
@@ -2906,6 +2910,4 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
   .sv-notas { flex-direction: column; gap: 2vh; }
   .sv-nota h3 { margin-bottom: 0.5vh; }
   .sv-nota p { font-size: 0.8rem; }
-  /* notita del antes/después más chica en celular para que se vean las fotos */
-  .antes-despues .papelito-center { width: 52vw; }
 }
