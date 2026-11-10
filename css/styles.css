@@ -2837,3 +2837,46 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
   .sv-nota h3 { margin-bottom: 0.5vh; }
   .sv-nota p { font-size: 0.8rem; }
 }
+
+/* ---- Descripción en bloques ---- */
+.sv-bloques { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; width: 100%; margin-bottom: 5vh; }
+.sv-bloque { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.sv-bloque__num { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 100; font-size: clamp(4.5rem, 18vh, 10rem); line-height: 1; margin-bottom: 1.5vh; }
+.sv-bloque h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(0.72rem, 1.6vh, 0.85rem); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin: 0 0 1.2vh; }
+.sv-bloque p { font-size: clamp(0.9rem, 2.1vh, 1.1rem); font-style: italic; font-weight: 300; line-height: 1.45; max-width: 300px; margin: 0; opacity: 0.9; }
+.sv-bloque b { font-weight: 600; }
+.sv-cta { margin-top: 3vh; }
+
+/* ---- Lo que recibís ---- */
+.sv-recibis { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 5vw; align-items: center; width: 100%; margin-bottom: 4vh; }
+.sv-recibis__img { width: 100%; max-height: 58vh; object-fit: contain; }
+.sv-recibis__texto { text-align: left; }
+.sv-recibis__texto .sv-titulo { text-align: left; margin-bottom: 2.5vh; }
+.sv-subtitulo { font-family: 'Montserrat', sans-serif; font-size: clamp(0.68rem, 1.5vh, 0.8rem); font-weight: 700; font-style: italic; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 1.8vh; opacity: 0.9; }
+.sv-lista { list-style: none; margin: 0 0 2vh; padding: 0; columns: 2; column-gap: 3vw; }
+.sv-lista li { position: relative; padding-left: 14px; font-size: clamp(0.82rem, 1.8vh, 0.95rem); font-weight: 300; line-height: 1.3; margin-bottom: 1vh; break-inside: avoid; opacity: 0.92; }
+.sv-lista li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 4px; height: 4px; border-radius: 50%; background: #fff; }
+.sv-deriva { gap: 6vw; }
+
+@media (max-width: 810px) {
+  .sv-bloques { grid-template-columns: 1fr; gap: 3vh; margin-bottom: 3vh; }
+  .sv-bloque { display: grid; grid-template-columns: 27vw 1fr; column-gap: 4vw; text-align: left; align-items: center; }
+  .sv-bloque__num { grid-row: 1 / span 2; font-size: 3.8rem; text-align: center; margin: 0; }
+  .sv-bloque h2 { margin-bottom: 0.6vh; }
+  .sv-bloque p { font-size: 0.85rem; max-width: none; }
+  .sv-cta { margin-top: 1.6vh; }
+
+  .sv-recibis { grid-template-columns: 1fr; gap: 1.2vh; margin-bottom: 1.6vh; }
+  .sv-recibis__img { max-height: 17vh; margin: 0 auto; }
+  .sv-recibis__texto { text-align: center; }
+  .sv-recibis__texto .sv-titulo { text-align: center; font-size: 1.55rem; margin-bottom: 1vh; }
+  .sv-subtitulo { font-size: 0.58rem; margin-bottom: 1vh; }
+  .sv-lista { column-gap: 5vw; text-align: left; margin-bottom: 0.6vh; }
+  .sv-lista li { font-size: 0.7rem; margin-bottom: 0.5vh; padding-left: 11px; }
+  .sv-recibis .btn-cta-servicio { margin: 0.4vh 0 0; padding: 1vh 5vw; font-size: 0.7rem; }
+  .sv-deriva.container-derivacion { flex-direction: row; gap: 3vw; align-items: flex-start; }
+  .sv-deriva .derivacion-col { max-width: none; flex: 1; }
+  .sv-deriva .derivacion-col p { font-size: 0.66rem; padding: 0; margin-bottom: 0.6vh; text-align-last: center; }
+  .sv-deriva .btn-derivacion { font-size: 0.62rem; padding: 0.8vh 1.5vw; display: block; white-space: nowrap; text-align: center; text-align-last: center; letter-spacing: 0.5px; }
+  .sv-bloque:last-child .sv-bloque__num { font-size: 3rem; }
+}
