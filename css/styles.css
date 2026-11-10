@@ -2977,9 +2977,9 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-recibe .titulo-seccion-superior { position: relative; top: 4vh; }
 
 /* Overlay del color de fondo de la web (casi negro marrón) en pantallas más oscuras */
-.sv-desc2 .opacidad, .sv-id6 .opacidad, .sv-recibe-sec .opacidad { background: rgba(19, 12, 9, 0.7); }
-.sv-desc2 .opacidad { background: rgba(19, 12, 9, 0.84); }
-.sv-no-sec .opacidad { background: rgba(19, 12, 9, 0.7); }
+.sv-desc2 .opacidad, .sv-id6 .opacidad, .sv-recibe-sec .opacidad { background: rgba(7, 5, 4, 0.82); }
+.sv-desc2 .opacidad { background: rgba(7, 5, 4, 0.9); }
+.sv-no-sec .opacidad { background: rgba(7, 5, 4, 0.82); }
 .sv-id6 .titulo-identif { margin: 0; }
 .sv-id6 .sv-ident-main .btn-cta-servicio { margin: 1.4vh 0 0; }
 .sv-id6 .sv-ident-main { padding: 1.6vh 0 4.4vh; }
