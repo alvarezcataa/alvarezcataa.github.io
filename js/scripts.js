@@ -753,3 +753,26 @@ document.addEventListener('scroll', () => {
   window.addEventListener('load', medir);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
 })();
+
+
+// ============================================================
+// PUNTITOS DE AVANCE — una marca por pantalla en el borde derecho
+//    (se crean solos en las páginas con 2 o más pantallas)
+// ============================================================
+(function () {
+  const secs = [...document.querySelectorAll('.mainContent')].filter(s => s.offsetHeight > 0);
+  if (secs.length < 2 || document.querySelector('.carril-wrap') || !('IntersectionObserver' in window)) return;
+  const cont = document.createElement('div');
+  cont.className = 'avance-pantallas';
+  cont.setAttribute('aria-hidden', 'true');
+  const pts = secs.map(() => { const d = document.createElement('i'); cont.appendChild(d); return d; });
+  document.body.appendChild(cont);
+  const ratios = new Map();
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => ratios.set(e.target, e.intersectionRatio));
+    let mejor = 0, r = -1;
+    secs.forEach((s, k) => { const v = ratios.get(s) || 0; if (v > r) { r = v; mejor = k; } });
+    pts.forEach((d, k) => d.classList.toggle('on', k === mejor));
+  }, { threshold: [0, 0.1, 0.25, 0.4, 0.55, 0.7, 0.85, 1] });
+  secs.forEach(s => io.observe(s));
+})();

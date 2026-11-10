@@ -366,8 +366,6 @@
     </div>
 </section>
 
-<div class="sv-avance" aria-hidden="true"></div>
-
 <script src="js/scripts.js"></script>
 
 <script>
@@ -419,16 +417,6 @@
       else if (e.intersectionRatio < 0.05) sec.classList.remove('visto');
     });
   }, { threshold: [0, 0.05, 0.55] }).observe(sec);
-})();
-
-(function () {
-  var secs = [].slice.call(document.querySelectorAll('.mainContent')), cont = document.querySelector('.sv-avance');
-  if (!cont || !secs.length || !('IntersectionObserver' in window)) return;
-  var pts = secs.map(function () { var d = document.createElement('i'); cont.appendChild(d); return d; });
-  var io = new IntersectionObserver(function (es) {
-    es.forEach(function (e) { if (e.isIntersecting && e.intersectionRatio >= 0.5) pts.forEach(function (d, k) { d.classList.toggle('on', secs[k] === e.target); }); });
-  }, { threshold: [0.5] });
-  secs.forEach(function (x) { io.observe(x); });
 })();
 </script>
 
