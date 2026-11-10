@@ -2764,3 +2764,76 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 @media (max-width: 810px) {
   .subtitulo-pagina--largo { font-size: 2.3vw; }
 }
+
+
+/* ===================================================================
+   SERVICIOS (nueva estructura) — "Cómo trabajamos" e "¡Importante!"
+   =================================================================== */
+.sv-oscuro::after { content: ""; position: absolute; inset: 0; background: rgba(12,4,4,0.6); z-index: 2; pointer-events: none; }
+.sv-cont { height: auto; min-height: 0; max-width: 1100px; padding-top: 56px; box-sizing: border-box; }
+.entregable .sv-cont { height: calc(var(--vh, 1vh) * 100); }
+
+.sv-titulo {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2rem, 5vh, 3.5rem);
+  margin: 0 0 6vh;
+  text-align: center;
+}
+
+/* Línea de tiempo */
+.sv-linea { list-style: none; margin: 0 0 6vh; padding: 0; width: 100%; display: grid; grid-template-columns: repeat(6, 1fr); }
+.sv-nodo { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0; }
+.sv-nodo h3, .sv-nodo p { padding: 0 0.7vw; }
+.sv-nodo__n { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 100; font-size: clamp(1.6rem, 4.2vh, 2.6rem); line-height: 1; opacity: 0.6; }
+.sv-nodo__fila { position: relative; width: 100%; height: 12px; margin: 1.6vh 0 2vh; }
+.sv-nodo__fila::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(255,255,255,0.4); }
+.sv-nodo:first-child .sv-nodo__fila::before { left: 50%; }
+.sv-nodo:last-child .sv-nodo__fila::before { right: 50%; }
+.sv-nodo__fila::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 6px rgba(255,255,255,0.12); }
+.sv-nodo h3 { font-family: 'Montserrat', sans-serif; font-size: clamp(0.68rem, 1.5vh, 0.8rem); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 0.8vh; }
+.sv-nodo p { font-size: clamp(0.88rem, 2vh, 1.05rem); font-style: italic; font-weight: 300; line-height: 1.35; margin: 0; opacity: 0.9; }
+
+.sv-datos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 1.2vw; justify-content: center; }
+.sv-datos li { border: 1px solid rgba(255,255,255,0.5); border-radius: 999px; padding: 1.1vh 1.8vw; font-size: clamp(0.7rem, 1.5vh, 0.8rem); letter-spacing: 0.16em; text-transform: uppercase; font-weight: 300; }
+.sv-datos b { font-weight: 700; }
+
+/* ¡Importante! */
+.sv-bajada { font-size: clamp(0.95rem, 2.1vh, 1.15rem); font-weight: 300; margin: 0 0 4vh; text-align: center; opacity: 0.92; }
+.sv-bajada b { font-weight: 600; }
+.sv-iconos { list-style: none; margin: 0 0 6vh; padding: 0; display: flex; gap: 4vw; justify-content: center; }
+.sv-iconos li { display: flex; flex-direction: column; align-items: center; gap: 1.6vh; width: 12vw; max-width: 170px; text-align: center; font-size: clamp(0.85rem, 1.85vh, 1rem); font-style: italic; font-weight: 300; }
+.sv-icono { width: clamp(64px, 11vh, 96px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,0.65); border-radius: 50%; display: grid; place-items: center; }
+.sv-icono svg { width: 46%; height: 46%; }
+.sv-notas { display: flex; gap: 4vw; width: 100%; max-width: 820px; }
+.sv-nota { flex: 1; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 1.8vh; text-align: left; }
+.sv-nota h3 { font-family: 'Montserrat', sans-serif; font-size: clamp(0.68rem, 1.5vh, 0.8rem); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 1vh; }
+.sv-nota p { font-size: clamp(0.85rem, 1.85vh, 1rem); font-weight: 300; line-height: 1.45; margin: 0; opacity: 0.9; }
+
+@media (max-width: 810px) {
+  .sv-cont { padding-left: 7vw; padding-right: 7vw; width: 100%; }
+  .entregable .sv-cont { height: calc(var(--vh, 1vh) * 100); }
+  .sv-titulo { font-size: 2rem; margin-bottom: 3vh; }
+  .sv-linea { grid-template-columns: 1fr; margin-bottom: 3vh; }
+  .sv-nodo { display: grid; grid-template-columns: 14px 1fr; column-gap: 16px; text-align: left; padding: 0 0 1.8vh; }
+  .sv-nodo h3, .sv-nodo p { padding: 0; }
+  .sv-nodo__n { display: none; }
+  .sv-nodo__fila { grid-column: 1; grid-row: 1 / span 2; height: auto; margin: 0; width: 14px; }
+  .sv-nodo { position: relative; }
+  .sv-nodo__fila::before { display: none; }
+  .sv-nodo::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: -8px; width: 1px; background: rgba(255,255,255,0.4); }
+  .sv-nodo:last-child::before { display: none; }
+  .sv-nodo__fila::after { left: 0; top: 0; margin: 0; width: 12px; height: 12px; box-shadow: 0 0 0 4px rgba(255,255,255,0.12); }
+  .sv-nodo h3 { grid-column: 2; margin: 0; }
+  .sv-nodo p { grid-column: 2; font-size: 0.85rem; }
+  .sv-datos { gap: 8px; }
+  .sv-datos li { padding: 0.9vh 12px; font-size: 0.62rem; }
+  .sv-bajada { margin-bottom: 3vh; }
+  .sv-iconos { gap: 3vw; margin-bottom: 3.5vh; }
+  .sv-iconos li { width: 20vw; font-size: 0.72rem; gap: 1vh; }
+  .sv-icono { width: 14vw; max-width: 60px; }
+  .sv-notas { flex-direction: column; gap: 2vh; }
+  .sv-nota h3 { margin-bottom: 0.5vh; }
+  .sv-nota p { font-size: 0.8rem; }
+}
