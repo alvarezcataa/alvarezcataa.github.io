@@ -2759,3 +2759,8 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
   transition: background .4s;
 }
 .btn-cta-pagina:hover { background: rgba(255, 255, 255, 0.14); }
+
+/* Subtítulo de portada con frase larga: más chico en celular para que las palabras no se toquen */
+@media (max-width: 810px) {
+  .subtitulo-pagina--largo { font-size: 2.3vw; }
+}
