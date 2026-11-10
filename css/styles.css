@@ -2986,19 +2986,14 @@ html.nativo.cubre.medido .marquesina { bottom: calc(40px + var(--Bx)); }
 .sv-id6 .sv-ident-main { padding: 1.6vh 0 4.4vh; }
 .sv-time-sec .opacidad { background: rgba(7, 5, 4, 0.6); }
 
-/* Flechas del carrusel */
-.sv-carrusel__flecha { all: unset; box-sizing: border-box; position: absolute; top: 50%; width: 38px; height: 38px; margin-top: -19px; z-index: 3; border-radius: 50%; background: rgba(7,5,4,.35); cursor: pointer; display: grid; place-items: center; transition: background .3s; }
-.sv-carrusel__flecha::before { content: ""; width: 9px; height: 9px; border-top: 1px solid #fff; border-right: 1px solid #fff; }
-.sv-carrusel__flecha--ant { left: 12px; } .sv-carrusel__flecha--ant::before { transform: translateX(2px) rotate(-135deg); }
-.sv-carrusel__flecha--sig { right: 12px; } .sv-carrusel__flecha--sig::before { transform: translateX(-2px) rotate(45deg); }
-@media (hover: hover) { .sv-carrusel__flecha:hover { background: rgba(7,5,4,.6); } }
+/* Flechas del carrusel (mismo estilo que en Proyectos) */
+.sv-carrusel__flecha { all: unset; box-sizing: border-box; position: absolute; top: 0; bottom: 0; width: clamp(44px, 8vw, 110px); z-index: 3; display: flex; align-items: center; cursor: pointer; color: rgba(255,255,255,.75); transition: color .25s; }
+.sv-carrusel__flecha--ant { left: 0; justify-content: flex-start; padding-left: clamp(10px, 2.2vw, 34px); }
+.sv-carrusel__flecha--sig { right: 0; justify-content: flex-end; padding-right: clamp(10px, 2.2vw, 34px); }
+.sv-carrusel__flecha svg { width: clamp(14px, 1.6vw, 22px); height: clamp(60px, 11vh, 110px); fill: none; stroke: currentColor; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(0,0,0,.45)); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+@media (hover: hover) { .sv-carrusel__flecha:hover { color: #fff; } .sv-carrusel__flecha--ant:hover svg { transform: translateX(-4px); } .sv-carrusel__flecha--sig:hover svg { transform: translateX(4px); } }
 
 /* Indicador de avance de la página */
 .sv-avance { position: fixed; right: 9px; top: 50%; transform: translateY(-50%); z-index: 50; display: flex; flex-direction: column; gap: 9px; pointer-events: none; }
 .sv-avance i { display: block; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.3); transition: background .4s, transform .4s; }
 .sv-avance i.on { background: #fff; transform: scale(1.5); }
-
-/* Cierre: frase, botón y aclaración */
-.sv-cierre { margin: 3.4vh 0 0; font-family: 'Playfair Display', serif; font-style: italic; font-weight: 100; font-size: clamp(1.2rem, 3vh, 1.8rem); text-align: center; }
-.sv-cierre__btn { margin-top: 1.6vh; }
-.sv-cierre__nota { margin: 1.2vh 0 0; font-size: 0.72rem; font-weight: 300; letter-spacing: .04em; opacity: .65; text-align: center; }

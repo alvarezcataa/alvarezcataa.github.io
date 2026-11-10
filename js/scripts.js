@@ -316,13 +316,19 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
       document.addEventListener("touchstart", (e) => {
         if (sideMenu.classList.contains("open") || e.touches.length !== 1) { ox = null; return; }
         ox = e.touches[0].clientX; oy = e.touches[0].clientY;
-        bloquea = !!(e.target.closest && e.target.closest(".grilla-servicios, .carril, .carril-wrap, .filtros, input, textarea, select, [data-no-menu]"));
+        bloquea = !!(e.target.closest && e.target.closest(".grilla-servicios, .carril, .carril-wrap, .filtros, .sv-carrusel, input, textarea, select, [data-no-menu]"));
       }, { passive: true });
+      // Si el gesto es claramente horizontal hacia la izquierda, el navegador no scrollea la página mientras tanto
+      document.addEventListener("touchmove", (e) => {
+        if (ox === null || bloquea || e.touches.length !== 1) return;
+        const mx = e.touches[0].clientX - ox, my = Math.abs(e.touches[0].clientY - oy);
+        if (mx < -12 && -mx > my * 1.5 && e.cancelable) e.preventDefault();
+      }, { passive: false });
       document.addEventListener("touchend", (e) => {
         if (ox === null || bloquea) { ox = null; return; }
         const dx = e.changedTouches[0].clientX - ox, dy = Math.abs(e.changedTouches[0].clientY - oy);
         ox = null;
-        if (dx < -60 && -dx > dy * 1.5) window.toggleMenu();
+        if (dx < -50 && -dx > dy * 1.2) window.toggleMenu();
       }, { passive: true });
     }
 
