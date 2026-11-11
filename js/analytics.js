@@ -1,18 +1,18 @@
-/* Google Analytics 4 de Estudio CAVLA.
-   Para activarlo, pegá entre las comillas el ID de medición (empieza con G-). Mientras esté vacío no se carga nada. */
+/* Google Tag Manager de Estudio CAVLA (la medición de Google Analytics se configura adentro de Tag Manager).
+   Además de las visitas, avisa cada clic en botones y el envío del formulario como eventos del dataLayer. */
 (function () {
-  var GA_ID = '';
+  var GTM_ID = 'GTM-TMKMT2W4';
 
-  window.cavlaTrack = function (nombre, datos) { try { if (window.gtag) window.gtag('event', nombre, datos || {}); } catch (e) {} };
-  if (!GA_ID) return;
-
-  var s = document.createElement('script');
-  s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-  document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function () { window.dataLayer.push(arguments); };
-  window.gtag('js', new Date());
-  window.gtag('config', GA_ID, { anonymize_ip: true });
+  window.cavlaTrack = function (nombre, datos) {
+    try { var o = { event: nombre }; for (var k in (datos || {})) o[k] = datos[k]; window.dataLayer.push(o); } catch (e) {}
+  };
+  if (!GTM_ID) return;
+
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+  var s = document.createElement('script');
+  s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+  document.head.appendChild(s);
 
   // Clics en botones que llevan a contactar o a avanzar en el proceso
   document.addEventListener('click', function (e) {

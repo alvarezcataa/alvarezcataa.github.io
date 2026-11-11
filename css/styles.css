@@ -3037,18 +3037,14 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
 .br-pc { display: none; }
 @media (min-width: 811px) { .br-pc { display: inline; } }
 
-/* ===== SOBRE MÍ: agenda con retrato (la foto va en la página izquierda/superior, la formación en la otra) ===== */
-.agenda { position: relative; width: min(80vw, 38vh); aspect-ratio: 736 / 1104; container-type: inline-size; margin: 0 auto; }
+/* ===== SOBRE MÍ: agenda con retrato (la foto va en la página izquierda/superior, el texto en la otra, con el mismo margen a cada lado) ===== */
+.agenda { position: relative; width: min(80vw, 40vh); aspect-ratio: 954 / 1200; container-type: inline-size; margin: 0 auto clamp(22px, 4vh, 40px); }
 .agenda__img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.agenda__texto { position: absolute; left: 9%; right: 9%; top: 53%; bottom: 6%; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; justify-content: space-evenly; text-align: left; color: #2a2420; opacity: .8; font-family: 'Montserrat', sans-serif; }
-.agenda__texto li { display: flex; flex-direction: column; gap: .3cqw; }
-.agenda__texto b { font-weight: 600; font-size: 3.5cqw; letter-spacing: .06em; line-height: 1.2; }
-.agenda__texto b i { font-style: normal; font-weight: 400; margin: 0 .5ch; }
-.agenda__texto span { font-weight: 400; font-size: 2.85cqw; line-height: 1.25; }
+.agenda__texto { position: absolute; left: 15.7%; right: 13.9%; top: 57.9%; bottom: 12.5%; display: flex; align-items: center; text-align: left; color: #2a2420; opacity: .8; font-family: 'Montserrat', sans-serif; }
+.agenda__texto p { margin: 0; font-weight: 400; font-size: 3.1cqw; line-height: 1.55; }
 @media (min-width: 811px) {
-  .agenda { width: min(86vw, 74vh); aspect-ratio: 1104 / 736; }
-  .agenda__texto { left: 54%; right: 6%; top: 8%; bottom: 8%; }
-  .agenda__texto b { font-size: 1.8cqw; }
-  .agenda__texto span { font-size: 1.4cqw; }
+  .agenda { width: min(86vw, 68vh); aspect-ratio: 1200 / 954; }
+  .agenda__texto { left: 57.8%; right: 12.5%; top: 14.4%; bottom: 16.4%; }
+  .agenda__texto p { font-size: 2.15cqw; }
 }
 .grafico-contenedor:has(.agenda) { max-width: none; display: flex; justify-content: center; }
