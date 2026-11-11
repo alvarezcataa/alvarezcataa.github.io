@@ -1,20 +1,18 @@
-/* Google Tag Manager de Estudio CAVLA (la medición de Google Analytics se configura adentro de Tag Manager).
-   Además de las visitas, avisa cada clic en botones y el envío del formulario como eventos del dataLayer. */
+/* Google Analytics 4 de Estudio CAVLA (ID de medición G-1960BDVZC4).
+   Además de las visitas, registra los clics en botones y el envío del formulario. */
 (function () {
-  var GTM_ID = 'GTM-TMKMT2W4';
+  var GA_ID = 'G-1960BDVZC4';
 
   window.dataLayer = window.dataLayer || [];
-  window.cavlaTrack = function (nombre, datos) {
-    try { var o = { event: nombre }; for (var k in (datos || {})) o[k] = datos[k]; window.dataLayer.push(o); } catch (e) {}
-  };
-  if (!GTM_ID) return;
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  window.cavlaTrack = function (nombre, datos) { try { window.gtag('event', nombre, datos || {}); } catch (e) {} };
 
-  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
   var s = document.createElement('script');
-  s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+  s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
   document.head.appendChild(s);
+  window.gtag('js', new Date());
+  window.gtag('config', GA_ID, { anonymize_ip: true });
 
-  // Clics en botones que llevan a contactar o a avanzar en el proceso
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a');
     if (!a) return;
