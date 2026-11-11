@@ -586,6 +586,7 @@
     function finalizar(esBot) {
       var c = resumen(), url = 'https://wa.me/' + CFG.whatsapp + '?text=' + encodeURIComponent(mensaje(c));
       terminado = true;
+      if (!esBot && window.cavlaTrack) cavlaTrack('generate_lead', { servicio: (typeof DESDE !== 'undefined' && DESDE) ? DESDE.nombre : 'Directo' });
       var w = null;
       try { w = window.open(url, '_blank'); if (w) w.opener = null; } catch (e) {}   // se abre en otra pestaña para que el sitio siga abierto
       if (!esBot && CFG.appsScriptUrl) {
@@ -629,5 +630,6 @@
   })();
   </script>
 
+<script src="/js/analytics.js" defer></script>
 </body>
 </html>

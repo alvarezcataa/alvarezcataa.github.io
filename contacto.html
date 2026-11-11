@@ -356,18 +356,35 @@
       .btn-guia { padding: 10px 14px; letter-spacing: 0.14em; }
     }
 
-    /* COMPUTADORA: el bloque de horario a redes queda centrado entre la navbar y la línea; textos +2px */
+    /* COMPUTADORA: el bloque de horario a redes queda centrado entre la navbar y la línea, con textos grandes para llenar la pantalla */
     @media (min-width: 811px) {
       .contacto-directo { padding-top: 56px; }
       .contacto-directo__bloque { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 0; }
-      .contacto-directo__guia { flex: 0 0 auto; }
+      .contacto-directo__guia { flex: 0 0 auto; margin-bottom: clamp(36px, 9vh, 110px); }
       .contacto-directo__guia .contacto-directo__sep { flex: 0 0 auto; min-height: 0; }
       .contacto-directo__guia .contacto-directo__sep:last-child { display: none; }
       .contacto-directo__guia-in { margin-top: clamp(22px, 3.6vh, 38px); }
-      .contacto-directo__label, .guia-pregunta { font-size: 12px; }
-      .contacto-directo__valor, .mail-txt__frase, .contacto-directo__guia-texto, .btn-whatsapp, .contacto-directo__equipo, .contacto-directo__equipo a { font-size: 14px; }
-      .mail-txt__dir { font-size: 15px; }
+      .contacto-directo__titulo { font-size: clamp(56px, 11vh, 120px); margin-bottom: clamp(20px, 3.4vh, 36px); }
+      .contacto-directo__horario { margin-bottom: clamp(20px, 3.4vh, 36px); }
+      .contacto-directo__label, .guia-pregunta { font-size: 13px; }
+      .contacto-directo__valor, .mail-txt__frase, .contacto-directo__guia-texto { font-size: 16px; }
+      .btn-whatsapp { font-size: 15px; padding: 19px 52px; }
+      .mail-txt__dir { font-size: 18px; }
+      .contacto-directo__mail-txt { margin-top: clamp(14px, 2.2vh, 24px); }
+      .contacto-directo__iconos { margin-top: calc(clamp(24px, 4vh, 40px) - 11px); }
+      .contacto-directo__iconos svg { width: 26px; height: 26px; }
       .btn-guia { font-size: 12px; }
+      .contacto-directo__equipo, .contacto-directo__equipo a { font-size: 14px; }
+    }
+    @media (min-width: 811px) and (max-height: 780px) {
+      .contacto-directo__titulo { font-size: clamp(48px, 9vh, 80px); margin-bottom: 14px; }
+      .contacto-directo__horario { margin-bottom: 12px; }
+      .contacto-directo__label, .guia-pregunta { font-size: 12px; }
+      .contacto-directo__valor, .mail-txt__frase, .contacto-directo__guia-texto { font-size: 14px; }
+      .btn-whatsapp { font-size: 13px; padding: 14px 40px; }
+      .mail-txt__dir { font-size: 15px; }
+      .contacto-directo__iconos svg { width: 22px; height: 22px; }
+      .contacto-directo__guia { margin-bottom: 4vh; }
     }
 
     /* ===================================================
@@ -683,5 +700,6 @@
     }
   </script>
 
+<script src="/js/analytics.js" defer></script>
 </body>
 </html>
