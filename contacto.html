@@ -356,6 +356,20 @@
       .btn-guia { padding: 10px 14px; letter-spacing: 0.14em; }
     }
 
+    /* COMPUTADORA: el bloque de horario a redes queda centrado entre la navbar y la línea; textos +2px */
+    @media (min-width: 811px) {
+      .contacto-directo { padding-top: 56px; }
+      .contacto-directo__bloque { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 0; }
+      .contacto-directo__guia { flex: 0 0 auto; }
+      .contacto-directo__guia .contacto-directo__sep { flex: 0 0 auto; min-height: 0; }
+      .contacto-directo__guia .contacto-directo__sep:last-child { display: none; }
+      .contacto-directo__guia-in { margin-top: clamp(22px, 3.6vh, 38px); }
+      .contacto-directo__label, .guia-pregunta { font-size: 12px; }
+      .contacto-directo__valor, .mail-txt__frase, .contacto-directo__guia-texto, .btn-whatsapp, .contacto-directo__equipo, .contacto-directo__equipo a { font-size: 14px; }
+      .mail-txt__dir { font-size: 15px; }
+      .btn-guia { font-size: 12px; }
+    }
+
     /* ===================================================
        MOBILE
        =================================================== */
@@ -430,6 +444,7 @@
   <section class="page contacto-directo mainContent">
     <div class="contacto-directo__inner">
 
+      <div class="contacto-directo__bloque">
       <div class="contacto-directo__horario">
         <span class="contacto-directo__label">Horario</span>
         <span class="contacto-directo__valor">Lunes a viernes de 9hs a 18hs</span>
@@ -446,6 +461,7 @@
         <a href="https://www.instagram.com/estudio.cavla" target="_blank" rel="noopener" aria-label="Instagram de Estudio CAVLA"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></a>
         <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener" aria-label="YouTube de Estudio CAVLA"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg></a>
         <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener" aria-label="Facebook de Estudio CAVLA"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M13.2 20.4v-7h2.3l.4-2.7h-2.7V9.1c0-.8.3-1.3 1.4-1.3h1.4V5.4c-.3 0-1.1-.1-2.1-.1-2.1 0-3.4 1.2-3.4 3.4v2h-2.3v2.7h2.3v7"/></svg></a>
+      </div>
       </div>
       </div>
 
