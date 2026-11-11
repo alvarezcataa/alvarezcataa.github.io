@@ -3031,5 +3031,5 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
   .sv-ico { grid-column: 1; grid-row: 1; align-self: center; margin-bottom: 14px; }
   .sv-punto { grid-column: 1; grid-row: 2; align-self: center; margin: 0 0 14px; }
   .sv-nodo h3 { grid-column: 1; grid-row: 3; text-align: center; }
-  .sv-nodo p { grid-column: 1; grid-row: 4; text-align: center; margin-top: 4px; }
+  .sv-nodo p { grid-column: 1; grid-row: 4; text-align: center; margin-top: 4px; max-width: 13em; min-height: 2.7em; }
 }
