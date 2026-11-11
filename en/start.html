@@ -151,7 +151,7 @@
     <a href="/en/contact">Contact</a>
   </nav>
 
-  <span class="cavla-nav__lang"><a href="/en/start" hreflang="es" lang="es" aria-label="Ver en español">ESPAÑOL</a> / <span class="is-on">ENGLISH</span></span>
+  <a class="cavla-nav__lang" href="/en/start" hreflang="es" lang="es" aria-label="Ver en español">ESPAÑOL</a>
   <a href="/en/contact" class="cavla-nav__cta" id="nav-dudas">I have questions</a>
 
     <div class="menu-toggle" onclick="toggleMenu()">☰</div>
@@ -263,7 +263,7 @@
                 opts: ['I have a carpenter', 'I want the studio to handle it'],
                 next: function () { return 'presupuesto'; } },
       espacio:{ tipo: 'single', q: 'What type of property is it?',
-                opts: ['House', 'Apartment', 'Retail space', 'Restaurant / hospitality space'],
+                opts: ['House', 'Apartment', 'Retail space', 'Gastronomic space (restaurant, café, bar)'],
                 next: function (a) { return a >= 2 ? 'rubro' : 'estadoEsp'; } },
       rubro:  { tipo: 'single', q: 'What line of business is it?',
                 opts: function () { return indices.espacio === 3 ? ['Café', 'Restaurant', 'Bar', 'Other'] : ['Clothing', 'Food', 'Technology', 'Health and beauty', 'Home and decor', 'Books and toys', 'Other']; },

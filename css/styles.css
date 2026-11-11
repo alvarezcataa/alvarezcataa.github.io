@@ -3058,3 +3058,5 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
 .cavla-nav.is-scrolled .cavla-nav__lang{margin-top:9px}
 @media (max-width:810px){ .cavla-nav__lang{display:none} }
 @media (min-width:811px) and (max-width:1500px){ .cavla-nav__lang{left:20px} }
+a.cavla-nav__lang{color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s}
+a.cavla-nav__lang:hover{color:#fff}
