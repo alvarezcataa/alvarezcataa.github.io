@@ -3060,3 +3060,7 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
 @media (min-width:811px) and (max-width:1500px){ .cavla-nav__lang{left:20px} }
 a.cavla-nav__lang{color:rgba(255,255,255,.5);text-decoration:none;transition:color .3s}
 a.cavla-nav__lang:hover{color:#fff}
+
+/* Idioma en el menú lateral: apartado, abajo, más chico y en negrita */
+.side-menu__lang{position:absolute;left:0;right:0;bottom:calc(7vh + env(safe-area-inset-bottom,0px));text-align:center;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.6);text-decoration:none;padding:12px}
+@media (min-width:811px){ .side-menu__lang{display:none} }
