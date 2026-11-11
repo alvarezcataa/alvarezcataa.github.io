@@ -1,49 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.estudiocavla.com/</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/asesoria-espacial</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/asesoria-espacial"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/spatial-advisory"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/asesoria-espacial"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/spatial-advisory</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/asesoria-espacial"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/spatial-advisory"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/asesoria-espacial"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/diseno-integral</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/diseno-integral"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/integral-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/diseno-integral"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/integral-design</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/diseno-integral"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/integral-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/diseno-integral"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/diseno-mobiliario</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/diseno-mobiliario"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/furniture-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/diseno-mobiliario"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/furniture-design</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/diseno-mobiliario"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/furniture-design"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/diseno-mobiliario"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/filosofia</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/filosofia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/philosophy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/filosofia"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/philosophy</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/filosofia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/philosophy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/filosofia"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/sobremi</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/sobremi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/sobremi"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/about</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/sobremi"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/sobremi"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/contacto</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/contacto"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/contact</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/contacto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/contacto"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/empezar</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/empezar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/start"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/empezar"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/start</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/empezar"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/start"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/empezar"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/proyectos</loc>
     <lastmod>2026-11-06</lastmod>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/proyectos"/>
+  </url>
+  <url>
+    <loc>https://www.estudiocavla.com/en/projects</loc>
+    <lastmod>2026-11-06</lastmod>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/proyectos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/proyectos"/>
   </url>
   <url>
     <loc>https://www.estudiocavla.com/proyectos/casa-bruma</loc>

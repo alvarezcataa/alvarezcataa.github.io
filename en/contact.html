@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#130c09" />
+  <meta name="color-scheme" content="dark" />
+  <title>Estudio CAVLA - Contact</title>
+  <meta name="description" content="Write to Estudio CAVLA on WhatsApp or by email. Monday to Friday, 9am to 6pm (Argentina time)." />
+  <link rel="canonical" href="https://www.estudiocavla.com/en/contact" />
+  <link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/contacto" />
+  <link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/contact" />
+  <link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/contacto" />
+  <link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/contacto" />
+  <link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/contact" />
+  <link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/contacto" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Estudio CAVLA" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Estudio CAVLA - Contact" />
+  <meta property="og:description" content="Write to Estudio CAVLA on WhatsApp or by email. Monday to Friday, 9am to 6pm (Argentina time)." />
+  <meta property="og:url" content="https://www.estudiocavla.com/en/contact" />
+  <meta property="og:image" content="https://www.estudiocavla.com/images/og-cavla.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.estudiocavla.com/images/og-cavla.jpg" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon_io/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===================================================
+       PANTALLA 1 — FORMULARIO DE CONTACTO
+       =================================================== */
+
+    /* Pantalla que solo aparece al tocar "o enviame un mail" (no forma parte del scroll de la página) */
+    .contacto-form {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: #0e0b0b;
+      display: flex;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .45s ease, visibility 0s linear .45s;
+    }
+    .contacto-form { scroll-snap-align: none; scroll-snap-stop: normal; }
+    .contacto-form.abierto { opacity: 1; visibility: visible; transition: opacity .45s ease; }
+
+    .contacto-form__volver {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.55); padding: 6px 4px; margin-bottom: clamp(8px, 2vh, 20px);
+      transition: color .4s;
+    }
+    .contacto-form__volver:hover { color: #fff; }
+
+    .contacto-form__inner {
+      width: 100%;
+      max-width: 680px;
+      margin: auto;
+      padding: 90px 5vw 48px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .contacto-form__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6.5vh, 76px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      line-height: 1.1;
+      margin-top: 2vh;
+      margin-bottom: clamp(32px, 5vh, 56px);
+    }
+
+    /* --- Campos --- */
+    .contacto-form__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 40px;
+      width: 100%;
+    }
+
+    .contacto-form__campo {
+      display: flex;
+      flex-direction: column;
+      margin: 0 0 2vh;
+      text-align: left;
+    }
+
+    .contacto-form__campo--full {
+      grid-column: 1 / -1;
+    }
+
+    .contacto-form__label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 10px;
+    }
+
+    .contacto-form__input,
+    .contacto-form__textarea {
+      background: transparent;
+      border: none;
+      border-bottom: 0.5px solid rgb(255, 255, 255);
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      padding: 10px 0;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.4s;
+    }
+
+    .contacto-form__input::placeholder,
+    .contacto-form__textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .contacto-form__input:focus,
+    .contacto-form__textarea:focus {
+      border-bottom-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .contacto-form__textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    /* --- Botones --- */
+    .contacto-form__botones {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    /* Enviar — outline secundario */
+    .btn-enviar {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      padding: 13px 36px;
+      text-align: center;
+      transition: all 0.4s;
+      cursor: pointer;
+    }
+
+    .btn-enviar:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .btn-enviar:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ===================================================
+       PANTALLA — CONTACTO DIRECTO
+       =================================================== */
+
+    .contacto-directo {
+      background: #0e0b0b;
+      height: auto;                       /* crece si el contenido no entra, así el zócalo nunca se superpone */
+      min-height: calc(var(--vh, 1vh) * 100);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      box-sizing: border-box;
+      --Z: clamp(16px, calc((var(--vh, 1vh) * 100 - 665px) * 0.95), 280px);   /* distancia entre la navbar y el horario: usa el espacio que sobra y se achica si la pantalla es corta */
+      padding: calc(56px + var(--Z)) 0 40px;
+    }
+
+    /* zonas seguras del celular (la barra de Safari y la hora), igual que el zócalo de Inicio */
+    html.nativo.fijo .contacto-directo { padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+    html.nativo.cubre.medido .smooth-scroll-wrapper > .contacto-directo.pantalla-s {
+      height: auto; min-height: var(--S);
+      padding-top: calc(var(--T) + 56px + var(--Z));
+      padding-bottom: calc(var(--Bx) + 40px);
+    }
+
+    .contacto-directo__inner {
+      width: 100%;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 5vw;
+      box-sizing: border-box;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .contacto-directo__horario {
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      margin: 0 0 clamp(14px, 2.2vh, 22px);
+    }
+
+    .contacto-directo__linea {
+      width: 100%; max-width: 640px; height: 0;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.16);
+    }
+
+    /* la línea queda a mitad de camino entre las redes y la guía; la guía queda centrada hasta el zócalo */
+    .contacto-directo__sep { flex: 1; min-height: 14px; display: flex; align-items: center; justify-content: center; width: 100%; }
+    .contacto-directo__guia-in { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+    .contacto-directo__label {
+      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.25;
+      color: rgba(255, 255, 255, 0.94);
+    }
+
+    .contacto-directo__valor {
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300; letter-spacing: 0.04em; line-height: 1.25;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .contacto-directo__arriba { display: flex; flex-direction: column; align-items: center; width: 100%; }
+
+    .contacto-directo__mail-txt { margin: clamp(8px, 1.3vh, 12px) 0 0; }
+    .contacto-directo__mail-txt a {
+      display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none;
+      font-family: 'Montserrat', sans-serif; letter-spacing: 0.06em;
+    }
+    .txt-tactil { display: none; }
+    @media (hover: none) and (pointer: coarse) { .txt-pc { display: none; } .txt-tactil { display: inline; } }
+    .mail-txt__frase { font-size: 12px; font-weight: 300; color: rgba(255, 255, 255, 0.6); transition: color .4s; }
+    .mail-txt__dir { font-size: 13px; color: rgba(255, 255, 255, 0.85); border-bottom: 0.5px solid rgba(255, 255, 255, 0.4); transition: color .4s, border-color .4s; }
+    .contacto-directo__mail-txt a:hover .mail-txt__frase { color: #fff; }
+    .contacto-directo__mail-txt a:hover .mail-txt__dir { color: #fff; border-bottom-color: #fff; }
+
+    .contacto-directo__titulo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6.5vh, 76px);
+      font-weight: 300;
+      font-style: italic;
+      color: white;
+      line-height: 1.1;
+      margin: 0 0 clamp(14px, 2.2vh, 22px);
+    }
+
+    /* "Hablemos." en regular, 20% más chico y con el mismo trazo esbelto del título de la sección de servicios */
+    .contacto-directo__titulo-2 {
+      display: block;
+      width: max-content;
+      margin: 0 auto;
+      font-size: 0.7em;
+      font-style: normal;
+      font-weight: 100;
+      transform: scaleX(0.9);
+      transform-origin: center;
+    }
+
+    .btn-whatsapp {
+      display: inline-block;
+      text-decoration: none;
+      border: 1px solid white;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ffffff;
+      padding: 15px 40px;
+      transition: all 0.4s;
+    }
+
+    .btn-whatsapp { display: inline-flex; align-items: center; gap: 12px; }
+    .btn-whatsapp:hover { background: rgba(255, 255, 255, 0.14); }
+
+    .contacto-directo__guia { flex: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .contacto-directo__guia-texto {
+      margin: 0; max-width: 440px;
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300;
+      line-height: 1.25; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6);
+    }
+    .guia-pregunta {
+      display: block; margin-bottom: 0;
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; line-height: 1.25;
+      color: rgba(255, 255, 255, 0.94);
+    }
+    .contacto-directo__guia-botones { display: flex; gap: 12px; justify-content: center; }
+    .btn-guia {
+      display: inline-block; text-decoration: none;
+      border: 0.5px solid rgba(255, 255, 255, 0.4); border-radius: 50px;
+      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65); padding: 11px 22px; transition: all .4s;
+    }
+    .btn-guia:hover { color: #fff; border-color: rgba(255, 255, 255, 0.8); background: rgba(255, 255, 255, 0.06); }
+
+    .contacto-directo__iconos { display: flex; justify-content: center; align-items: center; gap: 4px; margin: calc(clamp(18px, 2.8vh, 28px) - 11px) 0 -11px; }
+    .contacto-directo__iconos a { color: rgba(255, 255, 255, 0.6); display: inline-flex; padding: 11px; transition: color .4s, transform .4s; }
+    .contacto-directo__iconos a:hover { color: #fff; transform: translateY(-2px); }
+
+    .contacto-directo__equipo a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color .4s;
+    }
+
+    .contacto-directo__equipo a:hover { color: white; }
+
+    .contacto-directo { position: relative; }
+
+    /* zócalo: abajo de todo, respetando las zonas seguras del celular */
+    .contacto-directo__equipo {
+      margin: 16px 0 0;
+      text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .contacto-directo__equipo a {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      border-bottom: 0.5px solid rgba(255, 255, 255, 0.35);
+    }
+
+
+    @media (max-width: 810px) {
+      .btn-guia { padding: 10px 14px; letter-spacing: 0.14em; }
+    }
+
+    /* COMPUTADORA: el bloque de horario a redes queda centrado entre la navbar y la línea, con textos grandes para llenar la pantalla */
+    @media (min-width: 811px) {
+      .contacto-directo { padding-top: 56px; }
+      .contacto-directo__bloque { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 0; }
+      .contacto-directo__guia { flex: 0 0 auto; margin-bottom: clamp(36px, 9vh, 110px); }
+      .contacto-directo__guia .contacto-directo__sep { flex: 0 0 auto; min-height: 0; }
+      .contacto-directo__guia .contacto-directo__sep:last-child { display: none; }
+      .contacto-directo__guia-in { margin-top: clamp(22px, 3.6vh, 38px); }
+      .contacto-directo__titulo { font-size: clamp(56px, 11vh, 120px); margin-bottom: clamp(20px, 3.4vh, 36px); }
+      .contacto-directo__titulo-2 { font-size: 0.6em; }
+      .contacto-directo__horario { margin-bottom: clamp(20px, 3.4vh, 36px); }
+      .contacto-directo__label, .guia-pregunta { font-size: 13px; }
+      .contacto-directo__valor, .mail-txt__frase, .contacto-directo__guia-texto { font-size: 16px; }
+      .btn-whatsapp { font-size: 14px; padding: 16px 44px; }
+      .mail-txt__dir { font-size: 18px; }
+      .contacto-directo__mail-txt { margin-top: clamp(14px, 2.2vh, 24px); }
+      .contacto-directo__iconos { margin-top: calc(clamp(24px, 4vh, 40px) - 11px); }
+      .contacto-directo__iconos svg { width: 26px; height: 26px; }
+      .btn-guia { font-size: 12px; }
+      .contacto-directo__equipo, .contacto-directo__equipo a { font-size: 14px; }
+    }
+    @media (min-width: 811px) and (max-height: 780px) {
+      .contacto-directo__titulo { font-size: clamp(48px, 9vh, 80px); margin-bottom: 14px; }
+      .contacto-directo__horario { margin-bottom: 12px; }
+      .contacto-directo__label, .guia-pregunta { font-size: 12px; }
+      .contacto-directo__valor, .mail-txt__frase, .contacto-directo__guia-texto { font-size: 14px; }
+      .btn-whatsapp { font-size: 13px; padding: 14px 40px; }
+      .mail-txt__dir { font-size: 15px; }
+      .contacto-directo__iconos svg { width: 22px; height: 22px; }
+      .contacto-directo__guia { margin-bottom: 4vh; }
+    }
+
+    /* ===================================================
+       MOBILE
+       =================================================== */
+
+    @media (max-width: 810px) {
+      .contacto-form__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contacto-form__campo {
+      margin: 0 5vw 2vh;
+      }
+
+      .contacto-form__campo--full {
+        grid-column: 1;
+      }
+    }
+  </style>
+</head>
+<body class="pagina">
+
+  <!-- Navbar -->
+  <nav class="cavla-nav">
+    <a href="/en/" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+
+   <nav class="cavla-nav__center" aria-label="Main">
+    <a href="/en/">Home</a>
+    <a href="/en/projects">Projects</a>
+    <a href="/en/philosophy">Philosophy</a>
+    <a href="/en/about">About me</a>
+    <a href="/en/contact">Contact</a>
+  </nav>
+
+  <a href="/contacto" class="cavla-nav__lang" hreflang="es" lang="es" aria-label="Ver en español">ES</a>
+  <a href="/en/start" class="cavla-nav__cta">Start your project</a>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="/en/" onclick="toggleMenu()">Home</a></li>
+      <li><a href="/en/projects" onclick="toggleMenu()">Projects</a></li>
+      <li><a href="/en/philosophy" onclick="toggleMenu()">Philosophy</a></li>
+      <li><a href="/en/about" onclick="toggleMenu()">About me</a></li>
+      <li><a href="/en/contact" onclick="toggleMenu()">Contact</a></li>
+      <li><a href="/contacto" hreflang="es" lang="es" onclick="toggleMenu()">Español</a></li>
+    </ul>
+  </div>
+
+
+
+  <!-- PORTADA -->
+  <section class="page mainContent">
+    <div class="opacidad"></div>
+    <div class="bg-gradient"></div>
+    <div class="shadowa"></div>
+
+    <div class="bloque-titulos translate" data-speed="0.1">
+      <h1 class="titulo-pagina">Contact</h1>
+      <h2 class="subtitulo-pagina">
+        <span>ONE</span> <span>MESSAGE</span> <span>AWAY</span>
+      </h2>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Scroll</span>
+      <span class="scroll-cue__line">
+        <span class="scroll-cue__dot"></span>
+      </span>
+    </div>
+    <img alt="" src="/images/CONTACTO/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
+  </section>
+
+  <!-- PANTALLA — CONTACTO DIRECTO (propuesta) -->
+  <section class="page contacto-directo mainContent">
+    <div class="contacto-directo__inner">
+
+      <div class="contacto-directo__bloque">
+      <div class="contacto-directo__horario">
+        <span class="contacto-directo__label">Hours</span>
+        <span class="contacto-directo__valor">Monday to Friday, 9am to 6pm (Argentina time)</span>
+      </div>
+
+      <h2 class="contacto-directo__titulo">Any questions?<span class="contacto-directo__titulo-2">Let's talk.</span></h2>
+
+      <div class="contacto-directo__arriba">
+        <a href="/en/start" class="btn-whatsapp" id="btn-whatsapp" target="_blank" rel="noopener">Write on WhatsApp<svg class="btn-whatsapp__ico" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+
+        <p class="contacto-directo__mail-txt"><a href="#formulario" id="link-mail" onclick="irAlFormulario(event)"><span class="mail-txt__frase">or <span class="txt-pc">click here</span><span class="txt-tactil">tap here</span> to send me an email</span><span class="mail-txt__dir">office@estudiocavla.com</span></a></p>
+
+      <div class="contacto-directo__iconos">
+        <a href="https://www.instagram.com/estudio.cavla" target="_blank" rel="noopener" aria-label="Estudio CAVLA on Instagram"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></a>
+        <a href="https://www.youtube.com/@EstudioCAVLA" target="_blank" rel="noopener" aria-label="Estudio CAVLA on YouTube"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61587135314564" target="_blank" rel="noopener" aria-label="Estudio CAVLA on Facebook"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M13.2 20.4v-7h2.3l.4-2.7h-2.7V9.1c0-.8.3-1.3 1.4-1.3h1.4V5.4c-.3 0-1.1-.1-2.1-.1-2.1 0-3.4 1.2-3.4 3.4v2h-2.3v2.7h2.3v7"/></svg></a>
+      </div>
+      </div>
+      </div>
+
+      <div class="contacto-directo__guia">
+        <div class="contacto-directo__sep"><div class="contacto-directo__linea"></div></div>
+        <div class="contacto-directo__guia-in">
+        <p class="contacto-directo__guia-texto"><span class="guia-pregunta">Not sure where to start?</span>Take a look at the services or set up your project in a few steps.</p>
+        <div class="contacto-directo__guia-botones">
+          <a href="/en/" class="btn-guia" onclick="try{sessionStorage.setItem('snapSkip','servicios')}catch(e){}">See services</a>
+          <a href="/en/start" class="btn-guia">Start your project</a>
+        </div>
+        </div>
+        <div class="contacto-directo__sep"></div>
+      </div>
+
+    </div>
+
+    <p class="contacto-directo__equipo">Want to collaborate? <a href="#formulario" onclick="irAlFormulario(event, 'colaboracion')">Write to me</a></p>
+  </section>
+
+  <!-- PANTALLA 1 — FORMULARIO -->
+  <section class="contacto-form" id="formulario" aria-hidden="true">
+    <div class="contacto-form__inner">
+
+      <button type="button" class="contacto-form__volver" onclick="cerrarFormulario()">&larr; Back</button>
+
+      <h2 class="contacto-form__titulo">Your inquiry.</h2>
+
+      <form class="contacto-form__grid" id="form-contacto">
+
+        <div class="contacto-form__campo">
+          <label class="contacto-form__label" for="nombre">Name</label>
+          <input
+            class="contacto-form__input"
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Your name"
+            required
+          />
+        </div>
+
+        <div class="contacto-form__campo">
+          <label class="contacto-form__label" for="email">Email</label>
+          <input
+            class="contacto-form__input"
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@mail.com"
+            required
+          />
+        </div>
+
+        <div class="contacto-form__campo contacto-form__campo--full">
+          <label class="contacto-form__label" for="asunto">Subject</label>
+          <input
+            class="contacto-form__input"
+            type="text"
+            id="asunto"
+            name="asunto"
+            placeholder="How can I help you?"
+          />
+        </div>
+
+        <div class="contacto-form__campo contacto-form__campo--full">
+          <label class="contacto-form__label" for="mensaje">Message</label>
+          <textarea
+            class="contacto-form__textarea"
+            id="mensaje"
+            name="mensaje"
+            placeholder="Tell me about your project or question..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="contacto-form__botones contacto-form__campo--full">
+          <button type="button" class="btn-enviar" id="btn-enviar" onclick="enviarMail()">Send email</button>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- EmailJS — cargar ANTES de scripts.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/scripts.js"></script>
+
+  <script>
+    /* "o enviame un mail": abre la pantalla del formulario por encima de la página */
+    var formEl = document.getElementById('formulario');
+    var MODOS = {
+      consulta: {
+        titulo: 'Your inquiry.',
+        asunto: 'How can I help you?',
+        mensaje: 'Tell me about your project or question...',
+        asuntoPorDefecto: 'Inquiry from the website (EN)'
+      },
+      colaboracion: {
+        titulo: 'Your proposal.',
+        asunto: 'Collaboration',
+        mensaje: 'Tell me who you are and how you would like us to collaborate...',
+        asuntoPorDefecto: 'Collaboration proposal from the website (EN)'
+      }
+    };
+    var modoActual = MODOS.consulta;
+    var disparador = null, abierto = false;
+    function limpiarExito() {
+      ['mensaje-exito', 'mensaje-exito-2'].forEach(function (id) { var n = document.getElementById(id); if (n) n.parentNode.removeChild(n); });
+    }
+    function irAlFormulario(e, modo) {
+      e.preventDefault();
+      disparador = e.currentTarget || null;
+      modoActual = MODOS[modo || 'consulta'];
+      limpiarExito();
+      formEl.querySelector('.contacto-form__titulo').textContent = modoActual.titulo;
+      document.getElementById('asunto').placeholder = modoActual.asunto;
+      document.getElementById('mensaje').placeholder = modoActual.mensaje;
+      formEl.classList.add('abierto');
+      formEl.setAttribute('aria-hidden', 'false');
+      formEl.scrollTop = 0;
+      window.__snapInhibited = true;
+      /* la página de atrás queda inactiva: el teclado (Tab) no se escapa del formulario */
+      var w = document.querySelector('.smooth-scroll-wrapper'); if (w) w.setAttribute('inert', '');
+      /* con el botón "atrás" del celular se cierra el formulario en vez de salir de la página */
+      if (!abierto) { try { history.pushState({ formulario: true }, ''); } catch (err) {} }
+      abierto = true;
+      /* en computadora el cursor va al primer campo; en celular no, para que no se abra el teclado solo */
+      if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        setTimeout(function () { document.getElementById('nombre').focus({ preventScroll: true }); }, 450);
+      }
+    }
+    function cerrarFormulario(desdeHistorial) {
+      if (!abierto) return;
+      abierto = false;
+      formEl.classList.remove('abierto');
+      formEl.setAttribute('aria-hidden', 'true');
+      window.__snapInhibited = false;
+      limpiarExito();
+      var w = document.querySelector('.smooth-scroll-wrapper'); if (w) w.removeAttribute('inert');
+      if (disparador && disparador.focus) { try { disparador.focus({ preventScroll: true }); } catch (err) {} }
+      if (desdeHistorial !== true && history.state && history.state.formulario) { try { history.back(); } catch (err) {} }
+    }
+    window.addEventListener('popstate', function () { if (abierto) cerrarFormulario(true); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrarFormulario(); });
+    /* que la rueda y el deslizar dentro del formulario no muevan la página de atrás */
+    ['wheel', 'touchmove'].forEach(function (t) { formEl.addEventListener(t, function (e) { e.stopPropagation(); }, { passive: true }); });
+
+    /* WhatsApp: el número sale de js/config.js */
+    (function () {
+      var n = window.CAVLA_CONFIG && window.CAVLA_CONFIG.whatsapp;
+      var a = document.getElementById('btn-whatsapp');
+      if (n && a) a.href = 'https://wa.me/' + n + '?text=' + encodeURIComponent('Hi Cata! I have a question.');
+    })();
+
+    try { emailjs.init('y0ioHk2OfmM89TNpJ'); } catch (e) {}
+
+
+    /* -----------------------------------------------
+       Inhibir snap mientras un campo está enfocado
+       ----------------------------------------------- */
+    document.querySelectorAll('.contacto-form__input, .contacto-form__textarea').forEach(function(input) {
+      input.addEventListener('focus', function() { window.__snapInhibited = true; });
+      input.addEventListener('blur',  function() {
+        setTimeout(function() { window.__snapInhibited = false; }, 400);
+      });
+    });
+
+    /* -----------------------------------------------
+       Enviar mail con EmailJS
+       ----------------------------------------------- */
+    function enviarMail() {
+      var nombre  = document.getElementById('nombre').value.trim();
+      var email   = document.getElementById('email').value.trim();
+      var asunto  = document.getElementById('asunto').value.trim();
+      var mensaje = document.getElementById('mensaje').value.trim();
+
+      if (!nombre || !email || !mensaje) {
+        alert('Please fill in your name, email and message.');
+        return;
+      }
+
+      var btn = document.getElementById('btn-enviar');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      emailjs.send('service_epbhnfn', 'template_ycfbswk', {
+        nombre:  nombre,
+        email:   email,
+        asunto:  asunto || modoActual.asuntoPorDefecto,
+        mensaje: mensaje
+      })
+      .then(function() {
+        btn.textContent = 'Send email';
+        btn.disabled = false;
+
+        var botones = document.querySelector('.contacto-form__botones');
+        if (!document.getElementById('mensaje-exito')) {
+          var p = document.createElement('p');
+          p.id = 'mensaje-exito';
+          p.textContent = 'Email sent successfully!';
+          p.style.cssText = 'color: #4caf50; font-family: Montserrat, sans-serif; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 8px;';
+          botones.appendChild(p);
+          var p2 = document.createElement('p');
+          p2.id = 'mensaje-exito-2';
+          p2.textContent = 'I will reply during business hours (Monday to Friday, 9am to 6pm, Argentina time).';
+          p2.style.cssText = 'color: rgba(255,255,255,0.6); font-family: Montserrat, sans-serif; font-size: 12px; font-weight: 300; letter-spacing: 0.04em; margin-top: 4px; text-align: center;';
+          botones.appendChild(p2);
+        }
+
+        document.getElementById('form-contacto').reset();
+      })
+      .catch(function() {
+        btn.textContent = 'Enviar mail';
+        btn.disabled = false;
+        alert('There was an error sending your message. Please try again or write to us directly at office@estudiocavla.com');
+      });
+    }
+  </script>
+
+<script src="/js/analytics.js" defer></script>
+</body>
+</html>

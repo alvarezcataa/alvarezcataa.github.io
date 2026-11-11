@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#130c09" />
+  <meta name="color-scheme" content="dark" />
+  <title>Estudio CAVLA - Projects</title>
+  <meta name="description" content="Interior design and furniture projects by Estudio CAVLA: residential, commercial and hospitality spaces." />
+  <link rel="canonical" href="https://www.estudiocavla.com/en/projects" />
+  <link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/proyectos" />
+  <link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/projects" />
+  <link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/proyectos" />
+  <link rel="alternate" hreflang="es" href="https://www.estudiocavla.com/proyectos" />
+  <link rel="alternate" hreflang="en" href="https://www.estudiocavla.com/en/projects" />
+  <link rel="alternate" hreflang="x-default" href="https://www.estudiocavla.com/proyectos" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Estudio CAVLA" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Estudio CAVLA - Projects" />
+  <meta property="og:description" content="Interior design and furniture projects by Estudio CAVLA: residential, commercial and hospitality spaces." />
+  <meta property="og:url" content="https://www.estudiocavla.com/en/projects" />
+  <meta property="og:image" content="https://www.estudiocavla.com/images/og-cavla.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://www.estudiocavla.com/images/og-cavla.jpg" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon_io/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style>
+    /* ── Pantalla de proyectos ── */
+    .proyectos-pantalla { position: relative; overflow: hidden; color: #fff; background: #130c09; }
+    .proyectos-contenido { position: relative; z-index: 3; height: calc(var(--vh, 1vh) * 100); padding: 13vh 4vw 5vh; display: flex; flex-direction: column; box-sizing: border-box; }
+    .filtros { display: flex; justify-content: center; gap: clamp(16px, 3.5vw, 44px); margin: 0 0 3vh; padding-bottom: 12px; border-bottom: .5px solid rgba(255,255,255,.15); flex: 0 0 auto; overflow-x: auto; scrollbar-width: none; }
+    .filtros::-webkit-scrollbar { display: none; }
+    .filtro { background: none; border: 0; padding: 6px 2px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: clamp(10px, 1.5vh, 13px); font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: rgba(255,255,255,.5); position: relative; white-space: nowrap; transition: color .2s; }
+    .filtro::after { content: ""; position: absolute; left: 0; right: 0; bottom: -13px; height: 1px; background: #fff; transform: scaleX(0); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+    .filtro:hover, .filtro[aria-pressed="true"] { color: #fff; }
+    .filtro[aria-pressed="true"]::after { transform: scaleX(1); }
+    .filtro:focus-visible { outline: 2px solid rgba(255,255,255,.85); outline-offset: 4px; }
+
+    /* Carril horizontal infinito: 3 filas, flechas laterales, bordes que se difuminan */
+    .carril-wrap { position: relative; flex: 1 1 auto; min-height: 0; margin: 0 -4vw; }
+    .carril { --gap: 7px; height: 100%; display: grid; grid-template-rows: repeat(3, 1fr); grid-auto-flow: column; grid-auto-columns: calc((var(--alto-carril, 60vh) - 2 * var(--gap)) / 3 * 1.25); gap: var(--gap); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; cursor: grab; overscroll-behavior-x: contain;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 10vw, #000 calc(100% - 10vw), transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 10vw, #000 calc(100% - 10vw), transparent 100%); }
+    .carril::-webkit-scrollbar { display: none; }
+    .carril.arrastrando { cursor: grabbing; user-select: none; }
+    .flecha-carril { position: absolute; top: 0; bottom: 0; width: clamp(44px, 8vw, 110px); z-index: 4; display: flex; align-items: center; background: none; border: 0; padding: 0; cursor: pointer; color: rgba(255,255,255,.75); transition: color .25s, opacity .25s; }
+    .flecha-carril--izq { left: 0; justify-content: flex-start; padding-left: clamp(10px, 2.2vw, 34px); }
+    .flecha-carril--der { right: 0; justify-content: flex-end; padding-right: clamp(10px, 2.2vw, 34px); }
+    .flecha-carril svg { width: clamp(14px, 1.6vw, 22px); height: clamp(60px, 11vh, 110px); fill: none; stroke: currentColor; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+    .flecha-carril:hover { color: #fff; }
+    .flecha-carril--izq:hover svg { transform: translateX(-4px); }
+    .flecha-carril--der:hover svg { transform: translateX(4px); }
+    .flecha-carril:focus-visible { outline: 1px solid rgba(255,255,255,.7); outline-offset: -6px; }
+    .carril-wrap.sin-flechas .flecha-carril { display: none; }
+    .carril-wrap.estatico .carril { justify-content: center; padding-left: 0; -webkit-mask-image: none; mask-image: none; cursor: default; overflow-x: hidden; }
+
+    .proyecto { position: relative; display: block; min-height: 0; --radio: 28px; border-radius: var(--radio); overflow: hidden; text-decoration: none; color: #fff; background-size: cover; background-position: center; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+    .proyecto[hidden] { display: none; }
+    @keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
+    .carril.anima .proyecto:not(.proyecto--relleno) { opacity: 0; animation: aparece .7s ease forwards; animation-delay: calc(var(--i, 0) * 55ms); }
+    @media (prefers-reduced-motion: reduce) { .carril.anima .proyecto { animation: none; opacity: 1; } }
+    .proyecto--relleno { visibility: hidden; pointer-events: none; }
+    .proyecto:hover { transform: translateY(-3px); }
+    .proyecto__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) brightness(.78); transition: filter 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1); }
+    .proyecto:hover .proyecto__img { filter: saturate(1.05) brightness(.92); transform: scale(1.04); }
+    .proyecto::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(19,9,10,.7) 100%); pointer-events: none; }
+    .proyecto__texto { position: absolute; left: var(--radio); bottom: calc(var(--radio) - .6em); right: 16px; z-index: 2; text-align: left; }
+    .proyecto__nombre { margin: 0; font-family: 'Playfair Display', serif; font-style: normal; font-weight: 400; font-size: clamp(11px, 1.55vh, 15px); line-height: 1.2; color: #fff; }
+    .ph--1 { background-image: linear-gradient(160deg, #3a261f, #1a0f0c); }
+    .ph--2 { background-image: linear-gradient(160deg, #4a3526, #201410); }
+    .ph--3 { background-image: linear-gradient(160deg, #2c1c17, #120a08); }
+    .ph--4 { background-image: linear-gradient(160deg, #53402c, #241711); }
+    .vacio { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: rgba(255,255,255,.7); }
+
+    @media (max-width: 810px) {
+      .proyectos-contenido { padding: 12vh 5vw 4vh; }
+      .filtros { justify-content: flex-start; gap: 18px; }
+      .proyecto { --radio: 20px; }
+      .carril { --gap: 6px; grid-auto-columns: calc((var(--alto-carril, 55vh) - 2 * var(--gap)) / 3 * 1.25); }
+      .carril-wrap { margin: 0 -5vw; }
+    }
+  </style>
+</head>
+<body class="pagina">
+
+  <!-- Navbar -->
+  <nav class="cavla-nav">
+    <a href="/en/" class="cavla-nav__brand">CAVLA<span class="cavla-nav__brand-est">— EST. 2025</span></a>
+
+   <nav class="cavla-nav__center" aria-label="Main">
+    <a href="/en/">Home</a>
+    <a href="/en/projects">Projects</a>
+    <a href="/en/philosophy">Philosophy</a>
+    <a href="/en/about">About me</a>
+    <a href="/en/contact">Contact</a>
+  </nav>
+
+  <a href="/proyectos" class="cavla-nav__lang" hreflang="es" lang="es" aria-label="Ver en español">ES</a>
+  <a href="/en/start" class="cavla-nav__cta">Start your project</a>
+
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  </nav>
+
+  <div class="side-menu" id="sideMenu">
+    <ul>
+      <li><a href="/en/" onclick="toggleMenu()">Home</a></li>
+      <li><a href="/en/projects" onclick="toggleMenu()">Projects</a></li>
+      <li><a href="/en/philosophy" onclick="toggleMenu()">Philosophy</a></li>
+      <li><a href="/en/about" onclick="toggleMenu()">About me</a></li>
+      <li><a href="/en/contact" onclick="toggleMenu()">Contact</a></li>
+      <li><a href="/proyectos" hreflang="es" lang="es" onclick="toggleMenu()">Español</a></li>
+    </ul>
+  </div>
+
+
+  
+  <!-- PORTADA-->
+  <section class="page mainContent">
+    <div class="opacidad"></div>
+    <div class="bg-gradient"></div>
+    <div class="shadowa"></div>
+
+    <div class="bloque-titulos translate" data-speed="0.1">
+      <h1 class="titulo-pagina">Projects</h1>
+      <h2 class="subtitulo-pagina">
+        <span>SPACES</span> <span>THAT</span> <span>TELL</span> <span>STORIES</span>
+      </h2>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue__label">Scroll</span>
+      <span class="scroll-cue__line">
+         <span class="scroll-cue__dot"></span>
+      </span>
+    </div>
+    <img alt="" src="/images/PROYECTOS/PORTADA.webp" class="page_fondo translate" data-speed="0.6">
+  </section>
+
+  <!-- PROYECTOS -->
+  <section class="proyectos-pantalla mainContent">
+    <div class="proyectos-contenido">
+      <div class="filtros" role="group" aria-label="Filter projects by type">
+        <button type="button" class="filtro" data-filtro="Todo" aria-pressed="true">All</button>
+        <button type="button" class="filtro" data-filtro="Residencial" aria-pressed="false">Residential</button>
+        <button type="button" class="filtro" data-filtro="Gastronómico" aria-pressed="false">Hospitality</button>
+        <button type="button" class="filtro" data-filtro="Comercial" aria-pressed="false">Commercial</button>
+      </div>
+
+      <!-- ORDEN: del más nuevo al más viejo (Casa Bruma, el primero, va al final). Para sumar un proyecto: copiá un <a class="proyecto"> y cambiá data-cat, href, imagen y nombre; después creá proyectos/nombre.html -->
+      <div class="carril-wrap" id="carril-wrap">
+        <div class="carril" id="carril" tabindex="0" aria-label="Projects (swipe sideways to see more)">
+          <a class="proyecto" data-cat="Residencial" href="/proyectos/casa-bemol">
+            <img class="proyecto__img" src="/images/SERVICIOS/RESIDENCIAL/CONC-B.webp" alt="Casa Bemol" loading="lazy">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Casa Bemol</h2></div>
+          </a>
+          <a class="proyecto" data-cat="Residencial" href="/proyectos/quiros">
+            <img class="proyecto__img" src="/images/SERVICIOS/RESIDENCIAL/CONC-D.webp" alt="Quirós" loading="lazy">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Quirós</h2></div>
+          </a>
+          <a class="proyecto" data-cat="Residencial" href="/proyectos/casa-bruma">
+            <img class="proyecto__img" src="/images/PROYECTOS/CASA-BRUMA/07.webp" alt="Casa Bruma" loading="lazy">
+            <div class="proyecto__texto"><h2 class="proyecto__nombre">Casa Bruma</h2></div>
+          </a>
+        </div>
+        <button type="button" class="flecha-carril flecha-carril--izq" id="flecha-izq" aria-label="See previous projects"><svg viewBox="0 0 20 100" aria-hidden="true"><polyline points="16,4 4,50 16,96"/></svg></button>
+        <button type="button" class="flecha-carril flecha-carril--der" id="flecha-der" aria-label="See more projects"><svg viewBox="0 0 20 100" aria-hidden="true"><polyline points="4,4 16,50 4,96"/></svg></button>
+        <p class="vacio" id="vacio">Projects coming soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/scripts.js"></script>
+  <script>
+  (function () {
+    var wrap = document.getElementById('carril-wrap'), carril = document.getElementById('carril'), vacio = document.getElementById('vacio');
+    var botones = document.querySelectorAll('.filtro');
+    var originales = Array.prototype.slice.call(carril.querySelectorAll('.proyecto'));
+    var validos = ['Todo', 'Residencial', 'Gastronómico', 'Comercial'];
+    var filtro = 'Todo', W = 0, paso = 0, infinito = false;
+
+    // Si los proyectos entran en pantalla: quietos. Si no entran: carril infinito, repitiendo el conjunto las veces necesarias.
+    function construir() {
+      carril.querySelectorAll('[data-clon]').forEach(function (c) { c.remove(); });
+      originales.forEach(function (it) { var ok = filtro === 'Todo' || it.getAttribute('data-cat') === filtro; it.hidden = !ok; });
+      var vis = originales.filter(function (it) { return !it.hidden; });
+      vacio.style.display = vis.length ? 'none' : 'flex';
+      carril.style.setProperty('--alto-carril', carril.clientHeight + 'px');
+      infinito = false; W = 0; carril.scrollLeft = 0;
+      wrap.classList.add('estatico'); wrap.classList.add('sin-flechas');
+      if (!vis.length) return;
+      var colW = vis[0].getBoundingClientRect().width, gap = parseFloat(getComputedStyle(carril).columnGap) || 0;
+      paso = colW + gap;
+      var cols = Math.ceil(vis.length / 3), ancho = cols * paso - gap, margen = window.innerWidth * (window.innerWidth <= 810 ? .05 : .04);
+      if (ancho <= window.innerWidth - 2 * margen + 1) return;   // entran todos: sin scroll lateral
+      infinito = true; wrap.classList.remove('estatico'); wrap.classList.remove('sin-flechas');
+      var base = vis.slice();
+      while (base.length % 3) { var r = document.createElement('article'); r.className = 'proyecto proyecto--relleno'; r.setAttribute('aria-hidden', 'true'); r.setAttribute('data-clon', '1'); carril.appendChild(r); base.push(r); }
+      var fin = base.length; W = (fin / 3) * paso;
+      var copias = Math.ceil(carril.clientWidth / W) + 2;
+      for (var c = 1; c < copias; c++) {
+        base.slice(0, fin).forEach(function (it) { var k = it.cloneNode(true); k.setAttribute('data-clon', '1'); k.setAttribute('aria-hidden', 'true'); k.removeAttribute('hidden'); carril.appendChild(k); });
+      }
+      carril.scrollLeft = W;
+    }
+    function aparecer() {
+      carril.classList.remove('anima');
+      var n = 0;
+      Array.prototype.forEach.call(carril.querySelectorAll('.proyecto:not([hidden]):not(.proyecto--relleno)'), function (it) { it.style.setProperty('--i', Math.min(n++, 14)); });
+      void carril.offsetWidth;
+      carril.classList.add('anima');
+    }
+    function envolver() {
+      if (!infinito) return;
+      if (carril.scrollLeft < W) carril.scrollLeft += W; else if (carril.scrollLeft >= 2 * W) carril.scrollLeft -= W;
+    }
+
+    // Movimiento suave y progresivo: la velocidad sube de a poco al mantener la flecha y se frena con inercia al soltar
+    var v = 0, dir = 0, loop = null, MAX = 16;
+    function tick() {
+      if (dir) v += (dir * MAX - v) * 0.07; else v *= 0.94;
+      if (!dir && Math.abs(v) < 0.08) { v = 0; loop = null; return; }
+      carril.scrollLeft += v; envolver();
+      loop = requestAnimationFrame(tick);
+    }
+    function arrancar() { if (!loop) loop = requestAnimationFrame(tick); }
+    function flecha(el, d) {
+      var t0 = 0;
+      function abajo(e) { e.preventDefault(); dir = d; t0 = performance.now(); arrancar(); }
+      function arriba() { if (!dir) return; var corto = performance.now() - t0 < 220; dir = 0; if (corto) v = d * 20; arrancar(); }
+      el.addEventListener('pointerdown', abajo); el.addEventListener('pointerup', arriba); el.addEventListener('pointerleave', arriba); el.addEventListener('pointercancel', arriba);
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); v = d * 20; arrancar(); } });
+    }
+    flecha(document.getElementById('flecha-izq'), -1); flecha(document.getElementById('flecha-der'), 1);
+    carril.addEventListener('keydown', function (e) { if (!infinito) return; if (e.key === 'ArrowRight') { e.preventDefault(); v = 20; arrancar(); } if (e.key === 'ArrowLeft') { e.preventDefault(); v = -20; arrancar(); } });
+
+    function aplicar(f, url) {
+      filtro = f;
+      botones.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-filtro') === f ? 'true' : 'false'); });
+      construir(); aparecer();
+      if (url) { try { history.replaceState(null, '', f === 'Todo' ? location.pathname : '?categoria=' + encodeURIComponent(f.toLowerCase())); } catch (e) {} }
+    }
+    botones.forEach(function (b) { b.addEventListener('click', function () { aplicar(b.getAttribute('data-filtro'), true); }); });
+
+    // Arrastrar con el mouse (con inercia al soltar)
+    var down = false, x0 = 0, s0 = 0, movio = false, ult = 0, vel = 0;
+    carril.addEventListener('mousedown', function (e) { if (!infinito) return; dir = 0; v = 0; down = true; movio = false; x0 = e.pageX; s0 = carril.scrollLeft; ult = e.pageX; vel = 0; });
+    window.addEventListener('mousemove', function (e) {
+      if (!down) return; var dx = e.pageX - x0; if (Math.abs(dx) > 4) { movio = true; carril.classList.add('arrastrando'); }
+      vel = ult - e.pageX; ult = e.pageX; carril.scrollLeft = s0 - dx; var antes = carril.scrollLeft; envolver(); if (carril.scrollLeft !== antes) s0 += carril.scrollLeft - antes;
+    });
+    window.addEventListener('mouseup', function () { if (!down) return; down = false; carril.classList.remove('arrastrando'); if (movio) { v = Math.max(-40, Math.min(40, vel)); arrancar(); } });
+    carril.addEventListener('click', function (e) { if (movio) { e.preventDefault(); e.stopPropagation(); movio = false; } }, true);
+    carril.addEventListener('scroll', envolver, { passive: true });
+
+    var q = new URLSearchParams(location.search).get('categoria');
+    var m = q && validos.filter(function (x) { return x.toLowerCase() === q.toLowerCase(); })[0];
+    aplicar(m || 'Todo', false);
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(construir, 150); });
+    window.addEventListener('load', construir);
+  })();
+  </script>
+<script src="/js/analytics.js" defer></script>
+</body>
+</html>

@@ -98,7 +98,7 @@ if (CAVLA_NATIVO) document.addEventListener("DOMContentLoaded", function () {
       const actual = norm(location.pathname);
       document.querySelectorAll(".cavla-nav__center a, .side-menu a").forEach((a) => {
         const h = norm(a.getAttribute("href") || "");
-        if (h === actual || (h !== "/" && actual.indexOf(h + "/") === 0)) a.setAttribute("aria-current", "page");
+        if (h === actual || (h !== "/" && h !== "/en" && actual.indexOf(h + "/") === 0)) a.setAttribute("aria-current", "page");
       });
     })();
 
