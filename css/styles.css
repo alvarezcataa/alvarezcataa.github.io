@@ -3048,3 +3048,4 @@ html.menu-abierto .avance-pantallas { opacity: 0; transition: opacity .3s; }
   .agenda__texto p { font-size: 1.85cqw; }
 }
 .grafico-contenedor:has(.agenda) { max-width: none; display: flex; justify-content: center; }
+.grafico-contenido:has(.agenda) .texto-grafico { align-self: stretch; text-align: justify; }
